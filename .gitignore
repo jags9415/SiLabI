@@ -1,0 +1,11 @@
+Release/
+Debug/
+bin/
+obj/
+
+*.suo
+*.pdb
+*.user
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
