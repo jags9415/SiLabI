@@ -8,7 +8,8 @@
           'ngResource',
           'ngRoute',
           'ngSanitize',
-          'ngTouch'
+          'ngTouch',
+          'silabi.navbar'
         ])
         .config(function ($routeProvider) {
           $routeProvider
