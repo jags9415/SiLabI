@@ -12,7 +12,6 @@ namespace SiLabI
 {
     public class Global : System.Web.HttpApplication
     {
-
         protected void Application_Start(object sender, EventArgs e)
         {
             RegisterRoutes(RouteTable.Routes);
@@ -22,6 +21,5 @@ namespace SiLabI
         {
             routes.Add(new ServiceRoute("", new WebServiceHostFactory(), typeof(SiLabI.Service)));
         }
-
     }
 }

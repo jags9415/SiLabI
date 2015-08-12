@@ -15,26 +15,26 @@ namespace SiLabI.Model
         /// <summary>
         /// The username.
         /// </summary>
-        [DataMember]
-        public string username { get; set; }
+        [DataMember(Name = "username")]
+        public string Username { get; set; }
 
         /// <summary>
         /// The password hashed with SHA256.
         /// </summary>
-        [DataMember]
-        public string password { get; set; }
+        [DataMember(Name = "password")]
+        public string Password { get; set; }
     }
 
     /// <summary>
     /// Authentication response.
     /// </summary>
     [DataContract]
-    public class AuthenticationResponse : BaseResponse
+    public class AuthenticationResponse : User
     {
         /// <summary>
         /// A JWT token.
         /// </summary>
-        [DataMember(EmitDefaultValue = false)]
-        public string access_token { get; set; }
+        [DataMember(EmitDefaultValue = false, Name = "access_token")]
+        public string AccessToken { get; set; }
     }
 }
