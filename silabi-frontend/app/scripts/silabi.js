@@ -9,7 +9,8 @@
           'ngRoute',
           'ngSanitize',
           'ngTouch',
-          'silabi.navbar'
+          'silabi.navbar',
+          'silabi.sidebar',
         ])
         .config(function ($routeProvider) {
           $routeProvider
@@ -24,7 +25,7 @@
               controllerAs: 'About'
             })
             .otherwise({
-              redirectTo: '/'
+              templateUrl: '404.html'
             });
         });
 })();
