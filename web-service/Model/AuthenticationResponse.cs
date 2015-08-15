@@ -10,12 +10,18 @@ namespace SiLabI.Model
     /// Authentication response.
     /// </summary>
     [DataContract]
-    public class AuthenticationResponse : User
+    public class AuthenticationResponse
     {
         /// <summary>
         /// A JWT token.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "access_token")]
         public string AccessToken { get; set; }
+
+        /// <summary>
+        /// The user data.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "user")]
+        public User User { get; set; }
     }
 }

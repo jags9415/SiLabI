@@ -16,14 +16,14 @@ namespace SiLabI.Controllers
     /// </summary>
     public class AuthenticationController
     {
-        private UserDataAccess dao;
+        private UserDataAccess _UserDAO;
 
         /// <summary>
         /// Creates a new AuthenticationController.
         /// </summary>
         public AuthenticationController()
         {
-            dao = new UserDataAccess();
+            _UserDAO = new UserDataAccess();
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace SiLabI.Controllers
         {
             if (request.Username == null || request.Password == null)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Faltan ciertos campos obligatorios.");
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "MissingCredentials", "Faltan ciertos campos obligatorios");
                 throw new WebFaultException<ErrorResponse>(error, error.Code);
             }
 
@@ -43,34 +43,25 @@ namespace SiLabI.Controllers
 
             try
             {
-                var table = dao.Authenticate(request.Username, request.Password);
+                var table = _UserDAO.Authenticate(request.Username, request.Password);
                 
                 if (table.Rows.Count == 0)
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Credenciales Inválidos");
+                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidCredentials", "Credenciales inválidos");
                     throw new WebFaultException<ErrorResponse>(error, error.Code);
                 }
 
-                var row = table.Rows[0];
+                User user = _UserDAO.ParseUser(table.Rows[0]);
 
                 var payload = new Dictionary<string, object>()
                 {
-                    { "id", Convert.ToInt32(row["id"]) },
-                    { "username", Convert.ToString(row["username"]) },
-                    { "type", Convert.ToString(row["type"]) }
+                    { "id", Convert.ToInt32(user.Id) },
+                    { "username", Convert.ToString(user.Username) },
+                    { "type", Convert.ToString(table.Rows[0]["type"]) }
                 };
 
                 response.AccessToken = Token.Encode(payload);
-                response.Id = Converter.ToInt32(row["id"]);
-                response.Name = Converter.ToString(row["name"]);
-                response.LastName1 = Converter.ToString(row["last_name_1"]);
-                response.LastName2 = Converter.ToString(row["last_name_2"]);
-                response.Gender = Converter.ToString(row["gender"]);
-                response.Email = Converter.ToString(row["email"]);
-                response.Phone = Converter.ToString(row["phone"]);
-                response.Username = Converter.ToString(row["username"]);
-                response.CreatedAt = Converter.ToDateTime(row["created_at"]);
-                response.UpdatedAt = Converter.ToDateTime(row["updated_at"]); 
+                response.User = user;
             }
             catch (SqlException)
             {
