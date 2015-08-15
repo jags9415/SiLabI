@@ -7,5 +7,3 @@ obj/
 *.pdb
 *.user
 **/packages/*
-!**/packages/build/
-!**/packages/repositories.config
