@@ -7,7 +7,7 @@ using System.Net;
 using System.ServiceModel.Web;
 using System.Web;
 
-namespace SiLabI
+namespace SiLabI.Model
 {
     public enum UserType { Student, Professor, Operator, Admin }
 
@@ -66,7 +66,7 @@ namespace SiLabI
                 Dictionary<string, object> payload = Token.Decode(token);
                 permission = payload["permission"].ToString();
             }
-            catch (Exception)
+            catch (JWT.SignatureVerificationException)
             {
                 return false;
             }

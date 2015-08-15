@@ -8,16 +8,19 @@ using System.Web;
 
 namespace SiLabI.Data
 {
-    public class DBConnection
+    /// <summary>
+    /// Provides a connection to the database.
+    /// </summary>
+    public class Connection
     {
-        private string connectionString;
+        private string _ConnectionString;
 
         /// <summary>
         /// Creates a new DBConnection.
         /// </summary>
-        public DBConnection()
+        public Connection()
         {
-            connectionString = ConfigurationManager.ConnectionStrings["SiLabI"].ConnectionString;
+            _ConnectionString = ConfigurationManager.ConnectionStrings["SiLabI"].ConnectionString;
         }
 
         /// <summary>
@@ -26,15 +29,38 @@ namespace SiLabI.Data
         /// <returns>The connection.</returns>
         private SqlConnection createConnection()
         {
-            return new SqlConnection(connectionString);
+            return new SqlConnection(_ConnectionString);
         }
 
         /// <summary>
-        /// Execute a stored procedure with rows as result.
+        /// Execute a SELECT query and returns the data in a DataTable object.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>The results.</returns>
+        public DataTable executeSelectQuery(string query)
+        {
+            DataTable table = new DataTable();
+
+            using (SqlConnection conn = createConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlDataReader reader;
+                    conn.Open();
+                    reader = cmd.ExecuteReader();
+                    table.Load(reader);
+                }
+            }
+
+            return table;
+        }
+
+        /// <summary>
+        /// Execute a Stored Procedure and returns the data in a DataTable object.
         /// </summary>
         /// <param name="name">The name of the stored procedure.</param>
         /// <param name="parameters">The parameters.</param>
-        /// <returns>The rows returned by the procedure</returns>
+        /// <returns>The results.</returns>
         public DataTable executeStoredProcedure(string name, SqlParameter[] parameters)
         {
             DataTable table = new DataTable();
