@@ -29,7 +29,8 @@ namespace SiLabI.Data
         /// <returns>The connection.</returns>
         private SqlConnection createConnection()
         {
-            return new SqlConnection(_ConnectionString);
+            SqlConnection conn = new SqlConnection(_ConnectionString);
+            return conn;
         }
 
         /// <summary>

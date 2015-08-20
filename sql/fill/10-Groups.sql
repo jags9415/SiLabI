@@ -1,4 +1,5 @@
 USE [SiLabI];
+SET NOCOUNT ON;
 DECLARE @GROUP_course_id INT, @GROUP_professor_id INT, @GROUP_period_id INT, @GROUP_i INT, @GROUP_rows INT;
 
 SET @GROUP_i = 0;

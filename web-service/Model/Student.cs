@@ -1,39 +1,54 @@
-﻿using SiLabI.Model.Query;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
+using System.ServiceModel.Web;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace SiLabI.Model
 {
-    /// <summary>
-    /// A student data.
-    /// </summary>
     [DataContract]
     public class Student : User
     {
-        private static List<Field> _ValidFields;
+        /// <summary>
+        /// Creates a empty student.
+        /// </summary>
+        public Student() : base() { }
 
         /// <summary>
-        /// The number that identifies the student in the university.
+        /// Clones an user.
         /// </summary>
-        [DataMember(EmitDefaultValue = false, Name = "student_id")]
-        public string StudentId { get; set; }
+        /// <param name="user">The user to clone.</param>
+        public Student(User user) : base(user) { }
 
-        public static List<Field> ValidFields
+        /// <summary>
+        /// The username.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "username")]
+        public override string Username
         {
-            get
+            set
             {
-                if (Student._ValidFields == null)
+                if (value != null && !Regex.IsMatch(value, "^[0-9]+$"))
                 {
-                    FieldBuilder builder = new FieldBuilder("Students");
-                    Student._ValidFields = User.ValidFields;
-                    Student._ValidFields.Add(builder.VarChar("student_id", "Student_Id"));
+                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Username inválido. Ingrese únicamente caractéres numéricos.");
+                    throw new WebFaultException<ErrorResponse>(error, error.Code);
                 }
-                return Student._ValidFields;
+                _username = value;
             }
+            get { return _username; }
+        }
+
+        /// <summary>
+        /// Fill an Student object with the data provided in a DataRow.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        public static Student Parse(DataRow row)
+        {
+            return new Student(User.Parse(row));
         }
     }
 }

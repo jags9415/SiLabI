@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace SiLabI.Model.Query
@@ -48,17 +49,6 @@ namespace SiLabI.Model.Query
                     return DateTime.TryParse(Value, out date);
                 default:
                     return false;
-            }
-        }
-
-        /// <summary>
-        /// The query operator.
-        /// </summary>
-        public string Operator
-        {
-            get
-            {
-                return RelationshipUtils.ToString(Relationship);
             }
         }
 

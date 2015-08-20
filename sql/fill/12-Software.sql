@@ -1,4 +1,5 @@
 USE [SiLabI];
+SET NOCOUNT ON;
 DECLARE @SOFTWARE_software_state INT;
 SELECT @SOFTWARE_software_state = PK_State_Id FROM States WHERE Type = 'SOFTWARE' AND Name = 'ACTIVE';
 

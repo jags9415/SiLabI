@@ -42,7 +42,7 @@ namespace SiLabI.Util
         /// <returns>The string.</returns>
         public static string ToString(object obj)
         {
-            return obj == null ? null : Convert.ToString(obj);
+            return string.IsNullOrEmpty(obj as string) ? null : Convert.ToString(obj);
         }
     }
 }

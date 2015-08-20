@@ -1,10 +1,9 @@
 /**
- * @api {post} /authenticate Authenticates an user.
+ * @api {post} /v1/authenticate Authenticate an user.
  * @apiVersion 1.0.0
  * @apiName Authenticate
- * @apiGroup Authenticate
+ * @apiGroup Authentication
  * @apiPermission none
- * @apiUse AuthenticationError
  *
  * @apiDescription Retrieves the user information and access token based on an user log in credentials.
  *
@@ -16,18 +15,27 @@
  * @apiSuccess {Number}	user.id 			The user identification.
  * @apiSuccess {String}	user.name 			The first name.
  * @apiSuccess {String}	user.last_name_1	The first last name.
- * @apiSuccess {String}	[user.last_name_2]	The second last name.	
+ * @apiSuccess {String}	[user.last_name_2]	The second last name.
  * @apiSuccess {String}	user.username		The username.
- * @apiSuccess {String}	user.gender			The gender.
+ * @apiSuccess {String="Masculino, Femenino"}		user.gender			The gender.
  * @apiSuccess {String}	[user.email]		The email address.
  * @apiSuccess {String}	[user.phone]		The phone number.
+ * @apiSuccess {String}	[user.phone]		The phone number.
+ * @apiSuccess {String="student, professor, operator, administrator"}	user.type	The user type.
  * @apiSuccess {Date}	user.created_at		The creation date.
  * @apiSuccess {Date}	user.updated_at		The last update date.
  *
- * @apiSuccessExample Response (example):
+ * @apiParamExample {json} Request-Example:
+ *     POST /authenticate
+ *     {
+ *       "username": "emurray1",
+ *       "password": "..."
+ *     }
+ *
+ * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
- *       "access_token": "",
+ *       "access_token": "...",
  *       "user": {
  *         "id": 2,
  *         "name": "Eric",
@@ -37,6 +45,7 @@
  *         "gender": "Male",
  *         "email": "emurray1@buzzfeed.com",
  *         "phone": "83567411",
+ *         "type": "student",
  *         "created_at": "/Date(1439606715483-0600)/",
  *         "updated_at": "/Date(1439606715483-0600)/"
  *       }
@@ -45,11 +54,11 @@
  * @apiError InvalidCredentials Invalid username or password.
  * @apiError MissingCredentials Missing username or password.
  *
- * @apiErrorExample Response (example):
+ * @apiErrorExample {json} Error-Response:
  *     HTTP/1.1 400 BadRequest
  *     {
  *       "code": 400,
  *       "error": "InvalidCredentials",
- *       "description": "Invalid username or password"
+ *       "description": "Credenciales inválidos"
  *     }
  */

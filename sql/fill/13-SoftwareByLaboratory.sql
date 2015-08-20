@@ -1,4 +1,5 @@
 USE [SiLabI];
+SET NOCOUNT ON;
 DECLARE @SBL_labs_count INT, @SBL_software_count INT, @SBL_i INT, @SBL_j INT;
 
 SET @SBL_i = 1;

@@ -19,7 +19,6 @@ namespace SiLabI.Controllers
     public class AdministratorController
     {
         private AdministratorDataAccess _AdminDA;
-        private UserDataAccess _UserDA;
 
         /// <summary>
         /// Creates a new AdministratorController.
@@ -27,7 +26,6 @@ namespace SiLabI.Controllers
         public AdministratorController()
         {
             this._AdminDA = new AdministratorDataAccess();
-            this._UserDA = new UserDataAccess();
         }
 
         /// <summary>
@@ -35,27 +33,38 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="request">The query.</param>
         /// <returns>The list of administrators.</returns>
-        public List<User> GetAdministrators(QueryString request)
+        public GetResponse<User> GetAdministrators(QueryString request)
         {
-            //Token.CheckToken(request.AccessToken, UserType.Operator);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
 
-            List<User> list = new List<User>();
+            if (!request.Query.Exists(element => element.Alias == "state"))
+            {
+                Field field = new Field("States", "Name", "state", SqlDbType.VarChar);
+                request.Query.Add(new QueryField(field, Relationship.EQ, "active"));
+            }
+
+            GetResponse<User> response = new GetResponse<User>();
             try
             {
                 DataTable table = _AdminDA.GetAdministrators(request);
-                
+                int count = _AdminDA.GetAdministratorsCount(request);
+
                 foreach (DataRow row in table.Rows)
                 {
-                    list.Add(_UserDA.ParseUser(row));
+                    response.Results.Add(User.Parse(row));
                 }
+
+                response.CurrentPage = request.Page;
+                response.TotalPages = (count + request.Limit - 1) / request.Limit;
             }
-            catch (SqlException)
+            catch (SqlException e)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, "Ocurrió un error al recuperar los datos.");
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
                 throw new WebFaultException<ErrorResponse>(error, error.Code);
             }
 
-            return list;
+            return response;
         }
 
         /// <summary>
@@ -66,58 +75,9 @@ namespace SiLabI.Controllers
         /// <returns>The administrator.</returns>
         public User GetAdministrator(int id, string token)
         {
-            //Token.CheckToken(token, UserType.Operator);
-            return FetchAdministrator(id);
-        }
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Operator);
 
-        /// <summary>
-        /// Creates an administrator.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>The user data.</returns>
-        public User CreateAdministrator(int id, BaseRequest request)
-        {
-            //Token.CheckToken(request.AccessToken, UserType.Admin);
-            try
-            {
-                _AdminDA.CreateAdministrator(id);
-            }
-            catch (SqlException)
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, "Ocurrió un error al actualizar los datos.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
-            return FetchAdministrator(id);
-        }
-
-        /// <summary>
-        /// Deletes an administrator.
-        /// </summary>
-        /// <param name="id">The user identification.</param>
-        /// <param name="request">The request.</param>
-        public User DeleteAdministrator(int id, BaseRequest request)
-        {
-            //Token.CheckToken(request.AccessToken, UserType.Admin);
-            User admin = FetchAdministrator(id);
-            try
-            {
-                _AdminDA.DeleteAdministrator(id);
-            }
-            catch (SqlException)
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, "Ocurrió un error al eliminar los datos.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
-            return admin;
-        }
-
-        /// <summary>
-        /// Retrieves an administrator.
-        /// </summary>
-        /// <param name="id">The user identification.</param>
-        /// <returns>The user data.</returns>
-        private User FetchAdministrator(int id)
-        {
             try
             {
                 DataTable table = _AdminDA.GetAdministrator(id);
@@ -128,11 +88,65 @@ namespace SiLabI.Controllers
                     throw new WebFaultException<ErrorResponse>(error, error.Code);
                 }
 
-                return _UserDA.ParseUser(table.Rows[0]);
+                return User.Parse(table.Rows[0]);
             }
-            catch (SqlException)
+            catch (SqlException e)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, "Ocurrió un error al recuperar los datos.");
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+                throw new WebFaultException<ErrorResponse>(error, error.Code);
+            }
+        }
+
+        /// <summary>
+        /// Creates an administrator.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>The user data.</returns>
+        public void CreateAdministrator(int id, BaseRequest request)
+        {
+            if (request == null || !request.IsValid())
+            {
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Cuerpo de la solicitud inválido.");
+                throw new WebFaultException<ErrorResponse>(error, error.Code);
+            }
+            
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Admin);
+
+            try
+            {
+                _AdminDA.CreateAdministrator(id);
+            }
+            catch (SqlException e)
+            {
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+                throw new WebFaultException<ErrorResponse>(error, error.Code);
+            }
+        }
+
+        /// <summary>
+        /// Deletes an administrator.
+        /// </summary>
+        /// <param name="id">The user identification.</param>
+        /// <param name="request">The request.</param>
+        public void DeleteAdministrator(int id, BaseRequest request)
+        {
+            if (request == null || !request.IsValid())
+            {
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Cuerpo de la solicitud inválido.");
+                throw new WebFaultException<ErrorResponse>(error, error.Code);
+            }
+
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Admin);
+
+            try
+            {
+                _AdminDA.DeleteAdministrator(id);
+            }
+            catch (SqlException e)
+            {
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
                 throw new WebFaultException<ErrorResponse>(error, error.Code);
             }
         }

@@ -19,41 +19,114 @@ namespace SiLabI
     {
         /*
          * AUTHENTICATION ENDPOINTS.
-        */
+         */
 
         [OperationContract]
         [WebInvoke(Method = "POST",
-            UriTemplate = "/authenticate",
+            UriTemplate = "/authenticate/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json),
         Description("Authenticate a user in the service.")]
         AuthenticationResponse Authenticate(AuthenticationRequest request);
 
         /*
+         * USER ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/users/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of users.")]
+        GetResponse<User> GetUsers(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/users/{username}/?access_token={token}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve an user.")]
+        User GetUser(string username, string token);
+
+        /*
          * ADMINISTRATOR ENDPOINTS.
-        */
+         */
 
         [OperationContract]
-        [WebGet(UriTemplate = "/administrators?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}"),
+        [WebGet(UriTemplate = "/administrators/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of administrators.")]
-        List<User> GetAdministrators(string token, string query, string page, string limit, string sort, string fields);
+        GetResponse<User> GetAdministrators(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/administrators/{id}?access_token={token}"),
+        [WebGet(UriTemplate = "/administrators/{id}/?access_token={token}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve an administrator.")]
         User GetAdministrator(string id, string token);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
-            UriTemplate = "/administrators/{id}",
+            UriTemplate = "/administrators/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json),
         Description("Create an administrator.")]
-        User CreateAdministrator(string id, BaseRequest request);
+        void CreateAdministrator(string id, BaseRequest request);
 
         [OperationContract]
         [WebInvoke(Method = "DELETE",
-            UriTemplate = "/administrators/{id}",
+            UriTemplate = "/administrators/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json),
         Description("Delete an administrators.")]
-        User DeleteAdministrator(string id, BaseRequest request);
+        void DeleteAdministrator(string id, BaseRequest request);
+
+        /*
+         * STUDENTS ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/students/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of students.")]
+        GetResponse<Student> GetStudents(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/students/{id}/?access_token={token}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a student.")]
+        Student GetStudent(string id, string token);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/students/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create a student.")]
+        Student CreateStudent(StudentRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/students/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update a student.")]
+        Student UpdateStudent(string id, StudentRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/students/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a student.")]
+        void DeleteStudent(string id, BaseRequest request);
     }
 }

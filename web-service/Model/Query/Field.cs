@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace SiLabI.Model.Query
@@ -19,13 +20,13 @@ namespace SiLabI.Model.Query
         /// Creates a new Field.
         /// </summary>
         /// <param name="table">The table that contains this field.</param>
-        /// <param name="dbName">The name of the field in the database.</param>
-        /// <param name="name">The name.</param>
-        public Field(string table, string name, string dbName, SqlDbType type)
+        /// <param name="column">The name of the field in the database.</param>
+        /// <param name="alias">The alias.</param>
+        public Field(string table, string column, string alias, SqlDbType type)
         {
             this.Table = table;
-            this.Name = name;
-            this.DBName = dbName;
+            this.Column = column;
+            this.Alias = alias;
             this.Type = type;
         }
 
@@ -33,12 +34,12 @@ namespace SiLabI.Model.Query
         /// Creates a new Field.
         /// </summary>
         /// <param name="field">The field.</param>
-        public Field(Field field) : this(field.Table, field.Name, field.DBName, field.Type) { }
+        public Field(Field field) : this(field.Table, field.Column, field.Alias, field.Type) { }
 
         /// <summary>
         /// The name of the field.
         /// </summary>
-        public string Name { get; set; }
+        public string Alias { get; set; }
 
         /// <summary>
         /// The table that contains this field.
@@ -48,7 +49,7 @@ namespace SiLabI.Model.Query
         /// <summary>
         /// The name of this field in the database.
         /// </summary>
-        public string DBName { get; set; }
+        public string Column { get; set; }
 
         /// <summary>
         /// The type of this field.

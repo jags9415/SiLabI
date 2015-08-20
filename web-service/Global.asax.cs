@@ -10,7 +10,7 @@ using System.Web.SessionState;
 
 namespace SiLabI
 {
-    public class Global : System.Web.HttpApplication
+    public class Global : HttpApplication
     {
         protected void Application_Start(object sender, EventArgs e)
         {

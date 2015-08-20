@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace SiLabI.Model.Query
@@ -15,8 +16,6 @@ namespace SiLabI.Model.Query
     /// </summary>
     public class SortField : Field
     {
-        private SortOrder order;
-
         /// <summary>
         /// Create a SortField.
         /// </summary>
@@ -24,15 +23,12 @@ namespace SiLabI.Model.Query
         /// <param name="order">The sort order</param>
         public SortField(Field field, SortOrder order) : base(field)
         {
-            this.order = order;
+            this.Order = order;
         }
 
         /// <summary>
         /// The order of the query.
         /// </summary>
-        public SortOrder Order
-        {
-            get { return order; }
-        }
+        public SortOrder Order { get; set; }
     }
 }

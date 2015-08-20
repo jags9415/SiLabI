@@ -8,4 +8,4 @@ obj/
 *.user
 **/packages/*
 
-**/apidocs/output/*
+**/APIdoc/output/*

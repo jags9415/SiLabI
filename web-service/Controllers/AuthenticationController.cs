@@ -16,14 +16,14 @@ namespace SiLabI.Controllers
     /// </summary>
     public class AuthenticationController
     {
-        private UserDataAccess _UserDAO;
+        private UserDataAccess _UserDA;
 
         /// <summary>
         /// Creates a new AuthenticationController.
         /// </summary>
         public AuthenticationController()
         {
-            _UserDAO = new UserDataAccess();
+            _UserDA = new UserDataAccess();
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace SiLabI.Controllers
         /// <returns>The authentication response.</returns>
         public AuthenticationResponse Authenticate(AuthenticationRequest request)
         {
-            if (request.Username == null || request.Password == null)
+            if (request == null || !request.IsValid())
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "MissingCredentials", "Faltan ciertos campos obligatorios");
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Cuerpo de la solicitud inválido.");
                 throw new WebFaultException<ErrorResponse>(error, error.Code);
             }
 
@@ -43,7 +43,7 @@ namespace SiLabI.Controllers
 
             try
             {
-                var table = _UserDAO.Authenticate(request.Username, request.Password);
+                var table = _UserDA.Authenticate(request.Username, request.Password);
                 
                 if (table.Rows.Count == 0)
                 {
@@ -51,21 +51,21 @@ namespace SiLabI.Controllers
                     throw new WebFaultException<ErrorResponse>(error, error.Code);
                 }
 
-                User user = _UserDAO.ParseUser(table.Rows[0]);
-
+                User user = User.Parse(table.Rows[0]);
+                
                 var payload = new Dictionary<string, object>()
                 {
-                    { "id", Convert.ToInt32(user.Id) },
-                    { "username", Convert.ToString(user.Username) },
-                    { "type", Convert.ToString(table.Rows[0]["type"]) }
+                    { "id", user.Id },
+                    { "username", user.Username },
+                    { "type", user.Type }
                 };
 
                 response.AccessToken = Token.Encode(payload);
                 response.User = user;
             }
-            catch (SqlException)
+            catch (SqlException e)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, "Ocurrió un error al recuperar los datos.");
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
                 throw new WebFaultException<ErrorResponse>(error, error.Code);
             }
 

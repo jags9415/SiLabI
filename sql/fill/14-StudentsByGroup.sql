@@ -1,4 +1,5 @@
 USE [SiLabI];
+SET NOCOUNT ON;
 DECLARE @SBG_user_id INT, @SBG_group_id INT, @SBG_i INT, @SBG_rows INT;
 
 SET @SBG_i = 0;

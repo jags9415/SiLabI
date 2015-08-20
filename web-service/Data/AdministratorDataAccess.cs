@@ -17,8 +17,6 @@ namespace SiLabI.Data
     public class AdministratorDataAccess
     {
         private Connection _Connection;
-        private SqlQueryBuilder _SqlBuilder;
-        private FieldBuilder _FieldBuilder;
 
         /// <summary>
         /// Creates a new AdministratorDataAccess.
@@ -26,10 +24,24 @@ namespace SiLabI.Data
         public AdministratorDataAccess()
         {
             _Connection = new Connection();
-            _FieldBuilder = new FieldBuilder("States");
-            _SqlBuilder = new SqlQueryBuilder("Administrators");
-            _SqlBuilder.AddJoin(JoinType.INNER, "Users", "FK_User_Id", Relationship.EQ, "PK_User_Id");
-            _SqlBuilder.AddJoin(JoinType.INNER, "States", "FK_State_Id", Relationship.EQ, "PK_State_Id");
+        }
+
+        /// <summary>
+        /// Get the amount of administrators that satifies the query.
+        /// </summary>
+        /// <param name="request">The query.</param>
+        /// <returns>The amount of administrators that satifies the query</returns>
+        public int GetAdministratorsCount(QueryString request)
+        {
+            SqlParameter[] parameters = new SqlParameter[1];
+
+            parameters[0] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
+            parameters[0].Value = SqlUtilities.FormatWhereFields(request.Query);
+
+            DataTable table = _Connection.executeStoredProcedure("sp_GetAdministratorsCount", parameters);
+            DataRow row = table.Rows[0];
+
+            return table.Columns.Contains("count") ? Converter.ToInt32(row["count"]) : 0;
         }
 
         /// <summary>
@@ -39,13 +51,21 @@ namespace SiLabI.Data
         /// <returns>A DataTable that contains all the administrators data that satisfies the query.</returns>
         public DataTable GetAdministrators(QueryString request)
         {
-            if (request.Query.Find(element => element.Name == "state") == null)
-            {
-                request.Query.Add(new QueryField(_FieldBuilder.VarChar("state", "Name"), Relationship.EQ, "active"));
-            }
+            SqlParameter[] parameters = new SqlParameter[5];
 
-            String query = _SqlBuilder.Query(request);
-            return _Connection.executeSelectQuery(query);
+            parameters[0] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[0].Value = SqlUtilities.FormatSelectFields(request.Fields);
+
+            parameters[1] = SqlUtilities.CreateParameter("@order_by", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatOrderByFields(request.Sort);
+
+            parameters[2] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
+            parameters[2].Value = SqlUtilities.FormatWhereFields(request.Query);
+
+            parameters[3] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
+            parameters[4] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
+
+            return _Connection.executeStoredProcedure("sp_GetAdministrators", parameters);
         }
 
         /// <summary>
@@ -56,10 +76,7 @@ namespace SiLabI.Data
         public DataTable GetAdministrator(int id)
         {
             SqlParameter[] parameters = new SqlParameter[1];
-
-            parameters[0] = new SqlParameter("@user_id", SqlDbType.Int);
-            parameters[0].Value = id;
-
+            parameters[0] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, id);
             return _Connection.executeStoredProcedure("sp_GetAdministrator", parameters);
         }
 
@@ -70,10 +87,7 @@ namespace SiLabI.Data
         public void CreateAdministrator(int id)
         {
             SqlParameter[] parameters = new SqlParameter[1];
-
-            parameters[0] = new SqlParameter("@user_id", SqlDbType.Int);
-            parameters[0].Value = id;
-
+            parameters[0] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, id);
             _Connection.executeStoredProcedure("sp_CreateAdministrator", parameters);
         }
 
@@ -84,10 +98,7 @@ namespace SiLabI.Data
         public void DeleteAdministrator(int id)
         {
             SqlParameter[] parameters = new SqlParameter[1];
-
-            parameters[0] = new SqlParameter("@user_id", SqlDbType.Int);
-            parameters[0].Value = id;
-
+            parameters[0] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, id);
             _Connection.executeStoredProcedure("sp_DeleteAdministrator", parameters);
         }
     }

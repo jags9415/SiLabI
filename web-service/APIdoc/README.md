@@ -8,7 +8,7 @@ _ _ _
 
 ####Requisitos:
 
-1. Instalar [APIdocs](http://apidocjs.com/#install)  
+1. Instalar [APIdoc](http://apidocjs.com/#install).  
 
 ####Instrucciones:
 

@@ -1,5 +1,5 @@
 USE [SiLabI];
-
+SET NOCOUNT ON;
 DECLARE @OPERATOR_user_id INT, @OPERATOR_period_id INT, @OPERATOR_operator_state INT, @OPERATOR_i INT, @OPERATOR_rows INT;
 SELECT @OPERATOR_operator_state = PK_State_Id FROM States WHERE Type = 'OPERATOR' AND Name = 'ACTIVE';
 

@@ -1,5 +1,5 @@
 USE [SiLabI];
-
+SET NOCOUNT ON;
 DECLARE @semestre INT, @cuatrimestre INT, @trimestre INT, @bimestre INT;
 
 SELECT @semestre = PK_Period_Type_Id FROM PeriodTypes WHERE Name = 'Semestre';

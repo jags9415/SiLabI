@@ -71,27 +71,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AdministratorController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\AdministratorDataAccess.cs" />
-    <Compile Include="Data\Join.cs" />
-    <Compile Include="Data\SQLQueryBuilder.cs" />
+    <Compile Include="Model\Student.cs" />
+    <Compile Include="Util\SqlUtilities.cs" />
+    <Compile Include="Data\StudentDataAccess.cs" />
+    <Compile Include="Endpoints\AdministratorEndpoints.cs" />
+    <Compile Include="Endpoints\AuthenticationEndpoints.cs" />
+    <Compile Include="Endpoints\StudentEndpoints.cs" />
+    <Compile Include="Endpoints\UserEndpoints.cs" />
     <Compile Include="Model\AuthenticationRequest.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Model\AuthenticationResponse.cs" />
     <Compile Include="Model\BaseRequest.cs" />
     <Compile Include="Data\Connection.cs" />
     <Compile Include="Model\ErrorResponse.cs" />
+    <Compile Include="Model\GetResponse.cs" />
     <Compile Include="Model\Query\Field.cs" />
     <Compile Include="Model\Query\FieldBuilder.cs" />
     <Compile Include="Model\Query\QueryString.cs" />
     <Compile Include="Model\Query\QueryField.cs" />
     <Compile Include="Model\Query\SortField.cs" />
-    <Compile Include="Model\Student.cs" />
     <Compile Include="Model\StudentRequest.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IService.cs" />
+    <Compile Include="Model\ValidFields.cs" />
     <Compile Include="Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>
     </Compile>

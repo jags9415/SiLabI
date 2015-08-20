@@ -1,4 +1,5 @@
 ﻿using SiLabI.Model;
+using SiLabI.Model.Query;
 using SiLabI.Util;
 using System;
 using System.Collections.Generic;
@@ -33,37 +34,63 @@ namespace SiLabI.Data
         public DataTable Authenticate(string username, string password)
         {
             SqlParameter[] parameters = new SqlParameter[2];
-
-            parameters[0] = new SqlParameter("@username", SqlDbType.VarChar);
-            parameters[0].Value = username;
-            parameters[1] = new SqlParameter("@password", SqlDbType.VarChar);
-            parameters[1].Value = password;
-
-            DataTable table = _Connection.executeStoredProcedure("sp_Authenticate", parameters);
-            return table;
+            parameters[0] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
+            parameters[1] = SqlUtilities.CreateParameter("@password", SqlDbType.VarChar, password);
+            return _Connection.executeStoredProcedure("sp_Authenticate", parameters);
         }
 
         /// <summary>
-        /// Fill an User object with the data provided in a DataRow.
+        /// Get the amount of users that satifies the query.
         /// </summary>
-        /// <param name="user">The user.</param>
-        public User ParseUser(DataRow row)
+        /// <param name="request">The query.</param>
+        /// <returns>The amount of users that satifies the query</returns>
+        public int GetUsersCount(QueryString request)
         {
-            User user = new User();
+            SqlParameter[] parameters = new SqlParameter[1];
 
-            user.Id = row.Table.Columns.Contains("id") ? Converter.ToInt32(row["id"]) : 0;
-            user.Name = row.Table.Columns.Contains("name") ? Converter.ToString(row["name"]) : null;
-            user.LastName1 = row.Table.Columns.Contains("last_name_1") ? Converter.ToString(row["last_name_1"]) : null;
-            user.LastName2 = row.Table.Columns.Contains("last_name_2") ? Converter.ToString(row["last_name_2"]) : null;
-            user.Gender = row.Table.Columns.Contains("gender") ? Converter.ToString(row["gender"]) : null;
-            user.Email = row.Table.Columns.Contains("email") ? Converter.ToString(row["email"]) : null;
-            user.Phone = row.Table.Columns.Contains("phone") ? Converter.ToString(row["phone"]) : null;
-            user.Username = row.Table.Columns.Contains("username") ? Converter.ToString(row["username"]) : null;
-            user.CreatedAt = row.Table.Columns.Contains("created_at") ? Converter.ToDateTime(row["created_at"]) : null;
-            user.UpdatedAt = row.Table.Columns.Contains("updated_at") ? Converter.ToDateTime(row["updated_at"]) : null;
-            user.State = row.Table.Columns.Contains("state") ? Converter.ToString(row["state"]) : null;
+            parameters[0] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
+            parameters[0].Value = SqlUtilities.FormatWhereFields(request.Query);
 
-            return user;
+            DataTable table = _Connection.executeStoredProcedure("sp_GetUsersCount", parameters);
+            DataRow row = table.Rows[0];
+
+            return table.Columns.Contains("count") ? Converter.ToInt32(row["count"]) : 0;
+        }
+
+        /// <summary>
+        /// Get all the users that satisfies the query.
+        /// </summary>
+        /// <param name="request">The query.</param>
+        /// <returns>A DataTable that contains all the users data that satisfies the query.</returns>
+        public DataTable GetUsers(QueryString request)
+        {
+            SqlParameter[] parameters = new SqlParameter[5];
+
+            parameters[0] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[0].Value = SqlUtilities.FormatSelectFields(request.Fields);
+
+            parameters[1] = SqlUtilities.CreateParameter("@order_by", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatOrderByFields(request.Sort);
+
+            parameters[2] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
+            parameters[2].Value = SqlUtilities.FormatWhereFields(request.Query);
+
+            parameters[3] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
+            parameters[4] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
+
+            return _Connection.executeStoredProcedure("sp_GetUsers", parameters);
+        }
+
+        /// <summary>
+        /// Get a specific user.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>A DataTable that contains the user data.</returns>
+        public DataTable GetUser(string username)
+        {
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
+            return _Connection.executeStoredProcedure("sp_GetUser", parameters);
         }
     }
 }

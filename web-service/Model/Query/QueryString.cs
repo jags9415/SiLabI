@@ -76,7 +76,7 @@ namespace SiLabI.Model.Query
 
                foreach (var item in splitted)
                {
-                   Field field = ValidFields.Find(element => element.Name == item);
+                   Field field = ValidFields.Find(element => element.Alias == item);
                    if (field == null)
                    {
                        ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Parámetro inválido field: " + item);
@@ -104,23 +104,18 @@ namespace SiLabI.Model.Query
 
                 foreach (string str in splitted)
                 {
-                    order = SortOrder.ASC;
-
                     if (str.StartsWith("-"))
                     {
                         name = str.Substring(1);
                         order = SortOrder.DESC;
                     }
-                    else if (str.StartsWith("+"))
-                    {
-                        name = str.Substring(1);
-                    }
                     else
                     {
+                        order = SortOrder.ASC;
                         name = str;
                     }
 
-                    Field field = ValidFields.Find(element => element.Name == name);
+                    Field field = ValidFields.Find(element => element.Alias == name);
                     if (field == null)
                     {
                         ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Parámetro inválido sort: " + str);
@@ -188,7 +183,7 @@ namespace SiLabI.Model.Query
                 throw new WebFaultException<ErrorResponse>(error, error.Code);
             }
 
-            Field field = ValidFields.Find(element => element.Name == key);
+            Field field = ValidFields.Find(element => element.Alias == key);
             if (field == null)
             {
                 ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Campo inválido q: " + key);

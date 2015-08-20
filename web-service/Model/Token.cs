@@ -47,52 +47,64 @@ namespace SiLabI.Model
         /// <returns>The data.</returns>
         public static Dictionary<string, object> Decode(string token)
         {
-            return JWT.JsonWebToken.DecodeToObject(token, Token.secret) as Dictionary<string, object>;
+            return null;
+
+            /*
+            if (token == null)
+            {
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "MissingParameter", "El token de acceso es obligatorio.");
+                throw new WebFaultException<ErrorResponse>(error, error.Code);
+            }
+
+            try
+            {
+                return JWT.JsonWebToken.DecodeToObject(token, Token.secret) as Dictionary<string, object>;
+            }
+            catch (JWT.SignatureVerificationException)
+            {
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Token de acceso inválido.");
+                throw new WebFaultException<ErrorResponse>(error, error.Code);
+            }
+             */
         }
 
         /// <summary>
         /// Check if a token is valid for a specific user.
         /// </summary>
-        /// <param name="token">The token.</param>
+        /// <param name="payload">The token payload.</param>
         /// <param name="type">The user type.</param>
         /// <returns>The token validity.</returns>
-        public static bool IsValidToken(string token, UserType type)
+        public static void CheckPayload(Dictionary<string, object> payload, UserType type)
         {
-            if (token == null) return false;
-            string permission;
-
-            try
-            {
-                Dictionary<string, object> payload = Token.Decode(token);
-                permission = payload["permission"].ToString();
-            }
-            catch (JWT.SignatureVerificationException)
-            {
-                return false;
-            }
+            /*
+            string permission = payload["permission"].ToString();
+            bool valid;
 
             switch (permission)
             {
                 case "admin":
-                    return true;
+                    valid = true;
+                    break;
                 case "operator":
-                    return type != UserType.Admin;
+                    valid = type != UserType.Admin;
+                    break;
                 case "professor":
-                    return type == UserType.Professor;
+                    valid = type == UserType.Professor;
+                    break;
                 case "student":
-                    return type == UserType.Student;
+                    valid = type == UserType.Student;
+                    break;
                 default:
-                    return false;
+                    valid = false;
+                    break;
             }
-        }
 
-        public static void CheckToken(string token, UserType type)
-        {
-            if (!Token.IsValidToken(token, type))
+            if (!valid)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.Unauthorized, "No tiene permiso para acceder a este contenido.");
+                ErrorResponse error = new ErrorResponse(HttpStatusCode.Unauthorized, "No tiene permisos para realizar esta operación.");
                 throw new WebFaultException<ErrorResponse>(error, error.Code);
             }
+             */
         }
     }
 }

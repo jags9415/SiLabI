@@ -20,73 +20,19 @@ namespace SiLabI
     /// The web service implementation.
     /// </summary>
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class Service : IService
+    public partial class Service : IService
     {
         private AuthenticationController _AuthController;
+        private UserController _UserController;
         private AdministratorController _AdminController;
+        private StudentController _StudentController;
 
         public Service()
         {
             this._AuthController = new AuthenticationController();
+            this._UserController = new UserController();
             this._AdminController = new AdministratorController();
-        }
-
-        /*
-         * AUTHENTICATION ENDPOINTS IMPLEMENTATION.
-        */
-
-        public AuthenticationResponse Authenticate(AuthenticationRequest request)
-        {
-            return _AuthController.Authenticate(request);
-        }
-
-        /*
-         * ADMINISTRATOR ENDPOINTS IMPLEMENTATION.
-        */
-
-        public List<User> GetAdministrators(string token, string query, string page, string limit, string sort, string fields)
-        {
-            QueryString request = new QueryString(User.ValidFields);
-            request.AccessToken = token;
-            request.ParseQuery(query);
-            request.ParsePage(page);
-            request.ParseLimit(limit);
-            request.ParseSort(sort);
-            request.ParseFields(fields);
-            return _AdminController.GetAdministrators(request);
-        }
-
-        public User GetAdministrator(string id, string token)
-        {
-            int num;
-            if (!Int32.TryParse(id, out num))
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Identificador inválido: " + id);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
-            return _AdminController.GetAdministrator(num, token);
-        }
-
-        public User CreateAdministrator(string id, BaseRequest request)
-        {
-            int num;
-            if (!Int32.TryParse(id, out num))
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Identificador inválido: " + id);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
-            return _AdminController.CreateAdministrator(num, request);
-        }
-
-        public User DeleteAdministrator(string id, BaseRequest request)
-        {
-            int num;
-            if (!Int32.TryParse(id, out num))
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Identificador inválido: " + id);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
-            return _AdminController.DeleteAdministrator(num, request);
+            this._StudentController = new StudentController();
         }
     }
 }

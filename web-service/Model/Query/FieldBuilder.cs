@@ -23,45 +23,45 @@ namespace SiLabI.Model.Query
         /// <summary>
         /// Creates a new VarChar Field.
         /// </summary>
-        /// <param name="name">The name of the field.</param>
-        /// <param name="dbName">The column name.</param>
+        /// <param name="column">The column.</param>
+        /// <param name="alias">The alias.</param>
         /// <returns>The field.</returns>
-        public Field VarChar(string name, string dbName)
+        public Field VarChar(string column, string alias)
         {
-            return new Field(this.Table, name, dbName, SqlDbType.VarChar);
+            return new Field(this.Table, column, alias, SqlDbType.VarChar);
         }
 
         /// <summary>
         /// Creates a new Int Field.
         /// </summary>
-        /// <param name="name">The name of the field.</param>
-        /// <param name="dbName">The column name.</param>
+        /// <param name="column">The column.</param>
+        /// <param name="alias">The alias.</param>
         /// <returns>The field.</returns>
-        public Field Int(string name, string dbName)
+        public Field Int(string column, string alias)
         {
-            return new Field(this.Table, name, dbName, SqlDbType.Int);
+            return new Field(this.Table, column, alias, SqlDbType.Int);
         }
 
         /// <summary>
         /// Creates a new Real Field.
         /// </summary>
-        /// <param name="name">The name of the field.</param>
-        /// <param name="dbName">The column name.</param>
+        /// <param name="column">The column.</param>
+        /// <param name="alias">The alias.</param>
         /// <returns>The field.</returns>
-        public Field Real(string name, string dbName)
+        public Field Real(string column, string alias)
         {
-            return new Field(this.Table, name, dbName, SqlDbType.Real);
+            return new Field(this.Table, column, alias, SqlDbType.Real);
         }
 
         /// <summary>
         /// Creates a new DateTime Field.
         /// </summary>
-        /// <param name="name">The name of the field.</param>
-        /// <param name="dbName">The column name.</param>
+        /// <param name="column">The column.</param>
+        /// <param name="alias">The alias.</param>
         /// <returns>The field.</returns>
-        public Field DateTime(string name, string dbName)
+        public Field DateTime(string column, string alias)
         {
-            return new Field(this.Table, name, dbName, SqlDbType.DateTime);
+            return new Field(this.Table, column, alias, SqlDbType.DateTime);
         }
 
         /// <summary>

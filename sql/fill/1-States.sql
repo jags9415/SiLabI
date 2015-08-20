@@ -1,5 +1,5 @@
 USE [SiLabI];
-
+SET NOCOUNT ON;
 INSERT INTO States (Type, Name) VALUES
 ('USER', 'active'),
 ('USER', 'disabled'),
