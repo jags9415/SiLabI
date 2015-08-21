@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SiLabI.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -34,8 +35,7 @@ namespace SiLabI.Model
             {
                 if (value != null && !Regex.IsMatch(value, "^[0-9]+$"))
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Username inválido. Ingrese únicamente caractéres numéricos.");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
+                    throw new InvalidParameterException("username", "Ingrese únicamente caractéres numéricos.");
                 }
                 _username = value;
             }

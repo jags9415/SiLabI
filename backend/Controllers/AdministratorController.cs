@@ -1,4 +1,5 @@
 ﻿using SiLabI.Data;
+using SiLabI.Exceptions;
 using SiLabI.Model;
 using SiLabI.Model.Query;
 using SiLabI.Util;
@@ -45,24 +46,16 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<User> response = new GetResponse<User>();
-            try
-            {
-                DataTable table = _AdminDA.GetAdministrators(request);
-                int count = _AdminDA.GetAdministratorsCount(request);
+            DataTable table = _AdminDA.GetAdministrators(request);
+            int count = _AdminDA.GetAdministratorsCount(request);
 
-                foreach (DataRow row in table.Rows)
-                {
-                    response.Results.Add(User.Parse(row));
-                }
-
-                response.CurrentPage = request.Page;
-                response.TotalPages = (count + request.Limit - 1) / request.Limit;
-            }
-            catch (SqlException e)
+            foreach (DataRow row in table.Rows)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                response.Results.Add(User.Parse(row));
             }
+
+            response.CurrentPage = request.Page;
+            response.TotalPages = (count + request.Limit - 1) / request.Limit;
 
             return response;
         }
@@ -77,24 +70,14 @@ namespace SiLabI.Controllers
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);
+            DataTable table = _AdminDA.GetAdministrator(id);
 
-            try
+            if (table.Rows.Count == 0)
             {
-                DataTable table = _AdminDA.GetAdministrator(id);
-
-                if (table.Rows.Count == 0)
-                {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "El identificador ingresado no corresponde a un administrador");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
-                }
-
-                return User.Parse(table.Rows[0]);
+                throw new WcfException(HttpStatusCode.BadRequest, "El identificador ingresado no corresponde a un administrador");
             }
-            catch (SqlException e)
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
+
+            return User.Parse(table.Rows[0]);
         }
 
         /// <summary>
@@ -106,22 +89,12 @@ namespace SiLabI.Controllers
         {
             if (request == null || !request.IsValid())
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Cuerpo de la solicitud inválido.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidRequestBodyException();
             }
             
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Admin);
-
-            try
-            {
-                _AdminDA.CreateAdministrator(id);
-            }
-            catch (SqlException e)
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
+            _AdminDA.CreateAdministrator(id);
         }
 
         /// <summary>
@@ -133,22 +106,12 @@ namespace SiLabI.Controllers
         {
             if (request == null || !request.IsValid())
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Cuerpo de la solicitud inválido.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidRequestBodyException();
             }
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Admin);
-
-            try
-            {
-                _AdminDA.DeleteAdministrator(id);
-            }
-            catch (SqlException e)
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
+            _AdminDA.DeleteAdministrator(id);
         }
     }
 }

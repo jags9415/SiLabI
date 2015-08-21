@@ -1,4 +1,5 @@
 ﻿using SiLabI.Data;
+using SiLabI.Exceptions;
 using SiLabI.Model;
 using SiLabI.Model.Query;
 using SiLabI.Util;
@@ -46,24 +47,16 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Student> response = new GetResponse<Student>();
-            try
-            {
-                DataTable table = _StudentDA.GetStudents(request);
-                int count = _StudentDA.GetStudentsCount(request);
+            DataTable table = _StudentDA.GetStudents(request);
+            int count = _StudentDA.GetStudentsCount(request);
 
-                foreach (DataRow row in table.Rows)
-                {
-                    response.Results.Add(Student.Parse(row));
-                }
-
-                response.CurrentPage = request.Page;
-                response.TotalPages = (count + request.Limit - 1) / request.Limit;
-            }
-            catch (SqlException e)
+            foreach (DataRow row in table.Rows)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                response.Results.Add(Student.Parse(row));
             }
+
+            response.CurrentPage = request.Page;
+            response.TotalPages = (count + request.Limit - 1) / request.Limit;
 
             return response;
         }
@@ -78,24 +71,14 @@ namespace SiLabI.Controllers
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);
+            DataTable table = _StudentDA.GetStudent(id);
 
-            try
+            if (table.Rows.Count == 0)
             {
-                DataTable table = _StudentDA.GetStudent(id);
-
-                if (table.Rows.Count == 0)
-                {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "El identificador ingresado no corresponde a un estudiante");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
-                }
-
-                return Student.Parse(table.Rows[0]);
+                throw new WcfException(HttpStatusCode.BadRequest, "El identificador ingresado no corresponde a un estudiante");
             }
-            catch (SqlException e)
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
+
+            return Student.Parse(table.Rows[0]);
         }
 
         /// <summary>
@@ -107,8 +90,7 @@ namespace SiLabI.Controllers
         {
             if (request == null || !request.IsValid())
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Cuerpo de la solicitud inválido.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidRequestBodyException();
             }
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
@@ -116,20 +98,11 @@ namespace SiLabI.Controllers
 
             if (!request.Student.IsValidForCreate())
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Datos de estudiante incompletos.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new WcfException(HttpStatusCode.BadRequest, "Datos de estudiante incompletos.");
             }
 
-            try
-            {
-                DataTable table = _StudentDA.CreateStudent(request.Student);
-                return Student.Parse(table.Rows[0]);
-            }
-            catch (SqlException e)
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
+            DataTable table = _StudentDA.CreateStudent(request.Student);
+            return Student.Parse(table.Rows[0]);
         }
 
         /// <summary>
@@ -142,8 +115,7 @@ namespace SiLabI.Controllers
         {
             if (request == null || !request.IsValid())
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Cuerpo de la solicitud inválido.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidRequestBodyException();
             }
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
@@ -151,20 +123,11 @@ namespace SiLabI.Controllers
 
             if (!request.Student.IsValidForUpdate())
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Datos de estudiante inválidos.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new WcfException(HttpStatusCode.BadRequest, "Datos de estudiante inválidos.");
             }
 
-            try
-            {
-                DataTable table = _StudentDA.UpdateStudent(id, request.Student);
-                return Student.Parse(table.Rows[0]);
-            }
-            catch (SqlException e)
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
+           DataTable table = _StudentDA.UpdateStudent(id, request.Student);
+           return Student.Parse(table.Rows[0]);
         }
 
         /// <summary>
@@ -176,22 +139,12 @@ namespace SiLabI.Controllers
         {
             if (request == null || !request.IsValid())
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Cuerpo de la solicitud inválido.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidRequestBodyException();
             }
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-
-            try
-            {
-                _StudentDA.DeleteStudent(id);
-            }
-            catch (SqlException e)
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
+            _StudentDA.DeleteStudent(id);
         }
     }
 }

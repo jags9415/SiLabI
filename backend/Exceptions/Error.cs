@@ -6,23 +6,23 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace SiLabI.Model
+namespace SiLabI.Exceptions
 {
     /// <summary>
-    /// Base class for all the responses in the service.
+    /// Contains information about an error.
     /// </summary>
     [DataContract]
-    public class ErrorResponse
+    public class Error
     {
         /// <summary>
         /// Creates a new ErrorResponse.
         /// </summary>
         /// <param name="code">The error code.</param>
         /// <param name="description">The description.</param>
-        public ErrorResponse(HttpStatusCode code, string description)
+        public Error(HttpStatusCode code, string description)
         {
             this.Code = code;
-            this.Error = code.ToString();
+            this.Name = code.ToString();
             this.Description = description;
         }
 
@@ -30,12 +30,12 @@ namespace SiLabI.Model
         /// Creates a new ErrorResponse.
         /// </summary>
         /// <param name="code">The error code.</param>
-        /// <param name="error">The error.</param>
+        /// <param name="name">The error name.</param>
         /// <param name="description">The description.</param>
-        public ErrorResponse(HttpStatusCode code, string error, string description)
+        public Error(HttpStatusCode code, string name, string description)
         {
             this.Code = code;
-            this.Error = error;
+            this.Name = name;
             this.Description = description;
         }
 
@@ -44,7 +44,7 @@ namespace SiLabI.Model
         /// </summary>
         /// <example>NOT_AUTHORIZED</example>
         [DataMember(EmitDefaultValue = false, Name = "error")]
-        public string Error { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The error code.

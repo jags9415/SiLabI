@@ -21,5 +21,15 @@ namespace SiLabI
         {
             routes.Add(new ServiceRoute("", new WebServiceHostFactory(), typeof(SiLabI.Service)));
         }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            Uri url = HttpContext.Current.Request.Url;
+
+            if (!url.AbsolutePath.EndsWith("/"))
+            {
+                HttpContext.Current.RewritePath(url.AbsolutePath + "/" + url.Query);
+            }
+        }
     }
 }

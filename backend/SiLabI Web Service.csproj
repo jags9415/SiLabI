@@ -74,7 +74,16 @@
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\AdministratorDataAccess.cs" />
+    <Compile Include="Exceptions\InvalidParameterException.cs" />
+    <Compile Include="Exceptions\MissingParameterException.cs" />
+    <Compile Include="Exceptions\InvalidRequestBodyException.cs" />
+    <Compile Include="Exceptions\UnathorizedOperationException.cs" />
+    <Compile Include="Exceptions\WcfException.cs" />
+    <Compile Include="ExtendedWebHttpBehavior.cs" />
+    <Compile Include="ExtendedWebHttpElement.cs" />
+    <Compile Include="ExtendedErrorHandler.cs" />
     <Compile Include="Model\Student.cs" />
+    <Compile Include="UnknowOperationInvoker.cs" />
     <Compile Include="Util\SqlUtilities.cs" />
     <Compile Include="Data\StudentDataAccess.cs" />
     <Compile Include="Endpoints\AdministratorEndpoints.cs" />
@@ -86,7 +95,7 @@
     <Compile Include="Model\AuthenticationResponse.cs" />
     <Compile Include="Model\BaseRequest.cs" />
     <Compile Include="Data\Connection.cs" />
-    <Compile Include="Model\ErrorResponse.cs" />
+    <Compile Include="Exceptions\Error.cs" />
     <Compile Include="Model\GetResponse.cs" />
     <Compile Include="Model\Query\Field.cs" />
     <Compile Include="Model\Query\FieldBuilder.cs" />

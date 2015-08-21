@@ -52,8 +52,7 @@ namespace SiLabI.Model
             /*
             if (token == null)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "MissingParameter", "El token de acceso es obligatorio.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new MissingParameterException("access_token");
             }
 
             try
@@ -62,8 +61,7 @@ namespace SiLabI.Model
             }
             catch (JWT.SignatureVerificationException)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Token de acceso inválido.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidParameterException("access_token");
             }
              */
         }
@@ -101,8 +99,7 @@ namespace SiLabI.Model
 
             if (!valid)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.Unauthorized, "No tiene permisos para realizar esta operación.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new UnathorizedException();
             }
              */
         }

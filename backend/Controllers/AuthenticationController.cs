@@ -8,6 +8,7 @@ using System.ServiceModel.Web;
 using System.Web;
 using SiLabI.Util;
 using System.Data.SqlClient;
+using SiLabI.Exceptions;
 
 namespace SiLabI.Controllers
 {
@@ -35,39 +36,29 @@ namespace SiLabI.Controllers
         {
             if (request == null || !request.IsValid())
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Cuerpo de la solicitud inválido.");
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidRequestBodyException();
             }
 
             var response = new AuthenticationResponse();
 
-            try
-            {
-                var table = _UserDA.Authenticate(request.Username, request.Password);
+            var table = _UserDA.Authenticate(request.Username, request.Password);
                 
-                if (table.Rows.Count == 0)
-                {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidCredentials", "Credenciales inválidos");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
-                }
-
-                User user = User.Parse(table.Rows[0]);
-                
-                var payload = new Dictionary<string, object>()
-                {
-                    { "id", user.Id },
-                    { "username", user.Username },
-                    { "type", user.Type }
-                };
-
-                response.AccessToken = Token.Encode(payload);
-                response.User = user;
-            }
-            catch (SqlException e)
+            if (table.Rows.Count == 0)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new WcfException(HttpStatusCode.BadRequest, "InvalidCredentials", "Credenciales inválidos");
             }
+
+            User user = User.Parse(table.Rows[0]);
+                
+            var payload = new Dictionary<string, object>()
+            {
+                { "id", user.Id },
+                { "username", user.Username },
+                { "type", user.Type }
+            };
+
+            response.AccessToken = Token.Encode(payload);
+            response.User = user;
 
             return response;
         }

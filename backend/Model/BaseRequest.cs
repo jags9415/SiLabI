@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SiLabI.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -26,8 +27,7 @@ namespace SiLabI.Model
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "MissingParameter", "El token de acceso es obligatorio.");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
+                    throw new MissingParameterException("access_token");
                 }
                 _accessToken = value;
             }

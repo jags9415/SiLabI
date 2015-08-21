@@ -1,4 +1,5 @@
-﻿using SiLabI.Model;
+﻿using SiLabI.Exceptions;
+using SiLabI.Model;
 using SiLabI.Model.Query;
 using System;
 using System.Collections.Generic;
@@ -34,8 +35,7 @@ namespace SiLabI
             int num;
             if (!Int32.TryParse(id, out num))
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Identificador inválido: " + id);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidParameterException("id");
             }
             return _AdminController.GetAdministrator(num, token);
         }
@@ -45,8 +45,7 @@ namespace SiLabI
             int num;
             if (!Int32.TryParse(id, out num))
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Identificador inválido: " + id);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidParameterException("id");
             }
              _AdminController.CreateAdministrator(num, request);
         }
@@ -56,8 +55,7 @@ namespace SiLabI
             int num;
             if (!Int32.TryParse(id, out num))
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Identificador inválido: " + id);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidParameterException("id");
             }
             _AdminController.DeleteAdministrator(num, request);
         }

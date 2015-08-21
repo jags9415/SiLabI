@@ -1,4 +1,5 @@
-﻿using SiLabI.Util;
+﻿using SiLabI.Exceptions;
+using SiLabI.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,8 +41,7 @@ namespace SiLabI.Model.Query
             int result = 1;
             if ((page != null && !Int32.TryParse(page, out result)) || result <= 0)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Parámetro inválido page: " + page);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidParameterException("page");
             }
             this.Page = result;
         }
@@ -56,8 +56,7 @@ namespace SiLabI.Model.Query
             int result = 20;
             if ((limit != null && !Int32.TryParse(limit, out result)) || result <= 0)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Parámetro inválido limit: " + limit);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidParameterException("limit");
             }
             this.Limit = result;
         }
@@ -79,8 +78,7 @@ namespace SiLabI.Model.Query
                    Field field = ValidFields.Find(element => element.Alias == item);
                    if (field == null)
                    {
-                       ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Parámetro inválido field: " + item);
-                       throw new WebFaultException<ErrorResponse>(error, error.Code);
+                       throw new InvalidParameterException("field", string.Format("[{0}].", item));
                    }
                    result.Add(field);
                }
@@ -118,8 +116,7 @@ namespace SiLabI.Model.Query
                     Field field = ValidFields.Find(element => element.Alias == name);
                     if (field == null)
                     {
-                        ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Parámetro inválido sort: " + str);
-                        throw new WebFaultException<ErrorResponse>(error, error.Code);
+                        throw new InvalidParameterException("sort", string.Format("[{0}].", str));
                     }
                     result.Add(new SortField(field, order));
                 }
@@ -146,8 +143,7 @@ namespace SiLabI.Model.Query
 
                     if (!field.HasValidValue())
                     {
-                        ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Tipo inválido q: " + str);
-                        throw new WebFaultException<ErrorResponse>(error, error.Code);
+                        throw new InvalidParameterException("q", string.Format("[{0}].", str));
                     }
 
                     result.Add(field);
@@ -168,8 +164,7 @@ namespace SiLabI.Model.Query
 
             if (splitted.Length != 3)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Parámetro inválido q: " + str);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidParameterException("q", string.Format("[{0}].", str));
             }
 
             string key = splitted[0];
@@ -179,15 +174,13 @@ namespace SiLabI.Model.Query
             Relationship relationship;
             if (!RelationshipUtils.TryParse(operation, out relationship))
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Relación inválida q: " + str);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidParameterException("q", string.Format("Relación inválida: {0}.", operation));
             }
 
             Field field = ValidFields.Find(element => element.Alias == key);
             if (field == null)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "Campo inválido q: " + key);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                throw new InvalidParameterException("q", string.Format("Campo inválido: {0}.", key));
             }
             return new QueryField(field, relationship, value);
         }

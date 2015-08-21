@@ -1,4 +1,5 @@
 ﻿using SiLabI.Data;
+using SiLabI.Exceptions;
 using SiLabI.Model;
 using SiLabI.Model.Query;
 using SiLabI.Util;
@@ -45,24 +46,16 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<User> response = new GetResponse<User>();
-            try
-            {
-                DataTable table = _UserDA.GetUsers(request);
-                int count = _UserDA.GetUsersCount(request);     
+            DataTable table = _UserDA.GetUsers(request);
+            int count = _UserDA.GetUsersCount(request);     
 
-                foreach (DataRow row in table.Rows)
-                {
-                    response.Results.Add(User.Parse(row));
-                }
-
-                response.CurrentPage = request.Page;
-                response.TotalPages = (count + request.Limit - 1) / request.Limit;
-            }
-            catch (SqlException e)
+            foreach (DataRow row in table.Rows)
             {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
+                response.Results.Add(User.Parse(row));
             }
+
+            response.CurrentPage = request.Page;
+            response.TotalPages = (count + request.Limit - 1) / request.Limit;
 
             return response;
         }
@@ -77,24 +70,14 @@ namespace SiLabI.Controllers
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);
+            DataTable table = _UserDA.GetUser(username);
 
-            try
+            if (table.Rows.Count == 0)
             {
-                DataTable table = _UserDA.GetUser(username);
-
-                if (table.Rows.Count == 0)
-                {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "El username ingresado no corresponde a un usuario");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
-                }
-
-                return User.Parse(table.Rows[0]);
+                throw new WcfException(HttpStatusCode.BadRequest, "El username ingresado no corresponde a un usuario");
             }
-            catch (SqlException e)
-            {
-                ErrorResponse error = new ErrorResponse(HttpStatusCode.InternalServerError, e.Message);
-                throw new WebFaultException<ErrorResponse>(error, error.Code);
-            }
+
+            return User.Parse(table.Rows[0]);
         }
     }
 }

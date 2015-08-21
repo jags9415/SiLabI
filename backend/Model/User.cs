@@ -1,4 +1,5 @@
-﻿using SiLabI.Model.Query;
+﻿using SiLabI.Exceptions;
+using SiLabI.Model.Query;
 using SiLabI.Util;
 using System;
 using System.Collections.Generic;
@@ -69,8 +70,7 @@ namespace SiLabI.Model
             {
                 if (value < 0)
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Id inválido. Ingrese un número > 0.");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
+                    throw new InvalidParameterException("id", "Ingrese un número > 0.");
                 }
                 _id = value;
             }
@@ -117,8 +117,7 @@ namespace SiLabI.Model
             {
                 if (value != null && !Regex.IsMatch(value, "^[a-zA-Z0-9]+$"))
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Username inválido. Ingrese únicamente caractéres alfanuméricos.");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
+                    throw new InvalidParameterException("username", "Ingrese únicamente caractéres alfanuméricos.");
                 }
                 _username = value;
             }
@@ -152,8 +151,7 @@ namespace SiLabI.Model
                     }
                     catch (FormatException)
                     {
-                        ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Email inválido.");
-                        throw new WebFaultException<ErrorResponse>(error, error.Code);
+                        throw new InvalidParameterException("email");
                     }
                 }
                 else
@@ -185,8 +183,7 @@ namespace SiLabI.Model
                 var valid = new[] { "Masculino", "Femenino" };
                 if (value != null && !valid.Any(item => item.Equals(value)))
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Género inválido. Ingrese 'Masculino' o 'Femenino'.");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
+                    throw new InvalidParameterException("gender", "Ingrese 'Masculino' o 'Femenino'");
                 }
                 _gender = value; 
             }
@@ -224,8 +221,7 @@ namespace SiLabI.Model
                 var valid = new[] { "active", "disabled", "blocked" };
                 if (value != null && !valid.Any(item => item.Equals(value)))
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Estado inválido. Ingrese 'active', 'disabled' o 'blocked'.");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
+                    throw new InvalidParameterException("state", "Ingrese 'active', 'disabled' o 'blocked'.");
                 }
                 _state = value;
             }
@@ -242,8 +238,7 @@ namespace SiLabI.Model
                 var valid = new[] { "student", "professor", "operator", "administrator" };
                 if (value != null && !valid.Any(item => item.Equals(value)))
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "InvalidParameter", "Tipo de usuario inválido. Ingrese 'student', 'professor', 'operator' o 'administrator'.");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
+                    throw new InvalidParameterException("type", "Ingrese 'student', 'professor', 'operator' o 'administrator'.");
                 }
                 _type = value;
             }

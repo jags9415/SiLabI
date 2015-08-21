@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SiLabI.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -25,10 +26,9 @@ namespace SiLabI.Model
         {
             set
             {
-                if (value == null)
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "MissingParameter", "El nombre de usuario es obligatorio.");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
+                    throw new MissingParameterException("username");
                 }
                 _username = value;
             }
@@ -43,10 +43,9 @@ namespace SiLabI.Model
         {
             set
             {
-                if (value == null)
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "MissingParameter", "La contraseña es obligatoria.");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
+                    throw new MissingParameterException("password");
                 }
                 _password = value;
             }

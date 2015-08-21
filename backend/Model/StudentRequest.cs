@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SiLabI.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -20,8 +21,7 @@ namespace SiLabI.Model
             {
                 if (value == null)
                 {
-                    ErrorResponse error = new ErrorResponse(HttpStatusCode.BadRequest, "MissingParameter", "El parámetro 'student' es obligatorio.");
-                    throw new WebFaultException<ErrorResponse>(error, error.Code);
+                    throw new MissingParameterException("student");
                 }
                 _student = value;
             }
