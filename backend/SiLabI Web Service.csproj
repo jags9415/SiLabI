@@ -71,19 +71,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AdministratorController.cs" />
+    <Compile Include="Controllers\ProfessorController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\AdministratorDataAccess.cs" />
+    <Compile Include="Data\ProfessorDataAccess.cs" />
+    <Compile Include="Endpoints\ProfessorEndpoints.cs" />
     <Compile Include="Exceptions\InvalidParameterException.cs" />
     <Compile Include="Exceptions\MissingParameterException.cs" />
     <Compile Include="Exceptions\InvalidRequestBodyException.cs" />
     <Compile Include="Exceptions\UnathorizedOperationException.cs" />
     <Compile Include="Exceptions\WcfException.cs" />
-    <Compile Include="ExtendedWebHttpBehavior.cs" />
-    <Compile Include="ExtendedWebHttpElement.cs" />
-    <Compile Include="ExtendedErrorHandler.cs" />
+    <Compile Include="Configuration\ExtendedWebHttpBehavior.cs" />
+    <Compile Include="Configuration\ExtendedWebHttpElement.cs" />
+    <Compile Include="Configuration\ExtendedErrorHandler.cs" />
+    <Compile Include="Model\ProfessorRequest.cs" />
     <Compile Include="Model\Student.cs" />
-    <Compile Include="UnknowOperationInvoker.cs" />
+    <Compile Include="Configuration\UnknowOperationInvoker.cs" />
     <Compile Include="Util\SqlUtilities.cs" />
     <Compile Include="Data\StudentDataAccess.cs" />
     <Compile Include="Endpoints\AdministratorEndpoints.cs" />
@@ -116,7 +120,8 @@
     <Compile Include="Model\Token.cs" />
     <Compile Include="Data\UserDataAccess.cs" />
     <Compile Include="Util\Converter.cs" />
-    <Compile Include="Util\Relationship.cs" />
+    <Compile Include="Model\Relationship.cs" />
+    <Compile Include="Util\Validator.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -26,13 +26,18 @@ namespace SiLabI
         private UserController _UserController;
         private AdministratorController _AdminController;
         private StudentController _StudentController;
+        private ProfessorController _ProfessorController;
 
+        /// <summary>
+        /// Create a new Service.
+        /// </summary>
         public Service()
         {
             this._AuthController = new AuthenticationController();
             this._UserController = new UserController();
             this._AdminController = new AdministratorController();
             this._StudentController = new StudentController();
+            this._ProfessorController = new ProfessorController();
         }
     }
 }

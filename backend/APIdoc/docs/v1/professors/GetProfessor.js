@@ -1,15 +1,15 @@
 /**
- * @api {get} /v1/students/:id Retrieve a student.
+ * @api {get} /v1/professors/:id Retrieve a professor.
  * @apiVersion 1.0.0
- * @apiName GetStudent
- * @apiGroup Students
+ * @apiName GetProfessor
+ * @apiGroup Professors
  * @apiPermission operator
  * @apiUse BaseError
  *
- * @apiDescription Retrieve a student.
+ * @apiDescription Retrieve a professor.
  *
  * @apiExample Example:
- * 		GET /students/54
+ * 		GET /professors/54
  *
  * @apiParam {String}	access_token	The access token.
  *

@@ -1,11 +1,14 @@
-Release/
-Debug/
-bin/
-obj/
+**/Release/*
+**/Debug/*
+**/bin/*
+**/obj/*
 
 *.suo
 *.pdb
 *.user
 **/packages/*
-
 **/APIdoc/output/*
+
+**/node_modules/*
+**/bower_components/*
+**/.tmp/*

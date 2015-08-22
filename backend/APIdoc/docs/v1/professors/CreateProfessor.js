@@ -1,38 +1,38 @@
 /**
- * @api {post} /v1/students Create a student.
+ * @api {post} /v1/professors Create a professor.
  * @apiVersion 1.0.0
- * @apiName CreateStudent
- * @apiGroup Students
+ * @apiName CreateProfessor
+ * @apiGroup Professors
  * @apiPermission operator
  * @apiUse BaseError
  *
- * @apiDescription Create a student.
+ * @apiDescription Create a professor.
  *
  * @apiExample Example:
- *     POST /students
+ *     POST /professors
  *     {
- *       "student": {
+ *       "professor": {
  *         "email": "ataylor4a@moonfruit.com",
  *         "gender": "Masculino",
  *         "last_name_1": "Lewis",
  *         "last_name_2": "Taylor",
  *         "name": "Arthur",
  *         "phone": "83492144",
- *         "username": "201242273",
+ *         "username": "ataylor",
  *         "password": "..."
  *       },
  *       "access_token":"..."
  *     }
  *
- * @apiParam {Object}						student 				The student data.
- * @apiParam {String}						student.name 			The first name.
- * @apiParam {String}						student.last_name_1		The first last name.
- * @apiParam {String}						[student.last_name_2]	The second last name.
- * @apiParam {String}						student.username		The username.
- * @apiParam {String}						student.password		The password.
- * @apiParam {String="Masculino, Femenino"}	student.gender			The gender.
- * @apiParam {String}						[student.email]			The email address.
- * @apiParam {String}						[student.phone]			The phone number.
+ * @apiParam {Object}						professor 				The student data.
+ * @apiParam {String}						professor.name 			The first name.
+ * @apiParam {String}						professor.last_name_1	The first last name.
+ * @apiParam {String}						[professor.last_name_2]	The second last name.
+ * @apiParam {String}						professor.username		The username.
+ * @apiParam {String}						professor.password		The password.
+ * @apiParam {String="Masculino, Femenino"}	professor.gender		The gender.
+ * @apiParam {String}						[professor.email]		The email address.
+ * @apiParam {String}						[professor.phone]		The phone number.
  * @apiParam {String}						access_token			The access token.
  *
  * @apiSuccess {Number}									id 				The user identification.
@@ -60,7 +60,7 @@
  *       "phone": "83492144",
  *       "state": "Activo",
  *       "updated_at": "/Date(1440097559917-0600)/",
- *       "username": "201242273"
+ *       "username": "ataylor"
  *     }
  *
  * @apiErrorExample {json} Error-Response:

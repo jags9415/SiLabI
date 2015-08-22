@@ -20,7 +20,7 @@ namespace SiLabI.Model
     [DataContract]
     public class User
     {
-        protected int _id;
+        protected int? _id;
         protected string _name;
         protected string _lastname1;
         protected string _lastname2;
@@ -64,13 +64,13 @@ namespace SiLabI.Model
         /// The user identification number.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "id")]
-        public virtual int Id
+        public virtual int? Id
         {
             set
             {
-                if (value < 0)
+                if (!Validator.IsValidId(value))
                 {
-                    throw new InvalidParameterException("id", "Ingrese un número > 0.");
+                    throw new InvalidParameterException("id", "Ingrese un número > 0");
                 }
                 _id = value;
             }
@@ -115,9 +115,9 @@ namespace SiLabI.Model
         {
             set
             {
-                if (value != null && !Regex.IsMatch(value, "^[a-zA-Z0-9]+$"))
+                if (!Validator.IsValidUsername(value))
                 {
-                    throw new InvalidParameterException("username", "Ingrese únicamente caractéres alfanuméricos.");
+                    throw new InvalidParameterException("username", "Ingrese únicamente caractéres alfanuméricos");
                 }
                 _username = value;
             }
@@ -142,22 +142,11 @@ namespace SiLabI.Model
         {
             set
             {
-                if (value != null)
+                if (!Validator.IsValidEmail(value))
                 {
-                    try
-                    {
-                        MailAddress m = new MailAddress(value);
-                        _email = value;
-                    }
-                    catch (FormatException)
-                    {
-                        throw new InvalidParameterException("email");
-                    }
+                    throw new InvalidParameterException("email");
                 }
-                else
-                {
-                    _email = null;
-                }
+                _email = value;
             }
             get { return _email; }
         }
@@ -180,8 +169,7 @@ namespace SiLabI.Model
         {
             set
             {
-                var valid = new[] { "Masculino", "Femenino" };
-                if (value != null && !valid.Any(item => item.Equals(value)))
+                if (!Validator.IsValidGender(value))
                 {
                     throw new InvalidParameterException("gender", "Ingrese 'Masculino' o 'Femenino'");
                 }
@@ -218,10 +206,9 @@ namespace SiLabI.Model
         {
             set
             {
-                var valid = new[] { "active", "disabled", "blocked" };
-                if (value != null && !valid.Any(item => item.Equals(value)))
+                if (!Validator.IsValidUserState(value))
                 {
-                    throw new InvalidParameterException("state", "Ingrese 'active', 'disabled' o 'blocked'.");
+                    throw new InvalidParameterException("state", "Ingrese 'Activo', 'Inactivo' o 'Bloqueado'");
                 }
                 _state = value;
             }
@@ -234,11 +221,11 @@ namespace SiLabI.Model
         [DataMember(EmitDefaultValue = false, Name = "type")]
         public virtual string Type
         {
-            set {
-                var valid = new[] { "student", "professor", "operator", "administrator" };
-                if (value != null && !valid.Any(item => item.Equals(value)))
+            set
+            {
+                if (!Validator.IsValidUserType(value))
                 {
-                    throw new InvalidParameterException("type", "Ingrese 'student', 'professor', 'operator' o 'administrator'.");
+                    throw new InvalidParameterException("type", "Ingrese 'Estudiante', 'Docente', 'Operador' o 'Administrador'");
                 }
                 _type = value;
             }
@@ -258,8 +245,6 @@ namespace SiLabI.Model
             valid &= !string.IsNullOrWhiteSpace(Gender);
             valid &= !string.IsNullOrWhiteSpace(Username);
             valid &= !string.IsNullOrWhiteSpace(Password);
-            if (LastName2 != null) valid &= !string.IsNullOrWhiteSpace(LastName2);
-            if (Phone != null) valid &= !string.IsNullOrWhiteSpace(Phone);
 
             return valid;
         }
@@ -274,9 +259,9 @@ namespace SiLabI.Model
 
             if (Name != null) valid &= !string.IsNullOrWhiteSpace(Name);
             if (LastName1 != null) valid &= !string.IsNullOrWhiteSpace(LastName1);
-            if (LastName2 != null) valid &= !string.IsNullOrWhiteSpace(LastName2);
+            if (Gender != null) valid &= !string.IsNullOrWhiteSpace(Gender);
+            if (Username != null) valid &= !string.IsNullOrWhiteSpace(Username);
             if (Password != null) valid &= !string.IsNullOrWhiteSpace(Password);
-            if (Phone != null) valid &= !string.IsNullOrWhiteSpace(Phone);
 
             return valid;
         }
@@ -289,7 +274,7 @@ namespace SiLabI.Model
         {
             User user = new User();
 
-            user.Id = row.Table.Columns.Contains("id") ? Converter.ToInt32(row["id"]) : 0;
+            user.Id = row.Table.Columns.Contains("id") ? Converter.ToNullableInt32(row["id"]) : null;
             user.Name = row.Table.Columns.Contains("name") ? Converter.ToString(row["name"]) : null;
             user.LastName1 = row.Table.Columns.Contains("last_name_1") ? Converter.ToString(row["last_name_1"]) : null;
             user.LastName2 = row.Table.Columns.Contains("last_name_2") ? Converter.ToString(row["last_name_2"]) : null;

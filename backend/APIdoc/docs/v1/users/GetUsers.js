@@ -33,21 +33,21 @@
  * @apiParam {Number}   [page=1]		The page number.
  * @apiParam {Number}   [limit=20]		The amount of results by page.
  *
- * @apiSuccess {Number}		total_pages				The total amount of pages for this query.
- * @apiSuccess {Number}	  	current_page			The current page number.
- * @apiSuccess {Object[]} 	results 				The list of administrators.
- * @apiSuccess {Number}		results.id 				The user identification.
- * @apiSuccess {String}		results.name 			The first name.
- * @apiSuccess {String}		results.last_name_1		The first last name.
- * @apiSuccess {String}		[results.last_name_2]	The second last name.
- * @apiSuccess {String}		results.username		The username.
- * @apiSuccess {String="Masculino, Femenino"}		results.gender			The gender.
- * @apiSuccess {String}		[results.email]			The email address.
- * @apiSuccess {String}		[results.phone]			The phone number.
- * @apiSuccess {Date}		results.created_at		The creation date.
- * @apiSuccess {Date}		results.updated_at		The last update date.
- * @apiSuccess {String="active, inactive, blocked"}						results.state	The user state.
- * @apiSuccess {String="student, professor, operator, administrator"}	results.type	The user type.
+ * @apiSuccess {Number}														total_pages				The total amount of pages for this query.
+ * @apiSuccess {Number}	  													current_page			The current page number.
+ * @apiSuccess {Object[]} 													results 				The list of administrators.
+ * @apiSuccess {Number}														results.id 				The user identification.
+ * @apiSuccess {String}														results.name 			The first name.
+ * @apiSuccess {String}														results.last_name_1		The first last name.
+ * @apiSuccess {String}														results.last_name_2		The second last name.
+ * @apiSuccess {String}														results.username		The username.
+ * @apiSuccess {String="Masculino, Femenino"}								results.gender			The gender.
+ * @apiSuccess {String}														results.email			The email address.
+ * @apiSuccess {String}														results.phone			The phone number.
+ * @apiSuccess {Date}														results.created_at		The creation date.
+ * @apiSuccess {Date}														results.updated_at		The last update date.
+ * @apiSuccess {String="Activo, Inactivo, Bloqueado"}						results.state			The user state.
+ * @apiSuccess {String="Estudiante, Docente, Operador, Administrador"}		results.type			The user type.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -57,31 +57,31 @@
  *       "results": [
  *           {
  *              "created_at": "/Date(1439325374913-0600)/",
- *              "email": "gjacksonhi@USER_squidoo.com",
- *              "gender": "Male",
+ *              "email": "gjacksonhi@squidoo.com",
+ *              "gender": "Masculino",
  *              "id": 631,
  *              "last_name_1": "Lynch",
  *              "last_name_2": "Jackson",
  *              "name": "Gregory",
  *              "phone": "7-(384)880-7491",
- *              "state": "active",
+ *              "state": "Activo",
  *              "updated_at": "/Date(1439325374913-0600)/",
  *              "username": "gjacksonhi",
- *              "type": "student"
+ *              "type": "Estudiante"
  *           },
  *           {
  *              "created_at": "/Date(1439325374913-0600)/",
- *              "email": "lturnerel@USER_wordpress.org",
- *              "gender": "Female",
+ *              "email": "lturnerel@wordpress.org",
+ *              "gender": "Femenino",
  *              "id": 526,
  *              "last_name_1": "George",
  *              "last_name_2": "Turner",
  *              "name": "Lori",
  *              "phone": "8-(226)006-5947",
- *              "state": "active",
+ *              "state": "Activo",
  *              "updated_at": "/Date(1439325374913-0600)/",
  *              "username": "lturnerel",
- *              "type": "professor"
+ *              "type": "Docente"
  *           }
  *        ]
  *     }

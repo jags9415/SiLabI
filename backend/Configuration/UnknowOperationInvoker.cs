@@ -11,8 +11,11 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Web;
 
-namespace SiLabI
+namespace SiLabI.Configuration
 {
+    /// <summary>
+    /// Handle the HTTP 404 NotFound and send a JSON error message.
+    /// </summary>
     internal class UnknownOperationInvoker : IOperationInvoker
     {
         public object[] AllocateInputs()
@@ -23,7 +26,7 @@ namespace SiLabI
         public object Invoke(object instance, object[] inputs, out object[] outputs)
         {
             // Create message
-            var error = new Error(HttpStatusCode.BadRequest, "Resource not found.");
+            var error = new Error(HttpStatusCode.NotFound, "Resource not found.");
             var fault = Message.CreateMessage(MessageVersion.None, "", error, new DataContractJsonSerializer(typeof(Error)));
 
             // Tell WCF to use JSON encoding rather than default XML
@@ -33,8 +36,8 @@ namespace SiLabI
             // Modify response
             var rmp = new HttpResponseMessageProperty
             {
-                StatusCode = HttpStatusCode.BadRequest,
-                StatusDescription = "BadRequest",
+                StatusCode = HttpStatusCode.NotFound,
+                StatusDescription = "NotFound",
             };
 
             rmp.Headers[HttpResponseHeader.ContentType] = "application/json";

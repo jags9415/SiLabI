@@ -2,8 +2,8 @@ USE [SiLabI];
 SET NOCOUNT ON;
 DECLARE @ADMIN_user_id INT,  @ADMIN_user_state INT, @ADMIN_admin_state INT;
 
-SELECT @ADMIN_user_state = PK_State_Id FROM States WHERE Type = 'USER' AND Name = 'ACTIVE';
-SELECT @ADMIN_admin_state = PK_State_Id FROM States WHERE Type = 'ADMINISTRATOR' AND Name = 'ACTIVE';
+SELECT @ADMIN_user_state = PK_State_Id FROM States WHERE Type = 'USER' AND Name = 'Activo';
+SELECT @ADMIN_admin_state = PK_State_Id FROM States WHERE Type = 'ADMINISTRATOR' AND Name = 'Activo';
 
 INSERT INTO Users (Name, Last_Name_1, Gender, Username, Password, FK_State_Id) VALUES
 ('admin', 'admin', 'Masculino', 'admin', 'password', @ADMIN_user_state);

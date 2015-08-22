@@ -1,7 +1,7 @@
 USE [SiLabI];
 SET NOCOUNT ON;
 DECLARE @LAB_laboratory_state INT;
-SELECT @LAB_laboratory_state = PK_State_Id FROM States WHERE Type = 'LABORATORY' AND Name = 'ACTIVE';
+SELECT @LAB_laboratory_state = PK_State_Id FROM States WHERE Type = 'LABORATORY' AND Name = 'Activo';
 
 SET IDENTITY_INSERT Laboratories ON;
 

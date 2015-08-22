@@ -1,7 +1,7 @@
 USE [SiLabI];
 SET NOCOUNT ON;
 DECLARE @USER_user_state INT;
-SELECT @USER_user_state = PK_State_Id FROM States WHERE Type = 'USER' AND Name = 'ACTIVE';
+SELECT @USER_user_state = PK_State_Id FROM States WHERE Type = 'USER' AND Name = 'Activo';
 
 SET IDENTITY_INSERT Users ON;
 

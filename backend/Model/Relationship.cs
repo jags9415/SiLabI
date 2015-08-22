@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SiLabI.Util
+namespace SiLabI.Model
 {
     /// <summary>
     /// Defines comparation operators or relationships.

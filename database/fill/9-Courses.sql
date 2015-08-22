@@ -1,7 +1,7 @@
 USE [SiLabI];
 SET NOCOUNT ON;
 DECLARE @COURSE_course_state INT;
-SELECT @COURSE_course_state = PK_State_Id FROM States WHERE Type = 'COURSE' AND Name = 'ACTIVE';
+SELECT @COURSE_course_state = PK_State_Id FROM States WHERE Type = 'COURSE' AND Name = 'Activo';
 
 SET IDENTITY_INSERT Courses ON;
 

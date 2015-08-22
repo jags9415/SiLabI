@@ -1,4 +1,5 @@
-﻿using SiLabI.Model.Query;
+﻿using SiLabI.Model;
+using SiLabI.Model.Query;
 using SiLabI.Util;
 using System;
 using System.Collections.Generic;

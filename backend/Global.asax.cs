@@ -14,12 +14,7 @@ namespace SiLabI
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            RegisterRoutes(RouteTable.Routes);
-        }
-
-        private void RegisterRoutes(RouteCollection routes)
-        {
-            routes.Add(new ServiceRoute("", new WebServiceHostFactory(), typeof(SiLabI.Service)));
+            RouteTable.Routes.Add(new ServiceRoute("", new WebServiceHostFactory(), typeof(SiLabI.Service)));
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

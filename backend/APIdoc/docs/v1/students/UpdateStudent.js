@@ -1,39 +1,36 @@
 /**
- * @api {post} /v1/students Create a student.
+ * @api {put} /v1/students/:id Update a student.
  * @apiVersion 1.0.0
- * @apiName CreateStudent
+ * @apiName UpdateStudent
  * @apiGroup Students
  * @apiPermission operator
  * @apiUse BaseError
  *
- * @apiDescription Create a student.
+ * @apiDescription Update a student.
  *
  * @apiExample Example:
- *     POST /students
+ *     PUT /students/402
  *     {
  *       "student": {
  *         "email": "ataylor4a@moonfruit.com",
- *         "gender": "Masculino",
  *         "last_name_1": "Lewis",
  *         "last_name_2": "Taylor",
- *         "name": "Arthur",
- *         "phone": "83492144",
- *         "username": "201242273",
- *         "password": "..."
+ *         "phone": "83492144"
  *       },
  *       "access_token":"..."
  *     }
  *
- * @apiParam {Object}						student 				The student data.
- * @apiParam {String}						student.name 			The first name.
- * @apiParam {String}						student.last_name_1		The first last name.
- * @apiParam {String}						[student.last_name_2]	The second last name.
- * @apiParam {String}						student.username		The username.
- * @apiParam {String}						student.password		The password.
- * @apiParam {String="Masculino, Femenino"}	student.gender			The gender.
- * @apiParam {String}						[student.email]			The email address.
- * @apiParam {String}						[student.phone]			The phone number.
- * @apiParam {String}						access_token			The access token.
+ * @apiParam {Object}								student 				The student data.
+ * @apiParam {String}								[student.name] 			The first name.
+ * @apiParam {String}								[student.last_name_1]	The first last name.
+ * @apiParam {String}								[student.last_name_2]	The second last name.
+ * @apiParam {String}								[student.username]		The username.
+ * @apiParam {String}								[student.password]		The password.
+ * @apiParam {String="Masculino, Femenino"}			[student.gender]		The gender.
+ * @apiParam {String}								[student.email]			The email address.
+ * @apiParam {String}								[student.phone]			The phone number.
+ * @apiParam {String="Activo, Inactivo, Bloqueado"}	[student.state]			The user state.
+ * @apiParam {String}								access_token			The access token.
  *
  * @apiSuccess {Number}									id 				The user identification.
  * @apiSuccess {String}									name 			The first name.

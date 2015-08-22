@@ -21,6 +21,16 @@ namespace SiLabI.Util
         }
 
         /// <summary>
+        /// Cast an object to an integer.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>The integer.</returns>
+        public static Int32? ToNullableInt32(object obj)
+        {
+            return Converter.ToInt32(obj);
+        }
+
+        /// <summary>
         /// Cast an object to a datetime.
         /// </summary>
         /// <param name="obj">The object.</param>
@@ -42,7 +52,7 @@ namespace SiLabI.Util
         /// <returns>The string.</returns>
         public static string ToString(object obj)
         {
-            return string.IsNullOrEmpty(obj as string) ? null : Convert.ToString(obj);
+            return string.IsNullOrEmpty(obj as string) ? string.Empty : Convert.ToString(obj);
         }
     }
 }

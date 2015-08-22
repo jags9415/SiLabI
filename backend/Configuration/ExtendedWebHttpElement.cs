@@ -6,7 +6,7 @@ using System.ServiceModel.Configuration;
 using System.ServiceModel.Web;
 using System.Web;
 
-namespace SiLabI
+namespace SiLabI.Configuration
 {
     /// <summary>
     /// Enables the ExtendedWebHttpBehavior for an endpoint through configuration.

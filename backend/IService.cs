@@ -128,5 +128,50 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete a student.")]
         void DeleteStudent(string id, BaseRequest request);
+
+        /*
+         * PROFESSORS ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/professors/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of professors.")]
+        GetResponse<User> GetProfessors(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/professors/{id}/?access_token={token}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a professor.")]
+        User GetProfessor(string id, string token);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/professors/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create a professor.")]
+        User CreateProfessor(ProfessorRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/professors/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update a professor.")]
+        User UpdateProfessor(string id, ProfessorRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/professors/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a professor.")]
+        void DeleteProfessor(string id, BaseRequest request);
     }
 }

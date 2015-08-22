@@ -42,7 +42,7 @@ namespace SiLabI.Controllers
             if (!request.Query.Exists(element => element.Alias == "state"))
             {
                 Field field = new Field("States", "Name", "state", SqlDbType.VarChar);
-                request.Query.Add(new QueryField(field, Relationship.EQ, "active"));
+                request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
             GetResponse<User> response = new GetResponse<User>();

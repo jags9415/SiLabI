@@ -6,36 +6,33 @@ using SiLabI.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.ServiceModel.Web;
-using System.Text.RegularExpressions;
 using System.Web;
 
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// Student logic.
+    /// Professor logic.
     /// </summary>
-    public class StudentController
+    public class ProfessorController
     {
-        private StudentDataAccess _StudentDA;
+        private ProfessorDataAccess _ProfessorDA;
 
         /// <summary>
-        /// Create a StudentController.
+        /// Create a ProfessorController.
         /// </summary>
-        public StudentController()
+        public ProfessorController()
         {
-            this._StudentDA = new StudentDataAccess();
+            this._ProfessorDA = new ProfessorDataAccess();
         }
 
         /// <summary>
-        /// Retrieves a list of students based on a query.
+        /// Retrieves a list of professors based on a query.
         /// </summary>
         /// <param name="request">The query.</param>
-        /// <returns>The list of students.</returns>
-        public GetResponse<Student> GetStudents(QueryString request)
+        /// <returns>The list of professors.</returns>
+        public GetResponse<User> GetProfessors(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
@@ -46,13 +43,13 @@ namespace SiLabI.Controllers
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
-            GetResponse<Student> response = new GetResponse<Student>();
-            DataTable table = _StudentDA.GetStudents(request);
-            int count = _StudentDA.GetStudentsCount(request);
+            GetResponse<User> response = new GetResponse<User>();
+            DataTable table = _ProfessorDA.GetProfessors(request);
+            int count = _ProfessorDA.GetProfessorsCount(request);
 
             foreach (DataRow row in table.Rows)
             {
-                response.Results.Add(Student.Parse(row));
+                response.Results.Add(User.Parse(row));
             }
 
             response.CurrentPage = request.Page;
@@ -62,31 +59,31 @@ namespace SiLabI.Controllers
         }
 
         /// <summary>
-        /// Get a student.
+        /// Get a professor.
         /// </summary>
         /// <param name="id">The user identification.</param>
         /// <param name="token">The access token.</param>
-        /// <returns>The student.</returns>
-        public Student GetStudent(int id, string token)
+        /// <returns>The professor.</returns>
+        public User GetProfessor(int id, string token)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _StudentDA.GetStudent(id);
+            DataTable table = _ProfessorDA.GetProfessor(id);
 
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "El identificador ingresado no corresponde a un estudiante");
+                throw new WcfException(HttpStatusCode.BadRequest, "El identificador ingresado no corresponde a un docente");
             }
 
-            return Student.Parse(table.Rows[0]);
+            return User.Parse(table.Rows[0]);
         }
 
         /// <summary>
-        /// Creates a student.
+        /// Creates a professor.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns>The student data.</returns>
-        public Student CreateStudent(StudentRequest request)
+        /// <returns>The professor data.</returns>
+        public User CreateProfessor(ProfessorRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -96,22 +93,22 @@ namespace SiLabI.Controllers
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Student.IsValidForCreate())
+            if (!request.Professor.IsValidForCreate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de estudiante incompletos.");
+                throw new WcfException(HttpStatusCode.BadRequest, "Datos de docente incompletos.");
             }
 
-            DataTable table = _StudentDA.CreateStudent(request.Student);
-            return Student.Parse(table.Rows[0]);
+            DataTable table = _ProfessorDA.CreateProfessor(request.Professor);
+            return User.Parse(table.Rows[0]);
         }
 
         /// <summary>
-        /// Update a student.
+        /// Update a professor.
         /// </summary>
-        /// <param name="id">The student id.</param>
+        /// <param name="id">The professor id.</param>
         /// <param name="request">The request.</param>
-        /// <returns>The student data.</returns>
-        public Student UpdateStudent(int id, StudentRequest request)
+        /// <returns>The professor data.</returns>
+        public User UpdateProfessor(int id, ProfessorRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -121,21 +118,21 @@ namespace SiLabI.Controllers
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Student.IsValidForUpdate())
+            if (!request.Professor.IsValidForUpdate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de estudiante inválidos.");
+                throw new WcfException(HttpStatusCode.BadRequest, "Datos de docente inválidos.");
             }
 
-           DataTable table = _StudentDA.UpdateStudent(id, request.Student);
-           return Student.Parse(table.Rows[0]);
+            DataTable table = _ProfessorDA.UpdateProfessor(id, request.Professor);
+            return User.Parse(table.Rows[0]);
         }
 
         /// <summary>
-        /// Delete a student.
+        /// Delete a professor.
         /// </summary>
         /// <param name="id">The user identification.</param>
         /// <param name="request">The request.</param>
-        public void DeleteStudent(int id, BaseRequest request)
+        public void DeleteProfessor(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -144,7 +141,7 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            _StudentDA.DeleteStudent(id);
+            _ProfessorDA.DeleteProfessor(id);
         }
     }
 }

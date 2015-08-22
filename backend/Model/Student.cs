@@ -33,9 +33,9 @@ namespace SiLabI.Model
         {
             set
             {
-                if (value != null && !Regex.IsMatch(value, "^[0-9]+$"))
+                if (!string.IsNullOrWhiteSpace(value) && !Regex.IsMatch(value, "^[0-9]+$"))
                 {
-                    throw new InvalidParameterException("username", "Ingrese únicamente caractéres numéricos.");
+                    throw new InvalidParameterException("username", "Ingrese únicamente caractéres numéricos");
                 }
                 _username = value;
             }
