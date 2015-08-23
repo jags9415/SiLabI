@@ -1,0 +1,51 @@
+<div id="wrapper">
+
+  <!-- SideBar directive -->
+  <default-sidebar></default-sidebar>
+
+  <!-- Page content -->
+  <div id="page-content-wrapper">
+    <h1>Administradores</h1>
+    <br>
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-model="searchText">
+        </div>
+        <div class="col-sm-6">
+          
+          <select class="form-control" id="orderSel">
+            <option selected>Ordenar Por</option>
+            <option value="name">Nombre</option>
+            <option value="last_name_1">Apellido1</option>
+            <option value="last_name_2">Apellido2</option>
+            <option value="period">Periodo</option>
+          </select>
+        </div>
+      </div>
+      <br><br>
+      <table class="table table-bordered" id="adminsTable">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Primer Apellido</th>
+            <th>Segundo Apellido</th>
+            <th>Correo</th>
+            <th>Estado</th>
+            <th>Periodo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="admin in adminsArray | filter:searchText" id="{{admin.id}}">
+            <td>{{admin.name}}</td>
+            <td>{{admin.last_name_1}}</td>
+            <td>{{admin.last_name_2}}</td>
+            <td>{{admin.email}}</td>
+            <td>{{admin.state}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
