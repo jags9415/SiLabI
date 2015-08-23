@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['LoginService'];
+    LoginController.$inject = ['LoginService', '$location'];
 
-    function LoginController(LoginService) {
+    function LoginController(LoginService, $location) {
       var vm = this;
       vm.username;
       vm.password;
@@ -28,17 +28,25 @@
 
       function getUserInfo(result) {
         vm.user = result.user;
-        alert('Bienvenido ' + vm.user.name + '!');
+        redirectTo(vm.user.type);
         return vm.user;
+      }
+
+      function redirectTo(userTypeUrl) {
+        $location.path('/Inicio/' + userTypeUrl);
       }
 
       function handleErrorInfo(error) {
         vm.requestHasError = true;
+        showError(error);
+        vm.requestHasError = false;
+      }
+
+      function showError(error) {
         if (error.status === 404)
           alert("No se pudo conectar con el servidor");
         else
           alert(error.data.description);
-        vm.requestHasError = false;
       }
 
     }

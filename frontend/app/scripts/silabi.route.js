@@ -14,33 +14,32 @@
           controller: 'LoginController',
           controllerAs: 'Login'
         })
+        // FIXME: Acerca instead of about
         .when('/about', {
           templateUrl: 'scripts/about/about.html',
           controller: 'AboutController',
           controllerAs: 'About'
         })
-        .when('/administrators/home', {
+        .when('/Inicio/administrador', {
           templateUrl: 'scripts/administrators/adminsHome.html',
           controller: 'AdminController',
           controllerAs: 'AdminHome'
         })
-        .when('/operators/home', {
+        .when('/Inicio/Operador', {
           templateUrl: 'scripts/operators/operatorsHome.html',
           controller: 'OperatorsController',
           controllerAs: 'OperatorsHome'
         })
-        .when('/students/home', {
+        .when('/Inicio/Estudiante', {
           templateUrl: 'scripts/students/studentsHome.html',
           controller: 'StudentsController',
           controllerAs: 'StudentsHome'
         })
-        .when('/professors/home', {
+        .when('/Inicio/Docente', {
           templateUrl: 'scripts/professors/professorsHome.html',
           controller: 'ProfessorsController',
           controllerAs: 'ProfessorsHome'
         })
-        .otherwise({
-          templateUrl: '404.html'
-        });
+        .otherwise('/');
     }
 })();
