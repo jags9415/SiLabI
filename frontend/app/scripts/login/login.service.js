@@ -9,8 +9,19 @@
 
     function LoginService($http, apiUrl) {
         var LoginDataService = {
+          getUser: getUser
         };
 
         return LoginDataService;
+
+        function getUser(username, password) {
+          return $http.post(apiUrl + '/authenticate' , {
+            'username': username,
+            'password': password
+          })
+          .then(function(response) {
+            return response.data;
+          });
+        }
     }
 })();

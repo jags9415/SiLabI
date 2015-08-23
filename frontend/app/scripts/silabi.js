@@ -12,5 +12,5 @@
           'silabi.navbar',
           'silabi.sidebar',
         ])
-        .constant('API_URL','http://localhost/api/v1/');
+        .constant('API_URL','http://localhost/api/v1');
 })();
