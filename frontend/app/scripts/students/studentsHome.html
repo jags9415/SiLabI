@@ -1,0 +1,63 @@
+<div id="wrapper">
+
+  <!-- SideBar directive -->
+  <default-sidebar></default-sidebar>
+
+  <!-- Page content -->
+  <div id="page-content-wrapper">
+    <div class="container">
+      <h1>Citas</h1>
+      <br>
+      <br>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-model="searchText">
+          </div>
+          <div class="col-sm-6">
+            <select class="form-control" id="orderSel">
+              <option selected>Ordenar Por</option>
+              <option value="date" ng-model="orderCriteria">Hora</option>
+              <option value="course" ng-model="orderCriteria">Curso</option>
+              <option value="lab" ng-model="orderCriteria">Laboratorio</option>
+              <option value="software" ng-model="orderCriteria">Software</option>
+            </select>
+          </div>
+        </div>
+        <br><br>
+        <table class="table table-bordered" id="appointmentsTable">
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Curso</th>
+              <th>Laboratorio</th>
+              <th>Software</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="app in appsArray | filter:searchText | orderBy:orderCriteria" id="{{app.id}}">
+              <td>{{app.date}}</td>
+              <td>{{app.course}}</td>
+              <td>{{app.lab}}</td>
+              <td>{{app.software}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <br><br>
+        <div class="row">
+          <div class="form-inline">
+            <div class="col-sm-4">
+              <button type="button" class="btn btn-primary center-block" ng-click="loadPage(-1)"><</button>
+            </div>
+            <div class="col-sm-2">
+              <label>Página {{pageNumber}}</label>
+            </div>
+            <div class="col-sm-4">
+              <button type="button" class="btn btn-primary center-block" ng-click="loadPage(1)">></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
