@@ -5,9 +5,12 @@
         .module('silabi')
         .controller('LoginController', LoginController);
 
-    function LoginController() {
+    LoginController.$inject = ['LoginService'];
+
+    function LoginController(LoginService) {
       var vm = this;
       vm.email;
       vm.password;
+
     }
 })();
