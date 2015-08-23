@@ -14,13 +14,12 @@
           <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-model="searchText">
         </div>
         <div class="col-sm-6">
-          
           <select class="form-control" id="orderSel">
             <option selected>Ordenar Por</option>
-            <option value="name">Nombre</option>
-            <option value="last_name_1">Apellido1</option>
-            <option value="last_name_2">Apellido2</option>
-            <option value="period">Periodo</option>
+            <option value="name" ng-model="orderCriteria">Nombre</option>
+            <option value="last_name_1" ng-model="orderCriteria">Apellido1</option>
+            <option value="last_name_2" ng-model="orderCriteria">Apellido2</option>
+            <option value="period" ng-model="orderCriteria">Periodo</option>
           </select>
         </div>
       </div>
@@ -37,7 +36,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="admin in adminsArray | filter:searchText" id="{{admin.id}}">
+          <tr ng-repeat="admin in adminsArray | filter:searchText | orderBy:orderCriteria" id="{{admin.id}}">
             <td>{{admin.name}}</td>
             <td>{{admin.last_name_1}}</td>
             <td>{{admin.last_name_2}}</td>
@@ -46,6 +45,20 @@
           </tr>
         </tbody>
       </table>
+      <br><br>
+      <div class="row">
+        <div class="form-inline">
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-primary center-block" ng-click="loadPage(-1)"><</button>
+          </div>
+          <div class="col-sm-2">
+            <label>Página {{pageNumber}}</label>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-primary center-block" ng-click="loadPage(1)">></button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
