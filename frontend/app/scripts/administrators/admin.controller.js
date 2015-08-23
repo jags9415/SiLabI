@@ -15,29 +15,33 @@
 
     	 function loadPage(number)
     	{
-    		var pnumber = $scope.pageNumber + number;
-    		if(pnumber > 0 && pnumber <= $scope.toalPages)
+    		if(typeof(sessionStorage) == 'undefined')
     		{
-	    		AdminService.getAdmins($scope.pageNumber + number, "a"/*access_token*/ ).
-	    		then(function(response)
-			        {
-						$scope.adminsArray = response.results;
-						$scope.pageNumber = pnumber;
-						$scope.toalPages = response.total_pages;
-					},
-					function(error)
-			        {
-						LoggerService.logError(error);
-					}
-				);
-	    	}
+    			var access_token = sessionStorage.getItem('access_token');
+	    		var pnumber = $scope.pageNumber + number;
+	    		if(pnumber > 0 && pnumber <= $scope.totalPages)
+	    		{
+		    		AdminService.getAdmins($scope.pageNumber + number, "a"/*access_token*/ ).
+		    		then(function(response)
+				        {
+							$scope.adminsArray = response.results;
+							$scope.pageNumber = pnumber;
+							$scope.totalPages = response.total_pages;
+						},
+						function(error)
+				        {
+							
+						}
+					);
+		    	}
+		    }
     	};
 
     	function init()
     	{
     		$scope.adminsArray = [];
     		$scope.pageNumber = 0;
-    		$scope.toalPages = 1;
+    		$scope.totalPages = 1;
     	}
     }
 })();

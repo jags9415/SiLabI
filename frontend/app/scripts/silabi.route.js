@@ -24,6 +24,11 @@
           controller: 'AdminController',
           controllerAs: 'AdminHome'
         })
+        .when('/operators', {
+          templateUrl: 'scripts/operators/operatorsHome.html',
+          controller: 'OperatorsController',
+          controllerAs: 'OperatorsHome'
+        })
         .otherwise({
           templateUrl: '404.html'
         });
