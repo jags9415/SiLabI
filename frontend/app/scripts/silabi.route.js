@@ -14,7 +14,7 @@
           controller: 'LoginController',
           controllerAs: 'Login'
         })
-        // FIXME: Acerca instead of about
+        // FIXME: 'Acerca' instead of 'about'
         .when('/about', {
           templateUrl: 'scripts/about/about.html',
           controller: 'AboutController',

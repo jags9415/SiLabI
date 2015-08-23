@@ -28,6 +28,7 @@
 
       function getUserInfo(result) {
         vm.user = result.user;
+        sessionStorage.setItem('access_token', result.access_token);
         redirectTo(vm.user.type);
         return vm.user;
       }
