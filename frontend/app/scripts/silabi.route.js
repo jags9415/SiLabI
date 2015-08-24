@@ -20,7 +20,7 @@
           controller: 'AboutController',
           controllerAs: 'About'
         })
-        .when('/Inicio/administrador', {
+        .when('/Inicio/Administrador', {
           templateUrl: 'scripts/administrators/adminsHome.html',
           controller: 'AdminController',
           controllerAs: 'AdminHome'
