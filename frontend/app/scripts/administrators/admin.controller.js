@@ -41,7 +41,7 @@
     		$scope.adminsArray = [];
     		$scope.pageNumber = 0;
     		$scope.totalPages = 1;
-            var name = "NOT DEFINED";
+            var name = "undefined";
             var accessToken = -1;
             if(typeof(sessionStorage) != 'undefined' && sessionStorage.getItem('access_token') != null)
             {

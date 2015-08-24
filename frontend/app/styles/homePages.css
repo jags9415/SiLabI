@@ -16,8 +16,9 @@
 {
 	text-align: center;
 	margin: auto;
-    width: 70%;
+    width: 80%;
     color: red;
     font-size: 18pt;
     font-variant: bold;
+    padding-right: 20%;
 }

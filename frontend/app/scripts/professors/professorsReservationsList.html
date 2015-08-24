@@ -6,7 +6,7 @@
   <!-- Page content -->
   <div id="page-content-wrapper">
     <div class="container">
-      <h1>Citas Actuales</h1>
+      <h1>Reservaciones</h1>
       <br>
       <br>
       <div class="container">
@@ -17,7 +17,6 @@
           <div class="col-sm-6">
             <select class="form-control" id="orderSel">
               <option selected>Ordenar Por</option>
-              <option value="cardId" ng-model="orderCriteria">Carné</option>
               <option value="date" ng-model="orderCriteria">Hora</option>
               <option value="course" ng-model="orderCriteria">Curso</option>
               <option value="lab" ng-model="orderCriteria">Laboratorio</option>
@@ -29,7 +28,6 @@
         <table class="table table-bordered" id="appointmentsTable">
           <thead>
             <tr>
-              <th>Carné</th>
               <th>Hora</th>
               <th>Curso</th>
               <th>Laboratorio</th>
@@ -37,12 +35,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="app in appsArray | filter:searchText | orderBy:orderCriteria" id="{{app.id}}">
-              <td>{{app.cardId}}</td>
-              <td>{{app.date}}</td>
-              <td>{{app.course}}</td>
-              <td>{{app.lab}}</td>
-              <td>{{app.software}}</td>
+            <tr ng-repeat="res in reservationsArray | filter:searchText | orderBy:orderCriteria" id="{{res.id}}">
+              <td>{{res.date}}</td>
+              <td>{{res.course}}</td>
+              <td>{{res.lab}}</td>
+              <td>{{res.software}}</td>
             </tr>
           </tbody>
         </table>

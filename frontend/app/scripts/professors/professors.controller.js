@@ -51,6 +51,18 @@
             ];
     		$scope.pageNumber = 1;
     		$scope.totalPages = 1;
+            var name = "undefined";
+            var accessToken = -1;
+            if(typeof(sessionStorage) != 'undefined' && sessionStorage.getItem('access_token') != null)
+            {
+                accessToken = sessionStorage.getItem('access_token');
+                if(sessionStorage.getItem('user_name') != null)
+                {
+                    name = sessionStorage.getItem('user_name');
+                }
+            }
+            $scope.user_name = name;
+            $scope.access_token = accessToken;
     	}
     }
 })();
