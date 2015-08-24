@@ -28,7 +28,13 @@
 
       function getUserInfo(result) {
         vm.user = result.user;
+        var fullName = '';
+        fullName += vm.user.name + ' ' || '';
+        fullName += vm.user.last_name_1 + ' ' || '';
+        fullName += vm.user.last_name_2 || '';
         sessionStorage.setItem('access_token', result.access_token);
+        sessionStorage.setItem('user_id', vm.user.id.toString());
+        sessionStorage.setItem('user_name', fullName);
         redirectTo(vm.user.type);
         return vm.user;
       }
