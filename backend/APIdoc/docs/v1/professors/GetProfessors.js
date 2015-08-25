@@ -40,6 +40,7 @@
  * @apiSuccess {String}									results.name 			The first name.
  * @apiSuccess {String}									results.last_name_1		The first last name.
  * @apiSuccess {String}									results.last_name_2		The second last name.
+ * @apiSuccess {String}									results.full_name		The full name.
  * @apiSuccess {String}									results.username		The username.
  * @apiSuccess {String="Masculino, Femenino"}			results.gender			The gender.
  * @apiSuccess {String}									results.email			The email address.
@@ -62,6 +63,7 @@
  *              "last_name_1": "Lynch",
  *              "last_name_2": "Jackson",
  *              "name": "Gregory",
+ *              "full_name": "Gregory Lynch Jackson",
  *              "phone": "7-(384)880-7491",
  *              "state": "Activo",
  *              "updated_at": "/Date(1439325374913-0600)/",
@@ -75,6 +77,7 @@
  *              "last_name_1": "George",
  *              "last_name_2": "Turner",
  *              "name": "Lori",
+ *              "full_name": "Lori George Turner",
  *              "phone": "8-(226)006-5947",
  *              "state": "Activo",
  *              "updated_at": "/Date(1439325374913-0600)/",

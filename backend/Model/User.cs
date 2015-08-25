@@ -24,6 +24,7 @@ namespace SiLabI.Model
         protected string _name;
         protected string _lastname1;
         protected string _lastname2;
+        protected string _fullname;
         protected string _username;
         protected string _password;
         protected string _gender;
@@ -49,6 +50,7 @@ namespace SiLabI.Model
             this.Name = user.Name;
             this.LastName1 = user.LastName1;
             this.LastName2 = user.LastName2;
+            this.FullName = user.FullName;
             this.Gender = user.Gender;
             this.Username = user.Username;
             this.Password = user.Password;
@@ -105,6 +107,16 @@ namespace SiLabI.Model
         {
             set { _lastname2 = value; }
             get { return _lastname2; }
+        }
+
+        /// <summary>
+        /// The full name.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "full_name")]
+        public virtual string FullName
+        {
+            set { _fullname = value; }
+            get { return _fullname; }
         }
 
         /// <summary>
@@ -278,6 +290,7 @@ namespace SiLabI.Model
             user.Name = row.Table.Columns.Contains("name") ? Converter.ToString(row["name"]) : null;
             user.LastName1 = row.Table.Columns.Contains("last_name_1") ? Converter.ToString(row["last_name_1"]) : null;
             user.LastName2 = row.Table.Columns.Contains("last_name_2") ? Converter.ToString(row["last_name_2"]) : null;
+            user.FullName = row.Table.Columns.Contains("full_name") ? Converter.ToString(row["full_name"]) : null;
             user.Gender = row.Table.Columns.Contains("gender") ? Converter.ToString(row["gender"]) : null;
             user.Email = row.Table.Columns.Contains("email") ? Converter.ToString(row["email"]) : null;
             user.Phone = row.Table.Columns.Contains("phone") ? Converter.ToString(row["phone"]) : null;

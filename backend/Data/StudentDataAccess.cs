@@ -70,12 +70,12 @@ namespace SiLabI.Data
         /// <summary>
         /// Get a specific student.
         /// </summary>
-        /// <param name="id">The user identification.</param>
+        /// <param name="username">The username.</param>
         /// <returns>A DataTable that contains the student data.</returns>
-        public DataTable GetStudent(int id)
+        public DataTable GetStudent(string username)
         {
             SqlParameter[] parameters = new SqlParameter[1];
-            parameters[0] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, id);
+            parameters[0] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
             return _Connection.executeStoredProcedure("sp_GetStudent", parameters);
         }
 

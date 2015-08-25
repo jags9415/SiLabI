@@ -16,6 +16,7 @@
  * @apiSuccess {String}													user.name 			The first name.
  * @apiSuccess {String}													user.last_name_1	The first last name.
  * @apiSuccess {String}													user.last_name_2	The second last name.
+ * @apiSuccess {String}													user.full_name		The full name.
  * @apiSuccess {String}													user.username		The username.
  * @apiSuccess {String="Masculino, Femenino"}							user.gender			The gender.
  * @apiSuccess {String}													user.email			The email address.
@@ -41,6 +42,7 @@
  *         "name": "Eric",
  *         "last_name_1": "Andrews",
  *         "last_name_2": "Murray",
+ *         "full_name": "Eric Andrews Murray",
  *         "username": "emurray1"
  *         "gender": "Masculino",
  *         "email": "emurray1@buzzfeed.com",

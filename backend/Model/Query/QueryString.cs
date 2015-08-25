@@ -75,10 +75,10 @@ namespace SiLabI.Model.Query
 
                foreach (var item in splitted)
                {
-                   Field field = ValidFields.Find(element => element.Alias == item);
+                   Field field = ValidFields.Find(element => element.Name == item);
                    if (field == null)
                    {
-                       throw new InvalidParameterException("field", string.Format("[{0}].", item));
+                       throw new InvalidParameterException("field", string.Format("[{0}]", item));
                    }
                    result.Add(field);
                }
@@ -113,10 +113,10 @@ namespace SiLabI.Model.Query
                         name = str;
                     }
 
-                    Field field = ValidFields.Find(element => element.Alias == name);
+                    Field field = ValidFields.Find(element => element.Name == name);
                     if (field == null)
                     {
-                        throw new InvalidParameterException("sort", string.Format("[{0}].", str));
+                        throw new InvalidParameterException("sort", string.Format("[{0}]", str));
                     }
                     result.Add(new SortField(field, order));
                 }
@@ -143,7 +143,7 @@ namespace SiLabI.Model.Query
 
                     if (!field.HasValidValue())
                     {
-                        throw new InvalidParameterException("q", string.Format("[{0}].", str));
+                        throw new InvalidParameterException("q", string.Format("[{0}]", str));
                     }
 
                     result.Add(field);
@@ -164,7 +164,7 @@ namespace SiLabI.Model.Query
 
             if (splitted.Length != 3)
             {
-                throw new InvalidParameterException("q", string.Format("[{0}].", str));
+                throw new InvalidParameterException("q", string.Format("[{0}]", str));
             }
 
             string key = splitted[0];
@@ -174,13 +174,13 @@ namespace SiLabI.Model.Query
             Relationship relationship;
             if (!RelationshipUtils.TryParse(operation, out relationship))
             {
-                throw new InvalidParameterException("q", string.Format("Relación inválida: {0}.", operation));
+                throw new InvalidParameterException("q", string.Format("Relación inválida: {0}", operation));
             }
 
-            Field field = ValidFields.Find(element => element.Alias == key);
+            Field field = ValidFields.Find(element => element.Name == key);
             if (field == null)
             {
-                throw new InvalidParameterException("q", string.Format("Campo inválido: {0}.", key));
+                throw new InvalidParameterException("q", string.Format("Campo inválido: {0}", key));
             }
             return new QueryField(field, relationship, value);
         }

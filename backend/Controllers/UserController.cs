@@ -39,9 +39,10 @@ namespace SiLabI.Controllers
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Query.Exists(element => element.Alias == "state"))
+            // By default search only active users.
+            if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("States", "Name", "state", SqlDbType.VarChar);
+                Field field = new Field("state", SqlDbType.VarChar);
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -74,7 +75,7 @@ namespace SiLabI.Controllers
 
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "El username ingresado no corresponde a un usuario");
+                throw new WcfException(HttpStatusCode.BadRequest, "Usuario no encontrado");
             }
 
             return User.Parse(table.Rows[0]);

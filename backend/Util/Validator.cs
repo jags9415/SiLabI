@@ -68,7 +68,7 @@ namespace SiLabI.Util
         /// <summary>
         /// Validate an user type.
         /// </summary>
-        /// <param name="type">The type.</param>
+        /// <param name="period">The type.</param>
         /// <returns>True if the input is valid.</returns>
         public static bool IsValidUserType(string type)
         {
@@ -94,6 +94,17 @@ namespace SiLabI.Util
         public static bool IsValidStudentUsername(string username)
         {
             return username == null || Regex.IsMatch(username, "^[0-9]+$");
+        }
+
+        /// <summary>
+        /// Validate a period name.
+        /// </summary>
+        /// <param name="period">The period name.</param>
+        /// <returns>True if the input is valid.</returns>
+        public static bool IsValidPeriod(string period)
+        {
+            var valid = new[] { "Bimestre", "Trimestre", "Cuatrimestre", "Semestre" };
+            return period != null && valid.Any(item => item.Equals(period, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
