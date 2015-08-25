@@ -12,6 +12,12 @@ body {
   font-size: 14pt; 
 }
 
+th
+{
+  text-align: center;
+
+}
+
 .title
 {
   font-family: @import url(http://fonts.googleapis.com/css?family=Lato:700);
@@ -77,6 +83,7 @@ body {
   padding-bottom: 1%;
   position: fixed;
   background-color: rgb(0, 45, 86);
+  z-index: 1000;
 }
 
 .silabiFooter

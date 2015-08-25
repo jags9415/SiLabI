@@ -23,22 +23,27 @@
         .when('/Inicio/Administrador', {
           templateUrl: 'scripts/administrators/adminsHome.html',
           controller: 'AdminController',
-          controllerAs: 'AdminHome'
+          controllerAs: 'Admin'
         })
         .when('/Inicio/Operador', {
           templateUrl: 'scripts/operators/operatorsHome.html',
           controller: 'OperatorsController',
           controllerAs: 'OperatorsHome'
         })
+        .when('/Operador/Docentes', {
+          templateUrl: 'scripts/professors/professorsList.html',
+          controller: 'OperatorsController',
+          controllerAs: 'Operator'
+        })
         .when('/Inicio/Estudiante', {
           templateUrl: 'scripts/students/studentsHome.html',
           controller: 'StudentsController',
-          controllerAs: 'StudentsHome'
+          controllerAs: 'Students'
         })
         .when('/Inicio/Docente', {
           templateUrl: 'scripts/professors/professorsHome.html',
           controller: 'ProfessorsController',
-          controllerAs: 'ProfessorsHome'
+          controllerAs: 'Professors'
         })
         .otherwise('/');
     }

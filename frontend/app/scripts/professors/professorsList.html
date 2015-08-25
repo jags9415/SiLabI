@@ -1,0 +1,65 @@
+<div id="wrapper">
+
+  <!-- SideBar directive -->
+  <default-sidebar></default-sidebar>
+
+  <!-- Page content -->
+  <div id="page-content-wrapper">
+  <div ng-init="loadProfessorsPage(1)"></div>
+    <div class="container">
+      <h1>Docentes</h1>
+      <br>
+      <br>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-model="searchText">
+          </div>
+          <div class="col-sm-6">
+            <select class="form-control" id="orderSel">
+              <option selected>Ordenar Por</option>
+              <option value="name" ng-model="orderCriteria">Nombre</option>
+              <option value="last_name_1" ng-model="orderCriteria">Apellido1</option>
+              <option value="last_name_2" ng-model="orderCriteria">Apellido2</option>
+            </select>
+          </div>
+        </div>
+        <br><br>
+        <table class="table table-bordered" id="adminsTable">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Primer Apellido</th>
+              <th>Segundo Apellido</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="professor in professorsArray | filter:searchText | orderBy:orderCriteria" id="{{professor.id}}">
+              <td>{{professor.name}}</td>
+              <td>{{professor.last_name_1}}</td>
+              <td>{{professor.last_name_2}}</td>
+              <td>{{professor.email}}</td>
+              <td>{{professor.phone}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <br><br>
+        <div class="row">
+          <div class="form-inline">
+            <div class="col-sm-4">
+              <button type="button" class="btn btn-primary center-block" ng-click="loadProfessorsPage(-1)"><</button>
+            </div>
+            <div class="col-sm-2">
+              <label>Página {{pageNumber}}</label>
+            </div>
+            <div class="col-sm-4">
+              <button type="button" class="btn btn-primary center-block" ng-click="loadProfessorsPage(1)">></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
