@@ -1,11 +1,8 @@
-USE [SiLabI]
-GO
+USE [master];
 
 IF  EXISTS (SELECT * FROM sys.database_principals WHERE name = N'WebService')
 	DROP USER [WebService]
 GO
-
-USE [master];
 
 IF  EXISTS (SELECT * FROM sys.server_principals WHERE name = N'WebServiceLogin')
 	DROP LOGIN [WebServiceLogin]
