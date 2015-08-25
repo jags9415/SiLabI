@@ -13,6 +13,7 @@
     	
     	$scope.loadHomePage = loadHomePage;
     	$scope.loadProfessorsPage = loadProfessorsPage;
+    	$scope.checkProfessorSearch = checkProfessorSearch;
 
     	 function loadHomePage(number)
     	{
@@ -62,6 +63,30 @@
 	    	}
     	}
 
+    	function checkProfessorSearch()
+    	{
+    		if($scope.searchResults.length == 0 && !$scope.onSearch)
+    		{
+    			searchProfessor($scope.searchText);
+    		}
+    	}
+
+    	function searchProfessor(name)
+    	{
+    		$scope.onSearch = true;
+    		ProfessorsService.searchProfessorByName(name, "a"/*$scope.access_token*/ ).
+	    		then(function(response)
+			        {
+						$scope.professorsArray.push.apply($scope.professorsArray, response.results);
+						$scope.onSearch = false;
+					},
+					function(error)
+			        {
+						alert("Error al ontener datos de docente.");
+						$scope.onSearch = false;
+					}
+				);
+    	}
 
     	function init()
     	{
@@ -78,6 +103,7 @@
             $scope.professorsArray = [];
     		$scope.pageNumber = 0;
     		$scope.totalPages = 1;
+    		$scope.onSearch = false;
     		var name = "undefined";
             var accessToken = -1;
             if(typeof(sessionStorage) != 'undefined' && sessionStorage.getItem('access_token') != null)

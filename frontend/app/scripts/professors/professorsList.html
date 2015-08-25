@@ -13,7 +13,7 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-6">
-            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-model="searchText">
+            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-model="searchText" ng-change="checkProfessorSearch()">
           </div>
           <div class="col-sm-6">
             <select class="form-control" id="orderSel">
@@ -25,7 +25,7 @@
           </div>
         </div>
         <br><br>
-        <table class="table table-bordered" id="adminsTable">
+        <table class="table table-bordered" id="professorsTable">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -36,7 +36,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="professor in professorsArray | filter:searchText | orderBy:orderCriteria" id="{{professor.id}}">
+            <tr ng-repeat="professor in searchResults = (professorsArray | filter:searchText)" id="{{professor.id}}">
               <td>{{professor.name}}</td>
               <td>{{professor.last_name_1}}</td>
               <td>{{professor.last_name_2}}</td>
@@ -45,6 +45,7 @@
             </tr>
           </tbody>
         </table>
+        <p ng-show="searchResults.length==0"> No se encontraron resultados </p>
         <br><br>
         <div class="row">
           <div class="form-inline">

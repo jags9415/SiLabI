@@ -44,5 +44,22 @@
                  });
             return defer.promise;
         };
+
+        this.searchProfessorByName = function(name, access_token)
+        {
+            var defer = $q.defer();
+            $http.get(apiUrl + '/professors?q=name+like+*'+name+'*', {
+                'access_token': access_token
+            }).
+                success(function(data, status, headers, config) 
+                {
+                    defer.resolve(data);    
+                }).
+                error(function(data, status, headers, config) 
+                {
+                    defer.reject(error);
+                 });
+            return defer.promise;
+        }
     }
 })();
