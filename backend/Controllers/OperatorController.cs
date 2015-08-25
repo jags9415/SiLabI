@@ -2,57 +2,54 @@
 using SiLabI.Exceptions;
 using SiLabI.Model;
 using SiLabI.Model.Query;
-using SiLabI.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
-using System.ServiceModel.Web;
 using System.Web;
 
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// Administrator logic.
+    /// Operator logic.
     /// </summary>
-    public class AdministratorController
+    public class OperatorController
     {
-        private AdministratorDataAccess _AdminDA;
+        private OperatorDataAccess _OperatorDA;
 
         /// <summary>
-        /// Creates a new AdministratorController.
+        /// Creates a new OperatorController.
         /// </summary>
-        public AdministratorController()
+        public OperatorController()
         {
-            this._AdminDA = new AdministratorDataAccess();
+            this._OperatorDA = new OperatorDataAccess();
         }
 
         /// <summary>
-        /// Retrieves a list of administrators based on a query.
+        /// Retrieves a list of operators based on a query.
         /// </summary>
         /// <param name="request">The query.</param>
-        /// <returns>The list of administrators.</returns>
-        public GetResponse<User> GetAdministrators(QueryString request)
+        /// <returns>The list of operators.</returns>
+        public GetResponse<Operator> GetOperators(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            // By default search only active administrators.
+            // By default search only active operators.
             if (!request.Query.Exists(element => element.Name == "state"))
             {
                 Field field = new Field("state", SqlDbType.VarChar);
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
-            GetResponse<User> response = new GetResponse<User>();
-            DataTable table = _AdminDA.GetAdministrators(request);
-            int count = _AdminDA.GetAdministratorsCount(request);
+            GetResponse<Operator> response = new GetResponse<Operator>();
+            DataTable table = _OperatorDA.GetOperators(request);
+            int count = _OperatorDA.GetOperatorsCount(request);
 
             foreach (DataRow row in table.Rows)
             {
-                response.Results.Add(User.Parse(row));
+                response.Results.Add(Operator.Parse(row));
             }
 
             response.CurrentPage = request.Page;
@@ -62,49 +59,50 @@ namespace SiLabI.Controllers
         }
 
         /// <summary>
-        /// Get an administrator.
+        /// Get an operator.
         /// </summary>
         /// <param name="id">The user identification.</param>
         /// <param name="token">The access token.</param>
-        /// <returns>The administrator.</returns>
-        public User GetAdministrator(int id, string token)
+        /// <returns>The operator.</returns>
+        public Operator GetOperator(int id, string token)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _AdminDA.GetAdministrator(id);
+            DataTable table = _OperatorDA.GetOperator(id);
 
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Administrador no encontrado");
+                throw new WcfException(HttpStatusCode.BadRequest, "Operador no encontrado");
             }
 
-            return User.Parse(table.Rows[0]);
+            return Operator.Parse(table.Rows[0]);
         }
 
         /// <summary>
-        /// Creates an administrator.
+        /// Creates an operator.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>The user data.</returns>
-        public User CreateAdministrator(int id, BaseRequest request)
+        public Operator CreateOperator(int id, OperatorRequest request)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-            
+
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
-            DataTable table = _AdminDA.CreateAdministrator(id);
-            return User.Parse(table.Rows[0]);
+            Token.CheckPayload(payload, UserType.Operator);
+            DataTable table = _OperatorDA.CreateOperator(id, request.Period);
+
+            return Operator.Parse(table.Rows[0]);
         }
 
         /// <summary>
-        /// Deletes an administrator.
+        /// Deletes an operator.
         /// </summary>
         /// <param name="id">The user identification.</param>
         /// <param name="request">The request.</param>
-        public void DeleteAdministrator(int id, BaseRequest request)
+        public void DeleteOperator(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -112,8 +110,8 @@ namespace SiLabI.Controllers
             }
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
-            _AdminDA.DeleteAdministrator(id);
+            Token.CheckPayload(payload, UserType.Operator);
+            _OperatorDA.DeleteOperator(id);
         }
     }
 }

@@ -1,5 +1,5 @@
 /**
- * @api {get} /v1/students/:id Retrieve a student.
+ * @api {get} /v1/students/:username Retrieve a student.
  * @apiVersion 1.0.0
  * @apiName GetStudent
  * @apiGroup Students
@@ -9,7 +9,7 @@
  * @apiDescription Retrieve a student.
  *
  * @apiExample Example:
- * 		GET /students/54
+ * 		GET /students/201242273
  *
  * @apiParam {String}	access_token	The access token.
  *
@@ -17,6 +17,7 @@
  * @apiSuccess {String}									name 			The first name.
  * @apiSuccess {String}									last_name_1		The first last name.
  * @apiSuccess {String}									last_name_2		The second last name.
+ * @apiSuccess {String}									full_name		The full name.
  * @apiSuccess {String}									username		The username.
  * @apiSuccess {String="Masculino, Femenino"}			gender			The gender.
  * @apiSuccess {String}									email			The email address.
@@ -35,10 +36,11 @@
  *       "last_name_1": "Lynch",
  *       "last_name_2": "Jackson",
  *       "name": "Gregory",
+ *       "full_name": "Gregory Lynch Jackson",
  *       "phone": "7-(384)880-7491",
  *       "state": "Activo",
  *       "updated_at": "/Date(1439325374913-0600)/",
- *       "username": "gjacksonhi"
+ *       "username": "201242273"
  *     }
  *
  * @apiErrorExample {json} Error-Response:

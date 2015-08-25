@@ -75,22 +75,22 @@ namespace SiLabI.Model
         public static void CheckPayload(Dictionary<string, object> payload, UserType type)
         {
             /*
-            string permission = payload["permission"].ToString();
+            string type = payload["type"].ToString();
             bool valid;
 
-            switch (permission)
+            switch (type)
             {
-                case "admin":
+                case "Administrador":
                     valid = true;
                     break;
-                case "operator":
-                    valid = type != UserType.Admin;
+                case "Operador":
+                    valid = (type != UserType.Admin);
                     break;
-                case "professor":
-                    valid = type == UserType.Professor;
+                case "Docente":
+                    valid = (type == UserType.Professor);
                     break;
-                case "student":
-                    valid = type == UserType.Student;
+                case "Estudiante":
+                    valid = (type == UserType.Student);
                     break;
                 default:
                     valid = false;

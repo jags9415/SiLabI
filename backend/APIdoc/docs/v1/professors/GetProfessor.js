@@ -1,5 +1,5 @@
 /**
- * @api {get} /v1/professors/:id Retrieve a professor.
+ * @api {get} /v1/professors/:username Retrieve a professor.
  * @apiVersion 1.0.0
  * @apiName GetProfessor
  * @apiGroup Professors
@@ -9,7 +9,7 @@
  * @apiDescription Retrieve a professor.
  *
  * @apiExample Example:
- * 		GET /professors/54
+ * 		GET /professors/gjacksonhi
  *
  * @apiParam {String}	access_token	The access token.
  *
@@ -17,6 +17,7 @@
  * @apiSuccess {String}									name 			The first name.
  * @apiSuccess {String}									last_name_1		The first last name.
  * @apiSuccess {String}									last_name_2		The second last name.
+ * @apiSuccess {String}									full_name		The full name.
  * @apiSuccess {String}									username		The username.
  * @apiSuccess {String="Masculino, Femenino"}			gender			The gender.
  * @apiSuccess {String}									email			The email address.
@@ -35,6 +36,7 @@
  *       "last_name_1": "Lynch",
  *       "last_name_2": "Jackson",
  *       "name": "Gregory",
+ *       "full_name": "Gregory Lynch Jackson",
  *       "phone": "7-(384)880-7491",
  *       "state": "Activo",
  *       "updated_at": "/Date(1439325374913-0600)/",

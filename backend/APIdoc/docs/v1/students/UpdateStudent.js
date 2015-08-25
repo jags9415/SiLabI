@@ -36,6 +36,7 @@
  * @apiSuccess {String}									name 			The first name.
  * @apiSuccess {String}									last_name_1		The first last name.
  * @apiSuccess {String}									last_name_2		The second last name.
+ * @apiSuccess {String}									full_name		The full name.
  * @apiSuccess {String}									username		The username.
  * @apiSuccess {String="Masculino, Femenino"}			gender			The gender.
  * @apiSuccess {String}									email			The email address.
@@ -54,6 +55,7 @@
  *       "last_name_1": "Lewis",
  *       "last_name_2": "Taylor",
  *       "name": "Arthur",
+ *       "full_name": "Arthur Lewis Taylor",
  *       "phone": "83492144",
  *       "state": "Activo",
  *       "updated_at": "/Date(1440097559917-0600)/",
