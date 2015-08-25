@@ -31,7 +31,17 @@
           controllerAs: 'OperatorsHome'
         })
         .when('/Operador/Docentes', {
-          templateUrl: 'scripts/professors/professorsList.html',
+          templateUrl: 'scripts/operators/professors/professorsList.html',
+          controller: 'OperatorsController',
+          controllerAs: 'Operator'
+        })
+        .when('/Operador/Docentes/Agregar', {
+          templateUrl: 'scripts/operators/professors/professorsCreate.html',
+          controller: 'OperatorsController',
+          controllerAs: 'Operator'
+        })
+        .when('/Operador/Docentes/:id', {
+          templateUrl: 'scripts/operators/professors/professorsDetail.html',
           controller: 'OperatorsController',
           controllerAs: 'Operator'
         })

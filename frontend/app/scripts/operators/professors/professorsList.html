@@ -33,6 +33,7 @@
               <th>Segundo Apellido</th>
               <th>Correo</th>
               <th>Teléfono</th>
+              <th>Detalle</th>
             </tr>
           </thead>
           <tbody>
@@ -42,6 +43,7 @@
               <td>{{professor.last_name_2}}</td>
               <td>{{professor.email}}</td>
               <td>{{professor.phone}}</td>
+              <td> <button class="btn btn-primary center-block" ng-click="seeProfessorDetail({{professor.id}})">Ver</button>
             </tr>
           </tbody>
         </table>

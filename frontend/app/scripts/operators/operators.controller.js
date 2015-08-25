@@ -4,9 +4,9 @@
     angular
         .module('silabi')
         .controller('OperatorsController', OperatorsController);
-        OperatorsController.$inject = ['$scope', '$routeParams', 'OperatorsService', 'ProfessorsService'];
+        OperatorsController.$inject = ['$scope', '$routeParams', 'OperatorsService', 'ProfessorsService', '$location'];
 
-    function OperatorsController($scope, $routeParams, OperatorsService, ProfessorsService) {
+    function OperatorsController($scope, $routeParams, OperatorsService, ProfessorsService, $location) {
       
       	init();
       	//loadHomePage(1);
@@ -14,6 +14,9 @@
     	$scope.loadHomePage = loadHomePage;
     	$scope.loadProfessorsPage = loadProfessorsPage;
     	$scope.checkProfessorSearch = checkProfessorSearch;
+    	$scope.createProfessor = createProfessor;
+    	$scope.cleanProfessorCreate = cleanProfessorCreate;
+    	$scope.seeProfessorDetail = seeProfessorDetail;
 
     	 function loadHomePage(number)
     	{
@@ -88,6 +91,82 @@
 				);
     	}
 
+    	
+    	function  checkProfessorCreateInput() 
+    	{
+    		if(!isNaN($scope.professorinputName))
+    		{
+    			alert("Nombre incorrecto.");
+    			return false;
+    		}
+    		else if(!isNaN($scope.professorinputLastName1))
+    		{
+    			alert("Primer Apellido incorrecto.");
+    			return false;
+    		}
+    		else if(!isNaN($scope.professorinputLastName2))
+    		{
+    			alert("Segundo Apellido incorrecto.");
+    			return false;
+    		}
+    		else if(isNaN($scope.professorinputPhoneNumber))
+    		{
+    			alert("Número telefónico incorrecto.");
+    			return false;
+    		}
+    		else
+    		{
+    			return true;
+    		}
+    	}
+
+    	function seeProfessorDetail (id) {
+    		$location.path("/Operador/Docentes/"+id);
+    	}
+
+    	function cleanProfessorCreate()
+    	{
+    		$scope.professorinputEmail = null;
+    		 $scope.professorinputLastName1 = null;
+    		 $scope.professorinputLastName2 = null;
+    		 $scope.professorinputName = null;
+    		 $scope.professorinputPhoneNumber = null;
+    		 $scope.professorinputPassword = null;
+    	}
+
+    	function createProfessor()
+    	{
+    		if(checkProfessorCreateInput())
+    		{
+    			var jsonObject = 
+				{
+	              "professor": {
+	                "email": $scope.professorinputEmail,
+	                "gender": $scope.selected_gender,
+	                "last_name_1": $scope.professorinputLastName1,
+	                "last_name_2": $scope.professorinputLastName2,
+	                "name": $scope.professorinputName,
+	                "phone": $scope.professorinputPhoneNumber,
+	                "username": ($scope.professorinputName.substring(0, 1) + $scope.professorinputLastName1).toLowerCase(),//unique username validation is missing
+	                "password": $scope.professorinputPassword
+	              },
+	              "access_token":$scope.access_token
+	            }
+	            console.log(jsonObject);
+    			ProfessorsService.createProfessor(jsonObject).
+	    		then(function(response)
+			        {
+						cleanProfessorCreate();
+						console.log("Creado. "+response.created_at);
+					},
+					function(error)
+			        {
+						alert("Error al ontener datos de docente: "+response);
+					}
+				);
+	    	}
+    	}
+
     	function init()
     	{
     		$scope.appsArray = 
@@ -104,6 +183,7 @@
     		$scope.pageNumber = 0;
     		$scope.totalPages = 1;
     		$scope.onSearch = false;
+    		$scope.genders = [{"name":"Masculino"}, {"name":"Femenino"}];
     		var name = "undefined";
             var accessToken = -1;
             if(typeof(sessionStorage) != 'undefined' && sessionStorage.getItem('access_token') != null)

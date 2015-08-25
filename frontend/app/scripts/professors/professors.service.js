@@ -60,6 +60,22 @@
                     defer.reject(error);
                  });
             return defer.promise;
-        }
+        };
+
+        this.createProfessor = function(jsonObject)
+        {
+            var defer = $q.defer();
+            $http.post(apiUrl + '/professors', jsonObject).
+                success(function(data, status, headers, config) 
+                {
+                    defer.resolve(data);    
+                }).
+                error(function(data, status, headers, config) 
+                {
+                    defer.reject(error);
+                 });
+            return defer.promise;
+        };
+        
     }
 })();
