@@ -18,11 +18,23 @@ th
 
 }
 
+td
+{
+  font-size: 12pt;
+}
+
 .title
 {
   font-family: @import url(http://fonts.googleapis.com/css?family=Lato:700);
   font-size: 20pt;
   color: white;
+}
+
+.centerBox
+{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
