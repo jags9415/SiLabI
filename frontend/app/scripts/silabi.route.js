@@ -45,6 +45,16 @@
           controller: 'OperatorsController',
           controllerAs: 'Operator'
         })
+        .when('/Operador/Estudiantes', {
+          templateUrl: 'scripts/operators/students/list.html',
+          controller: 'StudentListController',
+          controllerAs: 'StudentList'
+        })
+        .when('/Operador/Estudiantes/Agregar', {
+          templateUrl: 'scripts/operators/students/add.html',
+          controller: 'StudentsAddController',
+          controllerAs: 'StudentsAdd'
+        })
         .when('/Inicio/Estudiante', {
           templateUrl: 'scripts/students/studentsHome.html',
           controller: 'StudentsController',
