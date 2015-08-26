@@ -9,13 +9,13 @@
       <h1>Agregar Docente</h1>
       <br><br>
       <form>
-        <input class="form-control" placeholder="Nombre" name="professorinputName" type="text" ng-model="professorinputName" required>
+        <input class="form-control" placeholder="Nombre" name="professorModifyName" type="text" ng-model="professorModifyName" required>
         <br>
-        <input class="form-control" placeholder="Primer Apellido" name="professorinputLastName1" type="text" ng-model="professorinputLastName1" required>
+        <input class="form-control" placeholder="Primer Apellido" name="professorModifyLastName1" type="text" ng-model="professorModifyLastName1" required>
         <br>
-        <input class="form-control" placeholder="Segundo Apellido" name="professorinputLastName2" type="text" ng-model="professorinputLastName2">
+        <input class="form-control" placeholder="Segundo Apellido" name="professorModifyLastName2" type="text" ng-model="professorModifyLastName2">
         <br>
-        <input class="form-control" placeholder="Email" name="professorinputEmail" type="email" ng-model="professorinputEmail">
+        <input class="form-control" placeholder="Email" name="professorModifyEmail" type="email" ng-model="professorModifyEmail">
         <br>
         <div class="row">
           <div class="col-sm-6">
@@ -25,18 +25,18 @@
             </select>
           </div>
           <div class="col-sm-6">
-            <input class="form-control" placeholder="Telefono" name="professorinputPhoneNumber" type="text" ng-model="professorinputPhoneNumber">
+            <input class="form-control" placeholder="Telefono" name="professorModifyPhoneNumber" type="text" ng-model="professorModifyPhoneNumber">
           </div>
         </div>
         <br>
-        <input class="form-control" placeholder="Contraseña" name="professorinputPassword" type="password" ng-model="professorinputPassword" required>
+        <input class="form-control" placeholder="Contraseña" name="professorModifyPassword" type="password" ng-model="professorModifyPassword" required>
         <br>
         <div class="row">
           <div class="col-sm-6">
               <label>Fecha de Creación:</label>
           </div>
           <div class="col-sm-6">
-            <input class="form-control"  name="professorCreationDate" type="text" ng-model="professoriCreationDate" disabled>
+            <input class="form-control"  name="professorCreationDate" type="text" ng-model="professorCreationDate" disabled>
           </div>
         </div> 
         <br>
@@ -45,7 +45,7 @@
               <label>última Actualización:</label>
           </div>
           <div class="col-sm-6">
-            <input class="form-control"  name="professorLastUpdateDate" type="text" ng-model="professorLastUpdateDate" disabled>
+            <input class="form-control"  name="professorLastUpdate" type="text" ng-model="professorLastUpdate" disabled>
           </div>
         </div> 
         <br> 
@@ -55,7 +55,7 @@
               <button class="btn btn-default" type="button" ng-click="modifyProfessor()">Modificar</button>
             </div>
             <div class="col-sm-6">
-              <button class="btn btn-default" type="button" ng-click="cleanProfessorModify()">Cancelar</button>
+              <button class="btn btn-default" type="button" ng-click="deleteProfessor()">Eliminar</button>
             </div>
           </div>
         </div>
