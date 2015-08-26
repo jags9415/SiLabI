@@ -4,9 +4,9 @@
     angular
         .module('silabi')
         .controller('OperatorsProfessorsController', OperatorsProfessorsController);
-        OperatorsProfessorsController.$inject = ['$scope', '$routeParams', 'OperatorsService', 'ProfessorsService', '$route'];
+        OperatorsProfessorsController.$inject = ['$scope', '$routeParams', 'OperatorsService', 'ProfessorsService', '$route', '$location'];
 
-    function OperatorsProfessorsController($scope, $routeParams, OperatorsService, ProfessorsService, $route) {
+    function OperatorsProfessorsController($scope, $routeParams, OperatorsService, ProfessorsService, $route, $location) {
       
       	init();
 
@@ -43,6 +43,7 @@
             then(function(response)
             {
                 $scope.professor = response;
+                $scope.professorid = $scope.professor.id;
                 console.log(response);
             },
             function(error)
@@ -59,37 +60,37 @@
                 {
                     "professor":
                     {
-                        "email": $scope.professorModifyEmail,
-                        "last_name_1": $scope.ModifyLastName1,
-                        "last_name_2": $scope.ModifyLastName2,
-                        "phone": $scope.ModifyPhoneNumber
+                        "email": $scope.professor.email,
+                        "last_name_1": $scope.professor.last_name_1,
+                        "last_name_2": $scope.professor.last_name_2,
+                        "phone": $scope.professor.phone
                     },
                     "access_token":$scope.access_token
                 };
                 ProfessorsService.updateProfessor($scope.professorid, jsonObject).
                 then(function(response)
                 {
-                    loadProfessor(response);
+                    $scope.professor = response;
                     console.log(response);
                 },
                 function(error)
                 {
-                    alert("Error al modificar datos de docente." + error);
+                    alert("Error al modificar datos de docente." + error.description);
                 });
             }
         }
 
         function deleteProfessor()
         {
+            console.log("Deleting professor: "+$scope.professorid+" access_token: "+$scope.access_token);
             ProfessorsService.deleteProfessor($scope.professorid, $scope.access_token).
                 then(function(response)
                 {
-                    console.log(response);
-                    $route.reload();
+                    $location.path("/Operador/Docentes");
                 },
                 function(error)
                 {
-                    alert("Error al modificar datos de docente." + error);
+                    alert("Error al modificar datos de docente." + error.description);
                 });
         }
 

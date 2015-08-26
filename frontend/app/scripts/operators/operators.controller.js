@@ -17,6 +17,7 @@
     	$scope.createProfessor = createProfessor;
     	$scope.cleanProfessorCreate = cleanProfessorCreate;
     	$scope.seeProfessorDetail = seeProfessorDetail;
+        $scope.generateUserName = generateUserName;
 
     	 function loadHomePage(number)
     	{
@@ -95,22 +96,22 @@
     	
     	function  checkProfessorCreateInput() 
     	{
-    		if(!isNaN($scope.professorinputName))
+    		if(!isNaN($scope.professor.name))
     		{
     			alert("Nombre incorrecto.");
     			return false;
     		}
-    		else if(!isNaN($scope.professorinputLastName1))
+    		else if(!isNaN($scope.professor.last_name_1))
     		{
     			alert("Primer Apellido incorrecto.");
     			return false;
     		}
-    		else if(!isNaN($scope.professorinputLastName2))
+    		else if(!isNaN($scope.professor.last_name_2))
     		{
     			alert("Segundo Apellido incorrecto.");
     			return false;
     		}
-    		else if(isNaN($scope.professorinputPhoneNumber))
+    		else if(isNaN($scope.professor.phone))
     		{
     			alert("Número telefónico incorrecto.");
     			return false;
@@ -128,21 +129,37 @@
 
     	function cleanProfessorCreate()
     	{
-    		$scope.professorinputEmail = null;
-    		 $scope.professorinputLastName1 = null;
-    		 $scope.professorinputLastName2 = null;
-    		 $scope.professorinputName = null;
-    		 $scope.professorinputPhoneNumber = null;
-    		 $scope.professorinputPassword = null;
+    		$scope.professor.email = null;
+    		 $scope.professor.last_name_1 = null;
+    		 $scope.professor.last_name_2 = null;
+    		 $scope.professor.name = null;
+    		 $scope.professor.phone = null;
+             $scope.professor.username = null;
+    		 $scope.professor.password = null;
     	}
+
+        function generateUserName()
+        {
+            $scope.professor.username = ($scope.professor.name.substring(0, 1) + $scope.professor.last_name_1).toLowerCase(); 
+        }
 
     	function createProfessor()
     	{
     		if(checkProfessorCreateInput() && $scope.professor != null)
     		{
+                var hash = CryptoJS.SHA256($scope.professor.password).toString(CryptoJS.enc.Hex);
     			var jsonObject = 
 				{
-	              $scope.professor,
+	              "professor": {
+	                "email": $scope.professor.email,
+	                "gender": $scope.selected_gender,
+	                "last_name_1": $scope.professor.last_name_1,
+	                "last_name_2": $scope.professor.last_name_2,
+	                "name": $scope.professor.name,
+	                "phone": $scope.professor.phone,
+	                "username": $scope.professor.username,
+	                "password": hash
+	              },
 	              "access_token":$scope.access_token
 	            }
 	            console.log(jsonObject);
@@ -150,11 +167,11 @@
 	    		then(function(response)
 			        {
 						cleanProfessorCreate();
-						console.log("Creado. "+response.created_at);
+						alert("Usuario creado con éxito: "+response.username);
 					},
 					function(error)
 			        {
-						alert("Error al ontener datos de docente: "+response);
+						alert("Error al ontener datos de docente: "+ error.description);
 					}
 				);
 	    	}
@@ -189,6 +206,17 @@
             }
             $scope.user_name = name;
             $scope.access_token = accessToken;
+            $scope.professor = 
+            {
+                "email": "",
+                "gender": "",
+                "last_name_1": "",
+                "last_name_2": "",
+                "name": "",
+                "phone": "",
+                "username": "",
+                "password": ""
+          };
     	}
     }
 })();

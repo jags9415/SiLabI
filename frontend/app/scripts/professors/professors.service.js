@@ -110,9 +110,8 @@
         this.deleteProfessor = function(id, access_token)
         {
             var defer = $q.defer();
-            $http.delete(apiUrl + '/professors/'+id,{
-                'access_token': access_token
-            }).success(function(data, status, headers, config) 
+            $http({method: "DELETE", headers: {"Content-Type": "application/json"}, url: apiUrl + '/professors/' + id, data: { 'access_token': access_token }})
+            .success(function(data, status, headers, config) 
             {
                 defer.resolve(data);    
             }).
