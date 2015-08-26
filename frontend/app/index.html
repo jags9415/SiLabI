@@ -24,23 +24,39 @@
 
     <!-- Add your site or application content here -->
 
+    
     <div class="silabiHeader">
-        <p class="title"> SiLabI </p>
+        <div ng-if="sessionStorage.getItem('access_token') != null">
+            <div class="dropdown title pull-right">
+              <a class="dropdown-toggle btn btn-lg btn-primary" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                SiLabI
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#">Mi Perfil</a></li>
+                <li><a href="#">Cerrar Sesión</a></li>
+              </ul>
+            </div>
+        </div>
+        <div ng-if="sessionStorage.getItem('access_token') == null">
+            <div class="title pull-right">
+              <a class="btn btn-lg btn-primary">SiLabI</a>
+            </div>
+        </div>
     </div>
-
 
     <div class="content-box" ng-view>
     </div>
 
     <div class="content-box">
         <div class="silabiFooter">
-            <p> © Instituto Tecnológico de Costa Rica 2016 </p>
+            <p>Instituto Tecnológico de Costa Rica. © 2016</p>
+            <ul>
+                <li><a href="#">Acerca de</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
         </div>
     </div>
-
-
-
-
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
