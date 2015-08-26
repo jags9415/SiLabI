@@ -11,6 +11,7 @@
         var service = {
             getByPage: getByPage,
             getByUsername: getByUsername,
+            create: create,
             update: update
         };
 
@@ -30,10 +31,10 @@
           });
         }
 
-        function update(username, newInfo) {
-          return $http.post(apiUrl + '/students/' + username , {
+        function update(userID, newInfo) {
+          return $http.put(apiUrl + '/students/' + userID , {
             'student': newInfo,
-            'access_token': ''
+            'access_token': '1'
           })
           .then(function(response) {
             return response.data;

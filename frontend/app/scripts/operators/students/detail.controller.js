@@ -10,6 +10,7 @@
     function StudentsDetail($scope, $routeParams, StudentService) {
         $scope.student = {};
         $scope.username = $routeParams.username;
+        $scope.userID;
         $scope.requestForUser = requestForUser;
         $scope.updateInfo = updateInfo;
 
@@ -22,7 +23,7 @@
 
         function getUserInfo(result) {
           $scope.student = result;
-          console.log(result);
+          $scope.userID = result.id;
           return $scope.student;
         }
 
@@ -35,10 +36,10 @@
 
         function updateInfo() {
           var newUserInfo = $scope.student;
-          var username = $scope.username;
-          StudentService.update(username, newUserInfo)
+          var userID = $scope.userID;
+          StudentService.update(userID, newUserInfo)
           .then(function(result) {
-            console.log("Updated");
+            $scope.student = result;
           })
           .catch(showError);
         }
