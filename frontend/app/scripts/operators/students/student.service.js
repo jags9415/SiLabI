@@ -11,7 +11,6 @@
         var service = {
             getByPage: getByPage,
             getByUsername: getByUsername,
-            create: create,
             update: update
         };
 

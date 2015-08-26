@@ -5,15 +5,16 @@
         .module('silabi')
         .controller('StudentListController', StudentListController);
 
-    StudentListController.$inject = ['$scope', 'StudentService'];
+    StudentListController.$inject = ['$scope','$location', 'StudentService'];
 
-    function StudentListController($scope, StudentService) {
+    function StudentListController($scope, $location, StudentService) {
         $scope.students = [];
         $scope.pageNumber = 1;
         $scope.noStudents = noStudents;
         $scope.loadStudents = loadStudents;
         $scope.goToNextPage = goToNextPage;
         $scope.goToPreviuosPage = goToPreviuosPage;
+        $scope.seeStudentDetail = seeStudentDetail;
 
         function loadStudents() {
           var page = $scope.pageNumber;
@@ -30,6 +31,10 @@
         function goToPreviuosPage() {
           $scope.pageNumber--;
           $scope.loadStudents();
+        }
+
+        function seeStudentDetail(studentUsername) {
+          $location.path('/Operador/Estudiantes/' + studentUsername);
         }
 
         function getStudents(result) {

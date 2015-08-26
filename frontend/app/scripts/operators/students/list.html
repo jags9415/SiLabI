@@ -33,6 +33,7 @@
                 <th>Apellidos</th>
                 <th>Correo</th>
                 <th>Estado</th>
+                <th>Detalle</th>
               </tr>
             </thead>
             <tbody>
@@ -42,6 +43,7 @@
                 <td>{{ student.last_name_1 + ' ' + student.last_name_2 }} </td>
                 <td>{{ student.email }} </td>
                 <td>{{ student.state }} </td>
+                <td> <button class="btn btn-primary center-block" ng-click="seeStudentDetail(student.username)">Ver</button>
               </tr>
             </tbody>
           </table>
