@@ -31,10 +31,7 @@
         this.getProfessorsByPage = function(page_number, access_token)
         {
             var defer = $q.defer();
-            $http.get(apiUrl + '/professors', {
-                'access_token': access_token,
-                'page': page_number
-            }).
+            $http.get(apiUrl + '/professors?page='+page_number+'&access_token='+access_token).
                 success(function(data, status, headers, config) 
                 {
                     defer.resolve(data);    
@@ -63,10 +60,10 @@
             return defer.promise;
         };
 
-        this.getProfessorById = function(id, access_token)
+        this.getProfessorByUserName = function(user_name, access_token)
         {
             var defer = $q.defer();
-            $http.get(apiUrl + '/professors/'+id,{
+            $http.get(apiUrl + '/professors/'+user_name,{
                 'access_token': access_token
             }).success(function(data, status, headers, config) 
             {

@@ -19,6 +19,15 @@ namespace SiLabI
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
+            HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "*");
+
+            if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
+            {
+                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                HttpContext.Current.Response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
+                HttpContext.Current.Response.End();
+            }
+
             Uri url = HttpContext.Current.Request.Url;
 
             if (!url.AbsolutePath.EndsWith("/"))

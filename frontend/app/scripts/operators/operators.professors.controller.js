@@ -36,30 +36,18 @@
             }
         }
 
-        function loadProfessor(professor) 
-        {
-            $scope.professorModifyName = professor.name;
-            $scope.professorModifyLastName1 = professor.last_name_1;
-            $scope.professorModifyLastName2 = professor.last_name_2;
-            $scope.professorModifyEmail = professor.email;
-            $scope.professorModifyPhoneNumber = professor.phone;
-            $scope.professorModifyPassword = null;
-            $scope.professorCreationDate = professor.created_at;
-            $scope.professorLastUpdate = professor.updated_at;
-        }
-
         function retrieveProfessor()
         {
-            $scope.professorid =  $routeParams.id;
-            ProfessorsService.getProfessorById($scope.professorid, "a"/*$scope.access_token*/ ).
+            $scope.professorUserName =  $routeParams.userName;
+            ProfessorsService.getProfessorByUserName($scope.professorUserName, "a"/*$scope.access_token*/ ).
             then(function(response)
             {
-                loadProfessor(response);
+                $scope.professor = response;
                 console.log(response);
             },
             function(error)
             {
-                alert("Error al obtener datos de docente.");
+                alert("Error al obtener datos de docente. "+error.description);
             });
         }
 
@@ -114,6 +102,8 @@
                 accessToken = sessionStorage.getItem('access_token');
             }
             $scope.access_token = accessToken;
+            $scope.professorid = null;
+            $scope.professor = null;
             retrieveProfessor();
     	}
     }
