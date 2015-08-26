@@ -54,6 +54,7 @@
 	    		then(function(response)
 			        {
 						$scope.professorsArray = response.results;
+                        console.log(response.results[0].username);
 						$scope.pageNumber = pnumber;
 						$scope.totalPages = response.total_pages;
 						console.log("Total pages: "+response.total_pages);
@@ -120,8 +121,9 @@
     		}
     	}
 
-    	function seeProfessorDetail (id) {
-    		$location.path("/Operador/Docentes/"+id);
+    	function seeProfessorDetail (user_name) 
+        {
+    		$location.path("/Operador/Docentes/"+user_name);
     	}
 
     	function cleanProfessorCreate()
@@ -136,20 +138,11 @@
 
     	function createProfessor()
     	{
-    		if(checkProfessorCreateInput())
+    		if(checkProfessorCreateInput() && $scope.professor != null)
     		{
     			var jsonObject = 
 				{
-	              "professor": {
-	                "email": $scope.professorinputEmail,
-	                "gender": $scope.selected_gender,
-	                "last_name_1": $scope.professorinputLastName1,
-	                "last_name_2": $scope.professorinputLastName2,
-	                "name": $scope.professorinputName,
-	                "phone": $scope.professorinputPhoneNumber,
-	                "username": ($scope.professorinputName.substring(0, 1) + $scope.professorinputLastName1).toLowerCase(),//unique username validation is missing
-	                "password": $scope.professorinputPassword
-	              },
+	              $scope.professor,
 	              "access_token":$scope.access_token
 	            }
 	            console.log(jsonObject);

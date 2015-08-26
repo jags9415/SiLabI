@@ -40,7 +40,7 @@
           controller: 'OperatorsController',
           controllerAs: 'Operator'
         })
-        .when('/Operador/Docentes/:id', {
+        .when('/Operador/Docentes/:userName', {
           templateUrl: 'scripts/operators/professors/professorsDetail.html',
           controller: 'OperatorsProfessorsController',
           controllerAs: 'OperatorProfessor'
