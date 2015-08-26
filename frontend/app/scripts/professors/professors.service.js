@@ -9,6 +9,7 @@
 
     function ProfessorsService($http, $q, apiUrl) {
 
+
         this.getReservations = function(page_number, access_token)
         {
         	var defer = $q.defer();
@@ -22,7 +23,7 @@
 				}).
 				error(function(data, status, headers, config) 
 				{
-				    defer.reject(error);
+				    defer.reject(data);
 				 });
 			return defer.promise;
         };
@@ -40,7 +41,7 @@
                 }).
                 error(function(data, status, headers, config) 
                 {
-                    defer.reject(error);
+                    defer.reject(data);
                  });
             return defer.promise;
         };
@@ -57,10 +58,27 @@
                 }).
                 error(function(data, status, headers, config) 
                 {
-                    defer.reject(error);
+                    defer.reject(data);
                  });
             return defer.promise;
         };
+
+        this.getProfessorById = function(id, access_token)
+        {
+            var defer = $q.defer();
+            $http.get(apiUrl + '/professors/'+id,{
+                'access_token': access_token
+            }).success(function(data, status, headers, config) 
+            {
+                defer.resolve(data);    
+            }).
+            error(function(data, status, headers, config) 
+            {
+                defer.reject(data);
+             });
+            return defer.promise;
+        };
+
 
         this.createProfessor = function(jsonObject)
         {
@@ -72,10 +90,41 @@
                 }).
                 error(function(data, status, headers, config) 
                 {
-                    defer.reject(error);
+                    defer.reject(data);
                  });
             return defer.promise;
         };
+
+        this.updateProfessor = function(id, jsonObject)
+        {
+            var defer = $q.defer();
+            $http.put(apiUrl + '/professors/'+id, jsonObject).
+            success(function(data, status, headers, config) 
+            {
+                defer.resolve(data);    
+            }).
+            error(function(data, status, headers, config) 
+            {
+                defer.reject(data);
+             });
+            return defer.promise;
+        };
+
+        this.deleteProfessor = function(id, access_token)
+        {
+            var defer = $q.defer();
+            $http.delete(apiUrl + '/professors/'+id,{
+                'access_token': access_token
+            }).success(function(data, status, headers, config) 
+            {
+                defer.resolve(data);    
+            }).
+            error(function(data, status, headers, config) 
+            {
+                defer.reject(data);
+             });
+            return defer.promise;
+        }
         
     }
 })();

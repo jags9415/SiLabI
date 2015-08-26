@@ -42,8 +42,8 @@
         })
         .when('/Operador/Docentes/:id', {
           templateUrl: 'scripts/operators/professors/professorsDetail.html',
-          controller: 'OperatorsController',
-          controllerAs: 'Operator'
+          controller: 'OperatorsProfessorsController',
+          controllerAs: 'OperatorProfessor'
         })
         .when('/Operador/Estudiantes', {
           templateUrl: 'scripts/operators/students/list.html',
