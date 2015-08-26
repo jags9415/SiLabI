@@ -146,6 +146,7 @@ namespace SiLabI.Configuration
 
             // Add allow-origin header to each response message, because client expects it
             property.Headers.Add("Access-Control-Allow-Origin", "*");
+            property.Headers.Add("Content-Type", "application/json;charset=utf-8");
         }
     }
 
