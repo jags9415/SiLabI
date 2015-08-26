@@ -9,13 +9,32 @@
 
     function students($http, apiUrl) {
         var service = {
-            getByPage: getByPage
+            getByPage: getByPage,
+            getByUsername: getByUsername,
+            update: update
         };
 
         return service;
 
         function getByPage(pageNumber) {
           return $http.get(apiUrl + '/students?page=' + pageNumber + '&access_token=123')
+          .then(function(response) {
+            return response.data;
+          });
+        }
+
+        function getByUsername(username) {
+          return $http.get(apiUrl + '/students/' + username)
+          .then(function(response) {
+            return response.data;
+          });
+        }
+
+        function update(username, newInfo) {
+          return $http.post(apiUrl + '/students/' + username , {
+            'student': newInfo,
+            'access_token': ''
+          })
           .then(function(response) {
             return response.data;
           });

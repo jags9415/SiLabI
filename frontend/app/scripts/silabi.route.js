@@ -55,6 +55,10 @@
           controller: 'StudentsAddController',
           controllerAs: 'StudentsAdd'
         })
+        .when('/Operador/Estudiantes/:username', {
+          templateUrl: 'scripts/operators/students/detail.html',
+          controller: 'StudentsDetailController'
+        })
         .when('/Inicio/Estudiante', {
           templateUrl: 'scripts/students/studentsHome.html',
           controller: 'StudentsController',
