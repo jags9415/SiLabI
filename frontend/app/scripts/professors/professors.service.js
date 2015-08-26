@@ -23,7 +23,7 @@
 				}).
 				error(function(data, status, headers, config) 
 				{
-				    defer.reject(error);
+				    defer.reject(data);
 				 });
 			return defer.promise;
         };
@@ -41,7 +41,7 @@
                 }).
                 error(function(data, status, headers, config) 
                 {
-                    defer.reject(error);
+                    defer.reject(data);
                  });
             return defer.promise;
         };
@@ -58,7 +58,7 @@
                 }).
                 error(function(data, status, headers, config) 
                 {
-                    defer.reject(error);
+                    defer.reject(data);
                  });
             return defer.promise;
         };
@@ -74,7 +74,7 @@
             }).
             error(function(data, status, headers, config) 
             {
-                defer.reject(error);
+                defer.reject(data);
              });
             return defer.promise;
         };
@@ -90,7 +90,7 @@
                 }).
                 error(function(data, status, headers, config) 
                 {
-                    defer.reject(error);
+                    defer.reject(data);
                  });
             return defer.promise;
         };

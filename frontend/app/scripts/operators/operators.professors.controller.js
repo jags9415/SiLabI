@@ -30,11 +30,6 @@
                 alert("Segundo Apellido incorrecto.");
                 return false;
             }
-            else if(isNaN($scope.professorModifyPhoneNumber))
-            {
-                alert("Número telefónico incorrecto.");
-                return false;
-            }
             else
             {
                 return true;
