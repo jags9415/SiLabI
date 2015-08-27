@@ -191,26 +191,6 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The creation date.
-        /// </summary>
-        [DataMember(EmitDefaultValue = false, Name = "created_at")]
-        public virtual DateTime? CreatedAt
-        {
-            set { _createdAt = value; }
-            get { return _createdAt; }
-        }
-
-        /// <summary>
-        /// The last update date.
-        /// </summary>
-        [DataMember(EmitDefaultValue = false, Name = "updated_at")]
-        public virtual DateTime? UpdatedAt
-        {
-            set { _updatedAt = value; }
-            get { return _updatedAt; }
-        }
-
-        /// <summary>
         /// The state.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "state")]
@@ -243,6 +223,44 @@ namespace SiLabI.Model
             }
             get { return _type; }
         }
+
+        /// <summary>
+        /// The creation date.
+        /// </summary>
+        public virtual DateTime? CreatedAt
+        {
+            set
+            { 
+                _createdAt = value;
+                CreatedAt_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ssZ") : string.Empty;
+            }
+            get { return _createdAt; }
+        }
+
+        /// <summary>
+        /// The last update date.
+        /// </summary>
+        public virtual DateTime? UpdatedAt
+        {
+            set
+            {
+                _updatedAt = value;
+                UpdatedAt_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ssZ") : string.Empty;
+            }
+            get { return _updatedAt; }
+        }
+
+        /// <summary>
+        /// The creation date.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "created_at")]
+        private string CreatedAt_ISO8601 { get; set; }
+
+        /// <summary>
+        /// The last update date.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "updated_at")]
+        private string UpdatedAt_ISO8601 { get; set; }
 
         /// <summary>
         /// Check if the object properties are valid for a create operation.
