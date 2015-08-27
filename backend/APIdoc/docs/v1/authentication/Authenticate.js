@@ -48,8 +48,8 @@
  *         "email": "emurray1@buzzfeed.com",
  *         "phone": "83567411",
  *         "type": "Estudiante",
- *         "created_at": "/Date(1439606715483-0600)/",
- *         "updated_at": "/Date(1439606715483-0600)/"
+ *         "created_at": "2015-08-27T22:14:20.646Z",
+ *         "updated_at": "2015-08-27T22:14:20.646Z"
  *       }
  *     }
  *

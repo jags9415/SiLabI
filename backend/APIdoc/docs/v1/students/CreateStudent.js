@@ -51,7 +51,7 @@
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
- *       "created_at": "/Date(1440097559917-0600)/",
+ *       "created_at": "2015-08-27T22:14:20.646Z",
  *       "email": "ataylor4a@moonfruit.com",
  *       "gender": "Masculino",
  *       "id": 1136,
@@ -61,7 +61,7 @@
  *       "full_name": "Arthur Lewis Taylor",
  *       "phone": "83492144",
  *       "state": "Activo",
- *       "updated_at": "/Date(1440097559917-0600)/",
+ *       "updated_at": "2015-08-27T22:14:20.646Z",
  *       "username": "201242273"
  *     }
  *

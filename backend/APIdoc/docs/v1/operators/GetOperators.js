@@ -60,7 +60,7 @@
  *       "current_page", 1,
  *       "results": [
  *           {
- *              "created_at": "/Date(1439325374913-0600)/",
+ *              "created_at": "2015-08-27T22:14:20.646Z",
  *              "email": "gjacksonhi@squidoo.com",
  *              "gender": "Masculino",
  *              "id": 631,
@@ -70,7 +70,7 @@
  *              "full_name": "Gregory Lynch Jackson",
  *              "phone": "7-(384)880-7491",
  *              "state": "Activo",
- *              "updated_at": "/Date(1439325374913-0600)/",
+ *              "updated_at": "2015-08-27T22:14:20.646Z",
  *              "username": "gjacksonhi",
  *              "period": {
  *                "value": 2,
@@ -79,7 +79,7 @@
  *              }
  *           },
  *           {
- *              "created_at": "/Date(1439325374913-0600)/",
+ *              "created_at": "2015-08-27T22:14:20.646Z",
  *              "email": "lturnerel@wordpress.org",
  *              "gender": "Femenino",
  *              "id": 526,
@@ -89,7 +89,7 @@
  *              "name": "Lori",
  *              "phone": "8-(226)006-5947",
  *              "state": "Activo",
- *              "updated_at": "/Date(1439325374913-0600)/",
+ *              "updated_at": "2015-08-27T22:14:20.646Z",
  *              "username": "lturnerel",
  *              "period": {
  *                "value": 1,
