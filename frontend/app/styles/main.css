@@ -9,7 +9,7 @@ body {
   padding: 0;
   height: 100%;
   font-family: @import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
-  font-size: 14pt; 
+  font-size: 14pt;
 }
 
 th
@@ -140,7 +140,7 @@ td
   padding-right: 2%;
   font-size: 12pt;
   color: white;
-  
+
 }
 
 .silabiFooter > ul
@@ -186,3 +186,19 @@ td
     border-bottom: 0;
   }
 }
+
+
+/*
+  Table display
+*/
+.custab{
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5% 0;
+    box-shadow: 3px 3px 2px #ccc;
+    transition: 0.5s;
+    }
+.custab:hover{
+    box-shadow: 3px 3px 0px transparent;
+    transition: 0.5s;
+    }
