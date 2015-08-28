@@ -27,7 +27,8 @@
  * @apiSuccess {Date}													user.updated_at		The last update date.
  *
  * @apiParamExample {json} Request-Example:
- *     POST /authenticate
+ *     POST /authenticate HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "username": "emurray1",
  *       "password": "..."

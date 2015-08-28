@@ -9,7 +9,8 @@
  * @apiDescription Update a course.
  *
  * @apiExample Example:
- *     PUT /courses/34
+ *     PUT /courses/34 HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "course": {
  *         "code": "CI-1313",

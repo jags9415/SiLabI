@@ -9,7 +9,8 @@
  * @apiDescription Create a course.
  *
  * @apiExample Example:
- *     POST /courses
+ *     POST /courses HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "course": {
  *         "code": "CI-1312",

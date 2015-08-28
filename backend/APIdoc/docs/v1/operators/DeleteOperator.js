@@ -9,7 +9,8 @@
  * @apiDescription Delete an operator.
  *
  * @apiExample Example:
- *     DELETE /operators/87
+ *     DELETE /operators/87 HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "access_token": "..."
  *     }

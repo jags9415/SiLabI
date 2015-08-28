@@ -9,7 +9,7 @@
  * @apiDescription Retrieve a student.
  *
  * @apiExample Example:
- * 		GET /students/201242273
+ * 		GET /students/201242273 HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
  *

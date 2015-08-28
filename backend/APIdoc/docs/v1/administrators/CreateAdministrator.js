@@ -9,7 +9,8 @@
  * @apiDescription Create an administrator.
  *
  * @apiExample Example:
- *     POST /administrators/87
+ *     POST /administrators/87 HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "access_token": "..."
  *     }

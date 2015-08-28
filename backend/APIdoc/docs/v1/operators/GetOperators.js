@@ -9,22 +9,22 @@
  * @apiDescription Retrieve a list of operators.
  *
  * @apiParamExample Example query:
- * 		/operators?q=period.year+eq+2015
+ * 		GET /operators?q=period.year+eq+2015 HTTP/1.1
  *		Retrieve all the operators of the year 2015.
  *
  *		Valid Operations: eq, ne, gt, ge, lt, le, like.
  *		The character '*' is a wildcard for the like operation.
  *
  * @apiParamExample Example fields:
- *      /operators?fields=id,name,email
+ *      GET /operators?fields=id,name,email HTTP/1.1
  *      Retrieves only the id, name and email fields.
  *
  * @apiParamExample Example sort:
- *      /operators?sort=name,-email
+ *      GET /operators?sort=name,-email HTTP/1.1
  *      Order the results by ascending name and then by descending email.
  *
  * @apiParamExample Full example:
- *      /operators?q=period.year+eq+2015&fields=id,name,email&sort=name,-email
+ *      GET /operators?q=period.year+eq+2015&fields=id,name,email&sort=name,-email HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
  * @apiParam {String[]} [q]				A query to filter the results.

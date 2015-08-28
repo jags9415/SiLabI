@@ -9,7 +9,7 @@
  * @apiDescription Retrieve a professor.
  *
  * @apiExample Example:
- * 		GET /professors/gjacksonhi
+ * 		GET /professors/gjacksonhi HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
  *

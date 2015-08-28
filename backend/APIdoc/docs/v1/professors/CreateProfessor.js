@@ -9,7 +9,8 @@
  * @apiDescription Create a professor.
  *
  * @apiExample Example:
- *     POST /professors
+ *     POST /professors HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "professor": {
  *         "email": "ataylor4a@moonfruit.com",

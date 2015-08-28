@@ -9,7 +9,8 @@
  * @apiDescription Create a student.
  *
  * @apiExample Example:
- *     POST /students
+ *     POST /students HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "student": {
  *         "email": "ataylor4a@moonfruit.com",

@@ -9,7 +9,8 @@
  * @apiDescription Delete a course.
  *
  * @apiExample Example:
- *     DELETE /courses/87
+ *     DELETE /courses/87 HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "access_token": "..."
  *     }

@@ -9,7 +9,8 @@
  * @apiDescription Create an operator.
  *
  * @apiExample Example:
- *     POST /operators/87
+ *     POST /operators/87 HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "period": {
  *         "value": 1,

@@ -9,7 +9,7 @@
  * @apiDescription Retrieve an administrator.
  *
  * @apiExample Example:
- * 		GET /administrators/54
+ * 		GET /administrators/54 HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
  *

@@ -9,7 +9,8 @@
  * @apiDescription Delete a professor.
  *
  * @apiExample Example:
- *     DELETE /professors/87
+ *     DELETE /professors/87 HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "access_token": "..."
  *     }

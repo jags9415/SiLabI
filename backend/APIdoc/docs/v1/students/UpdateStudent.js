@@ -9,7 +9,8 @@
  * @apiDescription Update a student.
  *
  * @apiExample Example:
- *     PUT /students/402
+ *     PUT /students/402 HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "student": {
  *         "email": "ataylor4a@moonfruit.com",

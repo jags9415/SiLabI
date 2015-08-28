@@ -9,22 +9,22 @@
  * @apiDescription Retrieve a list of courses.
  *
  * @apiParamExample Example query:
- * 		/courses?q=created_at+gt+2015-03-12T00:00:00
+ * 		GET /courses?q=created_at+gt+2015-03-12T00:00:00 HTTP/1.1
  *		Retrieve all the courses that was created after 2015/03/12
  *
  *		Valid Operations: eq, ne, gt, ge, lt, le, like.
  *		The character '*' is a wildcard for the like operation.
  *
  * @apiParamExample Example fields:
- *      /courses?fields=code,name
+ *      GET /courses?fields=code,name HTTP/1.1
  *      Retrieves only the code and name fields.
  *
  * @apiParamExample Example sort:
- *      /courses?sort=id
+ *      GET /courses?sort=id HTTP/1.1
  *      Order the results by ascending id.
  *
  * @apiParamExample Full example:
- *      /courses?q=created_at+gt+2015-03-12T00:00:00&fields=code,name&sort=id
+ *      GET /courses?q=created_at+gt+2015-03-12T00:00:00&fields=code,name&sort=id HTTP/1.1
  *
  * @apiParam {String}   access_token	The access token.
  * @apiParam {String[]} [q]           A query to filter the results.

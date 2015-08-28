@@ -9,7 +9,7 @@
  * @apiDescription Retrieve an user.
  *
  * @apiExample Example:
- * 		GET /users/gjacksonhi
+ * 		GET /users/gjacksonhi HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
  *

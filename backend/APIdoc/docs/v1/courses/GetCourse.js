@@ -9,7 +9,7 @@
  * @apiDescription Retrieve a course.
  *
  * @apiExample Example:
- * 		GET /courses/87
+ * 		GET /courses/87 HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
  *

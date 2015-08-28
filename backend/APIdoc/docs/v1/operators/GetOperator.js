@@ -9,7 +9,7 @@
  * @apiDescription Retrieve an operator.
  *
  * @apiExample Example:
- * 		GET /operators/54
+ * 		GET /operators/54 HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
  *

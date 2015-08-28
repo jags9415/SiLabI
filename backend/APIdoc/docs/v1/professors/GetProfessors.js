@@ -9,22 +9,22 @@
  * @apiDescription Retrieve a list of professors.
  *
  * @apiParamExample Example query:
- * 		/professors?q=name+like+*jose*,updated_at+gt+2015-03-12T00:00:00
+ * 		GET /professors?q=name+like+*jose*,updated_at+gt+2015-03-12T00:00:00 HTTP/1.1
  *		Retrieve all the professors which name contains 'jose' and was updated after 2015/03/12
  *
  *		Valid Operations: eq, ne, gt, ge, lt, le, like.
  *		The character '*' is a wildcard for the like operation.
  *
  * @apiParamExample Example fields:
- *      /professors?fields=id,name,email
+ *      GET /professors?fields=id,name,email HTTP/1.1
  *      Retrieves only the id, name and email fields.
  *
  * @apiParamExample Example sort:
- *      /professors?sort=name,-email
+ *      GET /professors?sort=name,-email HTTP/1.1
  *      Order the results by ascending name and then by descending email.
  *
  * @apiParamExample Full example:
- *      /professors?q=name+like+*jose*,updated_at+gt+2015-03-12T00:00:00&fields=id,name,email&sort=name,-email
+ *      GET /professors?q=name+like+*jose*,updated_at+gt+2015-03-12T00:00:00&fields=id,name,email&sort=name,-email HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
  * @apiParam {String[]} [q]				A query to filter the results.
