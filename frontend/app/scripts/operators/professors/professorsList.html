@@ -25,12 +25,10 @@
           </div>
         </div>
         <br><br>
-        <table class="table table-bordered" id="professorsTable">
+        <table class="table table-bordred table-striped" id="professorsTable">
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Primer Apellido</th>
-              <th>Segundo Apellido</th>
               <th>Correo</th>
               <th>Teléfono</th>
               <th>Detalle</th>
@@ -38,9 +36,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="professor in searchResults = (professorsArray | filter:searchText)" id="{{professor.id}}">
-              <td>{{professor.name}}</td>
-              <td>{{professor.last_name_1}}</td>
-              <td>{{professor.last_name_2}}</td>
+              <td>{{professor.full_name }}</td>
               <td>{{professor.email}}</td>
               <td>{{professor.phone}}</td>
               <td> <button class="btn btn-primary center-block" ng-click="seeProfessorDetail(professor.username)">Ver</button>
