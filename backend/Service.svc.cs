@@ -28,6 +28,7 @@ namespace SiLabI
         private StudentController _StudentController;
         private ProfessorController _ProfessorController;
         private OperatorController _OperatorController;
+        private CourseController _CourseController;
 
         /// <summary>
         /// Create a new Service.
@@ -40,6 +41,7 @@ namespace SiLabI
             this._StudentController = new StudentController();
             this._ProfessorController = new ProfessorController();
             this._OperatorController = new OperatorController();
+            this._CourseController = new CourseController();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace SiLabI.Model
         private static List<Field> _GenericUserValidFields;
         private static List<Field> _UserValidFields;
         private static List<Field> _OperatorValidFields;
+        private static List<Field> _CourseValidFields;
 
         private static List<Field> GenericUser
         {
@@ -78,6 +79,24 @@ namespace SiLabI.Model
         public static List<Field> Administrator
         {
             get { return GenericUser; }
+        }
+
+        public static List<Field> Course
+        {
+            get
+            {
+                if (_CourseValidFields == null)
+                {
+                    _CourseValidFields = new List<Field>();
+                    _CourseValidFields.Add(new Field("id", SqlDbType.Int));
+                    _CourseValidFields.Add(new Field("name", SqlDbType.VarChar));
+                    _CourseValidFields.Add(new Field("code", SqlDbType.VarChar));
+                    _CourseValidFields.Add(new Field("state", SqlDbType.VarChar));
+                    _CourseValidFields.Add(new Field("created_at", SqlDbType.DateTime));
+                    _CourseValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
+                }
+                return _CourseValidFields;
+            }
         }
     }
 }

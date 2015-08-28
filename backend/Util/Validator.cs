@@ -55,6 +55,17 @@ namespace SiLabI.Util
         }
 
         /// <summary>
+        /// Validate a state.
+        /// </summary>
+        /// <param name="state">The state.</param>
+        /// <returns>True if the input is valid.</returns>
+        public static bool IsValidState(string state)
+        {
+            var valid = new[] { "Activo", "Inactivo" };
+            return state == null || valid.Any(item => item.Equals(state, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
         /// Validate an user state.
         /// </summary>
         /// <param name="state">The state.</param>

@@ -209,5 +209,51 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete a professor.")]
         void DeleteProfessor(string id, BaseRequest request);
+
+
+        /*
+         * COURSES ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/courses/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of courses.")]
+        GetResponse<Course> GetCourses(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/courses/{id}/?access_token={token}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a course.")]
+        Course GetCourse(string id, string token);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/courses/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create a course.")]
+        Course CreateCourse(CourseRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/courses/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update a course.")]
+        Course UpdateCourse(string id, CourseRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/courses/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a course.")]
+        void DeleteCourse(string id, BaseRequest request);
     }
 }
