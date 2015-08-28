@@ -14,18 +14,17 @@
           controller: 'LoginController',
           controllerAs: 'Login'
         })
-        // FIXME: 'Acerca' instead of 'about'
-        .when('/about', {
+        .when('/About', {
           templateUrl: 'scripts/about/about.html',
           controller: 'AboutController',
           controllerAs: 'About'
         })
-        .when('/Inicio/Administrador', {
+        .when('/Administrador/Inicio', {
           templateUrl: 'scripts/administrators/adminsHome.html',
           controller: 'AdminController',
           controllerAs: 'Admin'
         })
-        .when('/Inicio/Operador', {
+        .when('/Operador/Inicio', {
           templateUrl: 'scripts/operators/operatorsHome.html',
           controller: 'OperatorsController',
           controllerAs: 'OperatorsHome'
@@ -59,12 +58,12 @@
           templateUrl: 'scripts/operators/students/detail.html',
           controller: 'StudentsDetailController'
         })
-        .when('/Inicio/Estudiante', {
+        .when('/Estudiante/Inicio', {
           templateUrl: 'scripts/students/studentsHome.html',
           controller: 'StudentsController',
           controllerAs: 'Students'
         })
-        .when('/Inicio/Docente', {
+        .when('/Docente/Inicio', {
           templateUrl: 'scripts/professors/professorsHome.html',
           controller: 'ProfessorsController',
           controllerAs: 'Professors'
