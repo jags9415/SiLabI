@@ -5,14 +5,14 @@
         .module('silabi')
         .service('RequestService', RequestService);
 
-    Service.$inject = ['$http', 'API_URL'];
+    RequestService.$inject = ['$http', '$q', 'API_URL'];
 
-    function RequestService($http, API_URL) {
+    function RequestService($http, $q, API_URL) {
 
-      this.get = get;
-      this.put = put;
-      this.post = post;
-      this.delete = delete;
+      this.get = getRequest;
+      this.put = putRequest;
+      this.post = postRequest;
+      this.delete = deleteRequest;
 
       /**
       * Join a base URL and a endpoint.
@@ -42,11 +42,16 @@
       * @param endpoint The endpoint.
       * @param queryString The query string.
       * @return A promise.
-      * @example get("/students", "?access_token=abcd1234&page=1")
+      * @example getRequest("/students", "?access_token=abcd1234&page=1")
       */
-      function get(endpoint, queryString) {
+      function getRequest(endpoint, queryString) {
         var url = join(API_URL, endpoint, queryString);
-        return $http.get(url);
+        var defer = $q.defer();
+
+        $http.get(url)
+        .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
+
+        return defer.promise;
       }
 
       /**
@@ -54,11 +59,16 @@
       * @param endpoint The endpoint.
       * @param data The data to sent.
       * @return A promise.
-      * @example put("/students", {"name": "...", "username": "..."})
+      * @example postRequest("/students", {"name": "...", "username": "..."})
       */
-      function post(enpoint, data) {
+      function postRequest(endpoint, data) {
         var url = join(API_URL, endpoint);
-        return $http.post(url, data);
+        var defer = $q.defer();
+
+        $http.post(url, data)
+        .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
+
+        return defer.promise;
       }
 
       /**
@@ -66,11 +76,16 @@
       * @param endpoint The endpoint.
       * @param data The data to sent.
       * @return A promise.
-      * @example put("/students/201242273", {"name": "...", "username": "..."})
+      * @example putRequest("/students/201242273", {"name": "...", "username": "..."})
       */
-      function put(endpoint, data) {
+      function putRequest(endpoint, data) {
         var url = join(API_URL, endpoint);
-        return $http.put(url, data);
+        var defer = $q.defer();
+        
+        $http.put(url, data)
+        .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
+        
+        return defer.promise;
       }
 
       /**
@@ -78,16 +93,21 @@
       * @param endpoint The endpoint.
       * @param data The data to sent.
       * @return A promise.
-      * @example put("/students/201242273", {"access_token": "..."})
+      * @example deleteRequest("/students/201242273", {"access_token": "..."})
       */
-      function delete(endpoint, data) {
+      function deleteRequest(endpoint, data) {
+        var defer = $q.defer();
         var config = {
           method: "DELETE",
           headers: {"Content-Type": "application/json"},
           url : join(API_URL, endpoint),
           data : data
         }
-        return $http(config);
+        
+        $http(config)
+        .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
+        
+        return defer.promise;
       }
     }
 })();

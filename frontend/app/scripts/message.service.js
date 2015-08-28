@@ -5,7 +5,7 @@
         .module('silabi')
         .service('MessageService', MessageService);
 
-    Service.$inject = ['toastr', '$q'];
+    MessageService.$inject = ['toastr', '$q'];
 
     function MessageService(toastr, $q) {
 
