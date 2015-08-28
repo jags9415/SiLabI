@@ -1,0 +1,50 @@
+<div id="wrapper">
+
+  <!-- SideBar directive -->
+  <default-sidebar></default-sidebar>
+
+  <!-- Page content -->
+  <div id="page-content-wrapper">
+      <div class="container">
+      <h1>Agregar Docente</h1>
+      <br><br>
+      <form>
+        <input class="form-control" placeholder="Nombre" name="professorinputName" type="text" ng-model="professor.name" required>
+        <br>
+        <input class="form-control" placeholder="Primer Apellido" name="professorinputLastName1" type="text" ng-model="professor.last_name_1" ng-blur="generateUserName()" required>
+        <br>
+        <input class="form-control" placeholder="Segundo Apellido" name="professor.last_name_2" type="text" ng-model="professor.last_name_2">
+        <br>
+        <input class="form-control" placeholder="Nombre de usuario" name="professorusername" type="text" ng-model="professor.username">
+        <br>
+        <input class="form-control" placeholder="Email" name="professorinputEmail" type="email" ng-model="professor.email">
+        <br>
+        <div class="row">
+          <div class="col-sm-6">
+            <select class="form-control" ng-model="selected_gender" required>
+              <option selected disabled> Seleccionar Género</option>
+              <option ng-repeat="gender in genders" value="{{gender.name}}"> {{gender.name}}</option>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <input class="form-control" placeholder="Telefono" name="professorinputPhoneNumber" type="text" ng-model="professor.phone">
+          </div>
+        </div>
+        <br>
+        <input class="form-control" placeholder="Contraseña" name="professorinputPassword" type="password" ng-model="professor.password" required>
+        <br>
+        <div class="row">
+          <div class="centerBox">
+            <div class="col-sm-6">
+              <button class="btn btn-default" type="button" ng-click="createProfessor()">Crear</button>
+            </div>
+            <div class="col-sm-6">
+              <button class="btn btn-default" type="button" ng-click="cleanProfessorCreate()">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>

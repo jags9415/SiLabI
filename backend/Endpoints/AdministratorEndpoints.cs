@@ -40,14 +40,14 @@ namespace SiLabI
             return _AdminController.GetAdministrator(num, token);
         }
 
-        public void CreateAdministrator(string id, BaseRequest request)
+        public User CreateAdministrator(string id, BaseRequest request)
         {
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-             _AdminController.CreateAdministrator(num, request);
+            return _AdminController.CreateAdministrator(num, request);
         }
 
         public void DeleteAdministrator(string id, BaseRequest request)

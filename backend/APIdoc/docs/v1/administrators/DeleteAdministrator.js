@@ -9,7 +9,8 @@
  * @apiDescription Delete an administrator.
  *
  * @apiExample Example:
- *     DELETE /administrators/87
+ *     DELETE /administrators/87 HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "access_token": "..."
  *     }

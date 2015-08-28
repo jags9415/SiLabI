@@ -22,7 +22,7 @@ namespace SiLabI.Util
         /// <param name="fields">The list of fields.</param>
         /// <returns>The formatted string.</returns>
         /// <example>
-        /// "Users.Name AS name, Users.Email AS email, States.Name AS state"
+        /// "[name], [username], [state]"
         /// </example>
         public static string FormatSelectFields(List<Field> fields)
         {
@@ -32,7 +32,7 @@ namespace SiLabI.Util
             for (int i = 0; i < fields.Count; i++)
             {
                 field = fields[i];
-                sb.Append(field.Table).Append(".").Append(field.Column).Append(" AS ").Append(field.Alias);
+                sb.AppendFormat("[{0}]", field.Name);
                 if (i < fields.Count - 1) sb.Append(", ");
             }
 
@@ -45,7 +45,7 @@ namespace SiLabI.Util
         /// <param name="fields">The list of fields.</param>
         /// <returns>The formatted string.</returns>
         /// <example>
-        /// "User.Gender ASC, User.Phone DESC"
+        /// "[gender] ASC, [phone] DESC"
         /// </example>
         public static string FormatOrderByFields(List<SortField> fields)
         {
@@ -55,7 +55,7 @@ namespace SiLabI.Util
             for (int i = 0; i < fields.Count; i++)
             {
                 field = fields[i];
-                sb.Append(field.Table).Append(".").Append(field.Column).Append(" ").Append(field.Order);
+                sb.AppendFormat("[{0}]", field.Name).Append(" ").Append(field.Order);
                 if (i < fields.Count - 1) sb.Append(", ");
             }
 
@@ -68,7 +68,7 @@ namespace SiLabI.Util
         /// <param name="fields">The list of fields.</param>
         /// <returns>The formatted string.</returns>
         /// <example>
-        /// "User.Gender = 'Male' AND User.Name LIKE 'Jo%'"
+        /// "[gender] = 'Male' AND [name] LIKE 'Jo%'"
         /// </example>
         public static string FormatWhereFields(List<QueryField> fields)
         {
@@ -78,7 +78,7 @@ namespace SiLabI.Util
             for (int i = 0; i < fields.Count; i++)
             {
                 field = fields[i];
-                sb.Append(field.Table).Append(".").Append(field.Column).Append(" ");
+                sb.AppendFormat("[{0}]", field.Name).Append(" ");
                 sb.Append(RelationshipUtils.ToString(field.Relationship)).Append(" ");
                 sb.Append("\'").Append(field.Value.Replace("*", "%")).Append("\'");
                 if (i < fields.Count - 1) sb.Append(" AND ");

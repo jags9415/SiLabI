@@ -84,11 +84,11 @@ namespace SiLabI.Data
         /// Creates an administrator.
         /// </summary>
         /// <param name="id">The user identification.</param>
-        public void CreateAdministrator(int id)
+        public DataTable CreateAdministrator(int id)
         {
             SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, id);
-            _Connection.executeStoredProcedure("sp_CreateAdministrator", parameters);
+            return _Connection.executeStoredProcedure("sp_CreateAdministrator", parameters);
         }
 
         /// <summary>

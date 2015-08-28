@@ -9,22 +9,22 @@
  * @apiDescription Retrieve a list of administrators.
  *
  * @apiParamExample Example query:
- * 		/administrators?q=name+like+*jose*,updated_at+gt+2015-03-12T00:00:00
+ * 		GET /administrators?q=name+like+*jose*,updated_at+gt+2015-03-12T00:00:00 HTTP/1.1
  *		Retrieve all the administrators which name contains 'jose' and was updated after 2015/03/12
  *
  *		Valid Operations: eq, ne, gt, ge, lt, le, like.
  *		The character '*' is a wildcard for the like operation.
  *
  * @apiParamExample Example fields:
- *      /administrators?fields=id,name,email
+ *      GET /administrators?fields=id,name,email HTTP/1.1
  *      Retrieves only the id, name and email fields.
  *
  * @apiParamExample Example sort:
- *      /administrators?sort=name,-email
+ *      GET /administrators?sort=name,-email HTTP/1.1
  *      Order the results by ascending name and then by descending email.
  *
  * @apiParamExample Full example:
- *      /administrators?q=name+like+*jose*,updated_at+gt+2015-03-12T00:00:00&fields=id,name,email&sort=name,-email
+ *      GET /administrators?q=name+like+*jose*,updated_at+gt+2015-03-12T00:00:00&fields=id,name,email&sort=name,-email HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
  * @apiParam {String[]} [q]				A query to filter the results.
@@ -40,6 +40,7 @@
  * @apiSuccess {String}									results.name 			The first name.
  * @apiSuccess {String}									results.last_name_1		The first last name.
  * @apiSuccess {String}									results.last_name_2		The second last name.
+ * @apiSuccess {String}									results.full_name		The full name.
  * @apiSuccess {String}									results.username		The username.
  * @apiSuccess {String="Masculino, Femenino"}			results.gender			The gender.
  * @apiSuccess {String}									results.email			The email address.
@@ -55,29 +56,31 @@
  *       "current_page", 1,
  *       "results": [
  *           {
- *              "created_at": "/Date(1439325374913-0600)/",
+ *              "created_at": "2015-08-27T22:14:20.646Z",
  *              "email": "gjacksonhi@squidoo.com",
  *              "gender": "Masculino",
  *              "id": 631,
  *              "last_name_1": "Lynch",
  *              "last_name_2": "Jackson",
  *              "name": "Gregory",
+ *              "full_name": "Gregory Lynch Jackson",
  *              "phone": "7-(384)880-7491",
  *              "state": "Activo",
- *              "updated_at": "/Date(1439325374913-0600)/",
+ *              "updated_at": "2015-08-27T22:14:20.646Z",
  *              "username": "gjacksonhi"
  *           },
  *           {
- *              "created_at": "/Date(1439325374913-0600)/",
+ *              "created_at": "2015-08-27T22:14:20.646Z",
  *              "email": "lturnerel@wordpress.org",
  *              "gender": "Femenino",
  *              "id": 526,
  *              "last_name_1": "George",
  *              "last_name_2": "Turner",
+ *              "full_name": "Lori George Turner",
  *              "name": "Lori",
  *              "phone": "8-(226)006-5947",
  *              "state": "Activo",
- *              "updated_at": "/Date(1439325374913-0600)/",
+ *              "updated_at": "2015-08-27T22:14:20.646Z",
  *              "username": "lturnerel"
  *           }
  *        ]

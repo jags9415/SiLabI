@@ -72,11 +72,17 @@
   <ItemGroup>
     <Compile Include="Configuration\CorsSupportBehavior.cs" />
     <Compile Include="Controllers\AdministratorController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\OperatorController.cs" />
     <Compile Include="Controllers\ProfessorController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\AdministratorDataAccess.cs" />
+    <Compile Include="Data\CourseDataAccess.cs" />
+    <Compile Include="Data\OperatorDataAccess.cs" />
     <Compile Include="Data\ProfessorDataAccess.cs" />
+    <Compile Include="Endpoints\CourseEndpoints.cs" />
+    <Compile Include="Endpoints\OperatorEndpoints.cs" />
     <Compile Include="Endpoints\ProfessorEndpoints.cs" />
     <Compile Include="Exceptions\InvalidParameterException.cs" />
     <Compile Include="Exceptions\MissingParameterException.cs" />
@@ -86,6 +92,12 @@
     <Compile Include="Configuration\ExtendedWebHttpBehavior.cs" />
     <Compile Include="Configuration\ExtendedWebHttpElement.cs" />
     <Compile Include="Configuration\ExtendedErrorHandler.cs" />
+    <Compile Include="Model\BaseObject.cs" />
+    <Compile Include="Model\Course.cs" />
+    <Compile Include="Model\CourseRequest.cs" />
+    <Compile Include="Model\Operator.cs" />
+    <Compile Include="Model\OperatorRequest.cs" />
+    <Compile Include="Model\Period.cs" />
     <Compile Include="Model\ProfessorRequest.cs" />
     <Compile Include="Model\Student.cs" />
     <Compile Include="Configuration\UnknowOperationInvoker.cs" />
@@ -103,7 +115,6 @@
     <Compile Include="Exceptions\Error.cs" />
     <Compile Include="Model\GetResponse.cs" />
     <Compile Include="Model\Query\Field.cs" />
-    <Compile Include="Model\Query\FieldBuilder.cs" />
     <Compile Include="Model\Query\QueryString.cs" />
     <Compile Include="Model\Query\QueryField.cs" />
     <Compile Include="Model\Query\SortField.cs" />

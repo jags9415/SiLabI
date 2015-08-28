@@ -29,14 +29,9 @@ namespace SiLabI
             return _StudentController.GetStudents(request);
         }
 
-        public Student GetStudent(string id, string token)
+        public Student GetStudent(string username, string token)
         {
-            int num;
-            if (!Int32.TryParse(id, out num))
-            {
-                throw new InvalidParameterException("id");
-            }
-            return _StudentController.GetStudent(num, token);
+            return _StudentController.GetStudent(username, token);
         }
 
         public Student CreateStudent(StudentRequest request)

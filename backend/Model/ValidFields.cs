@@ -1,6 +1,7 @@
 ﻿using SiLabI.Model.Query;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -10,7 +11,8 @@ namespace SiLabI.Model
     {
         private static List<Field> _GenericUserValidFields;
         private static List<Field> _UserValidFields;
-        private static List<Field> _StudentValidFields;
+        private static List<Field> _OperatorValidFields;
+        private static List<Field> _CourseValidFields;
 
         private static List<Field> GenericUser
         {
@@ -19,22 +21,18 @@ namespace SiLabI.Model
                 if (_GenericUserValidFields == null)
                 {
                     _GenericUserValidFields = new List<Field>();
-                    FieldBuilder builder;
-
-                    builder = new FieldBuilder("Users");
-                    _GenericUserValidFields.Add(builder.Int("PK_User_Id", "id"));
-                    _GenericUserValidFields.Add(builder.VarChar("Name", "name"));
-                    _GenericUserValidFields.Add(builder.VarChar("Last_Name_1", "last_name_1"));
-                    _GenericUserValidFields.Add(builder.VarChar("Last_Name_2", "last_name_2"));
-                    _GenericUserValidFields.Add(builder.VarChar("Username", "username"));
-                    _GenericUserValidFields.Add(builder.VarChar("Email", "email"));
-                    _GenericUserValidFields.Add(builder.VarChar("Phone", "phone"));
-                    _GenericUserValidFields.Add(builder.VarChar("Gender", "gender"));
-                    _GenericUserValidFields.Add(builder.DateTime("Created_At", "created_at"));
-                    _GenericUserValidFields.Add(builder.DateTime("Updated_At", "updated_at"));
-
-                    builder = new FieldBuilder("States");
-                    _GenericUserValidFields.Add(builder.VarChar("Name", "state"));
+                    _GenericUserValidFields.Add(new Field("id", SqlDbType.Int));
+                    _GenericUserValidFields.Add(new Field("name", SqlDbType.VarChar));
+                    _GenericUserValidFields.Add(new Field("last_name_1", SqlDbType.VarChar));
+                    _GenericUserValidFields.Add(new Field("last_name_2", SqlDbType.VarChar));
+                    _GenericUserValidFields.Add(new Field("full_name", SqlDbType.VarChar));
+                    _GenericUserValidFields.Add(new Field("username", SqlDbType.VarChar));
+                    _GenericUserValidFields.Add(new Field("email", SqlDbType.VarChar));
+                    _GenericUserValidFields.Add(new Field("phone", SqlDbType.VarChar));
+                    _GenericUserValidFields.Add(new Field("gender", SqlDbType.VarChar));
+                    _GenericUserValidFields.Add(new Field("created_at", SqlDbType.DateTime));
+                    _GenericUserValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
+                    _GenericUserValidFields.Add(new Field("state", SqlDbType.VarChar));
                 }
                 return _GenericUserValidFields;
             }
@@ -47,11 +45,24 @@ namespace SiLabI.Model
                 if (_UserValidFields == null)
                 {
                     _UserValidFields = new List<Field>(GenericUser);
-
-                    FieldBuilder builder = new FieldBuilder("Users");
-                    _UserValidFields.Add(builder.VarChar("Type", "type"));
+                    _UserValidFields.Add(new Field("type", SqlDbType.VarChar));
                 }
                 return _UserValidFields;
+            }
+        }
+
+        public static List<Field> Operator
+        {
+            get
+            {
+                if (_OperatorValidFields == null)
+                {
+                    _OperatorValidFields = new List<Field>(GenericUser);
+                    _OperatorValidFields.Add(new Field("period.value", SqlDbType.Int));
+                    _OperatorValidFields.Add(new Field("period.type", SqlDbType.VarChar));
+                    _OperatorValidFields.Add(new Field("period.year", SqlDbType.Int));
+                }
+                return _OperatorValidFields;
             }
         }
 
@@ -65,14 +76,27 @@ namespace SiLabI.Model
             get { return GenericUser; }
         }
 
-        public static List<Field> Operator
+        public static List<Field> Administrator
         {
             get { return GenericUser; }
         }
 
-        public static List<Field> Administrator
+        public static List<Field> Course
         {
-            get { return GenericUser; }
+            get
+            {
+                if (_CourseValidFields == null)
+                {
+                    _CourseValidFields = new List<Field>();
+                    _CourseValidFields.Add(new Field("id", SqlDbType.Int));
+                    _CourseValidFields.Add(new Field("name", SqlDbType.VarChar));
+                    _CourseValidFields.Add(new Field("code", SqlDbType.VarChar));
+                    _CourseValidFields.Add(new Field("state", SqlDbType.VarChar));
+                    _CourseValidFields.Add(new Field("created_at", SqlDbType.DateTime));
+                    _CourseValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
+                }
+                return _CourseValidFields;
+            }
         }
     }
 }

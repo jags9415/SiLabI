@@ -19,14 +19,11 @@ namespace SiLabI.Model.Query
         /// <summary>
         /// Creates a new Field.
         /// </summary>
-        /// <param name="table">The table that contains this field.</param>
-        /// <param name="column">The name of the field in the database.</param>
-        /// <param name="alias">The alias.</param>
-        public Field(string table, string column, string alias, SqlDbType type)
+        /// <param name="name">The name.</param>
+        /// <param name="type">The type.</param>
+        public Field(string name, SqlDbType type)
         {
-            this.Table = table;
-            this.Column = column;
-            this.Alias = alias;
+            this.Name = name;
             this.Type = type;
         }
 
@@ -34,22 +31,12 @@ namespace SiLabI.Model.Query
         /// Creates a new Field.
         /// </summary>
         /// <param name="field">The field.</param>
-        public Field(Field field) : this(field.Table, field.Column, field.Alias, field.Type) { }
+        public Field(Field field) : this(field.Name, field.Type) { }
 
         /// <summary>
         /// The name of the field.
         /// </summary>
-        public string Alias { get; set; }
-
-        /// <summary>
-        /// The table that contains this field.
-        /// </summary>
-        public string Table { get; set; }
-
-        /// <summary>
-        /// The name of this field in the database.
-        /// </summary>
-        public string Column { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// The type of this field.

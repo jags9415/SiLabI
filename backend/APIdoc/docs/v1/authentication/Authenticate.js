@@ -16,6 +16,7 @@
  * @apiSuccess {String}													user.name 			The first name.
  * @apiSuccess {String}													user.last_name_1	The first last name.
  * @apiSuccess {String}													user.last_name_2	The second last name.
+ * @apiSuccess {String}													user.full_name		The full name.
  * @apiSuccess {String}													user.username		The username.
  * @apiSuccess {String="Masculino, Femenino"}							user.gender			The gender.
  * @apiSuccess {String}													user.email			The email address.
@@ -26,7 +27,8 @@
  * @apiSuccess {Date}													user.updated_at		The last update date.
  *
  * @apiParamExample {json} Request-Example:
- *     POST /authenticate
+ *     POST /authenticate HTTP/1.1
+ *     Content-Type: application/json
  *     {
  *       "username": "emurray1",
  *       "password": "..."
@@ -41,13 +43,14 @@
  *         "name": "Eric",
  *         "last_name_1": "Andrews",
  *         "last_name_2": "Murray",
+ *         "full_name": "Eric Andrews Murray",
  *         "username": "emurray1"
  *         "gender": "Masculino",
  *         "email": "emurray1@buzzfeed.com",
  *         "phone": "83567411",
  *         "type": "Estudiante",
- *         "created_at": "/Date(1439606715483-0600)/",
- *         "updated_at": "/Date(1439606715483-0600)/"
+ *         "created_at": "2015-08-27T22:14:20.646Z",
+ *         "updated_at": "2015-08-27T22:14:20.646Z"
  *       }
  *     }
  *

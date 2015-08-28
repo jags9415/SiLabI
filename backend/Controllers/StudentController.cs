@@ -40,9 +40,10 @@ namespace SiLabI.Controllers
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Query.Exists(element => element.Alias == "state"))
+            // By default search only active students.
+            if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("States", "Name", "state", SqlDbType.VarChar);
+                Field field = new Field("state", SqlDbType.VarChar);
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -64,18 +65,18 @@ namespace SiLabI.Controllers
         /// <summary>
         /// Get a student.
         /// </summary>
-        /// <param name="id">The user identification.</param>
+        /// <param name="username">The username.</param>
         /// <param name="token">The access token.</param>
         /// <returns>The student.</returns>
-        public Student GetStudent(int id, string token)
+        public Student GetStudent(string username, string token)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _StudentDA.GetStudent(id);
+            DataTable table = _StudentDA.GetStudent(username);
 
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "El identificador ingresado no corresponde a un estudiante");
+                throw new WcfException(HttpStatusCode.BadRequest, "Estudiante no encontrado.");
             }
 
             return Student.Parse(table.Rows[0]);

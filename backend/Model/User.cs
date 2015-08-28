@@ -18,21 +18,18 @@ namespace SiLabI.Model
     /// An user data.
     /// </summary>
     [DataContract]
-    public class User
+    public class User : BaseObject
     {
-        protected int? _id;
         protected string _name;
         protected string _lastname1;
         protected string _lastname2;
+        protected string _fullname;
         protected string _username;
         protected string _password;
         protected string _gender;
         protected string _email;
         protected string _phone;
-        protected string _state;
         protected string _type;
-        protected DateTime? _createdAt;
-        protected DateTime? _updatedAt;
 
         /// <summary>
         /// Creates a new empty user.
@@ -49,6 +46,7 @@ namespace SiLabI.Model
             this.Name = user.Name;
             this.LastName1 = user.LastName1;
             this.LastName2 = user.LastName2;
+            this.FullName = user.FullName;
             this.Gender = user.Gender;
             this.Username = user.Username;
             this.Password = user.Password;
@@ -58,23 +56,6 @@ namespace SiLabI.Model
             this.Type = user.Type;
             this.CreatedAt = user.CreatedAt;
             this.UpdatedAt = user.UpdatedAt;
-        }
-
-        /// <summary>
-        /// The user identification number.
-        /// </summary>
-        [DataMember(EmitDefaultValue = false, Name = "id")]
-        public virtual int? Id
-        {
-            set
-            {
-                if (!Validator.IsValidId(value))
-                {
-                    throw new InvalidParameterException("id", "Ingrese un número > 0");
-                }
-                _id = value;
-            }
-            get { return _id; }
         }
 
         /// <summary>
@@ -105,6 +86,16 @@ namespace SiLabI.Model
         {
             set { _lastname2 = value; }
             get { return _lastname2; }
+        }
+
+        /// <summary>
+        /// The full name.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "full_name")]
+        public virtual string FullName
+        {
+            set { _fullname = value; }
+            get { return _fullname; }
         }
 
         /// <summary>
@@ -179,30 +170,10 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The creation date.
-        /// </summary>
-        [DataMember(EmitDefaultValue = false, Name = "created_at")]
-        public virtual DateTime? CreatedAt
-        {
-            set { _createdAt = value; }
-            get { return _createdAt; }
-        }
-
-        /// <summary>
-        /// The last update date.
-        /// </summary>
-        [DataMember(EmitDefaultValue = false, Name = "updated_at")]
-        public virtual DateTime? UpdatedAt
-        {
-            set { _updatedAt = value; }
-            get { return _updatedAt; }
-        }
-
-        /// <summary>
         /// The state.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "state")]
-        public virtual string State
+        public override string State
         {
             set
             {
@@ -236,7 +207,7 @@ namespace SiLabI.Model
         /// Check if the object properties are valid for a create operation.
         /// </summary>
         /// <returns></returns>
-        public virtual bool IsValidForCreate()
+        public override bool IsValidForCreate()
         {
             bool valid = true;
 
@@ -253,7 +224,7 @@ namespace SiLabI.Model
         /// Check if the object properties are valid for an update operation.
         /// </summary>
         /// <returns></returns>
-        public virtual bool IsValidForUpdate()
+        public override bool IsValidForUpdate()
         {
             bool valid = true;
 
@@ -278,6 +249,7 @@ namespace SiLabI.Model
             user.Name = row.Table.Columns.Contains("name") ? Converter.ToString(row["name"]) : null;
             user.LastName1 = row.Table.Columns.Contains("last_name_1") ? Converter.ToString(row["last_name_1"]) : null;
             user.LastName2 = row.Table.Columns.Contains("last_name_2") ? Converter.ToString(row["last_name_2"]) : null;
+            user.FullName = row.Table.Columns.Contains("full_name") ? Converter.ToString(row["full_name"]) : null;
             user.Gender = row.Table.Columns.Contains("gender") ? Converter.ToString(row["gender"]) : null;
             user.Email = row.Table.Columns.Contains("email") ? Converter.ToString(row["email"]) : null;
             user.Phone = row.Table.Columns.Contains("phone") ? Converter.ToString(row["phone"]) : null;

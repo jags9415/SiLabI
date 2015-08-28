@@ -39,9 +39,10 @@ namespace SiLabI.Controllers
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Query.Exists(element => element.Alias == "state"))
+            // By default search only active administrators.
+            if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("States", "Name", "state", SqlDbType.VarChar);
+                Field field = new Field("state", SqlDbType.VarChar);
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -74,7 +75,7 @@ namespace SiLabI.Controllers
 
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "El identificador ingresado no corresponde a un administrador");
+                throw new WcfException(HttpStatusCode.BadRequest, "Administrador no encontrado");
             }
 
             return User.Parse(table.Rows[0]);
@@ -85,7 +86,7 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>The user data.</returns>
-        public void CreateAdministrator(int id, BaseRequest request)
+        public User CreateAdministrator(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -94,7 +95,8 @@ namespace SiLabI.Controllers
             
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Admin);
-            _AdminDA.CreateAdministrator(id);
+            DataTable table = _AdminDA.CreateAdministrator(id);
+            return User.Parse(table.Rows[0]);
         }
 
         /// <summary>
