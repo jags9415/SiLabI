@@ -9,6 +9,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/toastr/toastr.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -24,7 +25,7 @@
 
     <!-- Add your site or application content here -->
 
-    
+
     <div class="silabiHeader">
         <div ng-if="sessionStorage.getItem('access_token') != null">
             <div class="dropdown title pull-right">
@@ -70,6 +71,7 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/crypto-js/rollups/sha256.js"></script>
+    <script src="bower_components/toastr/toastr.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -110,7 +112,7 @@
         <script src="scripts/professors/professors.controller.js"></script>
 
         <script src="scripts/sidebar/default/defaultSidebar.directive.js"></script>
-        
+
 
 
 </body>
