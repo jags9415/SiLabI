@@ -4,12 +4,12 @@
   <default-sidebar></default-sidebar>
 
   <!-- Page content -->
-  <div id="page-content-wrapper" ng-init="loadStudents()">
-    <div class="container">
+  <div id="page-content-wrapper" >
+    <div ng-init="loadStudents()">
       <h1>Estudiantes</h1>
       <br>
       <br>
-      <div class="container">
+      <div>
         <div ng-hide="noStudents()">
           <div class="row">
             <div class="col-sm-6">
@@ -25,7 +25,7 @@
             </div>
           </div>
           <br><br>
-          <table class="table table-bordered" id="professorsTable">
+          <table class="table table-striped custab" id="professorsTable">
             <thead>
               <tr>
                 <th>Carne</th>
@@ -33,7 +33,7 @@
                 <th>Apellidos</th>
                 <th>Correo</th>
                 <th>Estado</th>
-                <th>Detalle</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
@@ -43,7 +43,10 @@
                 <td>{{ student.last_name_1 + ' ' + student.last_name_2 }} </td>
                 <td>{{ student.email }} </td>
                 <td>{{ student.state }} </td>
-                <td> <button class="btn btn-primary center-block" ng-click="seeStudentDetail(student.username)">Ver</button>
+                <td class="text-center">
+                  <a class='btn btn-info btn-sm'><span class="glyphicon glyphicon-eye-open" ng-click="seeStudentDetail(student.username)"></span></a>
+                  <a href="#" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
               </tr>
             </tbody>
           </table>
