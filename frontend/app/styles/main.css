@@ -115,7 +115,7 @@ td
 
 .content-box
 {
-  padding-top: 7%;
+  padding-bottom: 3%;
 }
 
 .silabiHeader > p
@@ -212,4 +212,34 @@ td
 
 .advanced-search {
   padding-top: 1%;
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.navbar-brand {
+  padding: 0;
+}
+
+.navbar-inverse {
+  background-color: #002D56;
+}
+
+.navbar-inverse .navbar-toggle {
+  background-color: #002D56;
+  border-color: #002D56;
+}
+
+.navbar-inverse .navbar-toggle:hover {
+  background-color: #002D56;
+  border-color: #002D56;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: white;
+}
+
+.form-group label {
+  font-size: medium;
 }
