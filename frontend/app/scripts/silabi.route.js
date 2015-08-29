@@ -40,19 +40,19 @@
           controller: 'ProfessorsController',
           controllerAs: 'Professors'
         })
-        .when('/Operador/Operadores', {
-          templateUrl: 'scripts/operator/operators/operator.list.html',
+        .when('/Administrador/Operadores', {
+          templateUrl: 'scripts/administrator/operators/operator.list.html',
           controller: 'OperatorListController',
           controllerAs: 'OperatorList',
           reloadOnSearch: false
         })
-        .when('/Operador/Operadores/Agregar', {
-          templateUrl: 'scripts/operator/operators/operator.create.html',
+        .when('/Administrador/Operadores/Agregar', {
+          templateUrl: 'scripts/administrator/operators/operator.create.html',
           controller: 'OperatorCreateController',
           controllerAs: 'Operator'
         })
-        .when('/Operador/Operador/:id', {
-          templateUrl: 'scripts/operator/operators/operator.detail.html',
+        .when('/Administrador/Operadores/:id', {
+          templateUrl: 'scripts/administrator/operators/operator.detail.html',
           controller: 'OperatorDetailController',
           controllerAs: 'Operator'
         })

@@ -67,11 +67,11 @@
         }
 
         function createOperator() {
-          $location.path('/Operador/Operadores/Agregar');
+          $location.path('/Administrador/Operadores/Agregar');
         }
 
         function openOperator(id) {
-          $location.path('/Operador/Operador/' + id);
+          $location.path('/Administrador/Operadores/' + id);
         }
 
         function deleteOperator(id) {
