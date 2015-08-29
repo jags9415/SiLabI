@@ -43,7 +43,8 @@
         .when('/Operador/Operadores', {
           templateUrl: 'scripts/operator/operators/operator.list.html',
           controller: 'OperatorListController',
-          controllerAs: 'OperatorList'
+          controllerAs: 'OperatorList',
+          reloadOnSearch: false
         })
         .when('/Operador/Operadores/Agregar', {
           templateUrl: 'scripts/operator/operators/operator.create.html',
