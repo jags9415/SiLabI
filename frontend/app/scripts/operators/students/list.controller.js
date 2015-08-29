@@ -5,32 +5,33 @@
         .module('silabi')
         .controller('StudentListController', StudentListController);
 
-    StudentListController.$inject = ['$scope','$location', 'StudentService'];
+    StudentListController.$inject = ['$location', 'StudentService'];
 
-    function StudentListController($scope, $location, StudentService) {
-        $scope.students = [];
-        $scope.pageNumber = 1;
-        $scope.noStudents = noStudents;
-        $scope.loadStudents = loadStudents;
-        $scope.goToNextPage = goToNextPage;
-        $scope.goToPreviuosPage = goToPreviuosPage;
-        $scope.seeStudentDetail = seeStudentDetail;
+    function StudentListController($location, StudentService) {
+      var vm = this;
+        vm.students = [];
+        vm.pageNumber = 1;
+        vm.noStudents = noStudents;
+        vm.loadStudents = loadStudents;
+        vm.goToNextPage = goToNextPage;
+        vm.goToPreviuosPage = goToPreviuosPage;
+        vm.seeStudentDetail = seeStudentDetail;
 
         function loadStudents() {
-          var page = $scope.pageNumber;
-          StudentService.getByPage(page)
+          var page = vm.pageNumber;
+          StudentService.GetAll(page)
           .then(getStudents)
           .catch(showError);
         }
 
         function goToNextPage() {
-          $scope.pageNumber++;
-          $scope.loadStudents();
+          vm.pageNumber++;
+          vm.loadStudents();
         }
 
         function goToPreviuosPage() {
-          $scope.pageNumber--;
-          $scope.loadStudents();
+          vm.pageNumber--;
+          vm.loadStudents();
         }
 
         function seeStudentDetail(studentUsername) {
@@ -38,8 +39,8 @@
         }
 
         function getStudents(result) {
-          $scope.students = result.results;
-          return $scope.students;
+          vm.students = result.results;
+          return vm.students;
         }
 
         function showError(error) {
@@ -50,7 +51,7 @@
         }
 
         function noStudents(){
-          return $scope.students.length == 0;
+          return vm.students.length == 0;
         }
     }
 })();

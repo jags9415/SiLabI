@@ -5,41 +5,46 @@
         .module('silabi')
         .controller('StudentsDetailController', StudentsDetail);
 
-    StudentsDetail.$inject = ['$scope','$routeParams', 'StudentService'];
+    StudentsDetail.$inject = ['$routeParams', 'StudentService'];
 
-    function StudentsDetail($scope, $routeParams, StudentService) {
-        $scope.student = {};
-        $scope.username = $routeParams.username;
-        $scope.userID;
-        $scope.requestForUser = requestForUser;
-        $scope.updateInfo = updateInfo;
+    function StudentsDetail($routeParams, StudentService) {
+      var vm = this;
+        vm.student = {};
+        vm.username = $routeParams.username;
+        vm.userID;
+        vm.requestForUser = requestForUser;
+        vm.updateInfo = updateInfo;
+        vm.genders = [
+          { name: 'Masculino' },
+          { name: 'Femenino' }
+        ];
 
         function requestForUser() {
-          var username = $scope.username;
-          StudentService.getByUsername(username)
+          var username = vm.username;
+          StudentService.GetOne(username)
           .then(getUserInfo)
           .catch(showError);
         }
 
         function getUserInfo(result) {
-          $scope.student = result;
-          $scope.userID = result.id;
-          return $scope.student;
+          vm.student = result;
+          vm.userID = result.id;
+          return vm.student;
         }
 
         function showError(error) {
           if (error.status === 404)
             alert("No se pudo conectar con el servidor");
           else
-            alert(error.data.description);
+            alert(error.data);
         }
 
         function updateInfo() {
-          var newUserInfo = $scope.student;
-          var userID = $scope.userID;
-          StudentService.update(userID, newUserInfo)
+          var newUserInfo = vm.student;
+          var userID = vm.userID;
+          StudentService.Update(userID, newUserInfo)
           .then(function(result) {
-            $scope.student = result;
+            vm.student = result;
           })
           .catch(showError);
         }

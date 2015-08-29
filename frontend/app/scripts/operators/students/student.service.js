@@ -3,61 +3,29 @@
 
     angular
         .module('silabi')
-        .factory('StudentService', students);
+        .service('StudentService', LoginService);
 
-    students.$inject = ['$http', 'API_URL'];
+    LoginService.$inject = ['RequestService'];
 
-    function students($http, apiUrl) {
-        var service = {
-            getByPage: getByPage,
-            getByUsername: getByUsername,
-            update: update
-        };
+    function LoginService(RequestService) {
+        this.GetAll = GetAll;
+        this.GetOne = GetOne;
+        this.Update = Update;
 
-        return service;
+        function GetAll(Page) {
+          return RequestService.get('/students?page=' + Page + '&access_token=123'); // Insert a real access_token
+        }
 
-        function getByPage(pageNumber) {
-          return $http.get(apiUrl + '/students?page=' + pageNumber + '&access_token=123')
-          .then(function(response) {
-            return response.data;
+        function GetOne(Username) {
+          return RequestService.get('/students/' + Username);
+        }
+
+        function Update(StudentID, NewStudentInfo) {
+          return RequestService.put('/students/' + StudentID, {
+            'student': NewStudentInfo,
+            'access_token': '123'     // Insert a real access_token
           });
         }
 
-        function getByUsername(username) {
-          return $http.get(apiUrl + '/students/' + username)
-          .then(function(response) {
-            return response.data;
-          });
-        }
-
-        function update(userID, newInfo) {
-          return $http.put(apiUrl + '/students/' + userID , {
-            'student': newInfo,
-            'access_token': '1'
-          })
-          .then(function(response) {
-            return response.data;
-          });
-        }
-
-        /**
-        CREATE
-
-        {
-    "student": {
-        "email": "emmanueslq@hotmail.com",
-        "id": "201240052",
-        "last_name_1": "sanchez",
-        "gender":"Masculino",
-        "name": "murillo",
-        "username":"201240052",
-        "password": "0728374821",
-        "phone": "89623157",
-        "last_name_2": "morales"
-    },
-    "access_token": "ok"
-}
-
-**/
     }
 })();

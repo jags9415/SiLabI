@@ -56,7 +56,8 @@
         })
         .when('/Operador/Estudiantes/:username', {
           templateUrl: 'scripts/operators/students/detail.html',
-          controller: 'StudentsDetailController'
+          controller: 'StudentsDetailController',
+          controllerAs: 'StudentDetails'
         })
         .when('/Estudiante/Inicio', {
           templateUrl: 'scripts/students/studentsHome.html',

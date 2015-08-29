@@ -11,13 +11,7 @@
         vm.student = {};
         vm.genders = [
           { name: 'Masculino' },
-          { name: 'Femenenino' }
+          { name: 'Femenino' }
         ];
-
-        vm.mostrar = mostrar();
-
-        function mostrar() {
-          console.log(vm.student);
-        }
     }
 })();
