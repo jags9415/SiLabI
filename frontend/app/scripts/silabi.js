@@ -9,6 +9,9 @@
           'ngRoute',
           'ngSanitize',
           'ngTouch',
+          'ngStorage',
+          'angular-jwt',
+          'ui.bootstrap.showErrors',
           'silabi.sidebar',
         ]);
 })();

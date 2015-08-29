@@ -3,7 +3,8 @@
 
     angular
         .module('silabi')
-        .config(routeConfig);
+        .config(routeConfig)
+        .run(routeChangeListener);
 
     routeConfig.$inject = ['$routeProvider'];
 
@@ -12,22 +13,32 @@
         .when('/', {
           templateUrl: 'scripts/login/login.html',
           controller: 'LoginController',
-          controllerAs: 'Login'
+          controllerAs: 'Auth'
         })
         .when('/About', {
           templateUrl: 'scripts/about/about.html',
           controller: 'AboutController',
           controllerAs: 'About'
         })
-        .when('/Administrador/Inicio', {
+        .when('/Administrador', {
           templateUrl: 'scripts/administrators/adminsHome.html',
           controller: 'AdminController',
           controllerAs: 'Admin'
         })
-        .when('/Operador/Inicio', {
+        .when('/Operador', {
           templateUrl: 'scripts/operators/operatorsHome.html',
           controller: 'OperatorsController',
           controllerAs: 'OperatorsHome'
+        })
+        .when('/Estudiante', {
+          templateUrl: 'scripts/students/studentsHome.html',
+          controller: 'StudentsController',
+          controllerAs: 'Students'
+        })
+        .when('/Docente', {
+          templateUrl: 'scripts/professors/professorsHome.html',
+          controller: 'ProfessorsController',
+          controllerAs: 'Professors'
         })
         .when('/Operador/Docentes', {
           templateUrl: 'scripts/operators/professors/professorsList.html',
@@ -59,16 +70,30 @@
           controller: 'StudentsDetailController',
           controllerAs: 'StudentDetails'
         })
-        .when('/Estudiante/Inicio', {
-          templateUrl: 'scripts/students/studentsHome.html',
-          controller: 'StudentsController',
-          controllerAs: 'Students'
-        })
-        .when('/Docente/Inicio', {
-          templateUrl: 'scripts/professors/professorsHome.html',
-          controller: 'ProfessorsController',
-          controllerAs: 'Professors'
-        })
         .otherwise('/');
     }
+
+    routeChangeListener.$inject = ['$rootScope', '$location', '$sessionStorage', 'jwtHelper'];
+
+    function routeChangeListener($rootScope, $location, $sessionStorage, jwtHelper) {
+      $rootScope.$on("$routeChangeStart", function (event, next, current) {
+        var token = $sessionStorage['access_token'];
+
+        if (token && !jwtHelper.isTokenExpired(token)) {
+          var payload = jwtHelper.decodeToken(token);
+
+          if ((next.templateUrl === "scripts/public/login/login.html") ||
+              (next.templateUrl.startsWith("scripts/administrator") && payload.type !== "Administrador") ||
+              (next.templateUrl.startsWith("scripts/operator") && (payload.type !== "Operador" || payload.type !== "Administrador")) ||
+              (next.templateUrl.startsWith("scripts/professor") && payload.type !== "Docente") ||
+              (next.templateUrl.startsWith("scripts/student") && payload.type !== "Estudiante")) {
+                event.preventDefault();
+          }
+        }
+        else if (!next.templateUrl.startsWith("scripts/public")) {
+          $location.path('/');
+        }
+      });
+    }
+
 })();
