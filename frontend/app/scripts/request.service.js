@@ -18,35 +18,91 @@
       * Join a base URL and a endpoint.
       * @param baseUlr The base URL.
       * @param endpoint The endpoint.
-      * @param queryString The optional queryString.
       * @return The joined url.
       * @example join("http://localhost/api/v1/", "/students/201242273") => "http://localhost/api/v1/students/201242273"
-      * @example join("http://localhost/api/v1/", "/students/201242273", "?id=1") => "http://localhost/api/v1/students/201242273?id=1"
       */
-      function join(baseUrl, endpoint, queryString) {
+      function join(baseUrl, endpoint) {
         if (baseUrl.endsWith("/")) {
           baseUrl = baseUrl.substring(0, baseUrl.length - 1);
         }
         if (!endpoint.startsWith("/")) {
           endpoint = "/" + endpoint;
         }
-        var url = baseUrl + endpoint;
-        if (queryString) {
-          url += queryString;
+        return baseUrl + endpoint;
+      }
+
+      /**
+      * Create a query string based on a request object.
+      * @param request The request.
+      * @return The query string representation of the request.
+      */
+      function createQueryString(request) {
+        var query = "?";
+        var addAmpersand = false;
+
+        if (request.access_token) {
+          if (addAmpersand) query += "&";
+          query += "access_token=" + request.access_token;
+          addAmpersand = true;
         }
-        return url;
+
+        if (request.fields) {
+          if (addAmpersand) query += "&";
+          query += "fields=" + request.fields;
+          addAmpersand = true;
+        }
+
+        if (request.page) {
+          if (addAmpersand) query += "&";
+          query += "page=" + request.page;
+          addAmpersand = true;
+        }
+
+        if (request.limit) {
+          if (addAmpersand) query += "&";
+          query += "limit=" + request.limit;
+          addAmpersand = true;
+        }
+
+        if (request.sort && request.sort.field) {
+          if (addAmpersand) query += "&";
+          query += "sort=";
+          if (request.sort.type === "DESC") {
+            query += "-";
+          }
+          query += request.sort.field;
+          addAmpersand = true;
+        }
+
+        if (request.query) {
+          if (addAmpersand) query += "&";
+          query += "q=";
+          for (var property in request.query) {
+            if (request.query.hasOwnProperty(property)) {
+              query += property + '+' + request.query[property].operation + '+' + request.query[property].value;
+            }
+          }
+          addAmpersand = true;
+        }
+
+        return query;
       }
 
       /**
       * Perform a GET request to the SiLabI web service.
       * @param endpoint The endpoint.
-      * @param queryString The query string.
+      * @param request The request.
       * @return A promise.
-      * @example getRequest("/students", "?access_token=abcd1234&page=1")
+      * @example getRequest("/students", object)
       */
-      function getRequest(endpoint, queryString) {
-        var url = join(API_URL, endpoint, queryString);
+      function getRequest(endpoint, request) {
         var defer = $q.defer();
+        var url = join(API_URL, endpoint);
+
+        if (request) {
+          var queryString = createQueryString(request);
+          url += queryString;
+        }
 
         $http.get(url)
         .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
@@ -81,10 +137,10 @@
       function putRequest(endpoint, data) {
         var url = join(API_URL, endpoint);
         var defer = $q.defer();
-        
+
         $http.put(url, data)
         .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
-        
+
         return defer.promise;
       }
 
@@ -103,10 +159,10 @@
           url : join(API_URL, endpoint),
           data : data
         }
-        
+
         $http(config)
         .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
-        
+
         return defer.promise;
       }
     }

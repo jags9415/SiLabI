@@ -12,12 +12,6 @@ body {
   font-size: 14pt;
 }
 
-th
-{
-  text-align: center;
-
-}
-
 td
 {
   font-size: 12pt;
@@ -201,3 +195,7 @@ td
     box-shadow: 3px 3px 0px transparent;
     transition: 0.5s;
     }
+
+.table-search a {
+  font-size: small;
+}

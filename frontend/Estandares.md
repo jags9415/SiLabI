@@ -46,9 +46,10 @@ request
     "field": string,
     "type": string {"ASC", "DESC"}
   },
-  "query": string,
+  "query": object,
   "page": number,
-  "limit": number
+  "limit": number,
+  "access_token": string
 }
 
 ejemplo
@@ -68,11 +69,12 @@ ejemplo
     }
   },
   "page": 2,
-  "limit": 20
+  "limit": 20,
+  "access_token": "..."
 }
 ```
 
-Todos los elemento del objeto request (fields, sort, query, page, limit) son OPCIONALES.
+Los elemento del objeto request (fields, sort, query, page, limit) son OPCIONALES.
 
 2. `GetOne`
 
