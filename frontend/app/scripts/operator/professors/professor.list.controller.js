@@ -8,8 +8,8 @@
 
     function OperatorsController($scope, $routeParams, OperatorsService, ProfessorsService, $location) {
       
-      	init();
-      	//loadHomePage(1);
+        var vm = this;
+      	activate();
     	
     	$scope.loadHomePage = loadHomePage;
     	$scope.loadProfessorsPage = loadProfessorsPage;
@@ -127,6 +127,21 @@
     		$location.path("/Operador/Docentes/"+user_name);
     	}
 
+        function deleteProfessor(id)
+        {
+            console.log("Deleting professor: "+id+" access_token: "+$scope.access_token);
+            ProfessorsService.deleteProfessor(id, $scope.access_token).
+                then(function(response)
+                {
+                    alert("Usuario eliminado con éxito");
+                    //$location.path("/Operador/Docentes");
+                },
+                function(error)
+                {
+                    alert("Error al modificar datos de docente." + error.description);
+                });
+        }
+
     	function cleanProfessorCreate()
     	{
     		$scope.professor.email = null;
@@ -177,18 +192,8 @@
 	    	}
     	}
 
-    	function init()
+    	function activate()
     	{
-    		$scope.appsArray = 
-            [
-                {
-                    "cardId": "201230825",
-                    "date": Date(),
-                    "course": "Inglés 1 Computación",
-                    "lab": "Laboratorio A",
-                    "software": "SF-65"
-                }
-            ];
             $scope.professorsArray = [];
     		$scope.pageNumber = 0;
     		$scope.totalPages = 1;
