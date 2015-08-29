@@ -3,25 +3,19 @@
 
     angular
         .module('silabi')
-        .factory('LoginService', LoginService);
+        .service('LoginService', LoginService);
 
-    LoginService.$inject = ['$http', 'API_URL'];
+    LoginService.$inject = ['RequestService'];
 
-    function LoginService($http, apiUrl) {
-        var LoginDataService = {
-          getUser: getUser
-        };
+    function LoginService(RequestService) {
+        this.authenticate = authenticate;
 
-        return LoginDataService;
-
-        function getUser(username, password) {
-          return $http.post(apiUrl + '/authenticate' , {
+        function authenticate(username, password) {
+          var credentials = {
             'username': username,
             'password': password
-          })
-          .then(function(response) {
-            return response.data;
-          });
+          }
+          return RequestService.post('/authenticate', credentials);
         }
     }
 })();
