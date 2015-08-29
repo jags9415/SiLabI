@@ -8,9 +8,17 @@ Se deben utilizar la guía de estilos y buenas prácticas de [Jhon Papa](https:/
 **Nombre:** objeto.service.js  
 **Ejemplo:** student.service.js  
 
-**Tipo de Archivo:** Controlador de Angular (.js)  
-**Nombre:** objeto.controller.js  
-**Ejemplo:** student.controller.js  
+**Tipo de Archivo:** Controlador de listar objetos (.js)  
+**Nombre:** objeto.list.controller.js  
+**Ejemplo:** student.list.controller.js  
+
+**Tipo de Archivo:** Controlador de crear objetos (.js)  
+**Nombre:** objeto.create.controller.js  
+**Ejemplo:** student.create.controller.js
+
+**Tipo de Archivo:** Controlador de visualizar objetos (.js)  
+**Nombre:** objeto.detail.controller.js  
+**Ejemplo:** student.detail.controller.js
 
 **Tipo de Archivo:** Vista de listar objetos (.html)  
 **Nombre:** objeto.list.html  
@@ -141,6 +149,7 @@ Los elemento del objeto request (fields, sort, query, page, limit) son OPCIONALE
 ## Controladores
 
 Se debe usar la variable `vm` en vez del objecto `$scope`.  
+Para cargar la lógica inicial del controlador se debe usar la función `activate()`;
 
 **Nombre:** *objeto* + Controller  
 **Ejemplo:** StudentController  
@@ -159,11 +168,17 @@ Se debe usar la variable `vm` en vez del objecto `$scope`.
 
     function Controller(dependencies) {
         var vm = this;
+        vm.property = {};
+        vm.doSomething = doSomething;
 
         activate();
 
         // Initial logic goes here.
         function activate() {
+
+        }
+
+        function doSomething() {
 
         }
     }
