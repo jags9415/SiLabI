@@ -25,7 +25,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse" ng-controller="LoginController as Auth">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -44,7 +44,7 @@
               <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SiLabI <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="">Mi Perfil</a></li>
-                <li><a href="">Cerrar Sesión</a></li>
+                <li><a href="" ng-click="Auth.logOut()">Cerrar Sesión</a></li>
               </ul>
             </li>
           </ul>
