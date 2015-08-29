@@ -75,11 +75,14 @@
         }
 
         if (request.query && !jQuery.isEmptyObject(request.query)) {
+          var addComma = false;
           if (addAmpersand) query += "&";
           query += "q=";
           for (var property in request.query) {
             if (request.query.hasOwnProperty(property)) {
+              if (addComma) query += ',';
               query += property + '+' + request.query[property].operation + '+' + request.query[property].value;
+              addComma = true;
             }
           }
           addAmpersand = true;
@@ -103,8 +106,7 @@
           var queryString = createQueryString(request);
           url += queryString;
         }
-        console.log(JSON.stringify(request));
-        console.log(url);
+
         $http.get(url)
         .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
 

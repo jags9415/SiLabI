@@ -17,7 +17,7 @@
               <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="OperatorList.search()" ng-model="OperatorList.searched.full_name">
             </div>
             <div class="input-group">
-              <a href="">Búsqueda Avanzada</a>
+              <a href="" ng-click="OperatorList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
             </div>
             <button type="submit" name="button" ng-click="OperatorList.search()" hidden></button>
           </form>
@@ -27,6 +27,44 @@
             <i class="glyphicon glyphicon-plus"></i>
             <span class="hidden-xs">Crear</span>
           </a>
+        </div>
+      </div>
+      <div class="row" ng-show="OperatorList.advanceSearch">
+        <div class="col-md-12">
+          <form class="form-inline advanced-search">
+            <div class="form-group">
+              <input type="text" class="form-control" id="exampleInputName2" placeholder="Usuario" ng-model="OperatorList.searched.username">
+            </div>
+            <div class="form-group">
+              <ui-select id="state" ng-model="OperatorList.searched.state" theme="selectize">
+                <ui-select-match placeholder="Estado.">
+                  {{$select.selected.name}}
+                </ui-select-match>
+                <ui-select-choices repeat="state in OperatorList.states | filter: $select.search">
+                  <span ng-bind-html="state.name | highlight: $select.search"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+            <div class="form-group">
+              <ui-select id="period" ng-model="OperatorList.searched.period" theme="selectize">
+                <ui-select-match placeholder="Periodo.">
+                  {{$select.selected.value + ' ' + $select.selected.type}}
+                </ui-select-match>
+                <ui-select-choices repeat="period in OperatorList.periods | filter: $select.search">
+                  <span ng-bind-html="period.value | highlight: $select.search"></span>
+                  <span ng-bind-html="period.type | highlight: $select.search"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control" id="exampleInputEmail2" placeholder="Año" min="2000" ng-model="OperatorList.searched.year">
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-default" ng-click="OperatorList.search()">
+                <i class="glyphicon glyphicon-search"></i> Search
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
