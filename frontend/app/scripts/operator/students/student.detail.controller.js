@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('StudentsDetailController', StudentsDetail);
 
-    StudentsDetail.$inject = ['$routeParams', 'StudentService'];
+    StudentsDetail.$inject = ['$routeParams', '$location', 'StudentService', 'MessageService'];
 
-    function StudentsDetail($routeParams, StudentService) {
+    function StudentsDetail($routeParams, $location, StudentService, MessageService) {
       var vm = this;
         vm.student = {};
         vm.username = $routeParams.username;
@@ -34,9 +34,9 @@
 
         function showError(error) {
           if (error.status === 404)
-            alert("No se pudo conectar con el servidor");
+            MessageService.error("No se pudo conectar con el servidor");
           else
-            alert(error.data);
+            MessageService.error(error.data);
         }
 
         function updateInfo() {

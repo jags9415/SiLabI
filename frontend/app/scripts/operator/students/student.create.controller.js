@@ -5,6 +5,8 @@
         .module('silabi')
         .controller('StudentsAddController', StudentsAddController);
 
+    StudentsAddController.$inject = [''];
+
     function StudentsAddController() {
         var vm = this;
 
@@ -13,5 +15,11 @@
           { name: 'Masculino' },
           { name: 'Femenino' }
         ];
+
+        vm.create = create;
+
+        function create() {
+          // body...
+        }
     }
 })();
