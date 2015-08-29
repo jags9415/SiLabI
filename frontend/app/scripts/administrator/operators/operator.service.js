@@ -5,9 +5,9 @@
         .module('silabi')
         .service('OperatorService', OperatorService);
 
-    OperatorService.$inject = ['RequestService', '$sessionStorage'];
+    OperatorService.$inject = ['RequestService', '$localStorage'];
 
-    function OperatorService(RequestService, $sessionStorage) {
+    function OperatorService(RequestService, $localStorage) {
         this.GetAll = GetAll;
         this.GetOne = GetOne;
         this.Create = Create;
@@ -15,26 +15,26 @@
 
         function GetAll(request) {
           if (!request) request = {};
-          request.access_token = $sessionStorage['access_token'];
+          request.access_token = $localStorage['access_token'];
           return RequestService.get('/operators', request);
         }
 
         function GetOne(id) {
           var request = {};
-          request.access_token = $sessionStorage['access_token'];
+          request.access_token = $localStorage['access_token'];
           return RequestService.get('/operators/' + id, request);
         }
 
         function Create(id, period) {
           var request = {}
           request.period = period;
-          request.access_token = $sessionStorage['access_token'];
+          request.access_token = $localStorage['access_token'];
           return RequestService.post('/operators/' + id, request);
         }
 
         function Delete(id) {
           var request = {};
-          request.access_token = $sessionStorage['access_token'];
+          request.access_token = $localStorage['access_token'];
           return RequestService.delete('/operators/' + id, request);
         }
     }

@@ -5,16 +5,16 @@
         .module('silabi')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['LoginService', 'MessageService', '$location', '$sessionStorage', 'jwtHelper'];
+    LoginController.$inject = ['LoginService', 'MessageService', '$location', '$localStorage', 'jwtHelper'];
 
-    function LoginController(LoginService, MessageService, $location, $sessionStorage, jwtHelper) {
+    function LoginController(LoginService, MessageService, $location, $localStorage, jwtHelper) {
       var vm = this;
       vm.username;
       vm.password;
       vm.logIn = logIn;
       vm.logOut = logOut
       vm.isLoggedIn = isLoggedIn;
-      vm.$storage = $sessionStorage;
+      vm.$storage = $localStorage;
 
       function isLoggedIn() {
         var token = vm.$storage['access_token'];
