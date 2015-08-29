@@ -8,17 +8,18 @@
     <h2>Operadores</h2>
     <hr>
     <br>
-    <div class="table-search">
+    <div class="table-search" style="margin-bottom: 3%;">
       <div class="row">
         <div class="col-md-10 col-xs-9">
           <form class="form-horizontal">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-              <input class="form-control" placeholder="Buscar" name="searchInput" type="text">
+              <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="OperatorList.search()" ng-model="OperatorList.searched.full_name">
             </div>
             <div class="input-group">
-              <a href="">Busqueda Avanzada</a>
+              <a href="">Búsqueda Avanzada</a>
             </div>
+            <button type="submit" name="button" ng-click="OperatorList.search()" hidden></button>
           </form>
         </div>
         <div class="col-md-2 col-xs-3">
@@ -29,7 +30,7 @@
         </div>
       </div>
     </div>
-    <table class="table table-striped" style="margin-top: 3%;" ng-show="OperatorList.isLoaded() && !OperatorList.isEmpty()">
+    <table class="table table-striped" ng-show="OperatorList.isLoaded() && !OperatorList.isEmpty()">
       <thead>
         <tr>
           <th>Nombre</th>

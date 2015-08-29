@@ -11,6 +11,7 @@
         var vm = this;
         vm.loaded = false;
         vm.operators = [];
+        vm.seached = {};
         vm.limit = 20;
         vm.request = {
           fields : "id,full_name,username,state,period.value,period.year,period.type"
@@ -19,6 +20,7 @@
         vm.createOperator = createOperator;
         vm.open = openOperator;
         vm.delete = deleteOperator;
+        vm.search = searchOperators;
         vm.isEmpty = isEmpty;
         vm.isLoaded = isLoaded;
         vm.loadPage = loadPage;
@@ -48,6 +50,41 @@
           .catch(handleError);
         }
 
+        function createOperator() {
+          $location.path('/Administrador/Operadores/Agregar');
+        }
+
+        function openOperator(id) {
+          $location.path('/Administrador/Operadores/' + id);
+        }
+
+        function deleteOperator(id) {
+          OperatorService.Delete(id)
+          .then(handleDeleteSuccess)
+          .catch(handleError);
+        }
+
+        function searchOperators() {
+          vm.request.query = {};
+
+          if (vm.searched.full_name) {
+            vm.request.query.full_name = {
+              operation: "like",
+              value: '*' + vm.searched.full_name.replace(' ', '*') + '*'
+            }
+          }
+          
+          loadPage();
+        }
+
+        function isEmpty() {
+          return vm.operators.length == 0;
+        }
+
+        function isLoaded() {
+          return vm.loaded;
+        }
+
         function handleDeleteSuccess() {
           MessageService.success("Operador eliminado.");
           loadPage();
@@ -64,28 +101,6 @@
         function handleError(data) {
           MessageService.error(data.description);
           vm.loaded = true;
-        }
-
-        function createOperator() {
-          $location.path('/Administrador/Operadores/Agregar');
-        }
-
-        function openOperator(id) {
-          $location.path('/Administrador/Operadores/' + id);
-        }
-
-        function deleteOperator(id) {
-          OperatorService.Delete(id)
-          .then(handleDeleteSuccess)
-          .catch(handleError);
-        }
-
-        function isEmpty() {
-          return vm.operators.length == 0;
-        }
-
-        function isLoaded() {
-          return vm.loaded;
         }
     }
 })();

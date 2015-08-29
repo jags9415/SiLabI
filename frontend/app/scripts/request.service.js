@@ -74,7 +74,7 @@
           addAmpersand = true;
         }
 
-        if (request.query) {
+        if (request.query && !jQuery.isEmptyObject(request.query)) {
           if (addAmpersand) query += "&";
           query += "q=";
           for (var property in request.query) {
@@ -103,7 +103,8 @@
           var queryString = createQueryString(request);
           url += queryString;
         }
-
+        console.log(JSON.stringify(request));
+        console.log(url);
         $http.get(url)
         .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
 
