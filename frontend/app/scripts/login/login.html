@@ -1,27 +1,26 @@
-  <!-- Page content -->
-  <div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 center-block">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Iniciar Sesión</h3>
-            </div>
-            <div class="panel-body">
-              <form accept-charset="UTF-8" role="form">
-                <fieldset>
-                  <div class="form-group">
-                    <input class="form-control" placeholder="Identificación" name="username" type="text" ng-model="Login.username" required>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" placeholder="Contraseña" name="password" type="password" ng-model="Login.password" required>
-                  </div>
-                  <input class="btn btn-lg btn-info center-block" type="submit" value="Ingresar" ng-click="Login.authenticate()">
-                </fieldset>
-              </form>
-            </div>
-          </div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="panel panel-default" id="login-panel">
+        <div class="panel-heading">
+          <h3 class="panel-title">Iniciar Sesión</h3>
+        </div>
+        <div class="panel-body">
+          <form accept-charset="UTF-8" role="form">
+            <fieldset>
+              <div class="input-group" style="margin-bottom: 25px">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input class="form-control" placeholder="Identificación" name="username" type="text" ng-model="Auth.username" required>
+              </div>
+              <div class="input-group" style="margin-bottom: 25px">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input class="form-control" placeholder="Contraseña" name="password" type="password" ng-model="Auth.password" required>
+              </div>
+              <input class="btn btn-lg btn-primary center-block" value="Ingresar" type="submit" ng-click="Auth.logIn()"></input>
+            </fieldset>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>
