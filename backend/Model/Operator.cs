@@ -52,6 +52,11 @@ namespace SiLabI.Model
             op.Period.Value = row.Table.Columns.Contains("period.value") ? Converter.ToNullableInt32(row["period.value"]) : null;
             op.Period.Year = row.Table.Columns.Contains("period.year") ? Converter.ToNullableInt32(row["period.year"]) : null;
 
+            if (op.Period.Type == null && op.Period.Value == null && op.Period.Year == null)
+            {
+                op.Period = null;
+            }
+
             return op;
         }
     }

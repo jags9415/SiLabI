@@ -115,7 +115,7 @@ namespace SiLabI.Util
         public static bool IsValidPeriod(string period)
         {
             var valid = new[] { "Bimestre", "Trimestre", "Cuatrimestre", "Semestre" };
-            return period != null && valid.Any(item => item.Equals(period, StringComparison.OrdinalIgnoreCase));
+            return period == null || valid.Any(item => item.Equals(period, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
