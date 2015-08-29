@@ -11,21 +11,21 @@
       <form>
         <input class="form-control" placeholder="Nombre" name="studentName" type="text" ng-model="StudentsAdd.student.name" required>
         <br>
-        <input class="form-control" placeholder="Primer Apellido" name="studentLastName" type="text" ng-model="StudentsAdd.student.lastName" required>
+        <input class="form-control" placeholder="Primer Apellido" name="studentLastName" type="text" ng-model="StudentsAdd.student.last_name_1" required>
         <br>
-        <input class="form-control" placeholder="Segundo Apellido" name="studentSecondLastName" type="text" ng-model="StudentsAdd.student.secondLastName">
+        <input class="form-control" placeholder="Segundo Apellido" name="studentSecondLastName" type="text" ng-model="StudentsAdd.student.last_name_2">
         <br>
         <input class="form-control" placeholder="Email" name="studentEmail" type="email" ng-model="StudentsAdd.student.email">
         <br>
         <div class="row">
           <div class="col-sm-6">
-            <select class="form-control" ng-model="StudentsAdd.gender" required>
+            <select class="form-control" ng-model="StudentsAdd.student.gender" required>
               <option selected disabled> Seleccionar Género</option>
               <option ng-repeat="gender in StudentsAdd.genders" value="{{gender.name}}"> {{gender.name}} </option>
             </select>
           </div>
           <div class="col-sm-6">
-            <input class="form-control" placeholder="Telefono" name="studentPhone" type="text" ng-model="StudentsAdd.student.phoneNumber">
+            <input class="form-control" placeholder="Telefono" name="studentPhone" type="text" ng-model="StudentsAdd.student.phone">
           </div>
         </div>
         <br>
@@ -36,10 +36,10 @@
         <div class="row">
           <div class="centerBox">
             <div class="col-sm-6">
-              <button class="btn btn-default" type="button">Crear</button>
+              <button class="btn btn-default" type="button" ng-click="StudentsAdd.create()">Crear</button>
             </div>
             <div class="col-sm-6">
-              <button class="btn btn-default" type="button">Cancelar</button>
+              <button class="btn btn-default" type="button" ng-click="StudentsAdd.cancel()">Cancelar</button>
             </div>
           </div>
         </div>
