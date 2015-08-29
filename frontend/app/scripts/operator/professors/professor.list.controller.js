@@ -49,16 +49,13 @@
     		var pnumber = $scope.pageNumber + number;
     		if(pnumber > 0 && pnumber <= $scope.totalPages)
     		{
-    			console.log("Retrieving page number: " + pnumber);
     			$scope.professorsArray = [];
 	    		ProfessorsService.getProfessorsByPage(pnumber, "a"/*$scope.access_token*/ ).
 	    		then(function(response)
 			        {
 						$scope.professorsArray = response.results;
-                        console.log(response.results[0].username);
 						$scope.pageNumber = pnumber;
 						$scope.totalPages = response.total_pages;
-						console.log("Total pages: "+response.total_pages);
 					},
 					function(error)
 			        {
@@ -70,18 +67,45 @@
 
     	function checkProfessorSearch()
     	{
-    		if($scope.searchResults.length == 0 && !$scope.onSearch)
+            if($scope.searchText.length == 0)
+            {
+                var quant = $scope.professorsArray.length - 20;
+                $scope.professorsArray.splice(20, quant);
+            }
+    		else if($scope.searchResults.length == 0 && !$scope.onSearch)
     		{
-    			searchProfessor($scope.searchText);
+    			searchProfessor();
     		}
     	}
 
-    	function searchProfessor(name)
+    	function searchProfessor()
     	{
+            console.log("Looking for: "+$scope.searchText);
     		$scope.onSearch = true;
-    		ProfessorsService.searchProfessorByName(name, "a"/*$scope.access_token*/ ).
+            var jsonObject = 
+            {
+                "fields": "id, full_name, email, phone",
+                "sort" : {
+                "field": $scope.orderCriteria,
+                "type": $scope.orderType
+                },
+                "query":
+                {
+                    "full_name":
+                    {
+                        "operation":"like",
+                        "value":"*"+$scope.searchText+"*"
+                    }
+                },
+                "limit": 20,
+                "access_token": $scope.access_token
+            };
+
+    		ProfessorsService.searchProfessorByName(jsonObject).
 	    		then(function(response)
 			        {
+                        console.log(response.results.length);
+                        console.log(response.results);
 						$scope.professorsArray.push.apply($scope.professorsArray, response.results);
 						$scope.onSearch = false;
 					},
@@ -198,6 +222,9 @@
     		$scope.pageNumber = 0;
     		$scope.totalPages = 1;
     		$scope.onSearch = false;
+            $scope.orderType = "ASC";
+            $scope.orderCriteria = "name";
+            $scope.searchText = "";
     		$scope.genders = [{"name":"Masculino"}, {"name":"Femenino"}];
     		var name = "undefined";
             var accessToken = -1;

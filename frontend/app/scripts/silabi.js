@@ -11,6 +11,7 @@
           'ngTouch',
           'ngStorage',
           'angular-jwt',
+          'ui.bootstrap',
           'ui.select',
           'ui.mask',
           'ui.bootstrap.showErrors',

@@ -35,7 +35,7 @@
 
         function handleDeleteSuccess() {
           MessageService.success("Operador eliminado.");
-          $location.path('/Operador/Operadores')
+          $location.path('/Administrador/Operadores')
         }
 
         function handleError(data) {

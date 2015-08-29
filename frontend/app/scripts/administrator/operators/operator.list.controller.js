@@ -10,24 +10,39 @@
     function OperatorListController(OperatorService, MessageService, $location) {
         var vm = this;
         vm.loaded = false;
-        vm.current_page = 1;
-        vm.total_pages = 1;
         vm.operators = [];
-        vm.request = {};
-        vm.request.fields = "id,full_name,username,state,period.value,period.year,period.type";
+        vm.limit = 20;
+        vm.request = {
+          fields : "id,full_name,username,state,period.value,period.year,period.type"
+        };
+
         vm.createOperator = createOperator;
         vm.open = openOperator;
         vm.delete = deleteOperator;
         vm.isEmpty = isEmpty;
         vm.isLoaded = isLoaded;
+        vm.loadPage = loadPage;
 
         activate();
 
         function activate() {
-          loadOperators(vm.current_page);
+          var page = parseInt($location.search()['page']);
+
+          if (isNaN(page)) {
+            page = 1;
+          }
+
+          vm.totalPages = page;
+          vm.page = page;
+          loadPage();
         }
 
-        function loadOperators(page) {
+        function loadPage() {
+          $location.search('page', vm.page);
+
+          vm.request.page = vm.page;
+          vm.request.limit = vm.limit;
+
           OperatorService.GetAll(vm.request)
           .then(handleGetSuccess)
           .catch(handleError);
@@ -35,13 +50,14 @@
 
         function handleDeleteSuccess() {
           MessageService.success("Operador eliminado.");
-          loadOperators(vm.current_page);
+          loadPage();
         }
 
         function handleGetSuccess(data) {
           vm.operators = data.results;
-          vm.current_page = data.current_page;
-          vm.total_pages = data.total_pages;
+          vm.page = data.current_page;
+          vm.totalPages = data.total_pages;
+          vm.totalItems = vm.limit * vm.totalPages;
           vm.loaded = true;
         }
 
@@ -51,11 +67,11 @@
         }
 
         function createOperator() {
-          $location.path('/Operador/Operadores/Agregar');
+          $location.path('/Administrador/Operadores/Agregar');
         }
 
         function openOperator(id) {
-          $location.path('/Operador/Operador/' + id);
+          $location.path('/Administrador/Operadores/' + id);
         }
 
         function deleteOperator(id) {
