@@ -8,7 +8,7 @@
     function DefaultSideBar() {
         var directive = {
             restrict: 'EA',
-            templateUrl: 'scripts/sidebar/default/default-sidebar.html',
+            templateUrl: 'scripts/other/sidebar/default/default-sidebar.html',
             controller: DefaultSideBarController,
             controllerAs: 'vm',
             bindToController: true

@@ -38,7 +38,7 @@
 
         function retrieveProfessor()
         {
-            $scope.professorUserName =  $routeParams.userName;
+            $scope.professorUserName =  $routeParams.username;
             ProfessorsService.getProfessorByUserName($scope.professorUserName, "a"/*$scope.access_token*/ ).
             then(function(response)
             {

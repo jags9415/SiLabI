@@ -11,62 +11,62 @@
     function routeConfig($routeProvider) {
       $routeProvider
         .when('/', {
-          templateUrl: 'scripts/login/login.html',
+          templateUrl: 'scripts/public/login/login.html',
           controller: 'LoginController',
           controllerAs: 'Auth'
         })
         .when('/About', {
-          templateUrl: 'scripts/about/about.html',
+          templateUrl: 'scripts/public/about/about.html',
           controller: 'AboutController',
           controllerAs: 'About'
         })
         .when('/Administrador', {
-          templateUrl: 'scripts/administrators/adminsHome.html',
+          templateUrl: 'scripts/administrator/home.html',
           controller: 'AdminController',
           controllerAs: 'Admin'
         })
         .when('/Operador', {
-          templateUrl: 'scripts/operators/operatorsHome.html',
+          templateUrl: 'scripts/operator/home.html',
           controller: 'OperatorsController',
           controllerAs: 'OperatorsHome'
         })
         .when('/Estudiante', {
-          templateUrl: 'scripts/students/studentsHome.html',
+          templateUrl: 'scripts/student/home.html',
           controller: 'StudentsController',
           controllerAs: 'Students'
         })
         .when('/Docente', {
-          templateUrl: 'scripts/professors/professorsHome.html',
+          templateUrl: 'scripts/professor/home.html',
           controller: 'ProfessorsController',
           controllerAs: 'Professors'
         })
         .when('/Operador/Docentes', {
-          templateUrl: 'scripts/operators/professors/professorsList.html',
+          templateUrl: 'scripts/operator/professors/professors.list.html',
           controller: 'OperatorsController',
           controllerAs: 'Operator'
         })
         .when('/Operador/Docentes/Agregar', {
-          templateUrl: 'scripts/operators/professors/professorsCreate.html',
+          templateUrl: 'scripts/operator/professors/professors.create.html',
           controller: 'OperatorsController',
           controllerAs: 'Operator'
         })
-        .when('/Operador/Docentes/:userName', {
-          templateUrl: 'scripts/operators/professors/professorsDetail.html',
+        .when('/Operador/Docentes/:username', {
+          templateUrl: 'scripts/operator/professors/professors.detail.html',
           controller: 'OperatorsProfessorsController',
           controllerAs: 'OperatorProfessor'
         })
         .when('/Operador/Estudiantes', {
-          templateUrl: 'scripts/operators/students/list.html',
+          templateUrl: 'scripts/operator/students/student.list.html',
           controller: 'StudentListController',
           controllerAs: 'StudentList'
         })
         .when('/Operador/Estudiantes/Agregar', {
-          templateUrl: 'scripts/operators/students/add.html',
+          templateUrl: 'scripts/operator/students/student.create.html',
           controller: 'StudentsAddController',
           controllerAs: 'StudentsAdd'
         })
         .when('/Operador/Estudiantes/:username', {
-          templateUrl: 'scripts/operators/students/detail.html',
+          templateUrl: 'scripts/operator/students/student.detail.html',
           controller: 'StudentsDetailController',
           controllerAs: 'StudentDetails'
         })
@@ -84,7 +84,7 @@
 
           if ((next.templateUrl === "scripts/public/login/login.html") ||
               (next.templateUrl.startsWith("scripts/administrator") && payload.type !== "Administrador") ||
-              (next.templateUrl.startsWith("scripts/operator") && (payload.type !== "Operador" || payload.type !== "Administrador")) ||
+              (next.templateUrl.startsWith("scripts/operator") && payload.type !== "Operador" && payload.type !== "Administrador") ||
               (next.templateUrl.startsWith("scripts/professor") && payload.type !== "Docente") ||
               (next.templateUrl.startsWith("scripts/student") && payload.type !== "Estudiante")) {
                 event.preventDefault();
