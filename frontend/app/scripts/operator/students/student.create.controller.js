@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('StudentsAddController', StudentsAddController);
 
-    StudentsAddController.$inject = [''];
+    StudentsAddController.$inject = ['$location', 'RequestService', 'MessageService'];
 
-    function StudentsAddController() {
+    function StudentsAddController($location, RequestService, MessageService) {
         var vm = this;
 
         vm.student = {};
@@ -17,9 +17,27 @@
         ];
 
         vm.create = create;
+        vm.cancel = cancel;
 
         function create() {
-          // body...
+          RequestService.post('/students', {
+            'student': vm.student,
+            'access_token': '123'   // add a real access_token
+          })
+          .then(handleSuccess)
+          .catch(handleError);
+        }
+
+        function handleSuccess(result) {
+          vm.student = {};
+        }
+
+        function handleError(error) {
+          MessageService.error(error.description);
+        }
+
+        function cancel() {
+          $location.path('/');
         }
     }
 })();
