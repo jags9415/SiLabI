@@ -19,10 +19,14 @@
         <br>
         <div class="row">
           <div class="col-sm-6">
-            <select class="form-control" ng-model="StudentsAdd.student.gender" required>
-              <option selected disabled> Seleccionar Género</option>
-              <option ng-repeat="gender in StudentsAdd.genders" value="{{gender.name}}"> {{gender.name}} </option>
-            </select>
+            <ui-select id="period" ng-model="StudentsAdd.student.gender" theme="selectize">
+              <ui-select-match placeholder="Seleccionar Género">
+                {{ $select.selected.name }}
+              </ui-select-match>
+              <ui-select-choices repeat="gender in StudentsAdd.genders | filter: $select.search">
+                <span ng-bind-html="gender.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
           </div>
           <div class="col-sm-6">
             <input class="form-control" placeholder="Telefono" name="studentPhone" type="text" ng-model="StudentsAdd.student.phone">

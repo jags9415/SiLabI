@@ -34,6 +34,7 @@
         delete vm.$storage['access_token'];
         delete vm.$storage['user_id'];
         delete vm.$storage['user_name'];
+        delete vm.$storage['user_type'];
         $location.path('/');
       }
 
@@ -41,6 +42,7 @@
         vm.$storage['access_token'] = result.access_token;
         vm.$storage['user_id'] = result.user.id.toString();
         vm.$storage['user_name'] = result.user.full_name;
+        vm.$storage['user_type'] = result.user.type;
         redirectTo(result.user.type);
       }
 

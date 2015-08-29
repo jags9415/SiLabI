@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('StudentListController', StudentListController);
 
-    StudentListController.$inject = ['$location', 'StudentService'];
+    StudentListController.$inject = ['$location', 'StudentService', 'MessageService'];
 
-    function StudentListController($location, StudentService) {
+    function StudentListController($location, StudentService, MessageService) {
       var vm = this;
         vm.students = [];
         vm.pageNumber = 1;
@@ -16,12 +16,13 @@
         vm.goToNextPage = goToNextPage;
         vm.goToPreviuosPage = goToPreviuosPage;
         vm.seeStudentDetail = seeStudentDetail;
+        vm.delete = deleteStudent;
 
         function loadStudents() {
           var page = vm.pageNumber;
           StudentService.GetAll(page)
-          .then(getStudents)
-          .catch(showError);
+          .then(handleGetAllSuccess)
+          .catch(handleRequestError);
         }
 
         function goToNextPage() {
@@ -38,16 +39,27 @@
           $location.path('/Operador/Estudiantes/' + studentUsername);
         }
 
-        function getStudents(result) {
+        function handleGetAllSuccess(result) {
           vm.students = result.results;
           return vm.students;
         }
 
-        function showError(error) {
-          if (error.status === 404)
-            alert("No se pudo conectar con el servidor");
+        function handleRequestError(data) {
+          if (data.status === 404)
+            MessageService.error("No se pudo conectar con el servidor");
           else
-            alert(error.data.description);
+            MessageService.error(data.description);
+        }
+
+        function deleteStudent(StudentID) {
+          StudentService.Delete(StudentID)
+          .then(handleDeleteSuccess)
+          .catch(handleRequestError);
+        }
+
+        function handleDeleteSuccess(result) {
+          MessageService.success("Estudiante eliminado.");
+          loadStudents();
         }
 
         function noStudents(){

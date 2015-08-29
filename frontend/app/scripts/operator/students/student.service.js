@@ -3,17 +3,19 @@
 
     angular
         .module('silabi')
-        .service('StudentService', LoginService);
+        .service('StudentService', StudentService);
 
-    LoginService.$inject = ['RequestService'];
+    StudentService.$inject = ['RequestService', '$sessionStorage'];
 
-    function LoginService(RequestService) {
+    function StudentService(RequestService, $sessionStorage) {
         this.GetAll = GetAll;
         this.GetOne = GetOne;
         this.Update = Update;
+        this.Create = Create;
+        this.Delete = Delete;
 
         function GetAll(Page) {
-          return RequestService.get('/students?page=' + Page + '&access_token=123'); // Insert a real access_token
+          return RequestService.get('/students?page=' + Page + '&access_token=' + $sessionStorage['access_token']); // Insert a real access_token
         }
 
         function GetOne(Username) {
@@ -21,10 +23,23 @@
         }
 
         function Update(StudentID, NewStudentInfo) {
-          return RequestService.put('/students/' + StudentID, {
-            'student': NewStudentInfo,
-            'access_token': '123'     // Insert a real access_token
-          });
+          var requestBody = {};
+          requestBody.student = NewStudentInfo;
+          requestBody.access_token = $sessionStorage['access_token'];
+          return RequestService.put('/students/' + StudentID, requestBody);
+        }
+
+        function Create(Student) {
+          var requestBody = {};
+          requestBody.student = Student;
+          requestBody.access_token = $sessionStorage['access_token'];
+          return RequestService.post('/students', requestBody);
+        }
+
+        function Delete(StudentID) {
+          var requestBody = {};
+          requestBody.access_token = $sessionStorage['access_token'];
+          return RequestService.delete('/students/' + StudentID, requestBody);
         }
 
     }

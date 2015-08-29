@@ -11,9 +11,10 @@
       var vm = this;
         vm.student = {};
         vm.username = $routeParams.username;
-        vm.userID;
+        vm.StudentID;
         vm.requestForUser = requestForUser;
         vm.updateInfo = updateInfo;
+        vm.delete = deleteStudent;
         vm.genders = [
           { name: 'Masculino' },
           { name: 'Femenino' }
@@ -22,31 +23,43 @@
         function requestForUser() {
           var username = vm.username;
           StudentService.GetOne(username)
-          .then(getUserInfo)
-          .catch(showError);
+          .then(handleGetOneSuccess)
+          .catch(handleRequestError);
         }
 
-        function getUserInfo(result) {
+        function handleGetOneSuccess(result) {
           vm.student = result;
-          vm.userID = result.id;
+          vm.StudentID = result.id;
           return vm.student;
-        }
-
-        function showError(error) {
-          if (error.status === 404)
-            MessageService.error("No se pudo conectar con el servidor");
-          else
-            MessageService.error(error.data);
         }
 
         function updateInfo() {
           var newUserInfo = vm.student;
-          var userID = vm.userID;
-          StudentService.Update(userID, newUserInfo)
+          var StudentID = vm.StudentID;
+          StudentService.Update(StudentID, newUserInfo)
           .then(function(result) {
             vm.student = result;
           })
           .catch(showError);
+        }
+
+        function deleteStudent() {
+          var StudentID = vm.StudentID;
+          StudentService.Delete(StudentID)
+          .then(handleDeleteSuccess)
+          .catch(handleRequestError);
+        }
+
+        function handleDeleteSuccess(result) {
+          MessageService.success("Estudiante eliminado.");
+          $location.path('/Operador/Estudiantes');
+        }
+
+        function handleRequestError(data) {
+          if (data.status === 404)
+            MessageService.error("No se pudo conectar con el servidor");
+          else
+            MessageService.error(data.description);
         }
 
     }
