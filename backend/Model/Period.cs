@@ -23,7 +23,7 @@ namespace SiLabI.Model
         /// The period value.
         /// </summary>
         /// <example>1</example>
-        [DataMember(Name = "value", Order = 1)]
+        [DataMember(EmitDefaultValue = false, Name = "value", Order = 1)]
         public int? Value
         {
             get { return _value; }
@@ -34,7 +34,7 @@ namespace SiLabI.Model
         /// The period type.
         /// </summary>
         /// <example>Semestre</example>
-        [DataMember(Name = "type", Order = 2)]
+        [DataMember(EmitDefaultValue = false, Name = "type", Order = 2)]
         public string Type
         {
             set
@@ -53,7 +53,7 @@ namespace SiLabI.Model
         /// The period year.
         /// </summary>
         /// <example>2015</example>
-        [DataMember(Name = "year", Order = 3)]
+        [DataMember(EmitDefaultValue = false, Name = "year", Order = 3)]
         public int? Year
         {
             get { return _year; }

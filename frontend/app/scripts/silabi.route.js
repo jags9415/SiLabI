@@ -45,6 +45,16 @@
           controller: 'OperatorListController',
           controllerAs: 'OperatorList'
         })
+        .when('/Operador/Operadores/Agregar', {
+          templateUrl: 'scripts/operator/operators/operator.create.html',
+          controller: 'OperatorCreateController',
+          controllerAs: 'Operator'
+        })
+        .when('/Operador/Operador/:id', {
+          templateUrl: 'scripts/operator/operators/operator.detail.html',
+          controller: 'OperatorDetailController',
+          controllerAs: 'Operator'
+        })
         .when('/Operador/Docentes', {
           templateUrl: 'scripts/operator/professors/professors.list.html',
           controller: 'OperatorsController',

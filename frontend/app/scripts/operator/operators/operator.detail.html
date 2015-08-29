@@ -1,0 +1,57 @@
+<div id="wrapper">
+
+  <!-- SideBar directive -->
+  <default-sidebar></default-sidebar>
+
+  <!-- Page content -->
+  <div id="page-content-wrapper">
+    <h2>Operador</h2>
+    <br>
+    <form>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="Operator.user.full_name" readonly>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="email">Coreo</label>
+            <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="Operator.user.email" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="gender">Género</label>
+            <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="Operator.user.gender" readonly>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="phone">Teléfono</label>
+            <input type="text" class="form-control" id="username" placeholder="Teléfono" ng-model="Operator.user.phone" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-groups">
+            <label for="period">Periodo</label>
+            <input type="text" class="form-control" id="period" placeholder="Periodo"
+            value="{{Operator.user.period.value + ' ' + Operator.user.period.type + ' ' + Operator.user.period.year}}" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 3%;">
+        <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+          <button type="submit" class="btn btn-lg btn-danger" ng-click="Operator.delete()">
+            <i class="glyphicon glyphicon-trash"></i> Eliminar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

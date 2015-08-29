@@ -14,6 +14,7 @@
         this.Delete = Delete;
 
         function GetAll(request) {
+          if (!request) request = {};
           request.access_token = $sessionStorage['access_token'];
           return RequestService.get('/operators', request);
         }
@@ -24,8 +25,11 @@
           return RequestService.get('/operators/' + id, request);
         }
 
-        function Create(object) {
-          return RequestService.post('/operators', object);
+        function Create(id, period) {
+          var request = {}
+          request.period = period;
+          request.access_token = $sessionStorage['access_token'];
+          return RequestService.post('/operators/' + id, request);
         }
 
         function Delete(id) {
