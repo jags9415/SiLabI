@@ -14,8 +14,10 @@
         this.Create = Create;
         this.Delete = Delete;
 
-        function GetAll(Page) {
-          return RequestService.get('/students?page=' + Page + '&access_token=' + $sessionStorage['access_token']); // Insert a real access_token
+        function GetAll(request) {
+          if (!request) request = {};
+          request.access_token = $sessionStorage['access_token'];
+          return RequestService.get('/students', request);
         }
 
         function GetOne(Username) {
