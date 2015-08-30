@@ -11,10 +11,8 @@
         var vm = this;
 
         vm.student = {};
-        vm.genders = [
-          { name: 'Masculino' },
-          { name: 'Femenino' }
-        ];
+        vm.genders = ['Masculino', 'Femenino'];
+        vm.student.gender = vm.genders[0];
         vm.$storage = $localStorage;
         vm.user_type = vm.$storage['user_type'];
 
@@ -22,9 +20,7 @@
         vm.cancel = cancel;
 
         function create() {
-          vm.student.gender = vm.student.gender.name;
-          var student = vm.student;
-          StudentService.Create(student)
+          StudentService.Create(vm.student)
           .then(handleSuccess)
           .catch(handleError);
         }

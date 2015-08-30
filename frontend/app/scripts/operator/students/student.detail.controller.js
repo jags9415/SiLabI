@@ -11,29 +11,24 @@
       var vm = this;
         vm.student = {};
         vm.username = $routeParams.username;
-        vm.StudentID;
-        vm.requestForUser = requestForUser;
         vm.updateInfo = updateInfo;
         vm.delete = deleteStudent;
         vm.genders = ['Masculino', 'Femenino'];
 
-        function requestForUser() {
-          var username = vm.username;
-          StudentService.GetOne(username)
+        activate();
+
+        function activate() {
+          StudentService.GetOne(vm.username)
           .then(handleGetOneSuccess)
           .catch(handleRequestError);
         }
 
         function handleGetOneSuccess(result) {
           vm.student = result;
-          vm.StudentID = result.id;
-          return vm.student;
         }
 
         function updateInfo() {
-          var newUserInfo = vm.student;
-          var StudentID = vm.StudentID;
-          StudentService.Update(StudentID, newUserInfo)
+          StudentService.Update(vm.student.id, vm.student)
           .then(function(result) {
             vm.student = result;
           })
@@ -41,8 +36,7 @@
         }
 
         function deleteStudent() {
-          var StudentID = vm.StudentID;
-          StudentService.Delete(StudentID)
+          StudentService.Delete(vm.student.id)
           .then(handleDeleteSuccess)
           .catch(handleRequestError);
         }

@@ -9,6 +9,11 @@
   <div class="center-panel">
     <h2>Agregar Operador</h2>
     <hr>
+    <ol class="breadcrumb">
+      <li><a href="">Inicio</a></li>
+      <li><a href="#Administrador/Operadores">Operadores</a></li>
+      <li class="active">Agregar</li>
+    </ol>
     <form style="margin-bottom: 1%; margin-top: 3%;">
       <div class="row">
         <div class="col-md-10 col-xs-10">
@@ -49,7 +54,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="phone">Teléfono</label>
-            <input type="text" class="form-control" id="username" placeholder="Teléfono" ng-model="Operator.user.phone" readonly>
+            <input type="text" class="form-control" id="username" ui-mask="(+506) 9999-99-99" ng-model="Operator.user.phone" readonly>
           </div>
         </div>
       </div>
@@ -57,8 +62,8 @@
         <div class="col-md-6">
           <div class="form-groups">
             <label for="period">Periodo</label>
-            <ui-select id="period" ng-model="Operator.period" theme="selectize">
-              <ui-select-match placeholder="Seleccione un periodo.">
+            <ui-select id="period" ng-model="Operator.period">
+              <ui-select-match placeholder="{{$select.selected.value + ' ' + $select.selected.type}}">
                 {{$select.selected.value + ' ' + $select.selected.type}}
               </ui-select-match>
               <ui-select-choices repeat="period in Operator.periods | filter: $select.search">
@@ -71,8 +76,8 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="year">Año</label>
-            <ui-select id="year" ng-model="Operator.year" theme="selectize">
-              <ui-select-match placeholder="Seleccione un año.">
+            <ui-select id="year" ng-model="Operator.year" search-enable="false">
+              <ui-select-match placeholder="{{Operator.year}}">
                 {{$select.selected}}
               </ui-select-match>
               <ui-select-choices repeat="year in [{{Operator.currentYear-1}}, {{Operator.currentYear}}, {{Operator.currentYear+1}}] | filter: $select.search">
@@ -84,7 +89,7 @@
       </div>
       <div class="row" style="margin-top: 3%;">
         <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
-          <button type="submit" class="btn btn-lg btn-success" ng-click="Operator.create()">
+          <button type="submit" class="btn btn-lg btn-success" ng-click="Operator.create()" ng-disabled="!Operator.user">
             <i class="glyphicon glyphicon-plus"></i> Agregar
           </button>
         </div>
