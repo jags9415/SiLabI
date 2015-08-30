@@ -8,45 +8,49 @@
   <div class="center-panel">
     <h2>Agregar Estudiante</h2>
     <hr>
-    <form>
+    <form name="createUserForm">
       <div class="row">
         <div class="col-md-12">
-          <div class="form-group">
-            <label for="name"><small>*</small> Nombre</label>
-            <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="StudentsAdd.student.name">
+          <div class="form-group" show-errors>
+            <label for="name" class="control-label"><small>*</small> Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="StudentsAdd.student.name" ng-trim required>
+            <p class="help-block" ng-if="createUserForm.name.$error.required">Nombre requerido.</p>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <div class="form-group">
-            <label for="last_name_1"><small>*</small> Primer Apellido</label>
-            <input type="text" class="form-control" id="last_name_1" placeholder="Primer Apellido" ng-model="StudentsAdd.student.last_name_1">
+          <div class="form-group" show-errors>
+            <label for="last_name_1" class="control-label"><small>*</small> Primer Apellido</label>
+            <input type="text" class="form-control" id="last_name_1" name="last_name_1" placeholder="Primer Apellido" ng-model="StudentsAdd.student.last_name_1" ng-trim required>
+            <p class="help-block" ng-if="createUserForm.last_name_1.$error.required">Apellido requerido.</p>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="form-group">
-            <label for="last_name_2">Segundo Apellido</label>
-            <input type="text" class="form-control" id="last_name_2" placeholder="Segundo Apellido" ng-model="StudentsAdd.student.last_name_2">
+          <div class="form-group" show-errors>
+            <label for="last_name_2" class="control-label">Segundo Apellido</label>
+            <input type="text" class="form-control" id="last_name_2" name="last_name_2" placeholder="Segundo Apellido" ng-model="StudentsAdd.student.last_name_2" ng-trim>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <div class="form-group">
-            <label for="username"><small>*</small> Carné</label>
-            <input type="text" class="form-control" id="username" placeholder="Carné" ng-model="StudentsAdd.student.username">
+          <div class="form-group" show-errors>
+            <label for="username" class="control-label"><small>*</small> Carné</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Carné" ng-model="StudentsAdd.student.username" ng-pattern="'[0-9]{5,}'" ng-trim required>
+            <p class="help-block" ng-if="createUserForm.username.$error.required">Carné requerido.</p>
+            <p class="help-block" ng-if="createUserForm.username.$error.pattern">Formato incorrecto. Ingrese mínimo 5 caracteres numéricos.</p>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="form-group">
-            <label for="gender"><small>*</small> Género</label>
-            <ui-select id="period" ng-model="StudentsAdd.student.gender" theme="selectize">
-              <ui-select-match placeholder="Seleccionar Género">
-                {{ $select.selected.name }}
+          <div class="form-group" show-errors>
+            <label for="gender" class="control-label"><small>*</small> Género</label>
+            <ui-select id="gender" ng-model="StudentsAdd.student.gender" search-enable="false">
+              <ui-select-match placeholder="{{StudentsAdd.student.gender}}">
+                {{ $select.selected }}
               </ui-select-match>
-              <ui-select-choices repeat="gender in StudentsAdd.genders | filter: $select.search">
-                <span ng-bind-html="gender.name | highlight: $select.search"></span>
+              <ui-select-choices repeat="gender in StudentsAdd.genders">
+                <span ng-bind-html="gender"></span>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -54,34 +58,41 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-          <div class="form-group">
-            <label for="email">Coreo</label>
-            <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="StudentsAdd.student.email">
+          <div class="form-group" show-errors>
+            <label for="email" class="control-label">Coreo</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="Correo" ng-model="StudentsAdd.student.email" ng-trim>
+            <p class="help-block" ng-if="createUserForm.email.$error.email">Email inválido.</p>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="form-group">
-            <label for="phone">Teléfono</label>
-            <input type="text" class="form-control" id="phone"  ng-model="StudentsAdd.student.phone" ui-mask="(+506) 9999-99-99">
+          <div class="form-group" show-errors>
+            <label for="phone" class="control-label">Teléfono</label>
+            <input type="text" class="form-control" id="phone" name="phone" ng-model="StudentsAdd.student.phone" ui-mask="(+506) 9999-99-99" ng-pattern="'[0-9]{8,}'" ng-trim>
+            <p class="help-block" ng-if="createUserForm.phone.$error.pattern">Formato incorrecto. Ingrese mínimo 8 caracteres numéricos.</p>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <div class="form-group">
-            <label for="password"><small>*</small> Contraseña</label>
-            <input type="password" class="form-control" id="password" placeholder="Contraseña" ng-model="StudentsAdd.student.password">
+          <div class="form-group" show-errors>
+            <label for="password" class="control-label"><small>*</small> Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña. Mínimo 8 caracteres." ng-model="StudentsAdd.password" ng-minlength="8" required>
+            <p class="help-block" ng-if="createUserForm.password.$error.minlength">La contraseña debe contener mínimo 8 caracteres.</p>
+            <p class="help-block" ng-if="createUserForm.password.$error.required">Contraseña requerida.</p>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="form-group">
-            <label for="password_confirmation"><small>*</small> Confirmar Contraseña</label>
-            <input type="password" class="form-control" id="password_confirmation" placeholder="Confirmar Contraseña" ng-model="StudentsAdd.student.password_confirm"></div>
+          <div class="form-group" show-errors>
+            <label for="password_confirmation" class="control-label"><small>*</small> Confirmar Contraseña</label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmar Contraseña" ng-model="StudentsAdd.password_confirm" ng-pattern="{{StudentsAdd.password}}" required>
+            <p class="help-block" ng-if="createUserForm.password_confirmation.$error.pattern">Las contraseñas no coinciden.</p>
+            <p class="help-block" ng-if="createUserForm.password_confirmation.$error.required">Confirmación de contraseña requerida.</p>
+          </div>
         </div>
       </div>
       <div class="row" style="margin-top: 3%;">
         <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
-          <button type="submit" class="btn btn-lg btn-success" ng-click="StudentsAdd.create()">
+          <button type="submit" class="btn btn-lg btn-success" ng-click="StudentsAdd.create()" ng-disabled="createUserForm.$invalid">
             <i class="glyphicon glyphicon-plus"></i> Agregar
           </button>
         </div>

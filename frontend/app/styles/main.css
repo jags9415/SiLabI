@@ -277,3 +277,17 @@ td
 .form-group label {
   font-size: medium;
 }
+
+.ui-select-choices-row {
+  background-color: white;
+}
+
+.form-group .help-block {
+  display: none;
+  font-size: small;
+  margin-bottom: 0;
+}
+
+.form-group.has-error .help-block {
+  display: block;
+}
