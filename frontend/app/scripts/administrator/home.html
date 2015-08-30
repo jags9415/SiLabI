@@ -1,21 +1,22 @@
-<div id="wrapper">
+<div class="wrap">
 
   <!-- SideBar directive -->
-  <default-sidebar></default-sidebar>
+  <div class="left-panel">
+    <administrators-sidebar></administrators-sidebar>
+  </div>
 
   <!-- Page content -->
-  <div id="page-content-wrapper">
+  <div class="center-panel">
+    <br>
+    <br>
     <div class="container">
-      <br>
-      <br>
-      <div class="container">
-        <div class="row">
-            <div class="imageContainer">
-              <img src="../res/img/logolab.png"> 
-              <div class="nameContainer">
-                <p>Bienvenido {{user_name}}</p>
-              </div>   
-            </div>
+      <div class="row">
+          <div class="imageContainer">
+            <img src="../res/img/logolab.png"> 
+            <div class="nameContainer">
+              <p>Bienvenido {{user_name}}</p>
+            </div>   
+          </div>
       </div>
     </div>
   </div>

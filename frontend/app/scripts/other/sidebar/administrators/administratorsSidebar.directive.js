@@ -3,13 +3,13 @@
 
     angular
         .module('silabi.sidebar')
-        .directive('operatorsSidebar', OperatorsSideBar);
+        .directive('administratorsSidebar', AdministratorsSideBar);
 
-    function OperatorsSideBar() {
+    function AdministratorsSideBar() {
         var directive = {
             restrict: 'EA',
-            templateUrl: 'scripts/other/sidebar/operators/operators-sidebar.html',
-            controller: OperatorsSideBarController,
+            templateUrl: 'scripts/other/sidebar/administrators/administrators-sidebar.html',
+            controller: AdministratorsSideBarController,
             controllerAs: 'vm',
             bindToController: true
         };
@@ -17,15 +17,14 @@
         return directive;
     }
 
-    OperatorsSideBarController.$inject = ['$location'];
+    AdministratorsSideBarController.$inject = ['$location'];
 
-    function OperatorsSideBarController($location) {
+    function  AdministratorsSideBarController($location) {
       var vm = this;
 
       vm.isActive = isActive;
       vm.goProfessors = function goProfessors()
       {
-        vm.nombre = "hola";
         $location.path("/Operador/Docentes");
       };
       vm.nombre = "s";

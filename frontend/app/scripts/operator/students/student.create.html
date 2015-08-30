@@ -1,54 +1,52 @@
-<div id="wrapper">
+<div class="wrap">
 
-  <!-- SideBar directive -->
-  <default-sidebar></default-sidebar>
+  <div class="left-panel">
+    <operators-sidebar></operators-sidebar>
+  </div>
 
   <!-- Page content -->
-  <div id="page-content-wrapper">
-      <div class="container">
-      <h1>Agregar Estudiante</h1>
-      <br><br>
-      <form>
-        <input class="form-control" placeholder="Nombre" name="studentName" type="text" ng-model="StudentsAdd.student.name" required>
-        <br>
-        <input class="form-control" placeholder="Primer Apellido" name="studentLastName" type="text" ng-model="StudentsAdd.student.last_name_1" required>
-        <br>
-        <input class="form-control" placeholder="Segundo Apellido" name="studentSecondLastName" type="text" ng-model="StudentsAdd.student.last_name_2">
-        <br>
-        <input class="form-control" placeholder="Email" name="studentEmail" type="email" ng-model="StudentsAdd.student.email">
-        <br>
-        <div class="row">
-          <div class="col-sm-6">
-            <ui-select id="period" ng-model="StudentsAdd.student.gender" theme="selectize">
-              <ui-select-match placeholder="Seleccionar Género">
-                {{ $select.selected.name }}
-              </ui-select-match>
-              <ui-select-choices repeat="gender in StudentsAdd.genders | filter: $select.search">
-                <span ng-bind-html="gender.name | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-          <div class="col-sm-6">
-            <input class="form-control" placeholder="Telefono" name="studentPhone" type="text" ng-model="StudentsAdd.student.phone">
-          </div>
+  <div class="center-panel">
+    <h1>Agregar Estudiante</h1>
+    <br><br>
+    <form>
+      <input class="form-control" placeholder="Nombre" name="studentName" type="text" ng-model="StudentsAdd.student.name" required>
+      <br>
+      <input class="form-control" placeholder="Primer Apellido" name="studentLastName" type="text" ng-model="StudentsAdd.student.last_name_1" required>
+      <br>
+      <input class="form-control" placeholder="Segundo Apellido" name="studentSecondLastName" type="text" ng-model="StudentsAdd.student.last_name_2">
+     <br>
+      <input class="form-control" placeholder="Email" name="studentEmail" type="email" ng-model="StudentsAdd.student.email">
+      <br>
+      <div class="row">
+        <div class="col-sm-6">
+          <ui-select id="period" ng-model="StudentsAdd.student.gender" theme="selectize">
+            <ui-select-match placeholder="Seleccionar Género">
+              {{ $select.selected.name }}
+            </ui-select-match>
+            <ui-select-choices repeat="gender in StudentsAdd.genders | filter: $select.search">
+              <span ng-bind-html="gender.name | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
         </div>
-        <br>
-        <input class="form-control" placeholder="Nombre de usuario" name="studentUsername" type="text" ng-model="StudentsAdd.student.username" required>
-        <br>
-        <input class="form-control" placeholder="Contraseña" name="studentPassword" type="password" ng-model="StudentsAdd.student.password" required>
-        <br>
-        <div class="row">
-          <div class="centerBox">
-            <div class="col-sm-6">
-              <button class="btn btn-default" type="button" ng-click="StudentsAdd.create()">Crear</button>
-            </div>
-            <div class="col-sm-6">
-              <button href="{{ '#' + student.user_type }}" class="btn btn-default" type="button" ng-click="StudentsAdd.cancel()">Cancelar</button>
-            </div>
-          </div>
+        <div class="col-sm-6">
+          <input class="form-control" placeholder="Telefono" name="studentPhone" type="text" ng-model="StudentsAdd.student.phone">
         </div>
-      </form>
       </div>
-    </div>
+      <br>
+      <input class="form-control" placeholder="Nombre de usuario" name="studentUsername" type="text" ng-model="StudentsAdd.student.username" required>
+      <br>
+      <input class="form-control" placeholder="Contraseña" name="studentPassword" type="password" ng-model="StudentsAdd.student.password" required>
+      <br>
+      <div class="row">
+        <div class="centerBox">
+          <div class="col-sm-6">
+            <button class="btn btn-default" type="button" ng-click="StudentsAdd.create()">Crear</button>
+          </div>
+          <div class="col-sm-6">
+            <button href="{{ '#' + student.user_type }}" class="btn btn-default" type="button" ng-click="StudentsAdd.cancel()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+  </form>
   </div>
 </div>

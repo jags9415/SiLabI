@@ -1,15 +1,15 @@
-<div id="wrapper">
+<div class="wrap">
 
   <!-- SideBar directive -->
-  <default-sidebar></default-sidebar>
+  <div class="left-panel">
+    <operators-sidebar></operators-sidebar>
+  </div>
 
   <!-- Page content -->
-  <div id="page-content-wrapper">
-    <div class="container">
+    <div class="center-panel">
       <h1>Reservaciones</h1>
       <br>
       <br>
-      <div class="container">
         <div class="row">
           <div class="col-sm-6">
             <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-model="searchText">
@@ -57,7 +57,5 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
