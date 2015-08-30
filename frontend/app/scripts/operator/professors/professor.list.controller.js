@@ -10,6 +10,7 @@
       
         var vm = this;
         vm.advanceSearch = false;
+        vm.limit = 20;
         vm.searched = {};
       	activate();
     	
@@ -24,13 +25,13 @@
 
     	function loadPage()
     	{
-    		if(vm.pageNumber > 0 && vm.pageNumber <= vm.totalPages)
-    		{
-    			vm.professorsArray = [];
-	    		ProfessorsService.GetAll(vm.request)
-	    		.then(handleGetSuccess)
-                .catch(handleError);
-	    	}
+            $location.search('page', vm.page);
+			vm.professorsArray = [];
+            vm.request.page = vm.page;
+            vm.request.limit = vm.limit;
+    		ProfessorsService.GetAll(vm.request)
+    		.then(handleGetSuccess)
+            .catch(handleError);
     	}
 
         function handleGetSuccess(response)
@@ -38,6 +39,7 @@
             vm.professorsArray = response.results;
             vm.pageNumber = response.current_page;
             vm.totalPages = response.total_pages;
+            vm.totalItems = vm.limit * vm.totalPages;
         }
 
         function handleError(response)
@@ -58,7 +60,8 @@
     		}
     	}
 
-        function searchProfessors() {
+        function searchProfessors() 
+        {
           vm.request.query = {};
 
           if (vm.searched.full_name) {
@@ -82,31 +85,32 @@
             }
           }
 
-          if (vm.searched.email) {
-            if (vm.searched.period.value) {
+            if (vm.searched.email) {
+                console.log("Email: "+vm.searched.email);
               vm.request.query["email"] = {
                 operation: "eq",
-                value: '*' + vm.searched.email + '*'
+                value: vm.searched.email
               }
             }
+
             if (vm.searched.phone) {
               vm.request.query["phone"] = {
                 operation: "eq",
                 value: vm.searched.phone
               }
             }
-          }
-
-          loadPage();
+            loadPage();
         }
+
+          
 
         function toggleAdvanceSearch() 
         {
-          vm.advanceSearch = !vm.advanceSearch;
-          vm.searched.state = vm.states[0];
-          delete vm.searched.year;
-          delete vm.searched.period;
-          delete vm.searched.username;
+            vm.advanceSearch = !vm.advanceSearch;
+            vm.searched.state = vm.states[0];
+            delete vm.searched.email;
+            delete vm.searched.phone;
+            delete vm.searched.username;
         }
 
 
@@ -135,8 +139,12 @@
 
     	function activate()
     	{
+            vm.page = parseInt($location.search()['page']);
+            if (isNaN(vm.page)) 
+            {
+                vm.page = 1;
+            }
             vm.professorsArray = [];
-    		vm.pageNumber = 1;
     		vm.totalPages = 1;
     		vm.onSearch = false;
             vm.orderType = "ASC";
@@ -189,6 +197,7 @@
                 "type": vm.orderType
                 }
             };
+            loadPage();
     	}
     }
 })();

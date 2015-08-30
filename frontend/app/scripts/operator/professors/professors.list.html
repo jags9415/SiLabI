@@ -6,7 +6,7 @@
   </div>
 
   <!-- Page content -->
-<div class="center-panel" ng-init="ProfessorList.loadPage()">
+<div class="center-panel">
     <h1>Docentes</h1>
     <hr>
     <br>
@@ -31,27 +31,27 @@
           </a>
         </div>
       </div>
-      <div class="row" ng-show="advanceSearch">
+      <div class="row" ng-show="ProfessorList.advanceSearch">
         <div class="col-md-12">
           <form class="form-inline advanced-search">
             <div class="form-group">
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="Usuario" ng-model="searched.username">
+              <input type="text" class="form-control" id="exampleInputName2" placeholder="Usuario" ng-model="ProfessorList.searched.username">
             </div>
             <div class="form-group" style="width: 17%">
-              <ui-select id="state" ng-model="searched.state" theme="selectize">
-                <ui-select-match placeholder="Estado.">
+              <ui-select id="state" ng-model="searched.state">
+                <ui-select-match placeholder="Estado">
                   {{$select.selected.name}}
                 </ui-select-match>
-                <ui-select-choices repeat="state in states | filter: $select.search">
+                <ui-select-choices repeat="state in ProfessorList.states | filter: $select.search">
                   <span ng-bind-html="state.name | highlight: $select.search"></span>
                 </ui-select-choices>
               </ui-select>
             </div>
             <div class="form-group">
-              <input type="email" class="form-control" id="exampleInputName2" placeholder="Email" ng-model="searched.email">
+              <input type="email" class="form-control" id="exampleInputName2" placeholder="Email" ng-model="ProfessorList.searched.email">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="Teléfono" ng-model="searched.phone">
+              <input type="text" class="form-control" id="exampleInputName2" placeholder="Teléfono" ng-model="ProfessorList.searched.phone">
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-default" ng-click="ProfessorList.search()">
@@ -73,7 +73,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="professor in searchResults = (professorsArray | filter:searchText)" id="{{professor.id}}">
+          <tr ng-repeat="professor in searchResults = (ProfessorList.professorsArray | filter:searchText)" id="{{professor.id}}">
             <td>{{professor.full_name}}</td>
             <td>{{professor.email}}</td>
             <td>{{professor.phone}}</td>
@@ -91,20 +91,16 @@
           </tr>
         </tbody>
       </table>
-      <p ng-show="searchResults.length==0"> No se encontraron resultados </p>
+      <p ng-show="ProfessorList.searchResults.length==0"> No se encontraron resultados </p>
       <br><br>
       <div class="row">
-        <div class="form-inline">
-          <div class="col-sm-4">
-            <button type="button" class="btn btn-primary center-block" ng-click="ProfessorList.loadPage()"><</button>
-          </div>
-          <div class="col-sm-2">
-            <label>Página {{pageNumber}}</label>
-          </div>
-          <div class="col-sm-4">
-            <button type="button" class="btn btn-primary center-block" ng-click="ProfessorList.loadPage()">></button>
-          </div>
-        </div>
+      <div class="col-md-6 col-md-offset-3">
+        <pagination
+          ng-change="ProfessorList.loadPage()" ng-model="ProfessorList.page" items-per-page="ProfessorList.limit"
+          total-items="ProfessorList.totalItems" max-size="5" boundary-links="true" rotate="true"
+          previous-text="<" next-text=">" first-text="<<" last-text=">>"
+        ></pagination>
       </div>
+    </div>
   </div>
 </div>
