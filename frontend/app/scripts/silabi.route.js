@@ -72,8 +72,8 @@
         })
         .when('/Operador/Docentes/:username', {
           templateUrl: 'scripts/operator/professors/professors.detail.html',
-          controller: 'OperatorsProfessorsController',
-          controllerAs: 'OperatorProfessor'
+          controller: 'ProfessorsDetailController',
+          controllerAs: 'ProfessorDetail'
         })
         .when('/Operador/Estudiantes', {
           templateUrl: 'scripts/operator/students/student.list.html',

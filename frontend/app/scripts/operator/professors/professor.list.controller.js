@@ -20,6 +20,7 @@
         vm.toggleAdvanceSearch = toggleAdvanceSearch;
         vm.search = searchProfessors;
         vm.createProfessor = createProfessor;
+        vm.deleteProfessor = deleteProfessor;
 
 
 

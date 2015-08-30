@@ -3,29 +3,29 @@
 
     angular
         .module('silabi')
-        .controller('OperatorsProfessorsController', OperatorsProfessorsController);
-        OperatorsProfessorsController.$inject = ['$scope', '$routeParams', 'OperatorsService', 'ProfessorsService', '$route', '$location'];
+        .controller('ProfessorsDetailController', ProfessorsDetailController);
+        ProfessorsDetailController.$inject = ['$routeParams', 'ProfessorsService', '$route', '$location', 'MessageService'];
 
-    function OperatorsProfessorsController($scope, $routeParams, OperatorsService, ProfessorsService, $route, $location) {
-      
-      	init();
+    function ProfessorsDetailController($routeParams, ProfessorsService, $route, $location, MessageService) {
+        var vm = this;
+      	activate();
 
-        $scope.modifyProfessor = modifyProfessor;
-        $scope.deleteProfessor = deleteProfessor;
+        vm.modifyProfessor = modifyProfessor;
+        vm.deleteProfessor = deleteProfessor;
       	
         function  checkProfessorModifyInput() 
         {
-            if(!isNaN($scope.professorModifyName))
+            if(!isNaN(vm.professorModifyName))
             {
                 alert("Nombre incorrecto.");
                 return false;
             }
-            else if(!isNaN($scope.professorModifyLastName1))
+            else if(!isNaN(vm.professorModifyLastName1))
             {
                 alert("Primer Apellido incorrecto.");
                 return false;
             }
-            else if(!isNaN($scope.professorModifyLastName2))
+            else if(!isNaN(vm.professorModifyLastName2))
             {
                 alert("Segundo Apellido incorrecto.");
                 return false;
@@ -38,12 +38,12 @@
 
         function retrieveProfessor()
         {
-            $scope.professorUserName =  $routeParams.username;
-            ProfessorsService.getProfessorByUserName($scope.professorUserName, "a"/*$scope.access_token*/ ).
+            vm.professorUserName =  $routeParams.username;
+            ProfessorsService.GetOne(vm.professorUserName).
             then(function(response)
             {
-                $scope.professor = response;
-                $scope.professorid = $scope.professor.id;
+                vm.professor = response;
+                vm.professorid = vm.professor.id;
                 console.log(response);
             },
             function(error)
@@ -56,55 +56,56 @@
         {
             if(checkProfessorModifyInput())
             {
+                var hash = CryptoJS.SHA256(vm.professor.password).toString(CryptoJS.enc.Hex);
                 var jsonObject =
                 {
                     "professor":
                     {
-                        "email": $scope.professor.email,
-                        "last_name_1": $scope.professor.last_name_1,
-                        "last_name_2": $scope.professor.last_name_2,
-                        "phone": $scope.professor.phone
+                        "email": vm.professor.email,
+                        "last_name_1": vm.professor.last_name_1,
+                        "last_name_2": vm.professor.last_name_2,
+                        "password": hash,
+                        "phone": vm.professor.phone
                     },
-                    "access_token":$scope.access_token
+                    "access_token":""
                 };
-                ProfessorsService.updateProfessor($scope.professorid, jsonObject).
-                then(function(response)
-                {
-                    $scope.professor = response;
-                    console.log(response);
-                },
-                function(error)
-                {
-                    alert("Error al modificar datos de docente." + error.description);
-                });
+                ProfessorsService.Update(vm.professorid, jsonObject)
+                .then(handleGetSuccess)
+                .catch(handleError);
             }
         }
 
         function deleteProfessor()
         {
-            console.log("Deleting professor: "+$scope.professorid+" access_token: "+$scope.access_token);
-            ProfessorsService.deleteProfessor($scope.professorid, $scope.access_token).
-                then(function(response)
-                {
-                    $location.path("/Operador/Docentes");
-                },
-                function(error)
-                {
-                    alert("Error al modificar datos de docente." + error.description);
-                });
+            ProfessorsService.Delete(vm.professorid)
+            .then(handleDeleteSuccess)
+            .catch(handleError);
         }
 
-    	function init()
+        function handleGetSuccess(data) {
+          vm.professor = data;
+          MessageService.success("Docente actualizado.");
+        }
+
+        function handleDeleteSuccess() {
+          MessageService.success("Docente eliminado.");
+          $location.path("/Operador/Docentes");
+        }
+
+        function handleError(data) {
+          MessageService.error(data.description);
+        }
+
+    	function activate()
     	{
-    		$scope.genders = [{"name":"Masculino"}, {"name":"Femenino"}];
+    		vm.genders = [{"name":"Masculino"}, {"name":"Femenino"}];
             var accessToken = -1;
             if(typeof(sessionStorage) != 'undefined' && sessionStorage.getItem('access_token') != null)
             {
                 accessToken = sessionStorage.getItem('access_token');
             }
-            $scope.access_token = accessToken;
-            $scope.professorid = null;
-            $scope.professor = null;
+            vm.professorid = null;
+            vm.professor = null;
             retrieveProfessor();
     	}
     }

@@ -7,37 +7,42 @@
 
   <!-- Page content -->
   <div class="center-panel">
-    <h1>Agregar Docente</h1>
-    <br><br>
+    <h1>Ver Docente</h1>
+    <hr>
+    <ol class="breadcrumb">
+      <li><a href="#/">Inicio</a></li>
+      <li><a href="#Operador/Docentes">Docentes</a></li>
+      <li class="active">Detalle</li>
+    </ol>
     <form>
-      <input class="form-control" placeholder="Nombre" name="professorModifyName" type="text" ng-model="professor.name" required>
+      <input class="form-control" placeholder="Nombre" name="professorModifyName" type="text" ng-model="ProfessorDetail.professor.name" required>
       <br>
-      <input class="form-control" placeholder="Primer Apellido" name="professorModifyLastName1" type="text" ng-model="professor.last_name_1" required>
+      <input class="form-control" placeholder="Primer Apellido" name="professorModifyLastName1" type="text" ng-model="ProfessorDetail.professor.last_name_1" required>
       <br>
-      <input class="form-control" placeholder="Segundo Apellido" name="professorModifyLastName2" type="text" ng-model="professor.last_name_2">
+      <input class="form-control" placeholder="Segundo Apellido" name="professorModifyLastName2" type="text" ng-model="ProfessorDetail.professor.last_name_2">
       <br>
-      <input class="form-control" placeholder="Email" name="professorModifyEmail" type="email" ng-model="professor.email">
+      <input class="form-control" placeholder="Email" name="professorModifyEmail" type="email" ng-model="ProfessorDetail.professor.email">
       <br>
       <div class="row">
         <div class="col-sm-6">
           <select class="form-control" ng-model="selected_gender" required>
             <option selected disabled> Seleccionar Género</option>
-            <option ng-repeat="gender in genders" value="{{gender.name}}"> {{gender.name}}</option>
+            <option ng-repeat="gender in ProfessorDetail.genders" value="{{gender.name}}"> {{gender.name}}</option>
           </select>
         </div>
         <div class="col-sm-6">
-          <input class="form-control" placeholder="Telefono" name="professorModifyPhoneNumber" type="text" ng-model="professor.phone">
+          <input class="form-control" placeholder="Telefono" name="professorModifyPhoneNumber" type="text" ng-model="ProfessorDetail.professor.phone">
         </div>
       </div>
       <br>
-      <input class="form-control" placeholder="Contraseña" name="professorModifyPassword" type="password" ng-model="professor.password" required>
+      <input class="form-control" placeholder="Contraseña" name="professorModifyPassword" type="password" ng-model="ProfessorDetail.professor.password">
       <br>
       <div class="row">
         <div class="col-sm-6">
             <label>Fecha de Creación:</label>
         </div>
         <div class="col-sm-6">
-          <input class="form-control"  name="professorCreationDate" type="text" ng-model="professor.created_at" disabled>
+          <input class="form-control"  name="professorCreationDate" type="text" ng-model="ProfessorDetail.professor.created_at" disabled>
         </div>
       </div> 
       <br>
@@ -46,17 +51,21 @@
             <label>última Actualización:</label>
         </div>
         <div class="col-sm-6">
-          <input class="form-control"  name="professorLastUpdate" type="text" ng-model="professor.updated_at" disabled>
+          <input class="form-control"  name="professorLastUpdate" type="text" ng-model="ProfessorDetail.professor.updated_at" disabled>
         </div>
       </div> 
       <br> 
       <div class="row">
         <div class="centerBox">
           <div class="col-sm-6">
-            <button class="btn btn-default" type="button" ng-click="modifyProfessor()">Modificar</button>
+            <button class="btn btn-lg btn-success" type="submit" ng-click="ProfessorDetail.modifyProfessor()">
+              <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+            </button>
           </div>
           <div class="col-sm-6">
-            <button class="btn btn-default" type="button" ng-click="deleteProfessor()">Eliminar</button>
+            <button class="btn btn-lg btn-danger" type="submit" ng-click="ProfessorDetail.deleteProfessor()">
+            <i class="glyphicon glyphicon-trash"></i> Eliminar
+            </button>
           </div>
         </div>
       </div>
