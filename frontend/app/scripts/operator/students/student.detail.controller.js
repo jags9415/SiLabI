@@ -15,10 +15,7 @@
         vm.requestForUser = requestForUser;
         vm.updateInfo = updateInfo;
         vm.delete = deleteStudent;
-        vm.genders = [
-          { name: 'Masculino' },
-          { name: 'Femenino' }
-        ];
+        vm.genders = ['Masculino', 'Femenino'];
 
         function requestForUser() {
           var username = vm.username;
@@ -56,11 +53,10 @@
         }
 
         function handleRequestError(data) {
-          if (data.status === 404)
+          if (data.code === 404)
             MessageService.error("No se pudo conectar con el servidor");
           else
             MessageService.error(data.description);
         }
-
     }
 })();

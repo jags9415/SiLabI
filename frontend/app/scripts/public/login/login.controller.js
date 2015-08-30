@@ -43,15 +43,11 @@
         vm.$storage['user_id'] = result.user.id.toString();
         vm.$storage['user_name'] = result.user.full_name;
         vm.$storage['user_type'] = result.user.type;
-        redirectTo(result.user.type);
+        $location.path('/' +result.user.type);
       }
 
       function handleError(error) {
         MessageService.error(error.description);
-      }
-
-      function redirectTo(userType) {
-        $location.path('/' + userType);
       }
     }
 })();

@@ -7,60 +7,103 @@
 
   <!-- Page content -->
   <div class="center-panel" ng-init="StudentDetails.requestForUser()">
-    <h1>Ver detalle</h1>
-    <br><br>
+    <h1>Estudiante</h1>
+    <hr>
     <form>
-      <input class="form-control" placeholder="Nombre" name="" type="text" value="{{ StudentDetails.student.name }}" ng-model="StudentDetails.student.name" required>
-      <br>
-      <input class="form-control" placeholder="Apellido 1" name="" type="text" value="{{ StudentDetails.student.last_name_1 }}" ng-model="StudentDetails.student.last_name_1" required>
-      <br>
-      <input class="form-control" placeholder="Apellido 2" name="" type="text" value="{{ StudentDetails.student.last_name_2 }}" ng-model="StudentDetails.student.last_name_2" required>
-      <br>
-      <input class="form-control" placeholder="Email" name="" type="email" value="{{ StudentDetails.student.email }}" ng-model="StudentDetails.student.email">
-      <br>
       <div class="row">
-        <div class="col-sm-6">
-          <select class="form-control" ng-model="StudentDetails.student.gender" required>
-            <option selected disabled> Seleccionar Género</option>
-            <option ng-repeat="gender in StudentDetails.genders" value="{{ gender.name }}"> {{ gender.name }}</option>
-          </select>
-        </div>
-        <div class="col-sm-6">
-          <input class="form-control" placeholder="Telefono" name="" type="text" value="{{ StudentDetails.student.phone }}" ng-model="StudentDetails.student.phone">
-        </div>
-      </div>
-      <br>
-      <input class="form-control" placeholder="Contraseña" name="" type="password" value="{{ StudentDetails.student.password }}" ng-model="StudentDetails.student.password" required>
-      <br>
-      <div class="row">
-        <div class="col-sm-6">
-            <label>Fecha de Creación:</label>
-        </div>
-        <div class="col-sm-6">
-          <input class="form-control"  name="" type="text" value="{{ StudentDetails.student.created_at }}" disabled>
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-sm-6">
-            <label>Última Actualización:</label>
-        </div>
-        <div class="col-sm-6">
-          <input class="form-control"  name="" type="text" value="{{ StudentDetails.student.updated_at }}" disabled>
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="centerBox">
-          <div class="col-sm-6">
-            <button class="btn btn-success" type="button" ng-click="StudentDetails.updateInfo()">
-              <span class="glyphicon glyphicon-floppy-disk"> Guardar</span></button>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="StudentDetails.student.name">
           </div>
-          <div class="col-sm-6">
-            <button class="btn btn-danger" type="button" ng-click="StudentDetails.delete()">
-              <span class="glyphicon glyphicon-trash"> Eliminar</span>
-            </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="last_name_1">Primer Apellido</label>
+            <input type="text" class="form-control" id="last_name_1" placeholder="Primer Apellido" ng-model="StudentDetails.student.last_name_1">
           </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="last_name_2">Segundo Apellido</label>
+            <input type="text" class="form-control" id="last_name_2" placeholder="Segundo Apellido" ng-model="StudentDetails.student.last_name_2">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="username">Carné</label>
+            <input type="text" class="form-control" id="username" placeholder="Carné" ng-model="StudentDetails.student.username">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="gender">Género</label>
+            <ui-select id="period" ng-model="StudentDetails.student.gender" theme="selectize">
+              <ui-select-match placeholder="Seleccionar Género">
+                {{ $select.selected }}
+              </ui-select-match>
+              <ui-select-choices repeat="gender in StudentDetails.genders | filter: $select.search">
+                <span ng-bind-html="gender | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="email">Coreo</label>
+            <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="StudentDetails.student.email">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="phone">Teléfono</label>
+            <input type="text" class="form-control" id="phone"  ng-model="StudentDetails.student.phone" ui-mask="(+506) 9999-99-99">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" class="form-control" id="password" placeholder="Contraseña" ng-model="StudentDetails.student.password">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="password_confirmation">Confirmar Contraseña</label>
+            <input type="password" class="form-control" id="password_confirmation" placeholder="Confirmar Contraseña" ng-model="StudentDetails.student.password_confirm"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="created_at">Fecha Creación</label>
+            <input type="text" class="form-control" id="created_at" placeholder="Fecha Creación" ng-value="StudentDetails.student.created_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly></input>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="updated_at">Fecha Actualización</label>
+            <input type="text" class="form-control" id="updated_at" placeholder="Fecha Actualización" ng-value="StudentDetails.student.updated_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 3%;">
+        <div class="col-md-6 text-center">
+          <button type="submit" class="btn btn-lg btn-info" ng-click="StudentDetails.updateInfo()">
+            <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+          </button>
+        </div>
+        <div class="col-md-6 text-center">
+          <button type="submit" class="btn btn-lg btn-danger" ng-click="StudentDetails.delete()">
+            <i class="glyphicon glyphicon-trash"></i> Eliminar
+          </button>
         </div>
       </div>
     </form>
