@@ -3,121 +3,49 @@
 
     angular
         .module('silabi')
-        .service('ProfessorsService',ProfessorsService);
+        .service('ProfessorsService', ProfessorsService);
 
-    ProfessorsService.$inject = ['$http', '$q', 'API_URL'];
+    ProfessorsService.$inject = ['$localStorage', 'RequestService'];
 
-    function ProfessorsService($http, $q, apiUrl) {
+    function ProfessorsService($localStorage, RequestService) {
 
 
-        this.getReservations = function(page_number, access_token)
+        this.GetAll = function(request)
         {
-        	var defer = $q.defer();
-        	$http.get(apiUrl + '/reservations', {
-            	'access_token': access_token,
-            	'page': page_number
-          	}).
-        		success(function(data, status, headers, config) 
-				{
-				  	defer.resolve(data); 	
-				}).
-				error(function(data, status, headers, config) 
-				{
-				    defer.reject(data);
-				 });
-			return defer.promise;
-        };
-
-        this.getProfessorsByPage = function(page_number, access_token)
-        {
-            var defer = $q.defer();
-            $http.get(apiUrl + '/professors?page='+page_number+'&access_token='+access_token).
-                success(function(data, status, headers, config) 
-                {
-                    defer.resolve(data);    
-                }).
-                error(function(data, status, headers, config) 
-                {
-                    defer.reject(data);
-                 });
-            return defer.promise;
-        };
-
-        this.searchProfessorByName = function(jsonObject)
-        {
-            var defer = $q.defer();
-            $http.get(apiUrl + '/professors', jsonObject).
-                success(function(data, status, headers, config) 
-                {
-                    defer.resolve(data);    
-                }).
-                error(function(data, status, headers, config) 
-                {
-                    defer.reject(data);
-                 });
-            return defer.promise;
-        };
-
-        this.getProfessorByUserName = function(user_name, access_token)
-        {
-            var defer = $q.defer();
-            $http.get(apiUrl + '/professors/'+user_name,{
-                'access_token': access_token
-            }).success(function(data, status, headers, config) 
-            {
-                defer.resolve(data);    
-            }).
-            error(function(data, status, headers, config) 
-            {
-                defer.reject(data);
-             });
-            return defer.promise;
+            if (!request) request = {};
+            request.access_token = $localStorage['access_token'];
+            return RequestService.get('/professors', request);
         };
 
 
-        this.createProfessor = function(jsonObject)
+        this.GetOne = function(user_name)
         {
-            var defer = $q.defer();
-            $http.post(apiUrl + '/professors', jsonObject).
-                success(function(data, status, headers, config) 
-                {
-                    defer.resolve(data);    
-                }).
-                error(function(data, status, headers, config) 
-                {
-                    defer.reject(data);
-                 });
-            return defer.promise;
+            var request = {};
+            request.access_token = $localStorage['access_token'];
+            return RequestService.get('/professors/' + user_name, request);
+        }
+
+
+        this.Create = function(request)
+        {
+            var request = {};
+            request.access_token = $localStorage['access_token'];
+            return RequestService.post('/professors/', request);
         };
 
-        this.updateProfessor = function(id, jsonObject)
+        this.Update = function(id, jsonObject)
         {
-            var defer = $q.defer();
-            $http.put(apiUrl + '/professors/'+id, jsonObject).
-            success(function(data, status, headers, config) 
-            {
-                defer.resolve(data);    
-            }).
-            error(function(data, status, headers, config) 
-            {
-                defer.reject(data);
-             });
-            return defer.promise;
+            var request = {};
+            request.professor = jsonObject.professor;
+            request.access_token = $localStorage['access_token'];
+            return RequestService.put('/professors/'+id, request);
         };
 
-        this.deleteProfessor = function(id, access_token)
+        this.Delete = function(id)
         {
-            var defer = $q.defer();
-            $http({method: "DELETE", headers: {"Content-Type": "application/json"}, url: apiUrl + '/professors/' + id, data: { 'access_token': access_token }})
-            .success(function(data, status, headers, config) 
-            {
-                defer.resolve(data);    
-            }).
-            error(function(data, status, headers, config) 
-            {
-                defer.reject(data);
-             });
-            return defer.promise;
+            var request = {};
+            request.access_token = $localStorage['access_token'];
+            return RequestService.delete('/professors/'+id, request);
         }
         
     }

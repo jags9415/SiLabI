@@ -6,7 +6,7 @@
   </div>
 
   <!-- Page content -->
-<div class="center-panel" ng-init="ProfessorList.loadProfessorsPage(1)">
+<div class="center-panel" ng-init="ProfessorList.loadPage()">
     <h1>Docentes</h1>
     <hr>
     <br>
@@ -16,16 +16,16 @@
           <form class="form-horizontal">
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-              <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="checkProfessorSearch" ng-model="searchText">
+              <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="ProfessorList.search()" ng-model="ProfessorList.searched.full_name">
             </div>
             <div class="input-group">
-              <a href="" ng-click="toggleAdvanceSearch()">Búsqueda Avanzada</a>
+              <a href="" ng-click="ProfessorList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
             </div>
-            <button type="submit" name="button" ng-click="" hidden></button>
+            <button type="submit" name="button" ng-click="ProfessorList.search()" hidden></button>
           </form>
         </div>
         <div class="col-md-2 col-xs-3">
-          <a href="#Operador/Docentes/Agregar" class="btn btn-block btn-success" ng-click="">
+          <a href="#Operador/Docentes/Agregar" class="btn btn-block btn-success" ng-click="ProfessorList.createProfessor()">
             <i class="glyphicon glyphicon-plus"></i>
             <span class="hidden-xs">Crear</span>
           </a>
@@ -48,10 +48,13 @@
               </ui-select>
             </div>
             <div class="form-group">
-              <input type="number" class="form-control" id="exampleInputEmail2" placeholder="Año" min="2000" ng-model="OperatorList.searched.year">
+              <input type="email" class="form-control" id="exampleInputName2" placeholder="Email" ng-model="searched.email">
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-default" ng-click="">
+              <input type="text" class="form-control" id="exampleInputName2" placeholder="Teléfono" ng-model="searched.phone">
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-default" ng-click="ProfessorList.search()">
                 <i class="glyphicon glyphicon-search"></i> Search
               </button>
             </div>
@@ -82,8 +85,8 @@
               </span>
             </td>
             <td class="text-center">
-                <a class='btn btn-info btn-sm' ng-click="seeProfessorDetail(professor.username)"><span class="glyphicon glyphicon-eye-open" ></span></a>
-                <a href="#" class="btn btn-danger btn-sm" ng-click="deleteProfessor(professor.id)"><span class="glyphicon glyphicon-trash" ></span></a>
+                <a class='btn btn-info btn-sm' ng-click="ProfessorList.seeProfessorDetail(professor.username)"><span class="glyphicon glyphicon-eye-open" ></span></a>
+                <a href="#" class="btn btn-danger btn-sm" ng-click="ProfessorList.deleteProfessor(professor.id)"><span class="glyphicon glyphicon-trash" ></span></a>
             </td>
           </tr>
         </tbody>
@@ -93,13 +96,13 @@
       <div class="row">
         <div class="form-inline">
           <div class="col-sm-4">
-            <button type="button" class="btn btn-primary center-block" ng-click="loadProfessorsPage(-1)"><</button>
+            <button type="button" class="btn btn-primary center-block" ng-click="ProfessorList.loadPage()"><</button>
           </div>
           <div class="col-sm-2">
             <label>Página {{pageNumber}}</label>
           </div>
           <div class="col-sm-4">
-            <button type="button" class="btn btn-primary center-block" ng-click="loadProfessorsPage(1)">></button>
+            <button type="button" class="btn btn-primary center-block" ng-click="ProfessorList.loadPage()">></button>
           </div>
         </div>
       </div>
