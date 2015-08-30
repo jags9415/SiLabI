@@ -26,9 +26,10 @@
         }
 
 
-        this.Create = function(request)
+        this.Create = function(jsonObject)
         {
             var request = {};
+            request.professor = jsonObject.professor;
             request.access_token = $localStorage['access_token'];
             return RequestService.post('/professors/', request);
         };

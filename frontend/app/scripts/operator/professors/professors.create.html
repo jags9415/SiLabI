@@ -15,38 +15,35 @@
       <li class="active">Crear</li>
     </ol>
   <form>
-    <input class="form-control" placeholder="Nombre" name="professorinputName" type="text" ng-model="professor.name" required>
+    <input class="form-control" placeholder="Nombre" name="professorinputName" type="text" ng-model="ProfessorsCreate.professor.name" ng-blur="ProfessorsCreate.generateUserName()" required>
     <br>
-    <input class="form-control" placeholder="Primer Apellido" name="professorinputLastName1" type="text" ng-model="professor.last_name_1" ng-blur="generateUserName()" required>
+    <input class="form-control" placeholder="Primer Apellido" name="professorinputLastName1" type="text" ng-model="ProfessorsCreate.professor.last_name_1" ng-blur="ProfessorsCreate.generateUserName()" required>
     <br>
-    <input class="form-control" placeholder="Segundo Apellido" name="professor.last_name_2" type="text" ng-model="professor.last_name_2">
+    <input class="form-control" placeholder="Segundo Apellido" name="professor.last_name_2" type="text" ng-model="ProfessorsCreate.professor.last_name_2">
     <br>
-    <input class="form-control" placeholder="Nombre de usuario" name="professorusername" type="text" ng-model="professor.username">
+    <input class="form-control" placeholder="Nombre de usuario" name="professorusername" type="text" ng-model="ProfessorsCreate.professor.username">
     <br>
-    <input class="form-control" placeholder="Email" name="professorinputEmail" type="email" ng-model="professor.email">
+    <input class="form-control" placeholder="Email" name="professorinputEmail" type="email" ng-model="ProfessorsCreate.professor.email">
     <br>
     <div class="row">
       <div class="col-sm-6">
-        <select class="form-control" ng-model="selected_gender" required>
+        <select class="form-control" ng-model="ProfessorsCreate.selected_gender" required>
           <option selected disabled> Seleccionar Género</option>
-          <option ng-repeat="gender in genders" value="{{gender.name}}"> {{gender.name}}</option>
+          <option ng-repeat="gender in ProfessorsCreate.genders" value="{{gender.name}}"> {{gender.name}}</option>
         </select>
       </div>
       <div class="col-sm-6">
-        <input class="form-control" placeholder="Telefono" name="professorinputPhoneNumber" type="text" ng-model="professor.phone">
+        <input class="form-control" placeholder="Telefono" name="professorinputPhoneNumber" type="text" ng-model="ProfessorsCreate.professor.phone">
       </div>
     </div>
     <br>
-    <input class="form-control" placeholder="Contraseña" name="professorinputPassword" type="password" ng-model="professor.password" required>
+    <input class="form-control" placeholder="Contraseña" name="professorinputPassword" type="password" ng-model="ProfessorsCreate.professor.password" required>
     <br>
-    <div class="row">
-      <div class="centerBox">
-        <div class="col-sm-6">
-          <button class="btn btn-default" type="button" ng-click="createProfessor()">Crear</button>
-        </div>
-        <div class="col-sm-6">
-          <button class="btn btn-default" type="button" ng-click="cleanProfessorCreate()">Cancelar</button>
-        </div>
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+        <button class="btn btn-lg btn-success" type="submit" ng-click="ProfessorsCreate.createProfessor()">
+          <i class="glyphicon glyphicon-plus"></i> Agregar
+        </button>
       </div>
     </div>
   </form>
