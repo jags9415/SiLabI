@@ -95,21 +95,44 @@
       $rootScope.$on("$routeChangeStart", function (event, next, current) {
         var token = $localStorage['access_token'];
 
+        // The next route doesn't exist. Apply redirect.
+        if (!next || !next.$$route) {
+          if (token && !jwtHelper.isTokenExpired(token)) {
+            var payload = jwtHelper.decodeToken(token);
+            redirectOrPrevent($location, event, current, payload.type);
+          }
+          else {
+            $location.path('/');
+          }
+          return;
+        }
+
+        var url = next.$$route.templateUrl;
+
         if (token && !jwtHelper.isTokenExpired(token)) {
           var payload = jwtHelper.decodeToken(token);
 
-          if ((next.templateUrl === "scripts/public/login/login.html") ||
-              (next.templateUrl.startsWith("scripts/administrator") && payload.type !== "Administrador") ||
-              (next.templateUrl.startsWith("scripts/operator") && payload.type !== "Operador" && payload.type !== "Administrador") ||
-              (next.templateUrl.startsWith("scripts/professor") && payload.type !== "Docente") ||
-              (next.templateUrl.startsWith("scripts/student") && payload.type !== "Estudiante")) {
-                event.preventDefault();
+          if ((url === "scripts/public/login/login.html") ||
+              (url.startsWith("scripts/administrator") && payload.type !== "Administrador") ||
+              (url.startsWith("scripts/operator") && payload.type !== "Operador" && payload.type !== "Administrador") ||
+              (url.startsWith("scripts/professor") && payload.type !== "Docente") ||
+              (url.startsWith("scripts/student") && payload.type !== "Estudiante")) {
+                redirectOrPrevent($location, event, current, payload.type);
           }
         }
-        else if (!next.templateUrl.startsWith("scripts/public")) {
+        else if (!url.startsWith("scripts/public")) {
           $location.path('/');
         }
       });
+    }
+
+    function redirectOrPrevent($location, event, currentRoute, userType) {
+      if (currentRoute) {
+        event.preventDefault();
+      }
+      else {
+        $location.path('/' + userType);
+      }
     }
 
 })();
