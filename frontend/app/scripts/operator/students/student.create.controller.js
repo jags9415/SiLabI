@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('StudentsAddController', StudentsAddController);
 
-    StudentsAddController.$inject = ['$location', '$sessionStorage', 'StudentService', 'MessageService'];
+    StudentsAddController.$inject = ['$location', '$localStorage', 'StudentService', 'MessageService'];
 
-    function StudentsAddController($location, $sessionStorage, StudentService, MessageService) {
+    function StudentsAddController($location, $localStorage, StudentService, MessageService) {
         var vm = this;
 
         vm.student = {};
@@ -15,7 +15,8 @@
           { name: 'Masculino' },
           { name: 'Femenino' }
         ];
-        vm.$storage = $sessionStorage;
+        vm.$storage = $localStorage;
+        vm.user_type = vm.$storage['user_type'];
 
         vm.create = create;
         vm.cancel = cancel;
@@ -38,7 +39,7 @@
         }
 
         function cancel() {
-          $location.path('/' + vm.$storage['user_type']);
+          $location.path('/' + vm.user_type );
         }
     }
 })();

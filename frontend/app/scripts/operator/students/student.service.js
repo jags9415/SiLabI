@@ -5,9 +5,9 @@
         .module('silabi')
         .service('StudentService', StudentService);
 
-    StudentService.$inject = ['RequestService', '$sessionStorage'];
+    StudentService.$inject = ['RequestService', '$localStorage'];
 
-    function StudentService(RequestService, $sessionStorage) {
+    function StudentService(RequestService, $localStorage) {
         this.GetAll = GetAll;
         this.GetOne = GetOne;
         this.Update = Update;
@@ -16,7 +16,7 @@
 
         function GetAll(request) {
           if (!request) request = {};
-          request.access_token = $sessionStorage['access_token'];
+          request.access_token = $localStorage['access_token'];
           return RequestService.get('/students', request);
         }
 
@@ -27,20 +27,20 @@
         function Update(StudentID, NewStudentInfo) {
           var requestBody = {};
           requestBody.student = NewStudentInfo;
-          requestBody.access_token = $sessionStorage['access_token'];
+          requestBody.access_token = $localStorage['access_token'];
           return RequestService.put('/students/' + StudentID, requestBody);
         }
 
         function Create(Student) {
           var requestBody = {};
           requestBody.student = Student;
-          requestBody.access_token = $sessionStorage['access_token'];
+          requestBody.access_token = $localStorage['access_token'];
           return RequestService.post('/students', requestBody);
         }
 
         function Delete(StudentID) {
           var requestBody = {};
-          requestBody.access_token = $sessionStorage['access_token'];
+          requestBody.access_token = $localStorage['access_token'];
           return RequestService.delete('/students/' + StudentID, requestBody);
         }
 

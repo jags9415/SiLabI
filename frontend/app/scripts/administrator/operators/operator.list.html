@@ -23,7 +23,7 @@
           </form>
         </div>
         <div class="col-md-2 col-xs-3">
-          <a class="btn btn-block btn-success" ng-click="OperatorList.createOperator()">
+          <a href="#Administrador/Operadores/Agregar" class="btn btn-block btn-success" ng-click="OperatorList.createOperator()">
             <i class="glyphicon glyphicon-plus"></i>
             <span class="hidden-xs">Crear</span>
           </a>
@@ -35,7 +35,7 @@
             <div class="form-group">
               <input type="text" class="form-control" id="exampleInputName2" placeholder="Usuario" ng-model="OperatorList.searched.username">
             </div>
-            <div class="form-group">
+            <div class="form-group" style="width: 17%">
               <ui-select id="state" ng-model="OperatorList.searched.state" theme="selectize">
                 <ui-select-match placeholder="Estado.">
                   {{$select.selected.name}}
@@ -45,7 +45,7 @@
                 </ui-select-choices>
               </ui-select>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="width: 17%">
               <ui-select id="period" ng-model="OperatorList.searched.period" theme="selectize">
                 <ui-select-match placeholder="Periodo.">
                   {{$select.selected.value + ' ' + $select.selected.type}}

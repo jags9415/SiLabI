@@ -25,27 +25,39 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="silabiHeader" ng-controller="LoginController as Auth">
-        <div>
+    <nav class="navbar navbar-inverse" ng-controller="LoginController as Auth">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="">
             <img src="res/img/logo_eccl_tec_white.svg" height="50" width="350" class="img-responsive">
-        </div>
-        <div class="dropdown title pull-right" ng-show="Auth.isLoggedIn()">
-          <a class="dropdown-toggle btn btn-lg btn-primary" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            SiLabI
-            <span class="caret"></span>
           </a>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a href="">Mi Perfil</a></li>
-            <li><a href="" ng-click="Auth.logOut()">Cerrar Sesión</a></li>
-          </ul>
         </div>
-    </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SiLabI <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="">Mi Perfil</a></li>
+                <li><a href="" ng-click="Auth.logOut()">Cerrar Sesión</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
 
     <div class="content-box">
         <div ng-view>
             
-        </div >
-        <br>
+        </div>
+    </div>
+    <div class="content-box">
         <div class="bottom-panel">
             <div class="silabiFooter">
                 <p>Instituto Tecnológico de Costa Rica. © 2016</p>

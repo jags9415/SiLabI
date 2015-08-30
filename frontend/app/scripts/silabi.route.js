@@ -89,11 +89,11 @@
         .otherwise('/');
     }
 
-    routeChangeListener.$inject = ['$rootScope', '$location', '$sessionStorage', 'jwtHelper'];
+    routeChangeListener.$inject = ['$rootScope', '$location', '$localStorage', 'jwtHelper'];
 
-    function routeChangeListener($rootScope, $location, $sessionStorage, jwtHelper) {
+    function routeChangeListener($rootScope, $location, $localStorage, jwtHelper) {
       $rootScope.$on("$routeChangeStart", function (event, next, current) {
-        var token = $sessionStorage['access_token'];
+        var token = $localStorage['access_token'];
 
         if (token && !jwtHelper.isTokenExpired(token)) {
           var payload = jwtHelper.decodeToken(token);
