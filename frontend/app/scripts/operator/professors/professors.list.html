@@ -4,34 +4,69 @@
   <div class="left-panel">
     <operators-sidebar></operators-sidebar>
   </div>
-  
-<div class="center-panel">
+
   <!-- Page content -->
-  <div ng-init="loadProfessorsPage(1)"></div>
+<div class="center-panel" ng-init="ProfessorList.loadProfessorsPage(1)">
     <h1>Docentes</h1>
+    <hr>
     <br>
-    <br>
+    <div class="table-search" style="margin-bottom: 3%;">
       <div class="row">
-        <div class="col-sm-6">
-          <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-model="searchText" ng-change="checkProfessorSearch()">
+        <div class="col-md-10 col-xs-9">
+          <form class="form-horizontal">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+              <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="checkProfessorSearch" ng-model="searchText">
+            </div>
+            <div class="input-group">
+              <a href="" ng-click="toggleAdvanceSearch()">Búsqueda Avanzada</a>
+            </div>
+            <button type="submit" name="button" ng-click="" hidden></button>
+          </form>
         </div>
-        <div class="col-sm-6">
-          <select class="form-control" id="orderSel">
-            <option selected>Ordenar Por</option>
-            <option value="name" ng-model="orderCriteria">Nombre</option>
-            <option value="last_name_1" ng-model="orderCriteria">Apellido1</option>
-            <option value="last_name_2" ng-model="orderCriteria">Apellido2</option>
-          </select>
+        <div class="col-md-2 col-xs-3">
+          <a href="#Operador/Docentes/Agregar" class="btn btn-block btn-success" ng-click="">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span class="hidden-xs">Crear</span>
+          </a>
         </div>
       </div>
-      <br><br>
+      <div class="row" ng-show="advanceSearch">
+        <div class="col-md-12">
+          <form class="form-inline advanced-search">
+            <div class="form-group">
+              <input type="text" class="form-control" id="exampleInputName2" placeholder="Usuario" ng-model="searched.username">
+            </div>
+            <div class="form-group" style="width: 17%">
+              <ui-select id="state" ng-model="searched.state" theme="selectize">
+                <ui-select-match placeholder="Estado.">
+                  {{$select.selected.name}}
+                </ui-select-match>
+                <ui-select-choices repeat="state in states | filter: $select.search">
+                  <span ng-bind-html="state.name | highlight: $select.search"></span>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control" id="exampleInputEmail2" placeholder="Año" min="2000" ng-model="OperatorList.searched.year">
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-default" ng-click="">
+                <i class="glyphicon glyphicon-search"></i> Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
       <table class="table table-striped custab" id="professorsTable">
         <thead>
           <tr>
             <th>Nombre</th>
             <th>Correo</th>
             <th>Teléfono</th>
-            <th>Detalle</th>
+            <th>Estado</th>
+            <th>Acción</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +74,13 @@
             <td>{{professor.full_name}}</td>
             <td>{{professor.email}}</td>
             <td>{{professor.phone}}</td>
+            <td>
+              <span class="label"
+                ng-class="{ 'label-success': professor.state === 'Activo',
+                            'label-danger': professor.state === 'Inactivo'}" >
+                {{ professor.state }}
+              </span>
+            </td>
             <td class="text-center">
                 <a class='btn btn-info btn-sm' ng-click="seeProfessorDetail(professor.username)"><span class="glyphicon glyphicon-eye-open" ></span></a>
                 <a href="#" class="btn btn-danger btn-sm" ng-click="deleteProfessor(professor.id)"><span class="glyphicon glyphicon-trash" ></span></a>

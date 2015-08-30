@@ -3,36 +3,36 @@
 
     angular
         .module('silabi')
-        .controller('OperatorsController', OperatorsController);
-        OperatorsController.$inject = ['$scope', '$routeParams', 'OperatorsService', 'ProfessorsService', '$location'];
+        .controller('ProfessorListController', ProfessorListController);
+        ProfessorListController.$inject = ['$routeParams', 'OperatorsService', 'ProfessorsService', '$location'];
 
-    function OperatorsController($scope, $routeParams, OperatorsService, ProfessorsService, $location) {
+    function ProfessorListController($routeParams, OperatorsService, ProfessorsService, $location) {
       
         var vm = this;
+        vm.advanceSearch = false;
+        vm.searched = {};
       	activate();
     	
-    	$scope.loadHomePage = loadHomePage;
-    	$scope.loadProfessorsPage = loadProfessorsPage;
-    	$scope.checkProfessorSearch = checkProfessorSearch;
-    	$scope.createProfessor = createProfessor;
-    	$scope.cleanProfessorCreate = cleanProfessorCreate;
-    	$scope.seeProfessorDetail = seeProfessorDetail;
-        $scope.generateUserName = generateUserName;
+    	vm.loadHomePage = loadHomePage;
+    	vm.loadProfessorsPage = loadProfessorsPage;
+    	vm.checkProfessorSearch = checkProfessorSearch;
+    	vm.seeProfessorDetail = seeProfessorDetail;
+        vm.toggleAdvanceSearch = toggleAdvanceSearch;
 
     	 function loadHomePage(number)
     	{
     		if(typeof(sessionStorage) == 'undefined')
     		{
-    			$scope.appsArray = [];
-	    		var pnumber = $scope.pageNumber + number;
-	    		if(pnumber > 0 && pnumber <= $scope.totalPages)
+    			vm.appsArray = [];
+	    		var pnumber = vm.pageNumber + number;
+	    		if(pnumber > 0 && pnumber <= vm.totalPages)
 	    		{
-		    		OperatorsService.getAppointments($scope.pageNumber + number, "a"/*access_token*/ ).
+		    		OperatorsService.getAppointments(vm.pageNumber + number, "a"/*access_token*/ ).
 		    		then(function(response)
 				        {
-							$scope.appsArray = response.results;
-							$scope.pageNumber = pnumber;
-							$scope.totalPages = response.total_pages;
+							vm.appsArray = response.results;
+							vm.pageNumber = pnumber;
+							vm.totalPages = response.total_pages;
 						},
 						function(error)
 				        {
@@ -46,16 +46,16 @@
 
     	function loadProfessorsPage(number)
     	{
-    		var pnumber = $scope.pageNumber + number;
-    		if(pnumber > 0 && pnumber <= $scope.totalPages)
+    		var pnumber = vm.pageNumber + number;
+    		if(pnumber > 0 && pnumber <= vm.totalPages)
     		{
-    			$scope.professorsArray = [];
-	    		ProfessorsService.getProfessorsByPage(pnumber, "a"/*$scope.access_token*/ ).
+    			vm.professorsArray = [];
+	    		ProfessorsService.getProfessorsByPage(pnumber, "a"/*vm.access_token*/ ).
 	    		then(function(response)
 			        {
-						$scope.professorsArray = response.results;
-						$scope.pageNumber = pnumber;
-						$scope.totalPages = response.total_pages;
+						vm.professorsArray = response.results;
+						vm.pageNumber = pnumber;
+						vm.totalPages = response.total_pages;
 					},
 					function(error)
 			        {
@@ -67,38 +67,47 @@
 
     	function checkProfessorSearch()
     	{
-            if($scope.searchText.length == 0)
+            if(vm.searchText.length == 0)
             {
-                var quant = $scope.professorsArray.length - 20;
-                $scope.professorsArray.splice(20, quant);
+                var quant = vm.professorsArray.length - 20;
+                vm.professorsArray.splice(20, quant);
             }
-    		else if($scope.searchResults.length == 0 && !$scope.onSearch)
+    		else if(vm.searchResults.length == 0 && !vm.onSearch)
     		{
     			searchProfessor();
     		}
     	}
 
+        function toggleAdvanceSearch() 
+        {
+          vm.advanceSearch = !vm.advanceSearch;
+          vm.searched.state = vm.states[0];
+          delete vm.searched.year;
+          delete vm.searched.period;
+          delete vm.searched.username;
+        }
+
     	function searchProfessor()
     	{
-            console.log("Looking for: "+$scope.searchText);
-    		$scope.onSearch = true;
+            console.log("Looking for: "+vm.searchText);
+    		vm.onSearch = true;
             var jsonObject = 
             {
                 "fields": "id, full_name, email, phone",
                 "sort" : {
-                "field": $scope.orderCriteria,
-                "type": $scope.orderType
+                "field": vm.orderCriteria,
+                "type": vm.orderType
                 },
                 "query":
                 {
                     "full_name":
                     {
                         "operation":"like",
-                        "value":"*"+$scope.searchText+"*"
+                        "value":"*"+vm.searchText+"*"
                     }
                 },
                 "limit": 20,
-                "access_token": $scope.access_token
+                "access_token": vm.access_token
             };
 
     		ProfessorsService.searchProfessorByName(jsonObject).
@@ -106,45 +115,17 @@
 			        {
                         console.log(response.results.length);
                         console.log(response.results);
-						$scope.professorsArray.push.apply($scope.professorsArray, response.results);
-						$scope.onSearch = false;
+						vm.professorsArray.push.apply(vm.professorsArray, response.results);
+						vm.onSearch = false;
 					},
 					function(error)
 			        {
 						alert("Error al ontener datos de docente.");
-						$scope.onSearch = false;
+						vm.onSearch = false;
 					}
 				);
     	}
 
-    	
-    	function  checkProfessorCreateInput() 
-    	{
-    		if(!isNaN($scope.professor.name))
-    		{
-    			alert("Nombre incorrecto.");
-    			return false;
-    		}
-    		else if(!isNaN($scope.professor.last_name_1))
-    		{
-    			alert("Primer Apellido incorrecto.");
-    			return false;
-    		}
-    		else if(!isNaN($scope.professor.last_name_2))
-    		{
-    			alert("Segundo Apellido incorrecto.");
-    			return false;
-    		}
-    		else if(isNaN($scope.professor.phone))
-    		{
-    			alert("Número telefónico incorrecto.");
-    			return false;
-    		}
-    		else
-    		{
-    			return true;
-    		}
-    	}
 
     	function seeProfessorDetail (user_name) 
         {
@@ -153,8 +134,8 @@
 
         function deleteProfessor(id)
         {
-            console.log("Deleting professor: "+id+" access_token: "+$scope.access_token);
-            ProfessorsService.deleteProfessor(id, $scope.access_token).
+            console.log("Deleting professor: "+id+" access_token: "+vm.access_token);
+            ProfessorsService.deleteProfessor(id, vm.access_token).
                 then(function(response)
                 {
                     alert("Usuario eliminado con éxito");
@@ -166,66 +147,17 @@
                 });
         }
 
-    	function cleanProfessorCreate()
-    	{
-    		$scope.professor.email = null;
-    		 $scope.professor.last_name_1 = null;
-    		 $scope.professor.last_name_2 = null;
-    		 $scope.professor.name = null;
-    		 $scope.professor.phone = null;
-             $scope.professor.username = null;
-    		 $scope.professor.password = null;
-    	}
-
-        function generateUserName()
-        {
-            $scope.professor.username = ($scope.professor.name.substring(0, 1) + $scope.professor.last_name_1).toLowerCase(); 
-        }
-
-    	function createProfessor()
-    	{
-    		if(checkProfessorCreateInput() && $scope.professor != null)
-    		{
-                var hash = CryptoJS.SHA256($scope.professor.password).toString(CryptoJS.enc.Hex);
-    			var jsonObject = 
-				{
-	              "professor": {
-	                "email": $scope.professor.email,
-	                "gender": $scope.selected_gender,
-	                "last_name_1": $scope.professor.last_name_1,
-	                "last_name_2": $scope.professor.last_name_2,
-	                "name": $scope.professor.name,
-	                "phone": $scope.professor.phone,
-	                "username": $scope.professor.username,
-	                "password": hash
-	              },
-	              "access_token":$scope.access_token
-	            }
-	            console.log(jsonObject);
-    			ProfessorsService.createProfessor(jsonObject).
-	    		then(function(response)
-			        {
-						cleanProfessorCreate();
-						alert("Usuario creado con éxito: "+response.username);
-					},
-					function(error)
-			        {
-						alert("Error al ontener datos de docente: "+ error.description);
-					}
-				);
-	    	}
-    	}
 
     	function activate()
     	{
-            $scope.professorsArray = [];
-    		$scope.pageNumber = 0;
-    		$scope.totalPages = 1;
-    		$scope.onSearch = false;
-            $scope.orderType = "ASC";
-            $scope.orderCriteria = "name";
-            $scope.searchText = "";
-    		$scope.genders = [{"name":"Masculino"}, {"name":"Femenino"}];
+            vm.professorsArray = [];
+    		vm.pageNumber = 0;
+    		vm.totalPages = 1;
+    		vm.onSearch = false;
+            vm.orderType = "ASC";
+            vm.orderCriteria = "name";
+            vm.searchText = "";
+    		vm.genders = [{"name":"Masculino"}, {"name":"Femenino"}];
     		var name = "undefined";
             var accessToken = -1;
             if(typeof(sessionStorage) != 'undefined' && sessionStorage.getItem('access_token') != null)
@@ -236,9 +168,9 @@
                     name = sessionStorage.getItem('user_name');
                 }
             }
-            $scope.user_name = name;
-            $scope.access_token = accessToken;
-            $scope.professor = 
+            vm.user_name = name;
+            vm.access_token = accessToken;
+            vm.professor = 
             {
                 "email": "",
                 "gender": "",
@@ -249,6 +181,20 @@
                 "username": "",
                 "password": ""
           };
+          vm.states = [
+            {
+              name: 'Cualquiera',
+              value: '*'
+            },
+            {
+              name: 'Activo',
+              value: 'Activo'
+            },
+            {
+              name: 'Inactivo',
+              value: 'Inactivo'
+            }
+          ];
     	}
     }
 })();

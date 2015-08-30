@@ -58,13 +58,13 @@
         })
         .when('/Operador/Docentes', {
           templateUrl: 'scripts/operator/professors/professors.list.html',
-          controller: 'OperatorsController',
-          controllerAs: 'Operator'
+          controller: 'ProfessorListController',
+          controllerAs: 'ProfessorList'
         })
         .when('/Operador/Docentes/Agregar', {
           templateUrl: 'scripts/operator/professors/professors.create.html',
-          controller: 'OperatorsController',
-          controllerAs: 'Operator'
+          controller: 'OperatorsProfessorsCreateController',
+          controllerAs: 'OperatorCreate'
         })
         .when('/Operador/Docentes/:username', {
           templateUrl: 'scripts/operator/professors/professors.detail.html',
