@@ -195,7 +195,7 @@
 
         function toggleAdvanceSearch() {
           vm.advanceSearch = !vm.advanceSearch;
-          vm.searched.state = vm.states[0];
+          delete vm.searched.state;
           delete vm.searched.year;
           delete vm.searched.period;
           delete vm.searched.username;
