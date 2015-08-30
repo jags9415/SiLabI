@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['LoginService', 'MessageService', '$location', '$localStorage', 'jwtHelper'];
+    LoginController.$inject = ['AuthenticationService', 'MessageService', '$location', '$localStorage', 'jwtHelper'];
 
-    function LoginController(LoginService, MessageService, $location, $localStorage, jwtHelper) {
+    function LoginController(AuthenticationService, MessageService, $location, $localStorage, jwtHelper) {
       var vm = this;
       vm.username;
       vm.password;
@@ -24,7 +24,7 @@
 
       function logIn() {
         if (vm.username && vm.password) {
-          LoginService.authenticate(vm.username, vm.password)
+          AuthenticationService.authenticate(vm.username, vm.password)
           .then(handleSuccess)
           .catch(handleError);
         }

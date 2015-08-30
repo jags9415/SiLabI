@@ -11,6 +11,9 @@
     function routeConfig($routeProvider) {
       $routeProvider
         .when('/', {
+          resolve: { load: handleHomeRedirect }
+        })
+        .when('/Login', {
           templateUrl: 'scripts/public/login/login.html',
           controller: 'LoginController',
           controllerAs: 'Auth'
@@ -59,7 +62,8 @@
         .when('/Operador/Docentes', {
           templateUrl: 'scripts/operator/professors/professors.list.html',
           controller: 'ProfessorListController',
-          controllerAs: 'ProfessorList'
+          controllerAs: 'ProfessorList',
+          reloadOnSearch: false
         })
         .when('/Operador/Docentes/Agregar', {
           templateUrl: 'scripts/operator/professors/professors.create.html',
@@ -87,53 +91,69 @@
           controller: 'StudentsDetailController',
           controllerAs: 'StudentDetails'
         })
-        .otherwise('/');
+        .when('/404', {
+          templateUrl: '404.html'
+        })
+        .otherwise('/404');
     }
 
-    routeChangeListener.$inject = ['$rootScope', '$location', '$localStorage', 'jwtHelper'];
+    handleHomeRedirect.$inject = ['$location', 'AuthenticationService'];
 
-    function routeChangeListener($rootScope, $location, $localStorage, jwtHelper) {
+    function handleHomeRedirect($location, AuthenticationService) {
+        if (AuthenticationService.isAuthenticated()) {
+          var data = AuthenticationService.getUserData();
+          $location.path('/' + data.type);
+        }
+        else {
+          $location.path('/Login');
+        }
+      }
+
+    routeChangeListener.$inject = ['$rootScope', '$location', 'AuthenticationService'];
+
+    function routeChangeListener($rootScope, $location, AuthenticationService) {
       $rootScope.$on("$routeChangeStart", function (event, next, current) {
-        var token = $localStorage['access_token'];
+        var url = next.templateUrl;
 
-        // The next route doesn't exist. Apply redirect.
-        if (!next || !next.$$route) {
-          if (token && !jwtHelper.isTokenExpired(token)) {
-            var payload = jwtHelper.decodeToken(token);
-            redirectOrPrevent($location, event, current, payload.type);
-          }
-          else {
-            $location.path('/');
-          }
+        if (!url) {
           return;
         }
 
-        var url = next.$$route.templateUrl;
-
-        if (token && !jwtHelper.isTokenExpired(token)) {
-          var payload = jwtHelper.decodeToken(token);
-
-          if ((url === "scripts/public/login/login.html") ||
-              (url.startsWith("scripts/administrator") && payload.type !== "Administrador") ||
-              (url.startsWith("scripts/operator") && payload.type !== "Operador" && payload.type !== "Administrador") ||
-              (url.startsWith("scripts/professor") && payload.type !== "Docente") ||
-              (url.startsWith("scripts/student") && payload.type !== "Estudiante")) {
-                redirectOrPrevent($location, event, current, payload.type);
+        // User is authenticated.
+        if (AuthenticationService.isAuthenticated()) {
+          var data = AuthenticationService.getUserData();
+          // User is trying to access the login view or a restricted view.
+          if (url === "scripts/public/login/login.html" || !hasAccesssToView(url, data.type)) {
+            if (current) {
+              event.preventDefault();
+            }
+            else {
+              $location.path('/' + data.type);
+            }
           }
         }
+        // User is not authenticated. Only have access to public views.
         else if (!url.startsWith("scripts/public")) {
-          $location.path('/');
+          $location.path('/Login');
         }
       });
     }
 
-    function redirectOrPrevent($location, event, currentRoute, userType) {
-      if (currentRoute) {
-        event.preventDefault();
+    function hasAccesssToView(view, type) {
+      if (view.startsWith("scripts/administrator")) {
+        return type === "Administrador";
+      }
+      else if (view.startsWith("scripts/operator")) {
+        return type === "Operador" || type === "Administrador";
+      }
+      else if (view.startsWith("scripts/professor")) {
+        return type === "Docente";
+      }
+      else if (view.startsWith("scripts/student")) {
+        return type === "Estudiante";
       }
       else {
-        $location.path('/' + userType);
+        return false;
       }
     }
-
 })();
