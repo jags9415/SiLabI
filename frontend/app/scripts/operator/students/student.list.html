@@ -35,8 +35,8 @@
     <table class="table table-striped" ng-show="StudentList.isLoaded() && !StudentList.isEmpty()">
       <thead>
         <tr>
-          <th>Carne</th>
           <th>Nombre</th>
+          <th>Usuario</th>
           <th>Correo</th>
           <th>Estado</th>
           <th>Acción</th>
@@ -44,14 +44,14 @@
       </thead>
       <tbody>
         <tr ng-repeat="student in StudentList.students">
-          <td>{{ student.username }}</td>
           <td>{{ student.full_name }}</td>
+          <td>{{ student.username }}</td>
           <td>{{ student.email }}</td>
           <td>
             <span class="label"
               ng-class="{ 'label-success': student.state === 'Activo',
                           'label-danger': student.state === 'Inactivo',
-                          'label-default': student.state === 'Bloqueado',
+                          'label-warning': student.state === 'Bloqueado',
                         }" >
               {{ student.state }}
             </span>

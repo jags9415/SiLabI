@@ -74,7 +74,8 @@
         .when('/Operador/Estudiantes', {
           templateUrl: 'scripts/operator/students/student.list.html',
           controller: 'StudentListController',
-          controllerAs: 'StudentList'
+          controllerAs: 'StudentList',
+          reloadOnSearch: false
         })
         .when('/Operador/Estudiantes/Agregar', {
           templateUrl: 'scripts/operator/students/student.create.html',
