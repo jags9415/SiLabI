@@ -1,8 +1,12 @@
-<div id="wrapper">
+
+<div class="wrap">
 
   <!-- SideBar directive -->
-  <default-sidebar></default-sidebar>
 
+  <div class="left-panel">
+    <operators-sidebar></operators-sidebar>
+  </div>
+<div class="center-panel">
   <!-- Page content -->
   <div id="page-content-wrapper">
   <div ng-init="loadProfessorsPage(1)"></div>
@@ -59,5 +63,6 @@
           </div>
         </div>
       </div>
+  </div>
   </div>
 </div>

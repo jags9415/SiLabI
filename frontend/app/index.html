@@ -16,7 +16,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/homePages.css">
-    <link rel="stylesheet" href="styles/sidebar.style.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
     <!-- endbuild -->
   </head>
@@ -41,16 +41,19 @@
         </div>
     </div>
 
-    <div class="content-box" ng-view>
-    </div>
-
     <div class="content-box">
-        <div class="silabiFooter">
-            <p>Instituto Tecnológico de Costa Rica. © 2016</p>
-            <ul>
-                <li><a href="#About">Acerca de</a></li>
-                <li><a href="">Contacto</a></li>
-            </ul>
+        <div ng-view>
+            
+        </div >
+        <br>
+        <div class="bottom-panel">
+            <div class="silabiFooter">
+                <p>Instituto Tecnológico de Costa Rica. © 2016</p>
+                <ul>
+                    <li><a href="#About">Acerca de</a></li>
+                    <li><a href="">Contacto</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -121,5 +124,7 @@
 
     <!-- Sidebar -->
     <script src="scripts/other/sidebar/default/defaultSidebar.directive.js"></script>
+    <script src="scripts/other/sidebar/operators/operatorsSidebar.directive.js"></script>
+    <script src="scripts/other/sidebar/sidebarJQ.js"></script>
 </body>
 </html>

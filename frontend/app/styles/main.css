@@ -128,7 +128,8 @@ td
 {
   width: 100%;
   bottom: 0px;
-  position: fixed;
+  z-index: 1000;
+  position: relative;
   background-color: rgb(0, 45, 86);
   font-family: @import url(http://fonts.googleapis.com/css?family=Lato:400);
   padding-bottom: 0.5%;
@@ -212,4 +213,33 @@ td
 
 .advanced-search {
   padding-top: 1%;
+}
+
+.left-panel
+{
+  color: white;
+  float:left;
+  width: 20%;
+}
+
+.center-panel
+{
+  float:right;
+  width: 80%;
+}
+
+.bottom-panel
+{
+  clear: both;
+  width: 100%;
+}
+
+.fixed-container
+{
+  position: fixed;
+}
+
+.wrap
+{
+  width: 95%;
 }
