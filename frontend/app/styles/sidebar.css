@@ -169,11 +169,6 @@
         color: white;
     }
 
-    li:hover
-    {
-        background-color: rgb(0, 45, 86);
-    }
-
     li > p
     {
         margin-left: 5%;
@@ -184,4 +179,3 @@
         font-size: 12pt;
         margin-left: 10%;
     }
-

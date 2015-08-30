@@ -291,3 +291,7 @@ td
 .form-group.has-error .help-block {
   display: block;
 }
+
+.breadcrumb {
+  font-size: 70%;
+}
