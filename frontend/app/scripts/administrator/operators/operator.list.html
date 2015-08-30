@@ -38,24 +38,24 @@
         <div class="col-md-12">
           <form class="form-inline advanced-search">
             <div class="form-group">
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="Usuario" ng-model="OperatorList.searched.username">
+              <input type="text" class="form-control" placeholder="Usuario" ng-model="OperatorList.searched.username">
             </div>
             <div class="form-group" style="width: 17%">
-              <ui-select id="state" ng-model="OperatorList.searched.state" theme="selectize">
-                <ui-select-match placeholder="Estado.">
+              <ui-select id="state" ng-model="OperatorList.searched.state">
+                <ui-select-match placeholder="Estado" allow-clear="true">
                   {{$select.selected.name}}
                 </ui-select-match>
-                <ui-select-choices repeat="state in OperatorList.states | filter: $select.search">
-                  <span ng-bind-html="state.name | highlight: $select.search"></span>
+                <ui-select-choices repeat="state in OperatorList.states">
+                  <span ng-bind-html="state.name"></span>
                 </ui-select-choices>
               </ui-select>
             </div>
             <div class="form-group" style="width: 17%">
-              <ui-select id="period" ng-model="OperatorList.searched.period" theme="selectize">
-                <ui-select-match placeholder="Periodo.">
+              <ui-select id="period" ng-model="OperatorList.searched.period" style="width: 100%">
+                <ui-select-match placeholder="Periodo" allow-clear="true">
                   {{$select.selected.value + ' ' + $select.selected.type}}
                 </ui-select-match>
-                <ui-select-choices repeat="period in OperatorList.periods | filter: $select.search">
+                <ui-select-choices repeat="period in OperatorList.periods | filter: $select.search" group-by="'type'">
                   <span ng-bind-html="period.value | highlight: $select.search"></span>
                   <span ng-bind-html="period.type | highlight: $select.search"></span>
                 </ui-select-choices>
