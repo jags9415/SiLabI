@@ -295,3 +295,7 @@ td
 .breadcrumb {
   font-size: 70%;
 }
+
+.navbar {
+  border-radius: 0;
+}
