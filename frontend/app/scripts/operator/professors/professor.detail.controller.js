@@ -4,9 +4,9 @@
     angular
         .module('silabi')
         .controller('ProfessorsDetailController', ProfessorsDetailController);
-        ProfessorsDetailController.$inject = ['$routeParams', 'ProfessorsService', '$route', '$location', 'MessageService'];
+        ProfessorsDetailController.$inject = ['$routeParams', 'ProfessorService', '$route', '$location', 'MessageService'];
 
-    function ProfessorsDetailController($routeParams, ProfessorsService, $route, $location, MessageService) {
+    function ProfessorsDetailController($routeParams, ProfessorService, $route, $location, MessageService) {
         var vm = this;
         vm.genders = ["Masculino", "Femenino"];
         vm.username = $routeParams.username;
@@ -17,7 +17,7 @@
 
         function activate()
       	{
-          ProfessorsService.GetOne(vm.username).
+          ProfessorService.GetOne(vm.username).
           then(handleGetSuccess)
           .catch(handleError);
       	}
@@ -29,7 +29,7 @@
               var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
               vm.professor.password = hash;
             }
-            ProfessorsService.Update(vm.professor.id, vm.professor)
+            ProfessorService.Update(vm.professor.id, vm.professor)
             .then(handleGetSuccess)
             .catch(handleError);
           }
@@ -37,7 +37,7 @@
 
         function deleteProfessor() {
           if (vm.professor) {
-            ProfessorsService.Delete(vm.professor.id)
+            ProfessorService.Delete(vm.professor.id)
             .then(handleDeleteSuccess)
             .catch(handleError);
           }
