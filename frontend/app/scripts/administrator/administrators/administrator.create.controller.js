@@ -39,7 +39,7 @@
             {
               if(response!= null)
               {
-                handleSearchSucces(response);
+                handleSearchSuccess(response);
               }
             },
             function error(response)
