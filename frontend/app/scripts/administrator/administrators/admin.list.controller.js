@@ -14,7 +14,7 @@
         vm.limit = 20;
         vm.advanceSearch = false;
         vm.request = {
-          fields : "id,full_name,username,state,period.value,period.year,period.type"
+          fields : "id,full_name,username,state"
         };
 
       	activate();
@@ -45,7 +45,7 @@
         }
 
         function openAdministrator(id) {
-          $location.path('/Administrador/Operadores/' + id);
+          $location.path('/Administrador/Administradores/' + id);
         }
 
         function deleteAdministrator(id) {
@@ -78,28 +78,6 @@
             }
           }
 
-          if (vm.searched.period) {
-            if (vm.searched.period.value) {
-              vm.request.query["period.value"] = {
-                operation: "eq",
-                value: vm.searched.period.value
-              }
-            }
-            if (vm.searched.period.type) {
-              vm.request.query["period.type"] = {
-                operation: "eq",
-                value: vm.searched.period.type
-              }
-            }
-          }
-
-          if (vm.searched.year) {
-            vm.request.query["period.year"] = {
-              operation: "eq",
-              value: vm.searched.year
-            }
-          }
-
           if (vm.searched.email) {
               vm.request.query["email"] = {
                 operation: "eq",
@@ -114,8 +92,7 @@
         {
           vm.advanceSearch = !vm.advanceSearch;
           delete vm.searched.state;
-          delete vm.searched.year;
-          delete vm.searched.period;
+          delete vm.searched.email;
           delete vm.searched.username;
         }
 
@@ -127,6 +104,7 @@
 
         function handleGetSuccess(data) 
         {
+            console.log(data.results);
           vm.administrators = data.results;
           vm.page = data.current_page;
           vm.totalPages = data.total_pages;

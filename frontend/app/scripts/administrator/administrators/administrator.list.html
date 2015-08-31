@@ -50,22 +50,8 @@
                 </ui-select-choices>
               </ui-select>
             </div>
-            <div class="form-group" style="width: 17%">
-              <ui-select id="period" ng-model="AdminList.searched.period" style="width: 100%">
-                <ui-select-match placeholder="Periodo" allow-clear="true">
-                  {{$select.selected.value + ' ' + $select.selected.type}}
-                </ui-select-match>
-                <ui-select-choices repeat="period in AdminList.periods | filter: $select.search" group-by="'type'">
-                  <span ng-bind-html="period.value | highlight: $select.search"></span>
-                  <span ng-bind-html="period.type | highlight: $select.search"></span>
-                </ui-select-choices>
-              </ui-select>
-            </div>
             <div class="form-group">
-              <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Telefono" ng-model="AdminList.searched.phone">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Telefono" ng-model="AdminList.searched.email">
+              <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Correo" ng-model="AdminList.searched.email">
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-default" ng-click="AdminList.search()">
@@ -83,15 +69,14 @@
           <th>Usuario</th>
           <th>Correo</th>
           <th>Estado</th>
-          <th>Periodo</th>
           <th>Acción</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="admin in AdminList.operators">
+        <tr ng-repeat="admin in AdminList.administrators">
           <td>{{ admin.full_name }}</td>
           <td>{{ admin.username }}</td>
-          <td>{{ admin.period.value + ' ' + admin.period.type + ' ' + admin.period.year }}</td>
+          <td>{{ admin.email }}</td>
           <td>
             <span class="label"
               ng-class="{ 'label-success': admin.state === 'Activo',
