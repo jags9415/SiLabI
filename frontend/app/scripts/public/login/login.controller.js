@@ -21,7 +21,7 @@
       function logIn() {
         if (vm.username && vm.password) {
           var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
-          AuthenticationService.authenticate(vm.username, vm.password)
+          AuthenticationService.authenticate(vm.username, hash)
           .then(handleSuccess)
           .catch(handleError);
         }
