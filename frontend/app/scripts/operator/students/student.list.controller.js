@@ -13,6 +13,7 @@
         vm.students = [];
         vm.searched = {};
         vm.limit = 20;
+        vm.advanceSearch = false;
         vm.request = {
           fields : "id,full_name,email,phone,username,state"
         };
@@ -24,6 +25,7 @@
         vm.isEmpty = isEmpty;
         vm.isLoaded = isLoaded;
         vm.loadPage = loadPage;
+        vm.toggleAdvanceSearch = toggleAdvanceSearch;
 
         activate();
 
@@ -37,6 +39,25 @@
           vm.totalPages = page;
           vm.page = page;
           loadPage();
+
+          vm.states = [
+            {
+              name: 'Cualquiera',
+              value: '*'
+            },
+            {
+              name: 'Activo',
+              value: 'Activo'
+            },
+            {
+              name: 'Inactivo',
+              value: 'Inactivo'
+            },
+            {
+              name: 'Bloqueado',
+              value: 'Bloqueado'
+            }
+          ];
         }
 
         function loadPage() {
@@ -74,8 +95,37 @@
             }
           }
 
+          if (vm.searched.username) {
+            vm.request.query.username = {
+              operation: "like",
+              value: '*' + vm.searched.username.replace(' ', '*') + '*'
+            }
+          }
+
+          if (vm.searched.state) {
+            vm.request.query.state = {
+              operation: "like",
+              value: vm.searched.state.value
+            }
+          }
+
+          if (vm.searched.email) {
+            vm.request.query.email = {
+              operation: "like",
+              value: '*' + vm.searched.email.replace(' ', '*') + '*'
+            }
+          }
+
           loadPage();
         }
+
+        function toggleAdvanceSearch() {
+          vm.advanceSearch = !vm.advanceSearch;
+          delete vm.searched.state;
+          delete vm.searched.email;
+          delete vm.searched.username;
+        }
+
 
         function isEmpty() {
           return vm.students.length == 0;

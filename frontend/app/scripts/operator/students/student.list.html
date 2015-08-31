@@ -22,7 +22,7 @@
               <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="StudentList.search()" ng-model="StudentList.searched.full_name">
             </div>
             <div class="input-group">
-              <a href="">Búsqueda Avanzada</a>
+              <a href="" ng-click="StudentList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
             </div>
             <button type="submit" name="button" ng-click="StudentList.search()" hidden></button>
           </form>
@@ -32,6 +32,33 @@
             <i class="glyphicon glyphicon-plus"></i>
             <span class="hidden-xs">Crear</span>
           </a>
+        </div>
+        <div class="row" ng-show="StudentList.advanceSearch">
+          <div class="col-md-12">
+            <form class="form-inline advanced-search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Usuario" ng-model="StudentList.searched.username">
+              </div>
+              <div class="form-group" style="width: 17%">
+                <ui-select id="state" ng-model="StudentList.searched.state" search-enabled="false">
+                  <ui-select-match placeholder="Estado" allow-clear="true">
+                    {{$select.selected.name}}
+                  </ui-select-match>
+                  <ui-select-choices repeat="state in StudentList.states">
+                    <span ng-bind-html="state.name"></span>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Correo" ng-model="StudentList.searched.email">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-default" ng-click="StudentList.search()">
+                  <i class="glyphicon glyphicon-search"></i> Buscar
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
