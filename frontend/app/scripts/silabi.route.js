@@ -43,6 +43,11 @@
           controller: 'ProfessorsController',
           controllerAs: 'Professors'
         })
+        .when('/Administrador/Administradores', {
+          templateUrl: 'scripts/administrator/administrators/administrator.list.html',
+          controller: 'AdminListController',
+          controllerAs: 'AdminList',
+        })
         .when('/Administrador/Operadores', {
           templateUrl: 'scripts/administrator/operators/operator.list.html',
           controller: 'OperatorListController',

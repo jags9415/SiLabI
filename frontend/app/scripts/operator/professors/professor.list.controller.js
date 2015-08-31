@@ -87,7 +87,6 @@
           }
 
             if (vm.searched.email) {
-                console.log("Email: "+vm.searched.email);
               vm.request.query["email"] = {
                 operation: "eq",
                 value: vm.searched.email
