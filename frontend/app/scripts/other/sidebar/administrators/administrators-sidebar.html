@@ -1,56 +1,19 @@
-<div class="white-panel">  
-    <nav class="navbar navbar-inverse sidebar" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <p>Administrador</p>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <p> Citas </p>
-                        <a href="" class="sub-menu" >Inicio</a>
-                        <a href="" class="sub-menu" >Asistencia</a>
-                    </li>
-                    <li>
-                        <a href=""> Reservaciones</a>
-                    </li>
-                    <li >
-                        <a href="#/Operador/Docentes" ng-click=""> Docentes </a>
-                    </li>
-                    <li >
-                        <a href="#/Operador/Estudiantes"> Estudiantes </a>
-                    </li>
-                    <li >
-                        <a href="#/Administrador/Operadores"> Operadores </a>
-                    </li>
-                    <li >
-                        <a href="#/Administrador/Administradores"> Administradores </a>
-                    </li>
-                    <li >
-                        <a href=""> Cursos </a>
-                    </li>
-                    <li >
-                        <a href=""> Grupos </a>
-                    </li>
-                    <li >
-                        <a href=""> Software </a>
-                    </li>
-                    <li >
-                        <a href=""> Laboratorios </a>
-                    </li>
-                    <li >
-                        <a href=""> Reportes </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<div class="navbar-inverse sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+            <li><a href=""><i class="glyphicon glyphicon-ok-circle"></i> Asistencia</a></li>
+            <li><a href=""><i class="glyphicon glyphicon-calendar"></i> Citas</a></li>
+            <li><a href=""><i class="glyphicon glyphicon-calendar"></i> Reservaciones</a></li>
+            <li><a href="#Operador/Estudiantes"><i class="glyphicon glyphicon-user"></i> Estudiantes</a></li>
+            <li><a href="#Operador/Docentes"><i class="glyphicon glyphicon-user"></i> Docentes</a></li>
+            <li><a href="#Administrador/Operadores"><i class="glyphicon glyphicon-user"></i> Operadores</a></li>
+            <li><a href="#Administrador/Administradores"><i class="glyphicon glyphicon-user"></i> Administradores</a></li>
+            <li><a href=""><i class="glyphicon glyphicon-book"></i> Cursos</a></li>
+            <li><a href=""><i class="glyphicon glyphicon-book"></i> Grupos</a></li>
+            <li><a href=""><i class="glyphicon glyphicon-th-list"></i> Laboratorios</a></li>
+            <li><a href=""><i class="glyphicon glyphicon-floppy-disk"></i> Software</a></li>
+        </ul>
+    </div>
+    <!-- /.sidebar-collapse -->
 </div>
+<!-- /.navbar-static-side -->

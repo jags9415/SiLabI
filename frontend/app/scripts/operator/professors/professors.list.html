@@ -1,111 +1,102 @@
-<div class="wrap">
-
-  <!-- SideBar directive -->
-  <div class="left-panel">
-    <operators-sidebar></operators-sidebar>
-  </div>
-
-  <!-- Page content -->
-<div class="center-panel">
-    <h2>Docentes</h2>
-    <hr>
-    <ol class="breadcrumb">
-      <li><a href="#/">Inicio</a></li>
-      <li class="active">Docentes</li>
-    </ol>
-    <div class="table-search" style="margin-bottom: 3%;">
-      <div class="row">
-        <div class="col-md-10 col-xs-9">
-          <form class="form-horizontal">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-              <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="ProfessorList.search()" ng-model="ProfessorList.searched.full_name">
-            </div>
-            <div class="input-group">
-              <a href="" ng-click="ProfessorList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
-            </div>
-            <button type="submit" name="button" ng-click="ProfessorList.search()" hidden></button>
-          </form>
-        </div>
-        <div class="col-md-2 col-xs-3">
-          <a href="#Operador/Docentes/Agregar" class="btn btn-block btn-success" ng-click="ProfessorList.createProfessor()">
-            <i class="glyphicon glyphicon-plus"></i>
-            <span class="hidden-xs">Crear</span>
-          </a>
-        </div>
+<div>
+  <h2>Docentes</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li class="active">Docentes</li>
+  </ol>
+  <div class="table-search" style="margin-bottom: 3%;">
+    <div class="row">
+      <div class="col-md-10 col-xs-9">
+        <form class="form-horizontal">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="ProfessorList.search()" ng-model="ProfessorList.searched.full_name">
+          </div>
+          <div class="input-group">
+            <a href="" ng-click="ProfessorList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
+          </div>
+          <button type="submit" name="button" ng-click="ProfessorList.search()" hidden></button>
+        </form>
       </div>
-      <div class="row" ng-show="ProfessorList.advanceSearch">
-        <div class="col-md-12">
-          <form class="form-inline advanced-search">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Usuario" ng-model="ProfessorList.searched.username">
-            </div>
-            <div class="form-group" style="width: 17%">
-              <ui-select id="state" ng-model="searched.state" search-enabled="false">
-                <ui-select-match placeholder="Estado" allow-clear="true">
-                  {{$select.selected.name}}
-                </ui-select-match>
-                <ui-select-choices repeat="state in ProfessorList.states">
-                  <span ng-bind-html="state.name"></span>
-                </ui-select-choices>
-              </ui-select>
-            </div>
-            <div class="form-group">
-              <input type="email" class="form-control" placeholder="Email" ng-model="ProfessorList.searched.email">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Teléfono" ng-model="ProfessorList.searched.phone">
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-default" ng-click="ProfessorList.search()">
-                <i class="glyphicon glyphicon-search"></i> Search
-              </button>
-            </div>
-          </form>
-        </div>
+      <div class="col-md-2 col-xs-3">
+        <a href="#Operador/Docentes/Agregar" class="btn btn-block btn-success" ng-click="ProfessorList.createProfessor()">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span class="hidden-xs">Crear</span>
+        </a>
       </div>
     </div>
-      <table class="table table-striped" id="professorsTable">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Usuario</th>
-            <th>Correo</th>
-            <th>Teléfono</th>
-            <th>Estado</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="professor in ProfessorList.professors" id="{{professor.id}}">
-            <td>{{professor.full_name}}</td>
-            <td>{{professor.username}}</td>
-            <td>{{professor.email}}</td>
-            <td>{{professor.phone}}</td>
-            <td>
-              <span class="label"
-                ng-class="{ 'label-success': professor.state === 'Activo',
-                            'label-danger': professor.state === 'Inactivo'}" >
-                {{ professor.state }}
-              </span>
-            </td>
-            <td class="text-center">
-                <a href="{{ '#Operador/Docentes/' + professor.username }}" class='btn btn-info btn-sm' ng-click="ProfessorList.seeProfessorDetail(professor.username)"><span class="glyphicon glyphicon-eye-open" ></span></a>
-                <a href="" class="btn btn-danger btn-sm" ng-click="ProfessorList.deleteProfessor(professor.id)"><span class="glyphicon glyphicon-trash" ></span></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p ng-show="ProfessorList.searchResults.length==0"> No se encontraron resultados </p>
-      <br><br>
-      <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <pagination
-          ng-change="ProfessorList.loadPage()" ng-model="ProfessorList.page" items-per-page="ProfessorList.limit"
-          total-items="ProfessorList.totalItems" max-size="5" boundary-links="true" rotate="true"
-          previous-text="<" next-text=">" first-text="<<" last-text=">>"
-        ></pagination>
+    <div class="row" ng-show="ProfessorList.advanceSearch">
+      <div class="col-md-12">
+        <form class="form-inline advanced-search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Usuario" ng-model="ProfessorList.searched.username">
+          </div>
+          <div class="form-group" style="width: 17%">
+            <ui-select id="state" ng-model="searched.state" search-enabled="false">
+              <ui-select-match placeholder="Estado" allow-clear="true">
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="state in ProfessorList.states">
+                <span ng-bind-html="state.name"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email" ng-model="ProfessorList.searched.email">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Teléfono" ng-model="ProfessorList.searched.phone">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default" ng-click="ProfessorList.search()">
+              <i class="glyphicon glyphicon-search"></i> Search
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
+  </div>
+    <table class="table table-striped" id="professorsTable">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Usuario</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="professor in ProfessorList.professors" id="{{professor.id}}">
+          <td>{{professor.full_name}}</td>
+          <td>{{professor.username}}</td>
+          <td>{{professor.email}}</td>
+          <td>{{professor.phone}}</td>
+          <td>
+            <span class="label"
+              ng-class="{ 'label-success': professor.state === 'Activo',
+                          'label-danger': professor.state === 'Inactivo'}" >
+              {{ professor.state }}
+            </span>
+          </td>
+          <td class="text-center">
+              <a href="{{ '#Operador/Docentes/' + professor.username }}" class='btn btn-info btn-sm' ng-click="ProfessorList.seeProfessorDetail(professor.username)"><span class="glyphicon glyphicon-eye-open" ></span></a>
+              <a href="" class="btn btn-danger btn-sm" ng-click="ProfessorList.deleteProfessor(professor.id)"><span class="glyphicon glyphicon-trash" ></span></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p ng-show="ProfessorList.searchResults.length==0"> No se encontraron resultados </p>
+    <br><br>
+    <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <pagination
+        ng-change="ProfessorList.loadPage()" ng-model="ProfessorList.page" items-per-page="ProfessorList.limit"
+        total-items="ProfessorList.totalItems" max-size="5" boundary-links="true" rotate="true"
+        previous-text="<" next-text=">" first-text="<<" last-text=">>"
+      ></pagination>
     </div>
   </div>
 </div>

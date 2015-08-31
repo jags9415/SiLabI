@@ -14,9 +14,10 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="bower_components/metisMenu/dist/metisMenu.min.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/sb-admin-2.css">
     <link rel="stylesheet" href="styles/homePages.css">
-    <link rel="stylesheet" href="styles/sidebar.css">
     <!-- endbuild -->
   </head>
   <body ng-app="silabi" ng-controller="MainController as Main">
@@ -24,47 +25,52 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <nav class="navbar navbar-inverse" ng-controller="LoginController as Auth">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#/">
-            <img src="res/img/logo_eccl_tec_white.svg" height="50" width="350" class="img-responsive">
-          </a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right" ng-hide="!Auth.isAuthenticated()">
-            <li class="dropdown">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SiLabI <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="">Mi Perfil</a></li>
-                <li><a href="" ng-click="Auth.logOut()">Cerrar Sesión</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-
-    <div class="content-box">
-        <div ng-view>
-
-        </div>
-    </div>
-    <div class="content-box">
-        <div class="bottom-panel">
-            <div class="silabiFooter">
-                <p>Instituto Tecnológico de Costa Rica. © 2016</p>
-                <ul>
-                    <li><a href="#About">Acerca de</a></li>
-                    <li><a href="">Contacto</a></li>
-                </ul>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0" ng-controller="LoginController as Auth">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="">
+                  <img src="res/img/logo_eccl_tec_white.svg" class="img-responsive">
+                </a>
             </div>
+            <!-- /.navbar-header -->
+            <ul class="nav navbar-top-links navbar-right" ng-if="Auth.isAuthenticated()">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                      <i class="glyphicon glyphicon-user"></i> SiLabI <i class="glyphicon glyphicon-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                      <li><a href=""><i class="glyphicon glyphicon-user"></i> Mi Perfil</a></li>
+                      <li><a href="" ng-click="Auth.logOut()"><i class="glyphicon glyphicon-log-out"></i> Cerrar Sesión</a></li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <default-sidebar ng-if="!Main.UserType()"></default-sidebar>
+            <administrators-sidebar ng-if="Main.UserType() === 'Administrador'"></administrators-sidebar>
+            <operators-sidebar ng-if="Main.UserType() === 'Operador'"></operators-sidebar>
+            <professors-sidebar ng-if="Main.UserType() === 'Docente'"></professors-sidebar>
+            <students-sidebar ng-if="Main.UserType() === 'Estudiante'"></students-sidebar>
+        </nav>
+        <div id="page-wrapper">
+          <div id="view-wrapper" ng-view></div>
+          <div class="silabiFooter">
+            <p>Instituto Tecnológico de Costa Rica. © 2016</p>
+            <ul>
+                <li><a href="#About">Acerca de</a></li>
+                <li><a href="">Contacto</a></li>
+            </ul>
+          </div>
         </div>
     </div>
 
@@ -90,6 +96,7 @@
     <!-- endbuild -->
 
     <!-- Modules -->
+    <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
     <script src="bower_components/crypto-js/rollups/sha256.js"></script>
     <script src="bower_components/angular-i18n/angular-locale_es-cr.js"></script>
     <script src="bower_components/bootbox/bootbox.js"></script>
@@ -139,5 +146,43 @@
     <script src="scripts/other/sidebar/administrators/administratorsSidebar.directive.js"></script>
     <script src="scripts/other/sidebar/professors/professorsSidebar.directive.js"></script>
     <script src="scripts/other/sidebar/students/studentsSidebar.directive.js"></script>
+    <script src="scripts/other/sidebar/default/defaultSidebar.directive.js"></script>
+
+    <script type="application/javascript">
+      $(function() {
+        $('#side-menu').metisMenu();
+      });
+
+      //Loads the correct sidebar on window load,
+      //collapses the sidebar on window resize.
+      // Sets the min-height of #page-wrapper to window size
+      $(function() {
+        $(window).bind("load resize", function() {
+            topOffset = 50;
+            width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
+            if (width < 768) {
+                $('div.navbar-collapse').addClass('collapse');
+                topOffset = 100; // 2-row-menu
+            } else {
+                $('div.navbar-collapse').removeClass('collapse');
+            }
+
+            height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
+            height = height - topOffset;
+            if (height < 1) height = 1;
+            if (height > topOffset) {
+                $("#page-wrapper").css("min-height", (height) + "px");
+            }
+        });
+
+        var url = window.location;
+        var element = $('ul.nav a').filter(function() {
+            return this.href == url || url.href.indexOf(this.href) == 0;
+        }).addClass('active').parent().parent().addClass('in').parent();
+        if (element.is('li')) {
+            element.addClass('active');
+        }
+      });
+    </script>
 </body>
 </html>

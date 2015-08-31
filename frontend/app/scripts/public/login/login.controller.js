@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['AuthenticationService', 'MessageService', '$location', '$localStorage', 'jwtHelper', 'CryptoJS'];
+    LoginController.$inject = ['AuthenticationService', 'MessageService', '$route', '$location', '$localStorage', 'jwtHelper', 'CryptoJS'];
 
-    function LoginController(AuthenticationService, MessageService, $location, $localStorage, jwtHelper, CryptoJS) {
+    function LoginController(AuthenticationService, MessageService, $route, $location, $localStorage, jwtHelper, CryptoJS) {
       var vm = this;
       vm.logIn = logIn;
       vm.logOut = logOut
@@ -21,7 +21,7 @@
       function logIn() {
         if (vm.username && vm.password) {
           var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
-          AuthenticationService.authenticate(vm.username, hash)
+          AuthenticationService.authenticate(vm.username, vm.password)
           .then(handleSuccess)
           .catch(handleError);
         }
@@ -33,6 +33,7 @@
         delete vm.$storage['user_name'];
         delete vm.$storage['user_type'];
         $location.path('/Login');
+        $route.reload();
       }
 
       function handleSuccess(result) {
@@ -41,6 +42,7 @@
         vm.$storage['user_name'] = result.user.full_name;
         vm.$storage['user_type'] = result.user.type;
         $location.path('/' + result.user.type);
+        $route.reload();
       }
 
       function handleError(error) {

@@ -15,11 +15,20 @@ hr {
   padding: 0;
 }
 
+h1, h2, h3, h4, h5 {
+  margin-top: 0;
+  padding-top: 2%;
+}
+
 body {
   padding: 0;
   height: 100%;
   font-family: @import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
   font-size: 14pt;
+}
+
+.navbar {
+  font-size: 12pt;
 }
 
 td
@@ -131,7 +140,6 @@ td
   bottom: 0%;
   z-index: 1000;
   position: fixed;
-  margin-top: 2%;
   background-color: rgb(0, 45, 86);
   font-family: @import url(http://fonts.googleapis.com/css?family=Lato:400);
   padding-bottom: 0.5%;
@@ -248,31 +256,7 @@ td
   width: 95%;
 }
 
-.navbar {
-  margin-bottom: 0;
-}
 
-.navbar-brand {
-  padding: 0;
-}
-
-.navbar-inverse {
-  background-color: #002D56;
-}
-
-.navbar-inverse .navbar-toggle {
-  background-color: #002D56;
-  border-color: #002D56;
-}
-
-.navbar-inverse .navbar-toggle:hover {
-  background-color: #002D56;
-  border-color: #002D56;
-}
-
-.navbar-inverse .navbar-nav > li > a {
-    color: white;
-}
 
 .form-group label {
   font-size: medium;
@@ -309,9 +293,6 @@ input[type=number] {
   font-size: 70%;
 }
 
-.navbar {
-  border-radius: 0;
-}
 
 .error-details  {margin-top: 40px;}
 .error-template {padding: 40px 15px;text-align: center;}

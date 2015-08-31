@@ -1,55 +1,46 @@
-<div class="wrap">
-
-  <!-- SideBar directive -->
-  <div class="left-panel">
-    <administrators-sidebar></administrators-sidebar>
-  </div>
-
-  <!-- Page content -->
-  <div class="center-panel">
-    <h2>Administrador</h2>
-    <hr>
-    <ol class="breadcrumb">
-      <li><a href="#/">Inicio</a></li>
-      <li><a href="#Administrador/Administradores">Administradores</a></li>
-      <li class="active">Detalle</li>
-    </ol>
-    <form>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="name">Nombre</label>
-            <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="AdministratorDetail.user.full_name" readonly>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="email">Coreo</label>
-            <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="AdministratorDetail.user.email" readonly>
-          </div>
+<div>
+  <h2>Administrador</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li><a href="#Administrador/Administradores">Administradores</a></li>
+    <li class="active">Detalle</li>
+  </ol>
+  <form>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="AdministratorDetail.user.full_name" readonly>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="gender">Género</label>
-            <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="AdministratorDetail.user.gender" readonly>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="phone">Teléfono</label>
-            <input type="text" class="form-control" id="phone" ng-model="AdministratorDetail.user.phone" ui-mask="(+506) 9999-99-99" readonly>
-          </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="email">Coreo</label>
+          <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="AdministratorDetail.user.email" readonly>
         </div>
       </div>
-      <div class="row" style="margin-top: 3%;">
-        <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
-          <button type="submit" class="btn btn-lg btn-danger" ng-click="AdministratorDetail.delete()">
-            <i class="glyphicon glyphicon-trash"></i> Eliminar
-          </button>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="gender">Género</label>
+          <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="AdministratorDetail.user.gender" readonly>
         </div>
       </div>
-    </form>
-  </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="phone">Teléfono</label>
+          <input type="text" class="form-control" id="phone" ng-model="AdministratorDetail.user.phone" ui-mask="(+506) 9999-99-99" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+        <button type="submit" class="btn btn-lg btn-danger" ng-click="AdministratorDetail.delete()">
+          <i class="glyphicon glyphicon-trash"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </form>
 </div>
