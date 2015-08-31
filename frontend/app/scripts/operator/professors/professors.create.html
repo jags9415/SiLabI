@@ -14,38 +14,95 @@
       <li><a href="#Operador/Docentes">Docentes</a></li>
       <li class="active">Crear</li>
     </ol>
-  <form>
-    <input class="form-control" placeholder="Nombre" name="professorinputName" type="text" ng-model="ProfessorsCreate.professor.name" ng-blur="ProfessorsCreate.generateUserName()" required>
-    <br>
-    <input class="form-control" placeholder="Primer Apellido" name="professorinputLastName1" type="text" ng-model="ProfessorsCreate.professor.last_name_1" ng-blur="ProfessorsCreate.generateUserName()" required>
-    <br>
-    <input class="form-control" placeholder="Segundo Apellido" name="professor.last_name_2" type="text" ng-model="ProfessorsCreate.professor.last_name_2">
-    <br>
-    <input class="form-control" placeholder="Nombre de usuario" name="professorusername" type="text" ng-model="ProfessorsCreate.professor.username">
-    <br>
-    <input class="form-control" placeholder="Email" name="professorinputEmail" type="email" ng-model="ProfessorsCreate.professor.email">
-    <br>
-    <div class="row">
-      <div class="col-sm-6">
-        <select class="form-control" ng-model="ProfessorsCreate.selected_gender" required>
-          <option selected disabled> Seleccionar Género</option>
-          <option ng-repeat="gender in ProfessorsCreate.genders" value="{{gender.name}}"> {{gender.name}}</option>
-        </select>
+    <form name="createProfessorForm">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group" show-errors>
+            <label for="name" class="control-label">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="ProfessorCreate.professor.name" ng-blur="ProfessorCreate.generateUserName()" ng-trim required>
+            <p class="help-block" ng-if="createProfessorForm.name.$error.required">Nombre requerido.</p>
+          </div>
+        </div>
       </div>
-      <div class="col-sm-6">
-        <input class="form-control" placeholder="Telefono" name="professorinputPhoneNumber" type="text" ng-model="ProfessorsCreate.professor.phone">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="last_name_1" class="control-label">Primer Apellido</label>
+            <input type="text" class="form-control" id="last_name_1" name="last_name_1" placeholder="Primer Apellido" ng-model="ProfessorCreate.professor.last_name_1" ng-blur="ProfessorCreate.generateUserName()" ng-trim required>
+            <p class="help-block" ng-if="createProfessorForm.last_name_1.$error.required">Apellido requerido.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="last_name_2" class="control-label">Segundo Apellido</label>
+            <input type="text" class="form-control" id="last_name_2" name="last_name_2" placeholder="Segundo Apellido" ng-model="ProfessorCreate.professor.last_name_2" ng-trim>
+          </div>
+        </div>
       </div>
-    </div>
-    <br>
-    <input class="form-control" placeholder="Contraseña" name="professorinputPassword" type="password" ng-model="ProfessorsCreate.professor.password" required>
-    <br>
-    <div class="row" style="margin-top: 3%;">
-      <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
-        <button class="btn btn-lg btn-success" type="submit" ng-click="ProfessorsCreate.createProfessor()">
-          <i class="glyphicon glyphicon-plus"></i> Agregar
-        </button>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="username" class="control-label">Usuario</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Usuario" ng-pattern="'[A-Za-z0-9]+'" ng-model="ProfessorCreate.professor.username" ng-pattern="'[A-Za-z0-9]+'" ng-trim required>
+            <p class="help-block" ng-if="createProfessorForm.username.$error.required">Usuario requerido.</p>
+            <p class="help-block" ng-if="createProfessorForm.username.$error.pattern">Formato incorrecto. Ingrese mínimo únicamente alfanuméricos.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="gender" class="control-label">Género</label>
+            <ui-select id="gender" ng-model="ProfessorCreate.professor.gender">
+              <ui-select-match placeholder="{{ProfessorCreate.professor.gender}}">
+                {{ $select.selected }}
+              </ui-select-match>
+              <ui-select-choices repeat="gender in ProfessorCreate.genders">
+                <span ng-bind-html="gender"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
       </div>
-    </div>
-  </form>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="email" class="control-label">Coreo</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Correo" ng-model="ProfessorCreate.professor.email" ng-trim>
+            <p class="help-block" ng-if="createProfessorForm.email.$error.email">Email inválido.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="phone" class="control-label">Teléfono</label>
+            <input type="text" class="form-control" id="phone" name="phone" ng-model="ProfessorCreate.professor.phone" ui-mask="(+506) 9999-99-99" ng-trim>
+            <p class="help-block" ng-if="createProfessorForm.phone.$error.pattern">Formato incorrecto. Ingrese mínimo 8 caracteres numéricos.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="password" class="control-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" ng-model="ProfessorCreate.password" ng-minlength="8" required>
+            <p class="help-block" ng-if="createProfessorForm.password.$error.minlength">La contraseña debe contener mínimo 8 caracteres.</p>
+            <p class="help-block" ng-if="createProfessorForm.password.$error.required">Contraseña requerida.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="password_confirmation" class="control-label">Confirmar Contraseña</label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmar Contraseña" ng-model="ProfessorCreate.password_confirm" ng-pattern="{{ProfessorCreate.password}}" required>
+            <p class="help-block" ng-if="createProfessorForm.password_confirmation.$error.pattern">Las contraseñas no coinciden.</p>
+            <p class="help-block" ng-if="createProfessorForm.password_confirmation.$error.required">Confirmación de contraseña requerida.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 3%;">
+        <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+          <button type="submit" class="btn btn-lg btn-success" ng-click="ProfessorCreate.create()" ng-disabled="createProfessorForm.$invalid">
+            <i class="glyphicon glyphicon-plus"></i> Agregar
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

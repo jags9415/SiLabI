@@ -43,9 +43,9 @@
         <div class="col-md-6">
           <div class="form-group" show-errors>
             <label for="username" class="control-label">Usuario</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Carné" ng-model="ProfessorDetail.professor.username" ng-pattern="'[A-Za-z0-9]+'" ng-trim required>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Usuario" ng-model="ProfessorDetail.professor.username" ng-pattern="'[A-Za-z0-9]+'" ng-trim required>
             <p class="help-block" ng-if="updateProfessorForm.username.$error.required">Usuario requerido.</p>
-            <p class="help-block" ng-if="updateProfessorForm.username.$error.pattern">Formato incorrecto. Ingrese mínimo 5 caracteres alfanuméricos.</p>
+            <p class="help-block" ng-if="updateProfessorForm.username.$error.pattern">Formato incorrecto. Ingrese únicamente caracteres alfanuméricos.</p>
           </div>
         </div>
         <div class="col-md-6">

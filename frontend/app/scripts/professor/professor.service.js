@@ -9,14 +9,12 @@
 
     function ProfessorsService($localStorage, RequestService) {
 
-
         this.GetAll = function(request)
         {
             if (!request) request = {};
             request.access_token = $localStorage['access_token'];
             return RequestService.get('/professors', request);
         };
-
 
         this.GetOne = function(user_name)
         {
@@ -25,13 +23,12 @@
             return RequestService.get('/professors/' + user_name, request);
         }
 
-
-        this.Create = function(jsonObject)
+        this.Create = function(professor)
         {
             var request = {};
-            request.professor = jsonObject.professor;
+            request.professor = professor;
             request.access_token = $localStorage['access_token'];
-            return RequestService.post('/professors/', request);
+            return RequestService.post('/professors', request);
         };
 
         this.Update = function(id, professor)
