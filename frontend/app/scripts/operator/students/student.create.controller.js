@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('StudentsAddController', StudentsAddController);
 
-    StudentsAddController.$inject = ['$location', '$localStorage', 'StudentService', 'MessageService'];
+    StudentsAddController.$inject = ['$location', '$localStorage', 'StudentService', 'MessageService', 'CryptoJS'];
 
-    function StudentsAddController($location, $localStorage, StudentService, MessageService) {
+    function StudentsAddController($location, $localStorage, StudentService, MessageService, CryptoJS) {
         var vm = this;
 
         vm.student = {};
@@ -20,14 +20,20 @@
         vm.cancel = cancel;
 
         function create() {
-          StudentService.Create(vm.student)
-          .then(handleSuccess)
-          .catch(handleError);
+          if (vm.student) {
+            var hashedPassword = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
+            vm.student.password = hashedPassword;
+            StudentService.Create(vm.student)
+            .then(handleSuccess)
+            .catch(handleError);
+
+          }
         }
 
         function handleSuccess(result) {
           MessageService.success("Estudiante creado con éxito.");
           vm.student = {};
+          vm.password = '';
         }
 
         function handleError(error) {
