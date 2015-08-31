@@ -82,8 +82,8 @@
         <div class="col-md-6">
           <div class="form-group" show-errors>
             <label for="password" class="control-label">Contraseña</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" ng-model="ProfessorCreate.password" ng-minlength="8" required>
-            <p class="help-block" ng-if="createProfessorForm.password.$error.minlength">La contraseña debe contener mínimo 8 caracteres.</p>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" ng-model="ProfessorCreate.password" ng-minlength="6" required>
+            <p class="help-block" ng-if="createProfessorForm.password.$error.minlength">La contraseña debe contener mínimo 6 caracteres.</p>
             <p class="help-block" ng-if="createProfessorForm.password.$error.required">Contraseña requerida.</p>
           </div>
         </div>
@@ -94,6 +94,11 @@
             <p class="help-block" ng-if="createProfessorForm.password_confirmation.$error.pattern">Las contraseñas no coinciden.</p>
             <p class="help-block" ng-if="createProfessorForm.password_confirmation.$error.required">Confirmación de contraseña requerida.</p>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div ng-password-strength="ProfessorCreate.password" strength="ProfessorCreate.strength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
         </div>
       </div>
       <div class="row" style="margin-top: 3%;">
