@@ -7,59 +7,86 @@
         AdminListController.$inject = ['AdminService', 'MessageService', '$location'];
 
     function AdminListController(AdminService, MessageService, $location) {
+
+      var vm = this;
+      vm.loaded = false;
+      vm.administrators = [];
+      vm.searched = {};
+      vm.limit = 20;
+      vm.advanceSearch = false;
+      vm.request = {
+        fields : "id,full_name,email,username,state"
+      };
+
+  	  vm.loadPage = loadPage;
+      vm.open = openAdministrator;
+      vm.delete = deleteAdministrator;
+      vm.search = searchAdministrators;
+      vm.isEmpty = isEmpty;
+      vm.isLoaded = isLoaded;
+      vm.loadPage = loadPage;
+      vm.toggleAdvanceSearch = toggleAdvanceSearch;
+
+      activate();
+
+      function activate() {
+        var page = parseInt($location.search()['page']);
+
+        if (isNaN(page)) {
+            page = 1;
+         }
+
+        vm.totalPages = page;
+        vm.page = page;
+
+        vm.states = [
+          {
+            name: 'Cualquiera',
+            value: '*'
+          },
+          {
+            name: 'Activo',
+            value: 'Activo'
+          },
+          {
+            name: 'Inactivo',
+            value: 'Inactivo'
+          }
+        ];
         
-        var vm = this;
-        vm.loaded = false;
-        vm.searched = {};
-        vm.limit = 20;
-        vm.advanceSearch = false;
-        vm.request = {
-          fields : "id,full_name,username,state"
-        };
+        loadPage();
+      }
 
-      	activate();
-      	    	
-    	vm.loadPage = loadPage;
-        vm.open = openAdministrator;
-        vm.delete = deleteAdministrator;
-        vm.search = searchAdministrators;
-        vm.isEmpty = isEmpty;
-        vm.isLoaded = isLoaded;
-        vm.loadPage = loadPage;
-        vm.toggleAdvanceSearch = toggleAdvanceSearch;
+  	  function loadPage() {
+        $location.search('page', vm.page);
 
-    	 function loadPage()
-    	{
-            $location.search('page', vm.page);
+        vm.request.page = vm.page;
+        vm.request.limit = vm.limit;
 
-            vm.request.page = vm.page;
-            vm.request.limit = vm.limit;
-
-            AdminService.GetAll(vm.request)
-            .then(handleGetSuccess)
-            .catch(handleError);
+        AdminService.GetAll(vm.request)
+        .then(handleGetSuccess)
+        .catch(handleError);
     	};
 
-        function createAdministrator() {
-          $location.path('/Administrador/Administradores/Agregar');
-        }
+      function createAdministrator() {
+        $location.path('/Administrador/Administradores/Agregar');
+      }
 
-        function openAdministrator(id) {
-          $location.path('/Administrador/Administradores/' + id);
-        }
+      function openAdministrator(id) {
+        $location.path('/Administrador/Administradores/' + id);
+      }
 
-        function deleteAdministrator(id) {
-          MessageService.confirm("¿Desea realmente eliminar este administrador?")
-            .then(function() 
-            {
-            AdminService.Delete(id)
-            .then(handleDeleteSuccess)
-            .catch(handleError)
-            });
-        }
+      function deleteAdministrator(id) {
+        MessageService.confirm("¿Desea realmente eliminar este administrador?")
+        .then(function(){
+          AdminService.Delete(id)
+          .then(handleDeleteSuccess)
+          .catch(handleError)
+        });
+      }
 
-        function searchAdministrators() {
-          vm.request.query = {};
+      function searchAdministrators() {
+        vm.request.query = {};
 
           if (vm.searched.full_name) {
             vm.request.query.full_name = {
@@ -83,32 +110,27 @@
           }
 
           if (vm.searched.email) {
-              vm.request.query["email"] = {
-                operation: "eq",
-                value: vm.searched.email
-              }
+            vm.request.query.email = {
+              operation: "eq",
+              value: vm.searched.email
             }
+          }
 
           loadPage();
         }
 
-        function toggleAdvanceSearch() 
-        {
+        function toggleAdvanceSearch() {
           vm.advanceSearch = !vm.advanceSearch;
           delete vm.searched.state;
           delete vm.searched.email;
           delete vm.searched.username;
         }
 
-        function handleDeleteSuccess() 
-        {
-          MessageService.success("Administrador eliminado.");
+        function handleDeleteSuccess() {
           loadPage();
         }
 
-        function handleGetSuccess(data) 
-        {
-            console.log(data.results);
+        function handleGetSuccess(data) {
           vm.administrators = data.results;
           vm.page = data.current_page;
           vm.totalPages = data.total_pages;
@@ -116,121 +138,17 @@
           vm.loaded = true;
         }
 
-        function handleError(data) 
-        {
+        function handleError(data) {
           MessageService.error(data.description);
           vm.loaded = true;
         }
 
-        function isEmpty() 
-        {
+        function isEmpty() {
           return vm.administrators.length == 0;
         }
 
-        function isLoaded() 
-        {
+        function isLoaded() {
           return vm.loaded;
         }
-
-    	function activate()
-    	{
-            var page = parseInt($location.search()['page']);
-
-            if (isNaN(page)) {
-                page = 1;
-             }
-            vm.totalPages = page;
-            vm.page = page;
-    		vm.administrators = [];
-            var name = "undefined";
-            var accessToken = -1;
-            if(typeof(sessionStorage) != 'undefined')
-            {
-                if(sessionStorage.getItem('user_name') != null)
-                {
-                    name = sessionStorage.getItem('user_name');
-                }
-            }
-            vm.states = 
-            [
-                {
-                  name: 'Cualquiera',
-                  value: '*'
-                },
-                {
-                  name: 'Activo',
-                  value: 'Activo'
-                },
-                {
-                  name: 'Inactivo',
-                  value: 'Inactivo'
-                }
-            ];
-
-            vm.periods = [
-            {
-              value: 1,
-              type: 'Semestre'
-            },
-            {
-              value: 2,
-              type: 'Semestre'
-            },
-            {
-              value: 1,
-              type: 'Cuatrimestre'
-            },
-            {
-              value: 2,
-              type: 'Cuatrimestre'
-            },
-            {
-              value: 3,
-              type: 'Cuatrimestre'
-            },
-            {
-              value: 1,
-              type: 'Trimestre'
-            },
-            {
-              value: 2,
-              type: 'Trimestre'
-            },
-            {
-              value: 3,
-              type: 'Trimestre'
-            },
-            {
-              value: 4,
-              type: 'Trimestre'
-            },
-            {
-              value: 1,
-              type: 'Bimestre'
-            },
-            {
-              value: 2,
-              type: 'Bimestre'
-            },
-            {
-              value: 3,
-              type: 'Bimestre'
-            },
-            {
-              value: 4,
-              type: 'Bimestre'
-            },
-            {
-              value: 5,
-              type: 'Bimestre'
-            },
-            {
-              value: 6,
-              type: 'Bimestre'
-            }
-          ];
-            vm.user_name = name;
-            loadPage();
-    	}
     }
 })();

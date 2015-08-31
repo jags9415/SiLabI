@@ -7,6 +7,7 @@
           'ngRoute',
           'ngTouch',
           'ngStorage',
+          'ngSanitize',
           'angular-jwt',
           'ui.select',
           'ui.mask',

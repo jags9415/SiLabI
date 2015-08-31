@@ -92,6 +92,9 @@
             .then(handleSearchSuccess)
             .catch(handleError);
           }
+          else {
+            vm.user = null;
+          }
         }
 
         function create() {

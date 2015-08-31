@@ -41,7 +41,7 @@
               <input type="text" class="form-control" placeholder="Usuario" ng-model="AdminList.searched.username">
             </div>
             <div class="form-group" style="width: 17%">
-              <ui-select id="state" ng-model="AdminList.searched.state">
+              <ui-select id="state" ng-model="AdminList.searched.state" search-enabled="false">
                 <ui-select-match placeholder="Estado" allow-clear="true">
                   {{$select.selected.name}}
                 </ui-select-match>
@@ -55,7 +55,7 @@
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-default" ng-click="AdminList.search()">
-                <i class="glyphicon glyphicon-search"></i> Search
+                <i class="glyphicon glyphicon-search"></i> Buscar
               </button>
             </div>
           </form>

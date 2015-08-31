@@ -5,70 +5,39 @@
         .module('silabi')
         .controller('AdministratorCreateController', AdministratorCreateController);
 
-    AdministratorCreateController.$inject = ['AdminService', 'StudentService', 'ProfessorService','MessageService'];
+    AdministratorCreateController.$inject = ['AdminService', 'UserService', 'MessageService'];
 
-    function AdministratorCreateController(AdminService, StudentService, ProfessorService, MessageService) {
+    function AdministratorCreateController(AdminService, UserService, MessageService) {
         var vm = this;
         vm.search = search;
         vm.create = create;
 
-        activate();
-
-
-        function activate() 
-        {
-          vm.user = {};
-        }
-
-        function searchProfessor()
-        {
-          if (vm.username) 
-          {
-            ProfessorService.GetOne(vm.username)
+        function search() {
+          if (vm.username) {
+            UserService.GetOne(vm.username)
             .then(handleSearchSuccess)
             .catch(handleError);
           }
-        }
-
-        function search() 
-        {
-          if (vm.username) 
-          {
-            StudentService.GetOne(vm.username)
-            .then(function(response)
-            {
-              if(response!= null)
-              {
-                handleSearchSuccess(response);
-              }
-            },
-            function error(response)
-            {
-                searchProfessor();
-            });
+          else {
+            vm.user = null;
           }
         }
 
-
-        function create() 
-        {
+        function create() {
           AdminService.Create(vm.user.id)
           .then(handleCreateSuccess)
           .catch(handleError);
         }
 
-        function handleSearchSuccess(User) 
-        {
-          vm.user = User;
+        function handleSearchSuccess(user) {
+          vm.user = user;
         }
 
-        function handleCreateSuccess() 
-        {
+        function handleCreateSuccess() {
           MessageService.success("Administrador creado con éxito.");
         }
 
-        function handleError(data) 
-        {
+        function handleError(data) {
           MessageService.error(data.description);
         }
     }

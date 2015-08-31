@@ -47,7 +47,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="gender">Género</label>
+            <label for="gender">Usuario</label>
             <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="AdministratorCreate.user.gender" readonly>
           </div>
         </div>
@@ -55,6 +55,14 @@
           <div class="form-group">
             <label for="phone">Teléfono</label>
             <input type="text" class="form-control" id="username" ui-mask="(+506) 9999-99-99" ng-model="AdministratorCreate.user.phone" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="form-group">
+            <label for="period">Tipo de Usuario</label>
+            <input type="text" class="form-control" id="type" placeholder="Tipo de Usario" ng-model="AdministratorCreate.user.type" readonly>
           </div>
         </div>
       </div>
