@@ -23,9 +23,12 @@
 
         function deleteOperator() {
           if (vm.user) {
-            OperatorService.Delete(vm.id)
-            .then(handleDeleteSuccess)
-            .catch(handleError);
+            MessageService.confirm("¿Desea realmente eliminar este operador?")
+            .then(function() {
+              OperatorService.Delete(vm.id)
+              .then(handleDeleteSuccess)
+              .catch(handleError);
+            });
           }
         }
 
@@ -34,7 +37,6 @@
         }
 
         function handleDeleteSuccess() {
-          MessageService.success("Operador eliminado.");
           $location.path('/Administrador/Operadores')
         }
 

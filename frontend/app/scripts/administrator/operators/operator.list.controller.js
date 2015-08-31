@@ -139,9 +139,12 @@
         }
 
         function deleteOperator(id) {
-          OperatorService.Delete(id)
-          .then(handleDeleteSuccess)
-          .catch(handleError);
+          MessageService.confirm("¿Desea realmente eliminar este operador?")
+          .then(function() {
+            OperatorService.Delete(id)
+            .then(handleDeleteSuccess)
+            .catch(handleError);
+          });
         }
 
         function searchOperators() {
@@ -210,7 +213,6 @@
         }
 
         function handleDeleteSuccess() {
-          MessageService.success("Operador eliminado.");
           loadPage();
         }
 

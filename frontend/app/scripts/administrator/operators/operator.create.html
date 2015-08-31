@@ -66,7 +66,7 @@
               <ui-select-match placeholder="{{$select.selected.value + ' ' + $select.selected.type}}">
                 {{$select.selected.value + ' ' + $select.selected.type}}
               </ui-select-match>
-              <ui-select-choices repeat="period in Operator.periods | filter: $select.search">
+              <ui-select-choices repeat="period in Operator.periods | filter: $select.search" group-by="'type'">
                 <span ng-bind-html="period.value | highlight: $select.search"></span>
                 <span ng-bind-html="period.type | highlight: $select.search"></span>
               </ui-select-choices>

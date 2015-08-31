@@ -5,14 +5,15 @@
         .module('silabi')
         .service('MessageService', MessageService);
 
-    MessageService.$inject = ['toastr', '$q'];
+    MessageService.$inject = ['toastr', 'bootbox', '$q'];
 
-    function MessageService(toastr, $q) {
+    function MessageService(toastr, bootbox, $q) {
 
         this.success = success;
         this.info = info;
         this.warning = warning;
         this.error = error;
+        this.confirm = confirm;
 
         /**
         * Show a message.
@@ -58,6 +59,23 @@
         */
         function error(content, title) {
           message("error", content, title);
+        }
+
+        /**
+        * Show a confirmation message.
+        * @param message The message content.
+        * @return A promise. If the user press OK the promise is resolved, else the promise is rejected.
+        */
+        function confirm(message) {
+          var defer = $q.defer();
+
+          bootbox.confirm({
+            size: 'small',
+            message: message,
+            callback: function(result) { if (result) defer.resolve(); else defer.reject(); }
+          });
+
+          return defer.promise;
         }
     }
 })();
