@@ -73,7 +73,7 @@
         <div class="col-md-6">
           <div class="form-group" show-errors>
             <label for="phone" class="control-label">Teléfono</label>
-            <input type="text" class="form-control" id="phone" name="phone" ng-model="StudentDetails.student.phone" ui-mask="(+506) 9999-99-99" ng-pattern="'[0-9]{8,}'" ng-trim>
+            <input type="text" class="form-control" id="phone" name="phone" ng-model="StudentDetails.student.phone" ui-mask="(+506) 9999-99-99" ng-trim>
             <p class="help-block" ng-if="updateUserForm.phone.$error.pattern">Formato incorrecto. Ingrese mínimo 8 caracteres numéricos.</p>
           </div>
         </div>

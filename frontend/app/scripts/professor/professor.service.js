@@ -34,12 +34,12 @@
             return RequestService.post('/professors/', request);
         };
 
-        this.Update = function(id, jsonObject)
+        this.Update = function(id, professor)
         {
             var request = {};
-            request.professor = jsonObject.professor;
+            request.professor = professor;
             request.access_token = $localStorage['access_token'];
-            return RequestService.put('/professors/'+id, request);
+            return RequestService.put('/professors/' + id, request);
         };
 
         this.Delete = function(id)
@@ -48,6 +48,6 @@
             request.access_token = $localStorage['access_token'];
             return RequestService.delete('/professors/'+id, request);
         }
-        
+
     }
 })();

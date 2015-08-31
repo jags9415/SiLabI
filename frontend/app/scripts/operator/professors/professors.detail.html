@@ -7,66 +7,118 @@
 
   <!-- Page content -->
   <div class="center-panel">
-    <h1>Ver Docente</h1>
+    <h2>Docente</h2>
     <hr>
     <ol class="breadcrumb">
       <li><a href="#/">Inicio</a></li>
       <li><a href="#Operador/Docentes">Docentes</a></li>
       <li class="active">Detalle</li>
     </ol>
-    <form>
-      <input class="form-control" placeholder="Nombre" name="professorModifyName" type="text" ng-model="ProfessorDetail.professor.name" required>
-      <br>
-      <input class="form-control" placeholder="Primer Apellido" name="professorModifyLastName1" type="text" ng-model="ProfessorDetail.professor.last_name_1" required>
-      <br>
-      <input class="form-control" placeholder="Segundo Apellido" name="professorModifyLastName2" type="text" ng-model="ProfessorDetail.professor.last_name_2">
-      <br>
-      <input class="form-control" placeholder="Email" name="professorModifyEmail" type="email" ng-model="ProfessorDetail.professor.email">
-      <br>
+    <form name="updateProfessorForm">
       <div class="row">
-        <div class="col-sm-6">
-          <select class="form-control" ng-model="selected_gender" required>
-            <option selected disabled> Seleccionar Género</option>
-            <option ng-repeat="gender in ProfessorDetail.genders" value="{{gender.name}}"> {{gender.name}}</option>
-          </select>
-        </div>
-        <div class="col-sm-6">
-          <input class="form-control" placeholder="Telefono" name="professorModifyPhoneNumber" type="text" ng-model="ProfessorDetail.professor.phone">
+        <div class="col-md-12">
+          <div class="form-group" show-errors>
+            <label for="name" class="control-label">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="ProfessorDetail.professor.name" ng-trim required>
+            <p class="help-block" ng-if="updateProfessorForm.name.$error.required">Nombre requerido.</p>
+          </div>
         </div>
       </div>
-      <br>
-      <input class="form-control" placeholder="Contraseña" name="professorModifyPassword" type="password" ng-model="ProfessorDetail.professor.password">
-      <br>
       <div class="row">
-        <div class="col-sm-6">
-            <label>Fecha de Creación:</label>
-        </div>
-        <div class="col-sm-6">
-          <input class="form-control"  name="professorCreationDate" type="text" ng-model="ProfessorDetail.professor.created_at" disabled>
-        </div>
-      </div> 
-      <br>
-      <div class="row">
-        <div class="col-sm-6">
-            <label>última Actualización:</label>
-        </div>
-        <div class="col-sm-6">
-          <input class="form-control"  name="professorLastUpdate" type="text" ng-model="ProfessorDetail.professor.updated_at" disabled>
-        </div>
-      </div> 
-      <br> 
-      <div class="row">
-        <div class="centerBox">
-          <div class="col-sm-6">
-            <button class="btn btn-lg btn-success" type="submit" ng-click="ProfessorDetail.modifyProfessor()">
-              <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
-            </button>
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="last_name_1" class="control-label">Primer Apellido</label>
+            <input type="text" class="form-control" id="last_name_1" name="last_name_1" placeholder="Primer Apellido" ng-model="ProfessorDetail.professor.last_name_1" ng-trim required>
+            <p class="help-block" ng-if="updateProfessorForm.last_name_1.$error.required">Apellido requerido.</p>
           </div>
-          <div class="col-sm-6">
-            <button class="btn btn-lg btn-danger" type="submit" ng-click="ProfessorDetail.deleteProfessor()">
+        </div>
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="last_name_2" class="control-label">Segundo Apellido</label>
+            <input type="text" class="form-control" id="last_name_2" name="last_name_2" placeholder="Segundo Apellido" ng-model="ProfessorDetail.professor.last_name_2" ng-trim>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="username" class="control-label">Usuario</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Carné" ng-model="ProfessorDetail.professor.username" ng-pattern="'[A-Za-z0-9]+'" ng-trim required>
+            <p class="help-block" ng-if="updateProfessorForm.username.$error.required">Usuario requerido.</p>
+            <p class="help-block" ng-if="updateProfessorForm.username.$error.pattern">Formato incorrecto. Ingrese mínimo 5 caracteres alfanuméricos.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="gender" class="control-label">Género</label>
+            <ui-select id="gender" ng-model="ProfessorDetail.professor.gender">
+              <ui-select-match placeholder="{{ProfessorDetail.professor.gender}}">
+                {{ $select.selected }}
+              </ui-select-match>
+              <ui-select-choices repeat="gender in ProfessorDetail.genders">
+                <span ng-bind-html="gender"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="email" class="control-label">Coreo</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Correo" ng-model="ProfessorDetail.professor.email" ng-trim>
+            <p class="help-block" ng-if="updateProfessorForm.email.$error.email">Email inválido.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="phone" class="control-label">Teléfono</label>
+            <input type="text" class="form-control" id="phone" name="phone" ng-model="ProfessorDetail.professor.phone" ui-mask="(+506) 9999-99-99" ng-trim>
+            <p class="help-block" ng-if="updateProfessorForm.phone.$error.pattern">Formato incorrecto. Ingrese mínimo 8 caracteres numéricos.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="password" class="control-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" ng-model="ProfessorDetail.password" ng-minlength="8">
+            <p class="help-block" ng-if="updateProfessorForm.password.$error.minlength">La contraseña debe contener mínimo 8 caracteres.</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="password_confirmation" class="control-label">Confirmar Contraseña</label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmar Contraseña" ng-model="ProfessorDetail.password_confirm" ng-required="ProfessorDetail.password" ng-pattern="{{ProfessorDetail.password}}">
+            <p class="help-block" ng-if="updateProfessorForm.password_confirmation.$error.pattern">Las contraseñas no coinciden.</p>
+            <p class="help-block" ng-if="updateProfessorForm.password_confirmation.$error.required">Confirmación de contraseña requerida.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="created_at" class="control-label">Fecha Creación</label>
+            <input type="text" class="form-control" id="created_at" name="created_at" placeholder="Fecha Creación" ng-value="ProfessorDetail.professor.created_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly></input>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group" show-errors>
+            <label for="updated_at" class="control-label">Fecha Actualización</label>
+            <input type="text" class="form-control" id="updated_at" name="updated_at" placeholder="Fecha Actualización" ng-value="ProfessorDetail.professor.updated_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 3%;">
+        <div class="col-md-6 text-center">
+          <button type="submit" class="btn btn-lg btn-info" ng-click="ProfessorDetail.update()" ng-disabled="updateProfessorForm.$invalid">
+            <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+          </button>
+        </div>
+        <div class="col-md-6 text-center">
+          <button type="submit" class="btn btn-lg btn-danger" ng-click="ProfessorDetail.delete()">
             <i class="glyphicon glyphicon-trash"></i> Eliminar
-            </button>
-          </div>
+          </button>
         </div>
       </div>
     </form>
