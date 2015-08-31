@@ -36,10 +36,15 @@
         }
 
         function deleteProfessor() {
-          if (vm.professor) {
-            ProfessorService.Delete(vm.professor.id)
-            .then(handleDeleteSuccess)
-            .catch(handleError);
+          if (vm.professor) 
+          {
+            MessageService.confirm("¿Desea realmente eliminar este docente?")
+            .then(function() 
+            {
+              ProfessorService.Delete(vm.professor.id)
+              .then(handleDeleteSuccess)
+              .catch(handleError)
+            });
           }
         }
 

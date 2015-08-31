@@ -127,10 +127,15 @@
     		$location.path("/Operador/Docentes/" + username);
     	}
 
-      function deleteProfessor(id) {
-        ProfessorService.Delete(id)
-        .then(handleDeleteSuccess)
-        .catch(handleError);
+      function deleteProfessor(id) 
+      {
+        MessageService.confirm("¿Desea realmente eliminar este docente?")
+        .then(function() 
+        {
+          ProfessorService.Delete(id)
+          .then(handleDeleteSuccess)
+          .catch(handleError)
+        });
       }
 
       function handleDeleteSuccess(response) {
