@@ -106,7 +106,7 @@
         }
 
         if (vm.searched.phone) {
-          vm.request.query.phone. = {
+          vm.request.query.phone = {
             operation: "like",
             value: '*' + vm.searched.phone + '*'
           }

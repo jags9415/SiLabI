@@ -41,20 +41,20 @@
               <input type="text" class="form-control" placeholder="Usuario" ng-model="ProfessorList.searched.username">
             </div>
             <div class="form-group" style="width: 17%">
-              <ui-select id="state" ng-model="searched.state">
-                <ui-select-match placeholder="Estado">
+              <ui-select id="state" ng-model="searched.state" search-enabled="false">
+                <ui-select-match placeholder="Estado" allow-clear="true">
                   {{$select.selected.name}}
                 </ui-select-match>
-                <ui-select-choices repeat="state in ProfessorList.states | filter: $select.search">
-                  <span ng-bind-html="state.name | highlight: $select.search"></span>
+                <ui-select-choices repeat="state in ProfessorList.states">
+                  <span ng-bind-html="state.name"></span>
                 </ui-select-choices>
               </ui-select>
             </div>
             <div class="form-group">
-              <input type="email" class="form-control" id="exampleInputName2" placeholder="Email" ng-model="ProfessorList.searched.email">
+              <input type="email" class="form-control" placeholder="Email" ng-model="ProfessorList.searched.email">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="Teléfono" ng-model="ProfessorList.searched.phone">
+              <input type="text" class="form-control" placeholder="Teléfono" ng-model="ProfessorList.searched.phone">
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-default" ng-click="ProfessorList.search()">
