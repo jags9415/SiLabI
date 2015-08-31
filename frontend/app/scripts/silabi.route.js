@@ -13,35 +13,25 @@
         .when('/', {
           resolve: { load: handleHomeRedirect }
         })
+        .when('/About', {
+          templateUrl: 'scripts/public/about/about.html'
+        })
+        .when('/Administrador', {
+          templateUrl: 'scripts/administrator/home.html'
+        })
+        .when('/Operador', {
+          templateUrl: 'scripts/operator/home.html'
+        })
+        .when('/Estudiante', {
+          templateUrl: 'scripts/student/home.html'
+        })
+        .when('/Docente', {
+          templateUrl: 'scripts/professor/home.html'
+        })
         .when('/Login', {
           templateUrl: 'scripts/public/login/login.html',
           controller: 'LoginController',
           controllerAs: 'Auth'
-        })
-        .when('/About', {
-          templateUrl: 'scripts/public/about/about.html',
-          controller: 'AboutController',
-          controllerAs: 'About'
-        })
-        .when('/Administrador', {
-          templateUrl: 'scripts/administrator/home.html',
-          controller: 'AdminController',
-          controllerAs: 'Admin'
-        })
-        .when('/Operador', {
-          templateUrl: 'scripts/operator/home.html',
-          controller: 'OperatorsController',
-          controllerAs: 'OperatorsHome'
-        })
-        .when('/Estudiante', {
-          templateUrl: 'scripts/student/home.html',
-          controller: 'StudentsController',
-          controllerAs: 'Students'
-        })
-        .when('/Docente', {
-          templateUrl: 'scripts/professor/home.html',
-          controller: 'ProfessorsController',
-          controllerAs: 'Professors'
         })
         .when('/Administrador/Operadores', {
           templateUrl: 'scripts/administrator/operators/operator.list.html',

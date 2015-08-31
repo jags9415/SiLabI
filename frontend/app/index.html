@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="styles/sidebar.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="silabi">
+  <body ng-app="silabi" ng-controller="MainController as Main">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -99,14 +99,12 @@
     <script src="scripts/silabi.route.js"></script>
     <script src="scripts/request.service.js"></script>
     <script src="scripts/message.service.js"></script>
+    <script src="scripts/main.controller.js"></script>
     <script src="scripts/other/sidebar/sidebar.js"></script>
-    
+
     <!-- Login -->
     <script src="scripts/public/login/login.controller.js"></script>
     <script src="scripts/public/login/login.service.js"></script>
-
-    <!-- About -->
-    <script src="scripts/public/about/about.controller.js"></script>
 
     <!-- Admins -->
     <script src="scripts/administrator/administrators/admin.service.js"></script>
