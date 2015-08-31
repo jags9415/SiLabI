@@ -3,27 +3,48 @@
 
     angular
         .module('silabi')
-        .service('OperatorsService', OperatorsService);
+        .service('ProfessorsService', ProfessorsService);
 
-    OperatorsService.$inject = ['$http', '$q'];
+    ProfessorsService.$inject = ['$localStorage', 'RequestService'];
 
-    function OperatorsService($http, $q) {
-        this.getAppointments = function(page_number, access_token)
+    function ProfessorsService($localStorage, RequestService) {
+
+        this.GetAll = function(request)
         {
-        	var defer = $q.defer();
-        	$http.get('http://localhost/api/v1/', {
-            	'access_token': access_token,
-            	'page': page_number
-          	}).
-        		success(function(data, status, headers, config) 
-				{
-				  	defer.resolve(data); 	
-				}).
-				error(function(data, status, headers, config) 
-				{
-				    defer.reject(error);
-				 });
-			return defer.promise;
+            if (!request) request = {};
+            request.access_token = $localStorage['access_token'];
+            return RequestService.get('/professors', request);
         };
+
+        this.GetOne = function(user_name)
+        {
+            var request = {};
+            request.access_token = $localStorage['access_token'];
+            return RequestService.get('/professors/' + user_name, request);
+        }
+
+        this.Create = function(professor)
+        {
+            var request = {};
+            request.professor = professor;
+            request.access_token = $localStorage['access_token'];
+            return RequestService.post('/professors', request);
+        };
+
+        this.Update = function(id, professor)
+        {
+            var request = {};
+            request.professor = professor;
+            request.access_token = $localStorage['access_token'];
+            return RequestService.put('/professors/' + id, request);
+        };
+
+        this.Delete = function(id)
+        {
+            var request = {};
+            request.access_token = $localStorage['access_token'];
+            return RequestService.delete('/professors/'+id, request);
+        }
+
     }
 })();
