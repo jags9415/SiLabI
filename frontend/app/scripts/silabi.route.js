@@ -43,6 +43,11 @@
           controller: 'AdministratorCreateController',
           controllerAs: 'AdministratorCreate',
         })
+        .when('/Administrador/Administradores/:id', {
+          templateUrl: 'scripts/administrator/administrators/administrator.detail.html',
+          controller: 'AdministratorDetailController',
+          controllerAs: 'AdministratorDetail',
+        })
         .when('/Administrador/Operadores', {
           templateUrl: 'scripts/administrator/operators/operator.list.html',
           controller: 'OperatorListController',

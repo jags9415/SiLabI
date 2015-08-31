@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('AdministratorCreateController', AdministratorCreateController);
 
-    AdministratorCreateController.$inject = ['AdminService', 'StudentService', 'ProfessorsService','MessageService'];
+    AdministratorCreateController.$inject = ['AdminService', 'StudentService', 'ProfessorService','MessageService'];
 
-    function AdministratorCreateController(AdminService, StudentService, ProfessorsService, MessageService) {
+    function AdministratorCreateController(AdminService, StudentService, ProfessorService, MessageService) {
         var vm = this;
         vm.search = search;
         vm.create = create;
@@ -24,7 +24,7 @@
         {
           if (vm.username) 
           {
-            ProfessorsService.GetOne(vm.username)
+            ProfessorService.GetOne(vm.username)
             .then(handleSearchSuccess)
             .catch(handleError);
           }
