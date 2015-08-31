@@ -14,7 +14,7 @@
         vm.searched = {};
         vm.limit = 20;
         vm.request = {
-          fields : "id,full_name,email,username,state"
+          fields : "id,full_name,email,phone,username,state"
         };
 
         vm.createStudent = createStudent;

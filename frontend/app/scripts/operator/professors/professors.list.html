@@ -7,13 +7,12 @@
 
   <!-- Page content -->
 <div class="center-panel">
-    <h1>Docentes</h1>
+    <h2>Docentes</h2>
     <hr>
     <ol class="breadcrumb">
       <li><a href="#/">Inicio</a></li>
       <li class="active">Docentes</li>
     </ol>
-    <br>
     <div class="table-search" style="margin-bottom: 3%;">
       <div class="row">
         <div class="col-md-10 col-xs-9">
@@ -66,10 +65,11 @@
         </div>
       </div>
     </div>
-      <table class="table table-striped custab" id="professorsTable">
+      <table class="table table-striped" id="professorsTable">
         <thead>
           <tr>
             <th>Nombre</th>
+            <th>Usuario</th>
             <th>Correo</th>
             <th>Teléfono</th>
             <th>Estado</th>
@@ -79,6 +79,7 @@
         <tbody>
           <tr ng-repeat="professor in searchResults = (ProfessorList.professorsArray | filter:searchText)" id="{{professor.id}}">
             <td>{{professor.full_name}}</td>
+            <td>{{professor.username}}</td>
             <td>{{professor.email}}</td>
             <td>{{professor.phone}}</td>
             <td>
