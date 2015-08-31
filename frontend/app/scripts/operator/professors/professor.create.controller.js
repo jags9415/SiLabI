@@ -4,9 +4,9 @@
     angular
         .module('silabi')
         .controller('ProfessorsCreateController', ProfessorsCreateController);
-        ProfessorsCreateController.$inject = ['$routeParams', '$location', 'ProfessorsService', 'MessageService', 'CryptoJS'];
+        ProfessorsCreateController.$inject = ['$routeParams', '$location', 'ProfessorService', 'MessageService', 'CryptoJS'];
 
-    function ProfessorsCreateController($routeParams, $location, ProfessorsService, MessageService, CryptoJS) {
+    function ProfessorsCreateController($routeParams, $location, ProfessorService, MessageService, CryptoJS) {
       var vm = this;
       vm.professor = {};
       vm.genders = ["Masculino", "Femenino"];
@@ -29,7 +29,7 @@
     		if (vm.professor) {
           var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
           vm.professor.password = hash;
-    			ProfessorsService.Create(vm.professor)
+    			ProfessorService.Create(vm.professor)
 	    		.then(handleCreateSuccess)
           .catch(handleError);
 	    	}

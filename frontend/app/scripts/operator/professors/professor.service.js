@@ -3,11 +3,11 @@
 
     angular
         .module('silabi')
-        .service('ProfessorsService', ProfessorsService);
+        .service('ProfessorService', ProfessorService);
 
-    ProfessorsService.$inject = ['$localStorage', 'RequestService'];
+    ProfessorService.$inject = ['$localStorage', 'RequestService'];
 
-    function ProfessorsService($localStorage, RequestService) {
+    function ProfessorService($localStorage, RequestService) {
 
         this.GetAll = function(request)
         {
