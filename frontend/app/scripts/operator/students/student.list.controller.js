@@ -80,9 +80,12 @@
         }
 
         function deleteStudent(id) {
-          StudentService.Delete(id)
-          .then(handleDeleteSuccess)
-          .catch(handleError);
+          MessageService.confirm("¿Desea realmente eliminar este estudiante?")
+          .then(function() {
+            StudentService.Delete(id)
+            .then(handleDeleteSuccess)
+            .catch(handleError);
+          });
         }
 
         function searchStudents() {
@@ -136,7 +139,6 @@
         }
 
         function handleDeleteSuccess() {
-          MessageService.success("Estudiante eliminado.");
           loadPage();
         }
 

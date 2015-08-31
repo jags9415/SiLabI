@@ -36,13 +36,18 @@
         }
 
         function deleteStudent() {
-          StudentService.Delete(vm.student.id)
-          .then(handleDeleteSuccess)
-          .catch(handleRequestError);
+          if (vm.student) {
+            MessageService.confirm("¿Desea realmente eliminar este estudiante?")
+            .then(function (argument) {
+              StudentService.Delete(vm.student.id)
+              .then(handleDeleteSuccess)
+              .catch(handleRequestError);
+              }
+            );
+          }
         }
 
         function handleDeleteSuccess(result) {
-          MessageService.success("Estudiante eliminado.");
           $location.path('/Operador/Estudiantes');
         }
 
