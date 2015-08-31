@@ -49,9 +49,13 @@
         }
 
         function deleteAdministrator(id) {
-          AdminService.Delete(id)
-          .then(handleDeleteSuccess)
-          .catch(handleError);
+          MessageService.confirm("¿Desea realmente eliminar este administrador?")
+            .then(function() 
+            {
+            AdminService.Delete(id)
+            .then(handleDeleteSuccess)
+            .catch(handleError)
+            });
         }
 
         function searchAdministrators() {
