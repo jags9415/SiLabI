@@ -13,13 +13,11 @@
       vm.password;
       vm.logIn = logIn;
       vm.logOut = logOut
-      vm.isLoggedIn = isLoggedIn;
+      vm.isAuthenticated = isAuthenticated;
       vm.$storage = $localStorage;
 
-      function isLoggedIn() {
-        var token = vm.$storage['access_token'];
-        if (!token) return false;
-        else return !jwtHelper.isTokenExpired(token);
+      function isAuthenticated() {
+        return AuthenticationService.isAuthenticated();
       }
 
       function logIn() {
@@ -35,7 +33,7 @@
         delete vm.$storage['user_id'];
         delete vm.$storage['user_name'];
         delete vm.$storage['user_type'];
-        $location.path('/');
+        $location.path('/Login');
       }
 
       function handleSuccess(result) {
