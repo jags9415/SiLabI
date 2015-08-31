@@ -4,9 +4,9 @@
     angular
         .module('silabi')
         .controller('ProfessorsCreateController', ProfessorsCreateController);
-        ProfessorsCreateController.$inject = ['$routeParams', 'ProfessorsService', '$location', 'MessageService'];
+        ProfessorsCreateController.$inject = ['$routeParams', '$location', 'ProfessorsService', 'MessageService', 'CryptoJS'];
 
-    function ProfessorsCreateController($routeParams, ProfessorsService, $location, MessageService) {
+    function ProfessorsCreateController($routeParams, $location, ProfessorsService, MessageService, CryptoJS) {
       var vm = this;
       vm.professor = {};
       vm.genders = ["Masculino", "Femenino"];
