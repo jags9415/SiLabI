@@ -1,0 +1,70 @@
+<div class="wrap">
+
+  <!-- SideBar directive -->
+  <div class="left-panel">
+    <administrators-sidebar></administrators-sidebar>
+  </div>
+
+  <!-- Page content -->
+  <div class="center-panel">
+    <h2>Agregar Administrador</h2>
+    <hr>
+    <ol class="breadcrumb">
+      <li><a href="#/">Inicio</a></li>
+      <li><a href="#Administrador/Administradores">Administradores</a></li>
+      <li class="active">Agregar</li>
+    </ol>
+    <form style="margin-bottom: 1%; margin-top: 3%;">
+      <div class="row">
+        <div class="col-md-10 col-xs-10">
+          <div class="form-group">
+            <input type="text" class="form-control" id="username" placeholder="Usuario" ng-model="AdministratorCreate.username">
+          </div>
+        </div>
+        <div class="col-md-2 col-xs-2">
+          <button type="submit" class="btn btn-default" ng-click="AdministratorCreate.search()">
+            <i class="glyphicon glyphicon-search"></i>
+            <span class="hidden-xs">Buscar</span>
+          </button>
+        </div>
+      </div>
+    </form>
+    <form>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="AdministratorCreate.user.full_name" readonly>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="email">Coreo</label>
+            <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="AdministratorCreate.user.email" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="gender">Género</label>
+            <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="AdministratorCreate.user.gender" readonly>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="phone">Teléfono</label>
+            <input type="text" class="form-control" id="username" ui-mask="(+506) 9999-99-99" ng-model="AdministratorCreate.user.phone" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 3%;">
+        <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+          <button type="submit" class="btn btn-lg btn-success" ng-click="AdministratorCreate.create()" ng-disabled="!AdministratorCreate.user">
+            <i class="glyphicon glyphicon-plus"></i> Agregar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -28,7 +28,7 @@
         {
             var request = {}
             request.access_token = $localStorage['access_token'];
-            return RequestService.post('/operators/' + id, request);
+            return RequestService.post('/administrators/' + id, request);
         }
 
         this.Delete = function(id)

@@ -38,6 +38,11 @@
           controller: 'AdminListController',
           controllerAs: 'AdminList',
         })
+        .when('/Administrador/Administradores/Agregar', {
+          templateUrl: 'scripts/administrator/administrators/administrator.create.html',
+          controller: 'AdministratorCreateController',
+          controllerAs: 'AdministratorCreate',
+        })
         .when('/Administrador/Operadores', {
           templateUrl: 'scripts/administrator/operators/operator.list.html',
           controller: 'OperatorListController',
