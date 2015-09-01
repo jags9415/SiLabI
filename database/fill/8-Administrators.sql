@@ -6,7 +6,7 @@ SELECT @ADMIN_user_state = PK_State_Id FROM States WHERE Type = 'USER' AND Name 
 SELECT @ADMIN_admin_state = PK_State_Id FROM States WHERE Type = 'ADMINISTRATOR' AND Name = 'Activo';
 
 INSERT INTO Users (Name, Last_Name_1, Gender, Username, Password, FK_State_Id) VALUES
-('admin', 'admin', 'Masculino', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'password', @ADMIN_user_state);
+('Jhon', 'Doe', 'Masculino', 'admin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', @ADMIN_user_state);
 
 SET @ADMIN_user_id = SCOPE_IDENTITY();
 
