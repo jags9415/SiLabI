@@ -23,7 +23,7 @@
 @media(min-width:768px) {
     #page-wrapper {
         position: inherit;
-        margin: 0 0 0 250px;
+        margin: 0 0 0 190px;
     }
 }
 
@@ -184,7 +184,7 @@
     .sidebar {
         z-index: 1;
         position: absolute;
-        width: 250px;
+        width: 190px;
         margin-top: 54px;
     }
 
