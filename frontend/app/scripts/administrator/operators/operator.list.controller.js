@@ -15,7 +15,7 @@
         vm.limit = 20;
         vm.advanceSearch = false;
         vm.request = {
-          fields : "id,full_name,username,state,period.value,period.year,period.type"
+          fields : "id,full_name,username,email,phone,state,period.value,period.year,period.type"
         };
 
         vm.createOperator = createOperator;

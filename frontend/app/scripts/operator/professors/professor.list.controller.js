@@ -105,13 +105,6 @@
           }
         }
 
-        if (vm.searched.phone) {
-          vm.request.query.phone = {
-            operation: "like",
-            value: '*' + vm.searched.phone + '*'
-          }
-        }
-
         loadPage();
       }
 
@@ -127,10 +120,10 @@
     		$location.path("/Operador/Docentes/" + username);
     	}
 
-      function deleteProfessor(id) 
+      function deleteProfessor(id)
       {
         MessageService.confirm("¿Desea realmente eliminar este docente?")
-        .then(function() 
+        .then(function()
         {
           ProfessorService.Delete(id)
           .then(handleDeleteSuccess)

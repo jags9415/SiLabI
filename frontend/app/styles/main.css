@@ -301,3 +301,11 @@ input[type=number] {
 .error-template {padding: 40px 15px;text-align: center;}
 .error-actions {margin-top:40px;margin-bottom:15px;}
 .error-actions .btn { margin-right:10px; }
+
+.advanced-search .form-group {
+  width: 100%;
+}
+
+.advanced-search .form-group input, .advanced-search .form-group button {
+  width: 100%;
+}
