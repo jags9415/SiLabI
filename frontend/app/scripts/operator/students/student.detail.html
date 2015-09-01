@@ -101,6 +101,11 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div ng-password-strength="StudentDetails.password" strength="StudentDetails.strength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
+      </div>
+    </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-6 text-center">
         <button type="submit" class="btn btn-lg btn-info" ng-click="StudentDetails.updateInfo()" ng-disabled="updateUserForm.$invalid">
