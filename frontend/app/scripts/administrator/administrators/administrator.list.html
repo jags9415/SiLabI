@@ -54,39 +54,41 @@
       </div>
     </div>
   </div>
-  <table class="table table-striped" ng-show="AdminList.isLoaded() && !AdminList.isEmpty()">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Usuario</th>
-        <th>Correo</th>
-        <th>Estado</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="admin in AdminList.administrators">
-        <td>{{ admin.full_name }}</td>
-        <td>{{ admin.username }}</td>
-        <td>{{ admin.email }}</td>
-        <td>
-          <span class="label"
-            ng-class="{ 'label-success': admin.state === 'Activo',
-                        'label-danger': admin.state === 'Inactivo'}" >
-            {{ admin.state }}
-          </span>
-        </td>
-        <td>
-          <a href="{{ '#Administrador/Administradores/' + admin.id }}" class='btn btn-info btn-sm'>
-            <span class="glyphicon glyphicon-eye-open" ng-click="AdminList.open(admin.id)"></span>
-          </a>
-          <a href="" class="btn btn-danger btn-sm">
-            <span class="glyphicon glyphicon-trash" ng-click="AdminList.delete(admin.id)"></span>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-striped" ng-show="AdminList.isLoaded() && !AdminList.isEmpty()">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Usuario</th>
+          <th>Correo</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="admin in AdminList.administrators">
+          <td>{{ admin.full_name }}</td>
+          <td>{{ admin.username }}</td>
+          <td>{{ admin.email }}</td>
+          <td>
+            <span class="label"
+              ng-class="{ 'label-success': admin.state === 'Activo',
+                          'label-danger': admin.state === 'Inactivo'}" >
+              {{ admin.state }}
+            </span>
+          </td>
+          <td>
+            <a href="{{ '#Administrador/Administradores/' + admin.id }}" class='btn btn-info btn-sm'>
+              <span class="glyphicon glyphicon-eye-open" ng-click="AdminList.open(admin.id)"></span>
+            </a>
+            <a href="" class="btn btn-danger btn-sm">
+              <span class="glyphicon glyphicon-trash" ng-click="AdminList.delete(admin.id)"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <p ng-show="AdminList.isLoaded() && AdminList.isEmpty()"> No se encontraron resultados </p>
   <br>
   <div class="row">
