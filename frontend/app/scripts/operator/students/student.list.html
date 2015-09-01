@@ -94,7 +94,7 @@
   <p ng-show="StudentList.isLoaded() && StudentList.isEmpty()"> No se encontraron resultados </p>
   <br>
   <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-12 pagination">
       <pagination
         ng-change="StudentList.loadPage()" ng-model="StudentList.page" items-per-page="StudentList.limit"
         total-items="StudentList.totalItems" max-size="5" boundary-links="true" rotate="true"

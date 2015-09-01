@@ -90,7 +90,7 @@
   <p ng-show="AdminList.isLoaded() && AdminList.isEmpty()"> No se encontraron resultados </p>
   <br>
   <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-12 pagination">
       <pagination
         ng-change="AdminList.loadPage()" ng-model="AdminList.page" items-per-page="AdminList.limit"
         total-items="AdminList.totalItems" max-size="5" boundary-links="true" rotate="true"

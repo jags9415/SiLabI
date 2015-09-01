@@ -101,7 +101,7 @@
   <p ng-show="OperatorList.isLoaded() && OperatorList.isEmpty()"> No se encontraron resultados </p>
   <br>
   <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-12 pagination">
       <pagination
         ng-change="OperatorList.loadPage()" ng-model="OperatorList.page" items-per-page="OperatorList.limit"
         total-items="OperatorList.totalItems" max-size="5" boundary-links="true" rotate="true"
