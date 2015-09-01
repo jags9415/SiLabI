@@ -5,19 +5,19 @@
  */
 #wrapper {
     width: 100%;
-    background-color: #002D56;
+    background-color: #ebebeb;
 }
 
 #page-wrapper {
     min-height: 568px;
     background-color: #fff;
-     border-left: 1px solid white;
+    border-left: 1px solid white;
 }
 
 #view-wrapper {
   margin-left: 2%;
   margin-right: 2%;
-  padding-bottom: 10%;
+  padding-bottom: 2%;
 }
 
 @media(min-width:768px) {
@@ -28,7 +28,7 @@
 }
 
 .sidebar a {
-  color: white;
+  color: #002D56;
 }
 
 .dropdown a {
@@ -36,15 +36,43 @@
 }
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-  background-color: #002D56;
+  background-color: #00203d;
 }
 
 .nav > li > a:focus {
-  background-color: #002D56;
+  background-color: #00203d;
 }
 
 .nav > li > a:hover {
+  background-color: #00203d;
+}
+
+.navbar-inverse .navbar-toggle {
+  border-color: #00203d;
   background-color: #002D56;
+}
+
+.navbar-inverse .navbar-toggle:hover {
+  border-color: #002D56;
+  background-color: #00203d;
+}
+
+.navbar-inverse .navbar-toggle:focus {
+  border-color: #00203d;
+  background-color: #002D56;
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid white;
+    background-color: #ebebeb;
+}
+
+#side-menu > li > a:focus {
+  background-color: #d7d7d7;
+}
+
+#side-menu > li > a:hover {
+  background-color: #d7d7d7;
 }
 
 .navbar {
@@ -125,19 +153,6 @@
 
 .sidebar .sidebar-search {
     padding: 15px;
-}
-
-.sidebar ul li {
-    border-bottom: 1px solid #e7e7e7;
-    background-color: #002D56;
-}
-
-.sidebar ul li:hover {
-    background-color: #002D56;
-}
-
-.sidebar ul li a.active {
-    background-color: #002D56;
 }
 
 .sidebar .arrow {
