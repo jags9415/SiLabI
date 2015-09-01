@@ -54,43 +54,45 @@
       </div>
     </div>
   </div>
-  <table class="table table-striped" ng-show="StudentList.isLoaded() && !StudentList.isEmpty()">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Usuario</th>
-        <th>Correo</th>
-        <th>Teléfono</th>
-        <th>Estado</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="student in StudentList.students">
-        <td>{{ student.full_name }}</td>
-        <td>{{ student.username }}</td>
-        <td>{{ student.email }}</td>
-        <td>{{ student.phone }}</td>
-        <td>
-          <span class="label"
-            ng-class="{ 'label-success': student.state === 'Activo',
-                        'label-danger': student.state === 'Inactivo',
-                        'label-warning': student.state === 'Bloqueado',
-                      }" >
-            {{ student.state }}
-          </span>
-        </td>
-        <td>
-          <a href="{{ '#Operador/Estudiantes/' + student.username }}"class='btn btn-info btn-sm' ng-click="StudentList.open(student.username)">
-            <span class="glyphicon glyphicon-eye-open"></span>
-          </a>
-          <a href="" class="btn btn-danger btn-sm">
-            <span class="glyphicon glyphicon-trash" ng-click="StudentList.delete(student.id)"></span>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-striped" ng-show="StudentList.isLoaded() && !StudentList.isEmpty()">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Usuario</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="student in StudentList.students">
+          <td>{{ student.full_name }}</td>
+          <td>{{ student.username }}</td>
+          <td>{{ student.email }}</td>
+          <td>{{ student.phone }}</td>
+          <td>
+            <span class="label"
+              ng-class="{ 'label-success': student.state === 'Activo',
+                          'label-danger': student.state === 'Inactivo',
+                          'label-warning': student.state === 'Bloqueado',
+                        }" >
+              {{ student.state }}
+            </span>
+          </td>
+          <td>
+            <a href="{{ '#Operador/Estudiantes/' + student.username }}"class='btn btn-info btn-sm' ng-click="StudentList.open(student.username)">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+            <a href="" class="btn btn-danger btn-sm">
+              <span class="glyphicon glyphicon-trash" ng-click="StudentList.delete(student.id)"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <p ng-show="StudentList.isLoaded() && StudentList.isEmpty()"> No se encontraron resultados </p>
   <br>
   <div class="row">
