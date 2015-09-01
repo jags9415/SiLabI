@@ -4,9 +4,9 @@
     angular
         .module('silabi')
         .controller('ProfessorsCreateController', ProfessorsCreateController);
-        ProfessorsCreateController.$inject = ['$routeParams', '$location', 'ProfessorService', 'MessageService', 'CryptoJS'];
+        ProfessorsCreateController.$inject = ['$scope', '$routeParams', '$location', 'ProfessorService', 'MessageService', 'CryptoJS'];
 
-    function ProfessorsCreateController($routeParams, $location, ProfessorService, MessageService, CryptoJS) {
+    function ProfessorsCreateController($scope, $routeParams, $location, ProfessorService, MessageService, CryptoJS) {
       var vm = this;
       vm.professor = {};
       vm.genders = ["Masculino", "Femenino"];
@@ -36,7 +36,12 @@
     	}
 
       function handleCreateSuccess(data) {
-        vm.professor = data;
+        MessageService.success("Docente creado con éxito.");
+        vm.professor = {};
+        $scope.$broadcast('show-errors-reset');
+        vm.professor.gender = vm.genders[0];
+        vm.password = null;
+        vm.password_confirm = null;
       }
 
       function handleError(data) {
