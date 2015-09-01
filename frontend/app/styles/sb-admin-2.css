@@ -3,6 +3,7 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
+ 
 #wrapper {
     width: 100%;
     background-color: #ebebeb;
@@ -46,8 +47,77 @@
   color: #002D56;
 }
 
+.sidebar ul li {
+    border-bottom: 1px solid white;
+    background-color: #ebebeb;
+    outline: none;
+}
+
+.sidebar ul li:first-child {
+    border-top: 1px solid white;
+}
+
+#side-menu > li > a:focus {
+  background-color: initial;
+  outline: none;
+}
+
+#side-menu > li > a:hover {
+  background-color: #d7d7d7;
+  outline: none;
+}
+
+#side-menu > li.active {
+    background-color: #d7d7d7;
+    outline: none;
+}
+
+.sidebar .sidebar-nav.navbar-collapse {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.sidebar .sidebar-search {
+    padding: 15px;
+}
+
+.sidebar .arrow {
+    float: right;
+}
+
+.sidebar .fa.arrow:before {
+    content: "\f104";
+}
+
+.sidebar .active>a>.fa.arrow:before {
+    content: "\f107";
+}
+
+.sidebar .nav-second-level li,
+.sidebar .nav-third-level li {
+    border-bottom: 0!important;
+}
+
+.sidebar .nav-second-level li a {
+    padding-left: 37px;
+}
+
+.sidebar .nav-third-level li a {
+    padding-left: 52px;
+}
+
 .dropdown a {
   color: white;
+}
+
+.navbar {
+  background-color: #002D56;
+  border-color: white;
+  min-height: 54px;
+}
+
+.navbar-brand {
+  padding: 0;
 }
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
@@ -67,41 +137,18 @@
   background-color: #002D56;
 }
 
-.navbar-inverse .navbar-toggle:hover {
-  border-color: #002D56;
-  background-color: #00203d;
-}
-
 .navbar-inverse .navbar-toggle:focus {
   border-color: #00203d;
   background-color: #002D56;
 }
 
-.sidebar ul li {
-    border-bottom: 1px solid white;
-    background-color: #ebebeb;
+.navbar-inverse .navbar-toggle:hover {
+  border-color: #002D56;
+  background-color: #00203d;
 }
 
-.sidebar ul li:first-child {
-    border-top: 1px solid white;
-}
-
-#side-menu > li > a:focus {
-  background-color: #d7d7d7;
-}
-
-#side-menu > li > a:hover {
-  background-color: #d7d7d7;
-}
-
-.navbar {
-  background-color: #002D56;
-  border-color: white;
-  min-height: 54px;
-}
-
-.navbar-brand {
-  padding: 0;
+.navbar-brand:focus {
+  outline: none;
 }
 
 .navbar-brand > img {
@@ -164,38 +211,4 @@
 .navbar-top-links .dropdown-user {
     right: 0;
     left: auto;
-}
-
-.sidebar .sidebar-nav.navbar-collapse {
-    padding-right: 0;
-    padding-left: 0;
-}
-
-.sidebar .sidebar-search {
-    padding: 15px;
-}
-
-.sidebar .arrow {
-    float: right;
-}
-
-.sidebar .fa.arrow:before {
-    content: "\f104";
-}
-
-.sidebar .active>a>.fa.arrow:before {
-    content: "\f107";
-}
-
-.sidebar .nav-second-level li,
-.sidebar .nav-third-level li {
-    border-bottom: 0!important;
-}
-
-.sidebar .nav-second-level li a {
-    padding-left: 37px;
-}
-
-.sidebar .nav-third-level li a {
-    padding-left: 52px;
 }

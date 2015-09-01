@@ -1,16 +1,34 @@
 <div class="navbar-inverse sidebar" role="navigation">
-    <div class="sidebar-nav navbar-collapse">
-        <ul class="nav" id="side-menu">
-            <li><a href=""><i class="glyphicon glyphicon-ok-circle"></i> Asistencia</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-calendar"></i> Citas</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-calendar"></i> Reservaciones</a></li>
-            <li><a href="#Operador/Estudiantes"><i class="glyphicon glyphicon-user"></i> Estudiantes</a></li>
-            <li><a href="#Operador/Docentes"><i class="glyphicon glyphicon-user"></i> Docentes</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-book"></i> Cursos</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-book"></i> Grupos</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-th-list"></i> Laboratorios</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-floppy-disk"></i> Software</a></li>
-        </ul>
+    <div class="sidebar-nav navbar-collapse" collapse="Nav.collapsed" ng-click="Nav.collapsed = true">
+      <ul class="nav" id="side-menu">
+          <li>
+            <a href=""><i class="glyphicon glyphicon-ok-circle"></i> Asistencia</a>
+          </li>
+          <li>
+            <a href=""><i class="glyphicon glyphicon-calendar"></i> Citas</a>
+          </li>
+          <li>
+            <a href=""><i class="glyphicon glyphicon-calendar"></i> Reservaciones</a>
+          </li>
+          <li ng-class="{'active' : SideBar.isActive('/Operador/Estudiantes')}">
+            <a href="#Operador/Estudiantes"><i class="glyphicon glyphicon-user"></i> Estudiantes</a>
+          </li>
+          <li ng-class="{'active' : SideBar.isActive('/Operador/Docentes')}">
+            <a href="#Operador/Docentes"><i class="glyphicon glyphicon-user"></i> Docentes</a>
+          </li>
+          <li>
+            <a href=""><i class="glyphicon glyphicon-book"></i> Cursos</a>
+          </li>
+          <li>
+            <a href=""><i class="glyphicon glyphicon-book"></i> Grupos</a>
+          </li>
+          <li>
+            <a href=""><i class="glyphicon glyphicon-th-list"></i> Laboratorios</a>
+          </li>
+          <li>
+            <a href=""><i class="glyphicon glyphicon-floppy-disk"></i> Software</a>
+          </li>
+      </ul>
     </div>
     <!-- /.sidebar-collapse -->
 </div>

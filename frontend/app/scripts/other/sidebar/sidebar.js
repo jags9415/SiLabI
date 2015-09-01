@@ -2,5 +2,5 @@
     'use strict';
 
     angular
-        .module('silabi.sidebar', []);
+    .module('silabi.sidebar', []);
 })();

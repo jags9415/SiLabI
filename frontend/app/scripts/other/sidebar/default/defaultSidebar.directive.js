@@ -9,25 +9,10 @@
         var directive = {
             restrict: 'EA',
             templateUrl: 'scripts/other/sidebar/default/default-sidebar.html',
-            controller: DefaultSideBarController,
-            controllerAs: 'vm',
+            controller: 'SideBarController',
+            controllerAs: 'SideBar',
             bindToController: true
         };
-
         return directive;
-    }
-
-    DefaultSideBarController.$inject = ['$location'];
-
-    function DefaultSideBarController($location) {
-      var vm = this;
-
-      vm.isActive = isActive;
-
-      function isActive(viewLocation) {
-        return viewLocation === $location.path()
-      }
-
-
     }
 })();

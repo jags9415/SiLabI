@@ -9,27 +9,10 @@
         var directive = {
             restrict: 'EA',
             templateUrl: 'scripts/other/sidebar/professors/professors-sidebar.html',
-            controller: ProfessorsSideBarController,
-            controllerAs: 'vm',
+            controller: 'SideBarController',
+            controllerAs: 'SideBar',
             bindToController: true
         };
-
         return directive;
-    }
-
-    ProfessorsSideBarController.$inject = ['$location'];
-
-    function ProfessorsSideBarController($location) {
-      var vm = this;
-
-      vm.isActive = isActive;
-      
-
-      function isActive(viewLocation) 
-      {
-        return viewLocation === $location.path()
-      }
-
-
     }
 })();
