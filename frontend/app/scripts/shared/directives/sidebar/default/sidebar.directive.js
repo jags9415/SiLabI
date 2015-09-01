@@ -2,13 +2,13 @@
     'use strict';
 
     angular
-    .module('silabi.sidebar')
-    .directive('administratorsSidebar', AdministratorsSideBar);
+        .module('silabi.sidebar')
+        .directive('defaultSidebar', DefaultSideBar);
 
-    function AdministratorsSideBar() {
+    function DefaultSideBar() {
         var directive = {
             restrict: 'EA',
-            templateUrl: 'scripts/other/sidebar/administrators/administrators-sidebar.html',
+            templateUrl: 'scripts/shared/directives/sidebar/default/sidebar.html',
             controller: 'SideBarController',
             controllerAs: 'SideBar',
             bindToController: true

@@ -3,12 +3,12 @@
 
     angular
         .module('silabi.sidebar')
-        .directive('professorsSidebar', ProfessorsSideBar);
+        .directive('studentsSidebar', StudentsSideBar);
 
-    function ProfessorsSideBar() {
+    function StudentsSideBar() {
         var directive = {
             restrict: 'EA',
-            templateUrl: 'scripts/other/sidebar/professors/professors-sidebar.html',
+            templateUrl: 'scripts/shared/directives/sidebar/students/sidebar.html',
             controller: 'SideBarController',
             controllerAs: 'SideBar',
             bindToController: true

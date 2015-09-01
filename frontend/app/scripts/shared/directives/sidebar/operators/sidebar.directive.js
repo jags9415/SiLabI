@@ -8,7 +8,7 @@
     function OperatorsSideBar() {
         var directive = {
             restrict: 'EA',
-            templateUrl: 'scripts/other/sidebar/operators/operators-sidebar.html',
+            templateUrl: 'scripts/shared/directives/sidebar/operators/sidebar.html',
             controller: 'SideBarController',
             controllerAs: 'SideBar',
             bindToController: true
