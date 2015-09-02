@@ -16,7 +16,9 @@
                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                 <input class="form-control" placeholder="Contraseña" name="password" type="password" ng-model="Auth.password" required>
               </div>
-              <input class="btn btn-lg btn-primary center-block" value="Ingresar" type="submit" ng-click="Auth.logIn()"></input>
+              <button class="btn btn-lg btn-primary center-block" type="submit" ng-click="Auth.logIn()">
+                <i class="glyphicon glyphicon-log-in"></i>  Ingresar
+              </button>
             </fieldset>
           </form>
         </div>
