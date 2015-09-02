@@ -2,57 +2,61 @@
     'use strict';
 
     angular
-        .module('silabi')
-        .controller('ProfessorsDetailController', ProfessorsDetailController);
-        ProfessorsDetailController.$inject = ['$routeParams', 'ProfessorService', '$route', '$location', 'MessageService'];
+      .module('silabi')
+      .controller('ProfessorsDetailController', ProfessorsDetailController);
 
-    function ProfessorsDetailController($routeParams, ProfessorService, $route, $location, MessageService) {
+    ProfessorsDetailController.$inject = ['$routeParams', '$location', 'ProfessorService', 'GenderService', 'MessageService'];
+
+    function ProfessorsDetailController($routeParams, $location, ProfessorService, GenderService, MessageService) {
         var vm = this;
-        vm.genders = ["Masculino", "Femenino"];
         vm.username = $routeParams.username;
         vm.update = updateProfessor;
         vm.delete = deleteProfessor;
 
         activate();
 
-        function activate()
-      	{
+        function activate() {
+          GenderService.GetAll().
+          then(setGenders)
+          .catch(handleError);
+
           ProfessorService.GetOne(vm.username).
-          then(handleGetSuccess)
+          then(setProfessor)
           .catch(handleError);
       	}
 
-        function updateProfessor()
-        {
+        function updateProfessor() {
           if (vm.professor) {
             if (vm.password) {
               var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
               vm.professor.password = hash;
             }
             ProfessorService.Update(vm.professor.id, vm.professor)
-            .then(handleGetSuccess)
+            .then(setProfessor)
             .catch(handleError);
           }
         }
 
         function deleteProfessor() {
-          if (vm.professor) 
-          {
+          if (vm.professor) {
             MessageService.confirm("¿Desea realmente eliminar este docente?")
-            .then(function() 
-            {
+            .then(function() {
               ProfessorService.Delete(vm.professor.id)
-              .then(handleDeleteSuccess)
+              .then(redirectToProfessors)
               .catch(handleError)
             });
           }
         }
 
-        function handleGetSuccess(data) {
-          vm.professor = data;
+        function setGenders(genders) {
+          vm.genders = genders;
         }
 
-        function handleDeleteSuccess() {
+        function setProfessor(professor) {
+          vm.professor = professor;
+        }
+
+        function redirectToProfessors() {
           $location.path("/Operador/Docentes");
         }
 

@@ -65,18 +65,18 @@
           controllerAs: 'Operator'
         })
         .when('/Operador/Docentes', {
-          templateUrl: 'scripts/operator/professors/professors.list.html',
+          templateUrl: 'scripts/operator/professors/professor.list.html',
           controller: 'ProfessorListController',
           controllerAs: 'ProfessorList',
           reloadOnSearch: false
         })
         .when('/Operador/Docentes/Agregar', {
-          templateUrl: 'scripts/operator/professors/professors.create.html',
+          templateUrl: 'scripts/operator/professors/professor.create.html',
           controller: 'ProfessorsCreateController',
           controllerAs: 'ProfessorCreate'
         })
         .when('/Operador/Docentes/:username', {
-          templateUrl: 'scripts/operator/professors/professors.detail.html',
+          templateUrl: 'scripts/operator/professors/professor.detail.html',
           controller: 'ProfessorsDetailController',
           controllerAs: 'ProfessorDetail'
         })

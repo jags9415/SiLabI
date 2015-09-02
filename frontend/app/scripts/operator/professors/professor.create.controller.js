@@ -2,21 +2,23 @@
     'use strict';
 
     angular
-        .module('silabi')
-        .controller('ProfessorsCreateController', ProfessorsCreateController);
-        ProfessorsCreateController.$inject = ['$scope', '$routeParams', '$location', 'ProfessorService', 'MessageService', 'CryptoJS'];
+      .module('silabi')
+      .controller('ProfessorsCreateController', ProfessorsCreateController);
 
-    function ProfessorsCreateController($scope, $routeParams, $location, ProfessorService, MessageService, CryptoJS) {
+    ProfessorsCreateController.$inject = ['$scope', 'ProfessorService', 'GenderService', 'MessageService', 'CryptoJS'];
+
+    function ProfessorsCreateController($scope, ProfessorService, GenderService, MessageService, CryptoJS) {
       var vm = this;
       vm.professor = {};
-      vm.genders = ["Masculino", "Femenino"];
 	    vm.create = createProfessor;
       vm.generateUserName = generateUserName;
 
       activate();
 
       function activate() {
-        vm.professor.gender = vm.genders[0];
+        GenderService.GetAll()
+        .then(setGenders)
+        .catch(handleError);
       }
 
       function generateUserName() {
@@ -37,11 +39,20 @@
 
       function handleCreateSuccess(data) {
         MessageService.success("Docente creado con éxito.");
+
+        // Reset form data.
         vm.professor = {};
-        $scope.$broadcast('show-errors-reset');
         vm.professor.gender = vm.genders[0];
-        vm.password = null;
-        vm.password_confirm = null;
+        delete vm.password;
+        delete vm.password_confirm;
+
+        // Reset form validations.
+        $scope.$broadcast('show-errors-reset');
+      }
+
+      function setGenders(genders) {
+        vm.genders = genders;
+        vm.professor.gender = genders[0];
       }
 
       function handleError(data) {

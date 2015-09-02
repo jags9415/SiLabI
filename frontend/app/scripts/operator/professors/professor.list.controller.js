@@ -2,12 +2,14 @@
     'use strict';
 
     angular
-        .module('silabi')
-        .controller('ProfessorListController', ProfessorListController);
-        ProfessorListController.$inject = ['$routeParams', 'ProfessorService', '$location', 'MessageService'];
+      .module('silabi')
+      .controller('ProfessorListController', ProfessorListController);
 
-    function ProfessorListController($routeParams, ProfessorService, $location, MessageService) {
+    ProfessorListController.$inject = ['$routeParams', '$location', 'ProfessorService', 'StateService', 'MessageService'];
+
+    function ProfessorListController($routeParams, $location, ProfessorService, StateService, MessageService) {
       var vm = this;
+      vm.loaded = false;
       vm.advanceSearch = false;
       vm.limit = 20;
       vm.searched = {};
@@ -18,38 +20,27 @@
     	vm.seeProfessorDetail = seeProfessorDetail;
       vm.toggleAdvanceSearch = toggleAdvanceSearch;
       vm.search = searchProfessors;
+      vm.isEmpty = isEmpty;
+      vm.isLoaded = isLoaded;
       vm.createProfessor = createProfessor;
       vm.deleteProfessor = deleteProfessor;
 
       activate();
 
       function activate() {
-        vm.page = parseInt($location.search()['page']);
+        var page = parseInt($location.search()['page']);
 
-        if (isNaN(vm.page))
-        {
-            vm.page = 1;
+        if (isNaN(page)) {
+            page = 1;
         }
 
-        vm.professors = [];
-		    vm.totalPages = vm.page;
-
-        vm.states = [
-          {
-            name: 'Cualquiera',
-            value: '*'
-          },
-          {
-            name: 'Activo',
-            value: 'Activo'
-          },
-          {
-            name: 'Inactivo',
-            value: 'Inactivo'
-          }
-        ];
-
+		    vm.totalPages = page;
+        vm.page = page;
         loadPage();
+
+        StateService.GetProfessorStates()
+        .then(setStates)
+        .catch(handleError);
       }
 
     	function loadPage() {
@@ -59,15 +50,20 @@
         vm.request.limit = vm.limit;
 
     		ProfessorService.GetAll(vm.request)
-    		.then(handleGetSuccess)
+    		.then(setProfessors)
         .catch(handleError);
     	}
 
-      function handleGetSuccess(response) {
-        vm.professors = response.results;
-        vm.page = response.current_page;
-        vm.totalPages = response.total_pages;
+      function setProfessors(data) {
+        vm.professors = data.results;
+        vm.page = data.current_page;
+        vm.totalPages = data.total_pages;
         vm.totalItems = vm.limit * vm.totalPages;
+        vm.loaded = true;
+      }
+
+      function setStates(states) {
+        vm.states = states;
       }
 
       function handleError(response) {
@@ -108,6 +104,14 @@
         loadPage();
       }
 
+      function isEmpty() {
+        return vm.professors.length == 0;
+      }
+
+      function isLoaded() {
+        return vm.loaded;
+      }
+
       function toggleAdvanceSearch() {
         vm.advanceSearch = !vm.advanceSearch;
         delete vm.searched.state;
@@ -120,19 +124,13 @@
     		$location.path("/Operador/Docentes/" + username);
     	}
 
-      function deleteProfessor(id)
-      {
+      function deleteProfessor(id) {
         MessageService.confirm("¿Desea realmente eliminar este docente?")
-        .then(function()
-        {
+        .then(function() {
           ProfessorService.Delete(id)
-          .then(handleDeleteSuccess)
+          .then(loadPage)
           .catch(handleError)
         });
-      }
-
-      function handleDeleteSuccess(response) {
-        loadPage();
       }
 
       function createProfessor() {

@@ -2,60 +2,69 @@
     'use strict';
 
     angular
-        .module('silabi')
-        .controller('StudentsDetailController', StudentsDetail);
+      .module('silabi')
+      .controller('StudentsDetailController', StudentsDetail);
 
-    StudentsDetail.$inject = ['$routeParams', '$location', 'StudentService', 'MessageService'];
+    StudentsDetail.$inject = ['$routeParams', '$location', 'StudentService', 'GenderService', 'MessageService', 'CryptoJS'];
 
-    function StudentsDetail($routeParams, $location, StudentService, MessageService) {
+    function StudentsDetail($routeParams, $location, StudentService, GenderService, MessageService, CryptoJS) {
       var vm = this;
-        vm.student = {};
-        vm.username = $routeParams.username;
-        vm.updateInfo = updateInfo;
-        vm.delete = deleteStudent;
-        vm.genders = ['Masculino', 'Femenino'];
+      vm.student = {};
+      vm.username = $routeParams.username;
+      vm.update = updateStudent;
+      vm.delete = deleteStudent;
 
-        activate();
+      activate();
 
-        function activate() {
-          StudentService.GetOne(vm.username)
-          .then(handleGetOneSuccess)
-          .catch(handleRequestError);
-        }
+      function activate() {
+        GenderService.GetAll()
+        .then(setGenders)
+        .catch(handleError);
 
-        function handleGetOneSuccess(result) {
-          vm.student = result;
-        }
+        StudentService.GetOne(vm.username)
+        .then(setStudent)
+        .catch(handleError);
+      }
 
-        function updateInfo() {
+      function updateStudent() {
+        if (vm.student) {
+          if (vm.password) {
+            var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
+            vm.student.password = hash;
+          }
           StudentService.Update(vm.student.id, vm.student)
-          .then(function(result) {
-            vm.student = result;
-          })
+          .then(setStudent)
           .catch(showError);
         }
+      }
 
-        function deleteStudent() {
-          if (vm.student) {
-            MessageService.confirm("¿Desea realmente eliminar este estudiante?")
-            .then(function (argument) {
-              StudentService.Delete(vm.student.id)
-              .then(handleDeleteSuccess)
-              .catch(handleRequestError);
-              }
-            );
-          }
+      function deleteStudent() {
+        if (vm.student) {
+          MessageService.confirm("¿Desea realmente eliminar este estudiante?")
+          .then(function () {
+            StudentService.Delete(vm.student.id)
+            .then(redirectToStudents)
+            .catch(handleError);
+            }
+          );
         }
+      }
 
-        function handleDeleteSuccess(result) {
-          $location.path('/Operador/Estudiantes');
-        }
+      function setGenders(genders) {
+        vm.genders = genders;
+        vm.student.gender = genders[0];
+      }
 
-        function handleRequestError(data) {
-          if (data.code === 404)
-            MessageService.error("No se pudo conectar con el servidor");
-          else
-            MessageService.error(data.description);
-        }
+      function setStudent(student) {
+        vm.student = student;
+      }
+
+      function redirectToStudents(result) {
+        $location.path('/Operador/Estudiantes');
+      }
+
+      function handleError(data) {
+        MessageService.error(data.description);
+      }
     }
 })();

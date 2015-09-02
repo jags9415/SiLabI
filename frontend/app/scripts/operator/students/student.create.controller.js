@@ -5,35 +5,47 @@
         .module('silabi')
         .controller('StudentsAddController', StudentsAddController);
 
-    StudentsAddController.$inject = ['$scope', '$location', '$localStorage', 'StudentService', 'MessageService', 'CryptoJS'];
+    StudentsAddController.$inject = ['$scope', 'StudentService', 'MessageService', 'GenderService', 'CryptoJS'];
 
-    function StudentsAddController($scope, $location, $localStorage, StudentService, MessageService, CryptoJS) {
+    function StudentsAddController($scope, StudentService, MessageService, GenderService, CryptoJS) {
         var vm = this;
-
         vm.student = {};
-        vm.genders = ['Masculino', 'Femenino'];
-        vm.student.gender = vm.genders[0];
-        vm.$storage = $localStorage;
-
         vm.create = create;
+
+        activate();
+
+        function activate() {
+          GenderService.GetAll()
+          .then(setGenders)
+          .catch(handleError);
+        }
+
+        function setGenders(genders) {
+          vm.genders = genders;
+          vm.student.gender = genders[0];
+        }
 
         function create() {
           if (vm.student) {
             var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
             vm.student.password = hash;
             StudentService.Create(vm.student)
-            .then(handleSuccess)
+            .then(handleCreateSuccess)
             .catch(handleError);
           }
         }
 
-        function handleSuccess(result) {
+        function handleCreateSuccess(result) {
           MessageService.success("Estudiante creado con éxito.");
+
+          // Reset form data.
           vm.student = {};
-          $scope.$broadcast('show-errors-reset');
           vm.student.gender = vm.genders[0];
-          vm.password = null;
-          vm.password_confirm = null;
+          delete vm.password;
+          delete vm.password_confirm;
+
+          // Reset form validations.
+          $scope.$broadcast('show-errors-reset');
         }
 
         function handleError(error) {

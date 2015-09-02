@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
-                    <ui-select id="state" ng-model="OperatorList.searched.state" search-enabled="false">
+                    <ui-select id="state" ng-model="OperatorList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
                         {{$select.selected.name}}
                       </ui-select-match>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-3">
                   <div class="form-group">
-                    <ui-select id="period" ng-model="OperatorList.searched.period" style="width: 100%">
+                    <ui-select id="period" ng-model="OperatorList.searched.period">
                       <ui-select-match placeholder="Periodo" allow-clear="true">
                         {{$select.selected.value + ' ' + $select.selected.type}}
                       </ui-select-match>

@@ -17,7 +17,7 @@
 
         function activate() {
           OperatorService.GetOne(vm.id)
-          .then(handleGetSuccess)
+          .then(setUser)
           .catch(handleError);
         }
 
@@ -26,17 +26,17 @@
             MessageService.confirm("¿Desea realmente eliminar este operador?")
             .then(function() {
               OperatorService.Delete(vm.id)
-              .then(handleDeleteSuccess)
+              .then(redirectToOperators)
               .catch(handleError);
             });
           }
         }
 
-        function handleGetSuccess(data) {
-          vm.user = data;
+        function setUser(user) {
+          vm.user = user;
         }
 
-        function handleDeleteSuccess() {
+        function redirectToOperators() {
           $location.path('/Administrador/Operadores')
         }
 

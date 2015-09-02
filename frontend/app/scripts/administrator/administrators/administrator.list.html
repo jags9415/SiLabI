@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <ui-select id="state" ng-model="AdminList.searched.state" search-enabled="false">
+                    <ui-select id="state" ng-model="AdminList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
                         {{$select.selected.name}}
                       </ui-select-match>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Correo" ng-model="AdminList.searched.email">
+                    <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="AdminList.searched.email">
                   </div>
                 </div>
               </div>

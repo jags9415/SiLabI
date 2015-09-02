@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('OperatorCreateController', OperatorCreateController);
 
-    OperatorCreateController.$inject = ['OperatorService', 'StudentService', 'MessageService'];
+    OperatorCreateController.$inject = ['OperatorService', 'StudentService', 'PeriodService', 'MessageService'];
 
-    function OperatorCreateController(OperatorService, StudentService, MessageService) {
+    function OperatorCreateController(OperatorService, StudentService, PeriodService, MessageService) {
         var vm = this;
         vm.periods = [];
         vm.currentYear = new Date().getFullYear();
@@ -17,83 +17,18 @@
 
         activate();
 
-        // FIX. Periods need to be fetched from web service.
         function activate() {
-          vm.periods = [
-            {
-              value: 1,
-              type: 'Semestre'
-            },
-            {
-              value: 2,
-              type: 'Semestre'
-            },
-            {
-              value: 1,
-              type: 'Cuatrimestre'
-            },
-            {
-              value: 2,
-              type: 'Cuatrimestre'
-            },
-            {
-              value: 3,
-              type: 'Cuatrimestre'
-            },
-            {
-              value: 1,
-              type: 'Trimestre'
-            },
-            {
-              value: 2,
-              type: 'Trimestre'
-            },
-            {
-              value: 3,
-              type: 'Trimestre'
-            },
-            {
-              value: 4,
-              type: 'Trimestre'
-            },
-            {
-              value: 1,
-              type: 'Bimestre'
-            },
-            {
-              value: 2,
-              type: 'Bimestre'
-            },
-            {
-              value: 3,
-              type: 'Bimestre'
-            },
-            {
-              value: 4,
-              type: 'Bimestre'
-            },
-            {
-              value: 5,
-              type: 'Bimestre'
-            },
-            {
-              value: 6,
-              type: 'Bimestre'
-            }
-          ];
-          if (vm.periods.length > 0) {
-            vm.period = vm.periods[0];
-          }
+          PeriodService.GetAll()
+          .then(setPeriods)
+          .catch(handleError);
         }
 
         function search() {
+          vm.user = {};
           if (vm.username) {
             StudentService.GetOne(vm.username)
-            .then(handleSearchSuccess)
+            .then(setUser)
             .catch(handleError);
-          }
-          else {
-            vm.user = null;
           }
         }
 
@@ -107,12 +42,19 @@
           }
         }
 
-        function handleSearchSuccess(student) {
-          vm.user = student;
+        function setPeriods(periods) {
+          vm.periods = periods;
+          vm.period = periods[0];
+        }
+
+        function setUser(user) {
+          vm.user = user;
         }
 
         function handleCreateSuccess() {
           MessageService.success("Operador creado con éxito.");
+          vm.user = {};
+          delete vm.username;
         }
 
         function handleError(data) {

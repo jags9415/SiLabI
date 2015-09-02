@@ -44,7 +44,7 @@
         <div class="col-md-6">
           <div class="form-group" show-errors>
             <label for="gender" class="control-label"><small>*</small> Género</label>
-            <ui-select id="gender" ng-model="StudentsAdd.student.gender" search-enable="false">
+            <ui-select id="gender" ng-model="StudentsAdd.student.gender">
               <ui-select-match placeholder="{{StudentsAdd.student.gender}}">
                 {{ $select.selected }}
               </ui-select-match>

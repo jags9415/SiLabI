@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <ui-select id="state" ng-model="searched.state" search-enabled="false">
+                    <ui-select id="state" ng-model="ProfessorList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
                         {{$select.selected.name}}
                       </ui-select-match>
@@ -69,7 +69,7 @@
     </div>
   </div>
     <div class="table-responsive">
-      <table class="table table-striped" id="professorsTable">
+      <table class="table table-striped" id="professorsTable" ng-show="ProfessorList.isLoaded() && !ProfessorList.isEmpty()">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -101,7 +101,7 @@
         </tbody>
       </table>
     </div>
-    <p ng-show="ProfessorList.searchResults.length==0"> No se encontraron resultados </p>
+    <p ng-show="ProfessorList.isLoaded() && ProfessorList.isEmpty()">No se encontraron resultados.</p>
     <br><br>
     <div class="row">
     <div class="col-md-12 pagination">

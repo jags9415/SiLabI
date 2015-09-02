@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('OperatorListController', OperatorListController);
 
-    OperatorListController.$inject = ['OperatorService', 'MessageService', '$location'];
+    OperatorListController.$inject = ['$location', 'OperatorService', 'StateService', 'PeriodService', 'MessageService'];
 
-    function OperatorListController(OperatorService, MessageService, $location) {
+    function OperatorListController($location, OperatorService, StateService, PeriodService, MessageService) {
         var vm = this;
         vm.loaded = false;
         vm.operators = [];
@@ -40,83 +40,13 @@
           vm.page = page;
           loadPage();
 
-          vm.states = [
-            {
-              name: 'Cualquiera',
-              value: '*'
-            },
-            {
-              name: 'Activo',
-              value: 'Activo'
-            },
-            {
-              name: 'Inactivo',
-              value: 'Inactivo'
-            }
-          ];
+          StateService.GetOperatorStates()
+          .then(setStates)
+          .catch(handleError);
 
-          vm.periods = [
-            {
-              value: 1,
-              type: 'Semestre'
-            },
-            {
-              value: 2,
-              type: 'Semestre'
-            },
-            {
-              value: 1,
-              type: 'Cuatrimestre'
-            },
-            {
-              value: 2,
-              type: 'Cuatrimestre'
-            },
-            {
-              value: 3,
-              type: 'Cuatrimestre'
-            },
-            {
-              value: 1,
-              type: 'Trimestre'
-            },
-            {
-              value: 2,
-              type: 'Trimestre'
-            },
-            {
-              value: 3,
-              type: 'Trimestre'
-            },
-            {
-              value: 4,
-              type: 'Trimestre'
-            },
-            {
-              value: 1,
-              type: 'Bimestre'
-            },
-            {
-              value: 2,
-              type: 'Bimestre'
-            },
-            {
-              value: 3,
-              type: 'Bimestre'
-            },
-            {
-              value: 4,
-              type: 'Bimestre'
-            },
-            {
-              value: 5,
-              type: 'Bimestre'
-            },
-            {
-              value: 6,
-              type: 'Bimestre'
-            }
-          ];
+          PeriodService.GetAll()
+          .then(setPeriods)
+          .catch(handleError);
         }
 
         function loadPage() {
@@ -126,7 +56,7 @@
           vm.request.limit = vm.limit;
 
           OperatorService.GetAll(vm.request)
-          .then(handleGetSuccess)
+          .then(setOperators)
           .catch(handleError);
         }
 
@@ -142,7 +72,7 @@
           MessageService.confirm("¿Desea realmente eliminar este operador?")
           .then(function() {
             OperatorService.Delete(id)
-            .then(handleDeleteSuccess)
+            .then(loadPage)
             .catch(handleError);
           });
         }
@@ -212,16 +142,20 @@
           return vm.loaded;
         }
 
-        function handleDeleteSuccess() {
-          loadPage();
-        }
-
-        function handleGetSuccess(data) {
+        function setOperators(data) {
           vm.operators = data.results;
           vm.page = data.current_page;
           vm.totalPages = data.total_pages;
           vm.totalItems = vm.limit * vm.totalPages;
           vm.loaded = true;
+        }
+
+        function setStates(states) {
+          vm.states = states;
+        }
+
+        function setPeriods(periods) {
+          vm.periods = periods;
         }
 
         function handleError(data) {

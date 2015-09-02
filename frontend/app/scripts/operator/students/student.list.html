@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <ui-select id="state" ng-model="StudentList.searched.state" search-enabled="false">
+                    <ui-select id="state" ng-model="StudentList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
                         {{$select.selected.name}}
                       </ui-select-match>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Correo" ng-model="StudentList.searched.email">
+                    <input type="text" class="form-control" id="email" placeholder="Correo" ng-model="StudentList.searched.email">
                   </div>
                 </div>
               </div>
@@ -108,7 +108,7 @@
       </tbody>
     </table>
   </div>
-  <p ng-show="StudentList.isLoaded() && StudentList.isEmpty()"> No se encontraron resultados </p>
+  <p ng-show="StudentList.isLoaded() && StudentList.isEmpty()">No se encontraron resultados.</p>
   <br>
   <div class="row">
     <div class="col-md-12 pagination">

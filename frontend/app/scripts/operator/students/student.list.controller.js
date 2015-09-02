@@ -5,15 +5,15 @@
         .module('silabi')
         .controller('StudentListController', StudentListController);
 
-    StudentListController.$inject = ['StudentService', 'MessageService', '$location'];
+    StudentListController.$inject = ['$location', 'StudentService', 'MessageService', 'StateService'];
 
-    function StudentListController(StudentService, MessageService, $location) {
+    function StudentListController($location, StudentService, MessageService, StateService) {
         var vm = this;
         vm.loaded = false;
+        vm.advanceSearch = false;
         vm.students = [];
         vm.searched = {};
         vm.limit = 20;
-        vm.advanceSearch = false;
         vm.request = {
           fields : "id,full_name,email,phone,username,state"
         };
@@ -40,24 +40,9 @@
           vm.page = page;
           loadPage();
 
-          vm.states = [
-            {
-              name: 'Cualquiera',
-              value: '*'
-            },
-            {
-              name: 'Activo',
-              value: 'Activo'
-            },
-            {
-              name: 'Inactivo',
-              value: 'Inactivo'
-            },
-            {
-              name: 'Bloqueado',
-              value: 'Bloqueado'
-            }
-          ];
+          StateService.GetStudentStates()
+          .then(setStates)
+          .catch(handleError);
         }
 
         function loadPage() {
@@ -67,7 +52,7 @@
           vm.request.limit = vm.limit;
 
           StudentService.GetAll(vm.request)
-          .then(handleGetSuccess)
+          .then(setStudents)
           .catch(handleError);
         }
 
@@ -83,7 +68,7 @@
           MessageService.confirm("¿Desea realmente eliminar este estudiante?")
           .then(function() {
             StudentService.Delete(id)
-            .then(handleDeleteSuccess)
+            .then(loadPage)
             .catch(handleError);
           });
         }
@@ -138,11 +123,7 @@
           return vm.loaded;
         }
 
-        function handleDeleteSuccess() {
-          loadPage();
-        }
-
-        function handleGetSuccess(data) {
+        function setStudents(data) {
           vm.students = data.results;
           vm.page = data.current_page;
           vm.totalPages = data.total_pages;
@@ -150,9 +131,12 @@
           vm.loaded = true;
         }
 
+        function setStates(states) {
+          vm.states = states;
+        }
+
         function handleError(data) {
           MessageService.error(data.description);
-          vm.loaded = true;
         }
     }
 })();
