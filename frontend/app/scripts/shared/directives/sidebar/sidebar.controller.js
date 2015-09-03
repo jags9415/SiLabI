@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-    .module('silabi.sidebar')
+    .module('silabi')
     .controller('SideBarController', SideBarController);
 
     SideBarController.$inject = ['$location'];

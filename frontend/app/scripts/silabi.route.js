@@ -14,85 +14,85 @@
           resolve: { load: handleHomeRedirect }
         })
         .when('/About', {
-          templateUrl: 'scripts/public/about/about.html'
+          templateUrl: 'views/public/about.html'
         })
         .when('/Administrador', {
-          templateUrl: 'scripts/administrator/home.html'
+          templateUrl: 'views/administrator/home.html'
         })
         .when('/Operador', {
-          templateUrl: 'scripts/operator/home.html'
+          templateUrl: 'views/operator/home.html'
         })
         .when('/Estudiante', {
-          templateUrl: 'scripts/student/home.html'
+          templateUrl: 'views/student/home.html'
         })
         .when('/Docente', {
-          templateUrl: 'scripts/professor/home.html'
+          templateUrl: 'views/professor/home.html'
         })
         .when('/Login', {
-          templateUrl: 'scripts/public/login/login.html',
+          templateUrl: 'views/public/login.html',
           controller: 'LoginController',
           controllerAs: 'Auth'
         })
         .when('/Administrador/Administradores', {
-          templateUrl: 'scripts/administrator/administrators/administrator.list.html',
+          templateUrl: 'views/administrator/administrators/administrator.list.html',
           controller: 'AdminListController',
           controllerAs: 'AdminList',
         })
         .when('/Administrador/Administradores/Agregar', {
-          templateUrl: 'scripts/administrator/administrators/administrator.create.html',
+          templateUrl: 'views/administrator/administrators/administrator.create.html',
           controller: 'AdministratorCreateController',
           controllerAs: 'AdministratorCreate',
         })
         .when('/Administrador/Administradores/:id', {
-          templateUrl: 'scripts/administrator/administrators/administrator.detail.html',
+          templateUrl: 'views/administrator/administrators/administrator.detail.html',
           controller: 'AdministratorDetailController',
           controllerAs: 'AdministratorDetail',
         })
         .when('/Administrador/Operadores', {
-          templateUrl: 'scripts/administrator/operators/operator.list.html',
+          templateUrl: 'views/administrator/operators/operator.list.html',
           controller: 'OperatorListController',
           controllerAs: 'OperatorList',
           reloadOnSearch: false
         })
         .when('/Administrador/Operadores/Agregar', {
-          templateUrl: 'scripts/administrator/operators/operator.create.html',
+          templateUrl: 'views/administrator/operators/operator.create.html',
           controller: 'OperatorCreateController',
           controllerAs: 'Operator'
         })
         .when('/Administrador/Operadores/:id', {
-          templateUrl: 'scripts/administrator/operators/operator.detail.html',
+          templateUrl: 'views/administrator/operators/operator.detail.html',
           controller: 'OperatorDetailController',
           controllerAs: 'Operator'
         })
         .when('/Operador/Docentes', {
-          templateUrl: 'scripts/operator/professors/professor.list.html',
+          templateUrl: 'views/operator/professors/professor.list.html',
           controller: 'ProfessorListController',
           controllerAs: 'ProfessorList',
           reloadOnSearch: false
         })
         .when('/Operador/Docentes/Agregar', {
-          templateUrl: 'scripts/operator/professors/professor.create.html',
+          templateUrl: 'views/operator/professors/professor.create.html',
           controller: 'ProfessorsCreateController',
           controllerAs: 'ProfessorCreate'
         })
         .when('/Operador/Docentes/:username', {
-          templateUrl: 'scripts/operator/professors/professor.detail.html',
+          templateUrl: 'views/operator/professors/professor.detail.html',
           controller: 'ProfessorsDetailController',
           controllerAs: 'ProfessorDetail'
         })
         .when('/Operador/Estudiantes', {
-          templateUrl: 'scripts/operator/students/student.list.html',
+          templateUrl: 'views/operator/students/student.list.html',
           controller: 'StudentListController',
           controllerAs: 'StudentList',
           reloadOnSearch: false
         })
         .when('/Operador/Estudiantes/Agregar', {
-          templateUrl: 'scripts/operator/students/student.create.html',
+          templateUrl: 'views/operator/students/student.create.html',
           controller: 'StudentsAddController',
           controllerAs: 'StudentsAdd'
         })
         .when('/Operador/Estudiantes/:username', {
-          templateUrl: 'scripts/operator/students/student.detail.html',
+          templateUrl: 'views/operator/students/student.detail.html',
           controller: 'StudentsDetailController',
           controllerAs: 'StudentDetails'
         })
@@ -128,7 +128,7 @@
         if (AuthenticationService.isAuthenticated()) {
           var data = AuthenticationService.getUserData();
           // User is trying to access the login view or a restricted view.
-          if (url === "scripts/public/login/login.html" || !hasAccesssToView(url, data.type)) {
+          if (url === "views/public/login.html" || !hasAccesssToView(url, data.type)) {
             if (current) {
               event.preventDefault();
             }
@@ -138,23 +138,23 @@
           }
         }
         // User is not authenticated. Only have access to public views.
-        else if (!url.startsWith("scripts/public")) {
+        else if (!url.startsWith("views/public")) {
           $location.path('/Login');
         }
       });
     }
 
     function hasAccesssToView(view, type) {
-      if (view.startsWith("scripts/administrator")) {
+      if (view.startsWith("views/administrator")) {
         return type === "Administrador";
       }
-      else if (view.startsWith("scripts/operator")) {
+      else if (view.startsWith("views/operator")) {
         return type === "Operador" || type === "Administrador";
       }
-      else if (view.startsWith("scripts/professor")) {
+      else if (view.startsWith("views/professor")) {
         return type === "Docente";
       }
-      else if (view.startsWith("scripts/student")) {
+      else if (view.startsWith("views/student")) {
         return type === "Estudiante";
       }
       else {

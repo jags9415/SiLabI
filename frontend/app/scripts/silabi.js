@@ -13,7 +13,6 @@
           'ui.mask',
           'ui.bootstrap',
           'ui.bootstrap.showErrors',
-          'silabi.sidebar',
           'ngPasswordStrength'
         ]);
 })();

@@ -92,21 +92,29 @@
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
       <!-- SiLabI Modules -->
       <script src="scripts/silabi.js"></script>
-      <script src="scripts/silabi.config.js"></script>
       <script src="scripts/silabi.constants.js"></script>
+      <script src="scripts/silabi.config.js"></script>
       <script src="scripts/silabi.route.js"></script>
 
-      <!-- Shared Modules -->
+      <!-- Shared Services -->
       <script src="scripts/shared/services/request.service.js"></script>
       <script src="scripts/shared/services/message.service.js"></script>
       <script src="scripts/shared/services/user.service.js"></script>
       <script src="scripts/shared/services/period.service.js"></script>
       <script src="scripts/shared/services/gender.service.js"></script>
       <script src="scripts/shared/services/state.service.js"></script>
+
+      <!-- Shared Controllers -->
       <script src="scripts/shared/controllers/main.controller.js"></script>
       <script src="scripts/shared/controllers/navbar.controller.js"></script>
-      <script src="scripts/shared/directives/sidebar/sidebar.js"></script>
       <script src="scripts/shared/directives/sidebar/sidebar.controller.js"></script>
+
+      <!-- Shared Directives -->
+      <script src="scripts/shared/directives/sidebar/operator.sidebar.directive.js"></script>
+      <script src="scripts/shared/directives/sidebar/administrator.sidebar.directive.js"></script>
+      <script src="scripts/shared/directives/sidebar/professor.sidebar.directive.js"></script>
+      <script src="scripts/shared/directives/sidebar/student.sidebar.directive.js"></script>
+      <script src="scripts/shared/directives/sidebar/default.sidebar.directive.js"></script>
 
       <!-- Login -->
       <script src="scripts/public/login/login.controller.js"></script>
@@ -135,13 +143,6 @@
       <script src="scripts/operator/students/student.create.controller.js"></script>
       <script src="scripts/operator/students/student.detail.controller.js"></script>
       <script src="scripts/operator/students/student.service.js"></script>
-
-      <!-- Sidebar -->
-      <script src="scripts/shared/directives/sidebar/operators/sidebar.directive.js"></script>
-      <script src="scripts/shared/directives/sidebar/administrators/sidebar.directive.js"></script>
-      <script src="scripts/shared/directives/sidebar/professors/sidebar.directive.js"></script>
-      <script src="scripts/shared/directives/sidebar/students/sidebar.directive.js"></script>
-      <script src="scripts/shared/directives/sidebar/default/sidebar.directive.js"></script>
     <!-- endbuild -->
 </body>
 </html>
