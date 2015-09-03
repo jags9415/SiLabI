@@ -151,8 +151,12 @@
   outline: none;
 }
 
+.navbar-header {
+  height: 100%;
+}
+
 .navbar-brand > img {
-  height: 120%;
+  height: 100%;
 }
 
 .navbar-top-links {

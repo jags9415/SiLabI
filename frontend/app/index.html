@@ -5,6 +5,7 @@
     <title>SiLabI</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <link type="text/plain" rel="author" href="humans.txt" />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -14,6 +15,9 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Tinos' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/sb-admin-2.css">
     <link rel="stylesheet" href="styles/home.css">
@@ -25,7 +29,6 @@
     <![endif]-->
 
     <div id="wrapper">
-        <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0" ng-controller="NavBarController as Nav">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" ng-click="Nav.collapsed = !Nav.collapsed">
@@ -35,13 +38,11 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#/">
-                  <img src="res/img/logo_eccl_tec_white.svg" class="img-responsive">
+                  <img src="images/logo_tec.svg" class="img-responsive">
                 </a>
             </div>
-            <!-- /.navbar-header -->
             <div ng-controller="LoginController as Auth">
               <ul class="nav navbar-top-links navbar-right" ng-if="Auth.isAuthenticated()">
-                  <!-- /.dropdown -->
                   <li class="dropdown pull-right">
                       <a class="dropdown-toggle" data-toggle="dropdown" href="">
                         <i class="glyphicon glyphicon-user"></i> <span class="hidden-xs">SiLabI</span> <span class="caret"></span>
@@ -50,19 +51,14 @@
                         <li><a href=""><i class="glyphicon glyphicon-user"></i> Mi Perfil</a></li>
                         <li><a href="" ng-click="Auth.logOut()"><i class="glyphicon glyphicon-log-out"></i> Cerrar Sesión</a></li>
                       </ul>
-                      <!-- /.dropdown-user -->
                   </li>
-                  <!-- /.dropdown -->
               </ul>
-              <!-- /.navbar-top-links -->
             </div>
-            <!-- sidebars -->
             <administrators-sidebar ng-if="Main.UserType() === 'Administrador'"></administrators-sidebar>
             <operators-sidebar ng-if="Main.UserType() === 'Operador'"></operators-sidebar>
             <professors-sidebar ng-if="Main.UserType() === 'Docente'"></professors-sidebar>
             <students-sidebar ng-if="Main.UserType() === 'Estudiante'"></students-sidebar>
             <default-sidebar ng-if="!Main.UserType()"></default-sidebar>
-            <!-- /.sidebars -->
         </nav>
         <div id="page-wrapper">
           <div id="view-wrapper" ng-view></div>
@@ -78,74 +74,74 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/toastr/toastr.js"></script>
+    <script src="bower_components/crypto-js/rollups/sha256.js"></script>
     <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
     <script src="bower_components/angular-bootstrap-show-errors/src/showErrors.js"></script>
     <script src="bower_components/ngstorage/ngStorage.js"></script>
     <script src="bower_components/angular-ui-mask/dist/mask.js"></script>
     <script src="bower_components/angular-ui-select/dist/select.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-i18n/angular-locale_es-cr.js"></script>
+    <script src="bower_components/bootbox/bootbox.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/ng-password-strength/dist/scripts/ng-password-strength.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- other bower modules -->
-    <script src="bower_components/crypto-js/rollups/sha256.js"></script>
-    <script src="bower_components/angular-i18n/angular-locale_es-cr.js"></script>
-    <script src="bower_components/bootbox/bootbox.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+      <!-- SiLabI Modules -->
+      <script src="scripts/silabi.js"></script>
+      <script src="scripts/silabi.config.js"></script>
+      <script src="scripts/silabi.constants.js"></script>
+      <script src="scripts/silabi.route.js"></script>
 
-    <!-- SiLabI Modules -->
-    <script src="scripts/silabi.js"></script>
-    <script src="scripts/silabi.config.js"></script>
-    <script src="scripts/silabi.constants.js"></script>
-    <script src="scripts/silabi.route.js"></script>
+      <!-- Shared Modules -->
+      <script src="scripts/shared/services/request.service.js"></script>
+      <script src="scripts/shared/services/message.service.js"></script>
+      <script src="scripts/shared/services/user.service.js"></script>
+      <script src="scripts/shared/services/period.service.js"></script>
+      <script src="scripts/shared/services/gender.service.js"></script>
+      <script src="scripts/shared/services/state.service.js"></script>
+      <script src="scripts/shared/controllers/main.controller.js"></script>
+      <script src="scripts/shared/controllers/navbar.controller.js"></script>
+      <script src="scripts/shared/directives/sidebar/sidebar.js"></script>
+      <script src="scripts/shared/directives/sidebar/sidebar.controller.js"></script>
 
-    <!-- Shared Modules -->
-    <script src="scripts/shared/services/request.service.js"></script>
-    <script src="scripts/shared/services/message.service.js"></script>
-    <script src="scripts/shared/services/user.service.js"></script>
-    <script src="scripts/shared/services/period.service.js"></script>
-    <script src="scripts/shared/services/gender.service.js"></script>
-    <script src="scripts/shared/services/state.service.js"></script>
-    <script src="scripts/shared/controllers/main.controller.js"></script>
-    <script src="scripts/shared/controllers/navbar.controller.js"></script>
-    <script src="scripts/shared/directives/sidebar/sidebar.js"></script>
-    <script src="scripts/shared/directives/sidebar/sidebar.controller.js"></script>
+      <!-- Login -->
+      <script src="scripts/public/login/login.controller.js"></script>
+      <script src="scripts/public/login/login.service.js"></script>
 
-    <!-- Login -->
-    <script src="scripts/public/login/login.controller.js"></script>
-    <script src="scripts/public/login/login.service.js"></script>
+      <!-- Administrators/Administrators -->
+      <script src="scripts/administrator/administrators/administrator.service.js"></script>
+      <script src="scripts/administrator/administrators/administrator.list.controller.js"></script>
+      <script src="scripts/administrator/administrators/administrator.detail.controller.js"></script>
+      <script src="scripts/administrator/administrators/administrator.create.controller.js"></script>
 
-    <!-- Administrators/Administrators -->
-    <script src="scripts/administrator/administrators/administrator.service.js"></script>
-    <script src="scripts/administrator/administrators/administrator.list.controller.js"></script>
-    <script src="scripts/administrator/administrators/administrator.detail.controller.js"></script>
-    <script src="scripts/administrator/administrators/administrator.create.controller.js"></script>
+      <!-- Administrator/Operators -->
+      <script src="scripts/administrator/operators/operator.service.js"></script>
+      <script src="scripts/administrator/operators/operator.list.controller.js"></script>
+      <script src="scripts/administrator/operators/operator.create.controller.js"></script>
+      <script src="scripts/administrator/operators/operator.detail.controller.js"></script>
 
-    <!-- Administrator/Operators -->
-    <script src="scripts/administrator/operators/operator.service.js"></script>
-    <script src="scripts/administrator/operators/operator.list.controller.js"></script>
-    <script src="scripts/administrator/operators/operator.create.controller.js"></script>
-    <script src="scripts/administrator/operators/operator.detail.controller.js"></script>
+      <!-- Operators/Professor -->
+      <script src="scripts/operator/professors/professor.service.js"></script>
+      <script src="scripts/operator/professors/professor.list.controller.js"></script>
+      <script src="scripts/operator/professors/professor.detail.controller.js"></script>
+      <script src="scripts/operator/professors/professor.create.controller.js"></script>
 
-    <!-- Operators/Professor -->
-    <script src="scripts/operator/professors/professor.service.js"></script>
-    <script src="scripts/operator/professors/professor.list.controller.js"></script>
-    <script src="scripts/operator/professors/professor.detail.controller.js"></script>
-    <script src="scripts/operator/professors/professor.create.controller.js"></script>
+      <!-- Operators/Students -->
+      <script src="scripts/operator/students/student.list.controller.js"></script>
+      <script src="scripts/operator/students/student.create.controller.js"></script>
+      <script src="scripts/operator/students/student.detail.controller.js"></script>
+      <script src="scripts/operator/students/student.service.js"></script>
 
-    <!-- Operators/Students -->
-    <script src="scripts/operator/students/student.list.controller.js"></script>
-    <script src="scripts/operator/students/student.create.controller.js"></script>
-    <script src="scripts/operator/students/student.detail.controller.js"></script>
-    <script src="scripts/operator/students/student.service.js"></script>
-
-    <!-- Sidebar -->
-    <script src="scripts/shared/directives/sidebar/operators/sidebar.directive.js"></script>
-    <script src="scripts/shared/directives/sidebar/administrators/sidebar.directive.js"></script>
-    <script src="scripts/shared/directives/sidebar/professors/sidebar.directive.js"></script>
-    <script src="scripts/shared/directives/sidebar/students/sidebar.directive.js"></script>
-    <script src="scripts/shared/directives/sidebar/default/sidebar.directive.js"></script>
+      <!-- Sidebar -->
+      <script src="scripts/shared/directives/sidebar/operators/sidebar.directive.js"></script>
+      <script src="scripts/shared/directives/sidebar/administrators/sidebar.directive.js"></script>
+      <script src="scripts/shared/directives/sidebar/professors/sidebar.directive.js"></script>
+      <script src="scripts/shared/directives/sidebar/students/sidebar.directive.js"></script>
+      <script src="scripts/shared/directives/sidebar/default/sidebar.directive.js"></script>
+    <!-- endbuild -->
 </body>
 </html>

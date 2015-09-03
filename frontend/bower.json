@@ -24,13 +24,23 @@
     "angular-mocks": "^1.3.0"
   },
   "appPath": "app",
-  "moduleName": "silabiFrontendApp",
+  "moduleName": "silabi-frontend",
   "overrides": {
     "bootstrap": {
       "main": [
         "less/bootstrap.less",
         "dist/css/bootstrap.css",
         "dist/js/bootstrap.js"
+      ]
+    },
+    "crypto-js": {
+      "main": [
+        "rollups/sha256.js"
+      ]
+    },
+    "angular-i18n": {
+      "main": [
+        "angular-locale_es-cr.js"
       ]
     }
   }
