@@ -31,6 +31,12 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+    githooks: {
+      all: {
+        'pre-commit': 'jshint jscs',
+      }
+    },
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -135,6 +141,15 @@ module.exports = function (grunt) {
         },
         src: ['test/spec/**/*.js']
       }
+    },
+
+    jscs: {
+      src: "<%= yeoman.app %>/scripts/**/*.js",
+      options: {
+          config: ".jscsrc",
+          esnext: true,
+          verbose: true
+        }
     },
 
     // Empties folders to start fresh
