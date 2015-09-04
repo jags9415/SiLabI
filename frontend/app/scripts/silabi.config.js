@@ -3,7 +3,7 @@
 
     angular
       .module('silabi')
-      .config(['showErrorsConfigProvider', showErrorsConfigProvider])
+      .config(['showErrorsConfigProvider', configShowErrors])
       .config(['toastr', configToaster]);
 
     function configShowErrors(showErrorsConfigProvider) {

@@ -97,7 +97,7 @@
           controllerAs: 'StudentDetails'
         })
         .when('/404', {
-          templateUrl: '404.html'
+          templateUrl: 'views/public/404.html'
         })
         .otherwise('/404');
     }
@@ -119,10 +119,7 @@
     function routeChangeListener($rootScope, $location, AuthenticationService) {
       $rootScope.$on("$routeChangeStart", function (event, next, current) {
         var url = next.templateUrl;
-
-        if (!url) {
-          return;
-        }
+        if (!url) return;
 
         // User is authenticated.
         if (AuthenticationService.isAuthenticated()) {
@@ -145,7 +142,10 @@
     }
 
     function hasAccesssToView(view, type) {
-      if (view.startsWith("views/administrator")) {
+      if (view.startsWith("views/public")) {
+        return true;
+      }
+      else if (view.startsWith("views/administrator")) {
         return type === "Administrador";
       }
       else if (view.startsWith("views/operator")) {
