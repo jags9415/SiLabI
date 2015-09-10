@@ -29,6 +29,7 @@ namespace SiLabI
         private ProfessorController _ProfessorController;
         private OperatorController _OperatorController;
         private CourseController _CourseController;
+        private GroupController _GroupController;
 
         /// <summary>
         /// Create a new Service.
@@ -42,6 +43,7 @@ namespace SiLabI
             this._ProfessorController = new ProfessorController();
             this._OperatorController = new OperatorController();
             this._CourseController = new CourseController();
+            this._GroupController = new GroupController();
         }
     }
 }

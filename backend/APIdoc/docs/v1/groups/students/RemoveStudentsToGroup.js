@@ -1,21 +1,23 @@
 /**
- * @api {delete} /v1/operators/:id Delete an operator.
+ * @api {delete} /v1/groups/:id/students Remove students from a group.
  * @apiVersion 1.0.0
- * @apiName DeleteOperator
- * @apiGroup Operators
- * @apiPermission administrator
+ * @apiName RemoveStudentsFromGroup
+ * @apiGroup Groups/Students
+ * @apiPermission operator
  * @apiUse BaseError
  *
- * @apiDescription Delete an operator.
+ * @apiDescription Remove students from a group.
  *
  * @apiExample Example:
- *     DELETE /operators/87 HTTP/1.1
+ *     POST /groups/45/students HTTP/1.1
  *     Content-Type: application/json
  *     {
+ *       "students": ["201242273", "201390652", "201503214"],
  *       "access_token": "..."
  *     }
  *
- * @apiParam {String}	access_token	The access token.
+ * @apiParam {Object[]}				  students  The students list.
+ * @apiParam {String}						access_token    The access token.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

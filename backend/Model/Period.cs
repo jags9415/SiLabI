@@ -2,6 +2,7 @@
 using SiLabI.Util;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
@@ -58,6 +59,51 @@ namespace SiLabI.Model
         {
             get { return _year; }
             set { _year = value; }
+        }
+
+        /// <summary>
+        /// Check if the period is valid.
+        /// </summary>
+        /// <returns>True if the period is valid.</returns>
+        public bool isValidForCreate()
+        {
+            bool valid = true;
+
+            valid &= Type != null && Validator.IsValidPeriod(Type);
+            valid &= Year != null && Year > 0;
+            valid &= Value != null && Value > 0;
+
+            return valid;
+        }
+
+        /// <summary>
+        /// Check if the period is valid for an update operation.
+        /// </summary>
+        /// <returns>True if the period is valid.</returns>
+        public bool isValidForUpdate()
+        {
+            bool valid = true;
+
+            if (Type != null || Value != null)
+            {
+                valid &= Type != null && Validator.IsValidPeriod(Type);
+                valid &= Value != null && Value > 0;
+            }
+            
+            if (Year != null) valid &= Year > 0;
+
+            return valid;
+        }
+
+        public static Period Parse(DataRow row)
+        {
+            Period period = new Period();
+
+            period.Type = row.Table.Columns.Contains("period.type") ? Converter.ToString(row["period.type"]) : null;
+            period.Value = row.Table.Columns.Contains("period.value") ? Converter.ToNullableInt32(row["period.value"]) : null;
+            period.Year = row.Table.Columns.Contains("period.year") ? Converter.ToNullableInt32(row["period.year"]) : null;
+
+            return period;
         }
     }
 }

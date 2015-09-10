@@ -3,7 +3,7 @@
  * @apiVersion 1.0.0
  * @apiName GetOperators
  * @apiGroup Operators
- * @apiPermission operator
+ * @apiPermission administrator
  * @apiUse BaseError
  *
  * @apiDescription Retrieve a list of operators.

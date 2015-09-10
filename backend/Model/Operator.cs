@@ -16,19 +16,13 @@ namespace SiLabI.Model
         /// <summary>
         /// Creates a empty operator.
         /// </summary>
-        public Operator() : base()
-        {
-            this.Period = new Period();
-        }
+        public Operator() : base() { }
 
         /// <summary>
         /// Clones an user.
         /// </summary>
         /// <param name="user">The user to clone.</param>
-        public Operator(Student user) : base(user)
-        {
-            this.Period = new Period();
-        }
+        public Operator(Student user) : base(user) { }
 
         /// <summary>
         /// The operator period.
@@ -48,10 +42,7 @@ namespace SiLabI.Model
         {
             Operator op = new Operator(Student.Parse(row));
 
-            op.Period.Type = row.Table.Columns.Contains("period.type") ? Converter.ToString(row["period.type"]) : null;
-            op.Period.Value = row.Table.Columns.Contains("period.value") ? Converter.ToNullableInt32(row["period.value"]) : null;
-            op.Period.Year = row.Table.Columns.Contains("period.year") ? Converter.ToNullableInt32(row["period.year"]) : null;
-
+            op.Period = Period.Parse(row);
             if (op.Period.Type == null && op.Period.Value == null && op.Period.Year == null)
             {
                 op.Period = null;

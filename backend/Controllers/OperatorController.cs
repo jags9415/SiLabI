@@ -34,7 +34,7 @@ namespace SiLabI.Controllers
         public GetResponse<Operator> GetOperators(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Admin);
 
             // By default search only active operators.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -67,7 +67,7 @@ namespace SiLabI.Controllers
         public Operator GetOperator(int id, string token)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Admin);
             DataTable table = _OperatorDA.GetOperator(id);
 
             if (table.Rows.Count == 0)
@@ -91,7 +91,7 @@ namespace SiLabI.Controllers
             }
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Admin);
             DataTable table = _OperatorDA.CreateOperator(id, request.Period);
 
             return Operator.Parse(table.Rows[0]);
@@ -110,7 +110,7 @@ namespace SiLabI.Controllers
             }
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Admin);
             _OperatorDA.DeleteOperator(id);
         }
     }

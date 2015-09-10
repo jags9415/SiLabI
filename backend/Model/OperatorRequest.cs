@@ -30,7 +30,7 @@ namespace SiLabI.Model
         /// <returns></returns>
         public override bool IsValid()
         {
-            return base.IsValid() && Period != null;
+            return base.IsValid() && Period != null && Period.isValidForCreate();
         }
     }
 }

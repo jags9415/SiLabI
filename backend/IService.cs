@@ -255,5 +255,85 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete a course.")]
         void DeleteCourse(string id, BaseRequest request);
+
+
+        /*
+         * GROUPS ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/groups/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of groups.")]
+        GetResponse<Group> GetGroups(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/groups/{id}/?access_token={token}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a group.")]
+        Group GetGroup(string id, string token);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/groups/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create a group.")]
+        Group CreateGroup(GroupRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/groups/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update a group.")]
+        Group UpdateGroup(string id, GroupRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/groups/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a group.")]
+        void DeleteGroup(string id, BaseRequest request);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/groups/{id}/students/?access_token={token}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve the list of students of a group.")]
+        List<Student> GetGroupStudents(string id, string token);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/groups/{id}/students/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Add a list of students to a group.")]
+        void AddStudentsToGroup(string id, StudentByGroupRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/groups/{id}/students/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update the list of students of a group.")]
+        void UpdateGroupStudents(string id, StudentByGroupRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/groups/{id}/students/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a list of students from a group.")]
+        void DeleteStudentsFromGroup(string id, StudentByGroupRequest request);
     }
 }

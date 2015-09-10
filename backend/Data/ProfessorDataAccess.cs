@@ -76,6 +76,18 @@ namespace SiLabI.Data
         {
             SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
+            return _Connection.executeStoredProcedure("sp_GetProfessorByUsername", parameters);
+        }
+
+        /// <summary>
+        /// Get a specific professor.
+        /// </summary>
+        /// <param name="id">The professor identification.</param>
+        /// <returns>A DataTable that contains the professor data.</returns>
+        public DataTable GetProfessor(int id)
+        {
+            SqlParameter[] parameters = new SqlParameter[1];
+            parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
             return _Connection.executeStoredProcedure("sp_GetProfessor", parameters);
         }
 

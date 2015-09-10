@@ -12,6 +12,9 @@ namespace SiLabI.Model
     {
         protected Course _course;
 
+        /// <summary>
+        /// The course.
+        /// </summary>
         [DataMember(Name = "course")]
         public Course Course
         {

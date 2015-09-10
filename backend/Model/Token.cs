@@ -1,4 +1,5 @@
-﻿using SiLabI.Model;
+﻿using SiLabI.Exceptions;
+using SiLabI.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -47,9 +48,6 @@ namespace SiLabI.Model
         /// <returns>The data.</returns>
         public static Dictionary<string, object> Decode(string token)
         {
-            return null;
-
-            /*
             if (token == null)
             {
                 throw new MissingParameterException("access_token");
@@ -63,7 +61,6 @@ namespace SiLabI.Model
             {
                 throw new InvalidParameterException("access_token");
             }
-             */
         }
 
         /// <summary>
@@ -74,11 +71,9 @@ namespace SiLabI.Model
         /// <returns>The token validity.</returns>
         public static void CheckPayload(Dictionary<string, object> payload, UserType type)
         {
-            /*
-            string type = payload["type"].ToString();
             bool valid;
 
-            switch (type)
+            switch (payload["type"].ToString())
             {
                 case "Administrador":
                     valid = true;
@@ -99,9 +94,8 @@ namespace SiLabI.Model
 
             if (!valid)
             {
-                throw new UnathorizedException();
+                throw new UnathorizedOperationException();
             }
-             */
         }
     }
 }

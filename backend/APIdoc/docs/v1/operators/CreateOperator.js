@@ -3,7 +3,7 @@
  * @apiVersion 1.0.0
  * @apiName CreateOperator
  * @apiGroup Operators
- * @apiPermission operator
+ * @apiPermission administrator
  * @apiUse BaseError
  *
  * @apiDescription Create an operator.

@@ -1,15 +1,15 @@
 /**
- * @api {delete} /v1/operators/:id Delete an operator.
+ * @api {delete} /v1/groups/:id Delete a group.
  * @apiVersion 1.0.0
- * @apiName DeleteOperator
- * @apiGroup Operators
- * @apiPermission administrator
+ * @apiName DeleteGroup
+ * @apiGroup Groups
+ * @apiPermission operator
  * @apiUse BaseError
  *
- * @apiDescription Delete an operator.
+ * @apiDescription Delete a group.
  *
  * @apiExample Example:
- *     DELETE /operators/87 HTTP/1.1
+ *     DELETE /groups/87 HTTP/1.1
  *     Content-Type: application/json
  *     {
  *       "access_token": "..."

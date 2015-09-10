@@ -1,6 +1,7 @@
 USE [SiLabI];
 SET NOCOUNT ON;
-DECLARE @GROUP_course_id INT, @GROUP_professor_id INT, @GROUP_period_id INT, @GROUP_i INT, @GROUP_rows INT;
+DECLARE @GROUP_group_state INT, @GROUP_course_id INT, @GROUP_professor_id INT, @GROUP_period_id INT, @GROUP_i INT, @GROUP_rows INT;
+SELECT @GROUP_group_state = PK_State_Id FROM States WHERE Type = 'GROUP' AND Name = 'Activo';
 
 SET @GROUP_i = 0;
 SET @GROUP_rows = 200;
@@ -16,8 +17,8 @@ BEGIN
 	WHERE PT.Name = 'Semestre'
 	ORDER BY NEWID();
 
-	INSERT INTO Groups(FK_Course_Id, FK_Professor_Id, FK_Period_Id, Number) VALUES
-	(@GROUP_course_id, @GROUP_professor_id, @GROUP_period_id, @GROUP_i + 1);
+	INSERT INTO Groups(FK_Course_Id, FK_Professor_Id, FK_Period_Id, FK_State_Id, Number) VALUES
+	(@GROUP_course_id, @GROUP_professor_id, @GROUP_period_id, @GROUP_group_state, @GROUP_i + 1);
 
 	SET @GROUP_i = @GROUP_i + 1;
 END
