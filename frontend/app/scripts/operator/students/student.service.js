@@ -21,7 +21,9 @@
         }
 
         function GetOne(Username) {
-          return RequestService.get('/students/' + Username);
+          var request = {};
+          request.access_token = $localStorage['access_token'];
+          return RequestService.get('/students/' + Username, request);
         }
 
         function Update(StudentID, NewStudentInfo) {
