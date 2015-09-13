@@ -1,0 +1,36 @@
+<div>
+  <h2>Agregar Curso</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li><a href="#Operador/Cursos">Cursos</a></li>
+    <li class="active">Agregar</li>
+  </ol>
+  <form name="createCourseForm">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group" show-errors>
+          <label for="code" class="control-label">Código</label>
+          <input type="text" class="form-control" id="code" name="code" placeholder="Código" ng-model="CourseAdd.course.code" ng-trim required>
+          <p class="help-block" ng-if="createCourseForm.code.$error.required">Código requerido.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group" show-errors>
+          <label for="name" class="control-label">Nombre</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="CourseAdd.course.name" ng-trim required>
+          <p class="help-block" ng-if="createCourseForm.name.$error.required">Nombre requerido.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+        <button type="submit" class="btn btn-lg btn-success" ng-click="CourseAdd.create()" ng-disabled="createCourseForm.$invalid">
+          <i class="glyphicon glyphicon-plus"></i> Agregar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

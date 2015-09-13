@@ -26,7 +26,7 @@
         </form>
       </div>
       <div class="col-md-2 col-xs-3">
-        <a href="#Operador/Estudiantes/Agregar" class="btn btn-block btn-success">
+        <a href="#Operador/Cursos/Agregar" class="btn btn-block btn-success">
           <i class="glyphicon glyphicon-plus"></i>
           <span class="hidden-xs">Crear</span>
         </a>
@@ -79,8 +79,8 @@
           <td>{{ course.code }}</td>
           <td>{{ course.name }}</td>
           <td style="text-align: center">
-            <a class='btn btn-info btn-sm'>
-              <span class="glyphicon glyphicon-eye-open" ng-click="CourseList.open(course.id)"></span>
+            <a class='btn btn-info btn-sm' ng-click="CourseList.open(course.id)">
+              <span class="glyphicon glyphicon-eye-open"></span>
             </a>
             <a href="" class="btn btn-danger btn-sm" ng-click="CourseList.delete(course.id)">
               <span class="glyphicon glyphicon-trash"></span>

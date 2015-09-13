@@ -102,6 +102,11 @@
           controllerAs: 'CourseList',
           reloadOnSearch: false
         })
+        .when('/Operador/Cursos/Agregar', {
+          templateUrl: 'views/operator/courses/course.create.html',
+          controller: 'CourseAddController',
+          controllerAs: 'CourseAdd'
+        })
         .when('/Operador/Cursos/:id', {
           templateUrl: 'views/operator/courses/course.detail.html',
           controller: 'CourseDetailController',
