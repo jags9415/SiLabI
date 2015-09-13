@@ -99,7 +99,8 @@
         .when('/Operador/Cursos', {
           templateUrl: 'views/operator/courses/courses.list.html',
           controller: 'CourseListController',
-          controllerAs: 'CourseList'
+          controllerAs: 'CourseList',
+          reloadOnSearch: false
         })
         .when('/404', {
           templateUrl: 'views/public/404.html'
