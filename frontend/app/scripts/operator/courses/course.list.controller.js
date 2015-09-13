@@ -18,6 +18,7 @@
           fields : "id,code,name"
         };
 
+        vm.open = openCourse;
         vm.delete = deleteCourse;
         vm.search = searchCourse;
         vm.isEmpty = isEmpty;
@@ -47,6 +48,10 @@
           CourseService.GetAll(vm.request)
           .then(setCourses)
           .catch(handleError);
+        }
+
+        function openCourse(id) {
+          $location.url('/Operador/Cursos/' + id);
         }
 
         function searchCourse() {

@@ -34,7 +34,7 @@
           }
           StudentService.Update(vm.student.id, vm.student)
           .then(setStudent)
-          .catch(showError);
+          .catch(handleError);
         }
       }
 

@@ -97,10 +97,15 @@
           controllerAs: 'StudentDetails'
         })
         .when('/Operador/Cursos', {
-          templateUrl: 'views/operator/courses/courses.list.html',
+          templateUrl: 'views/operator/courses/course.list.html',
           controller: 'CourseListController',
           controllerAs: 'CourseList',
           reloadOnSearch: false
+        })
+        .when('/Operador/Cursos/:id', {
+          templateUrl: 'views/operator/courses/course.detail.html',
+          controller: 'CourseDetailController',
+          controllerAs: 'CourseDetail'
         })
         .when('/404', {
           templateUrl: 'views/public/404.html'
