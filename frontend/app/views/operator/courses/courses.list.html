@@ -11,7 +11,7 @@
         <form class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Código" name="searchInput" type="text">
+            <input class="form-control" placeholder="Código" name="searchInput" type="text" ng-change="CourseList.search()" ng-model="CourseList.searched.code">
           </div>
           <button type="submit" name="button" hidden></button>
         </form>
@@ -20,7 +20,7 @@
         <form class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Nombre" name="searchInput" type="text">
+            <input class="form-control" placeholder="Nombre" name="searchInput" type="text" ng-change="CourseList.search()" ng-model="CourseList.searched.name">
           </div>
           <button type="submit" name="button" hidden></button>
         </form>
@@ -82,7 +82,7 @@
             <a class='btn btn-info btn-sm'>
               <span class="glyphicon glyphicon-eye-open"></span>
             </a>
-            <a href="" class="btn btn-danger btn-sm">
+            <a href="" class="btn btn-danger btn-sm" ng-click="CourseList.delete(course.id)">
               <span class="glyphicon glyphicon-trash"></span>
             </a>
           </td>
@@ -90,6 +90,15 @@
       </tbody>
     </table>
   </div>
-  <p ng-show="">No se encontraron resultados.</p>
+  <p ng-show="CourseList.isLoaded() && CourseList.isEmpty()">No se encontraron resultados.</p>
   <br>
+  <div class="row">
+    <div class="col-md-12 pagination">
+      <pagination
+        ng-change="CourseList.loadPage()" ng-model="CourseList.page" items-per-page="CourseList.limit"
+        total-items="CourseList.totalItems" max-size="5" boundary-links="true" rotate="true"
+        previous-text="<" next-text=">" first-text="<<" last-text=">>"
+      ></pagination>
+    </div>
+  </div>
 </div>
