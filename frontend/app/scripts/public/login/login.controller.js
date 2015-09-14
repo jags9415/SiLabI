@@ -13,6 +13,7 @@
       vm.logOut = logOut
       vm.isAuthenticated = isAuthenticated;
       vm.$storage = $localStorage;
+      vm.loading = false;
 
       function isAuthenticated() {
         return AuthenticationService.isAuthenticated();
@@ -21,6 +22,7 @@
       function logIn() {
         if (vm.username && vm.password) {
           var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
+          vm.loading = true;
           AuthenticationService.authenticate(vm.username, hash)
           .then(handleSuccess)
           .catch(handleError);
@@ -46,6 +48,7 @@
       }
 
       function handleError(error) {
+        vm.loading = false;
         MessageService.error(error.description);
       }
     }

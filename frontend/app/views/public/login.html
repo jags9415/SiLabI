@@ -17,7 +17,12 @@
                 <input class="form-control" placeholder="Contraseña" name="password" type="password" ng-model="Auth.password" required>
               </div>
               <button class="btn btn-lg btn-primary center-block" type="submit" ng-click="Auth.logIn()">
-                <i class="glyphicon glyphicon-log-in"></i>  Ingresar
+	            <div ng-if="Auth.loading">
+	              	<i class="glyphicon glyphicon-cog gly-spin"></i> Ingresar
+	            </div>
+              	<div ng-if="!Auth.loading">
+                	<i class="glyphicon glyphicon-log-in"></i>  Ingresar
+                </div>
               </button>
             </fieldset>
           </form>
