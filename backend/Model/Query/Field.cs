@@ -26,7 +26,7 @@ namespace SiLabI.Model.Query
         {
             this.Name = name;
             this.Type = type;
-            this.Children = children;
+            this.Children = new List<Field>(children);
             this.Parent = parent;
 
             foreach (Field child in children)
