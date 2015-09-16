@@ -18,7 +18,7 @@ namespace SiLabI.Model
     /// An user data.
     /// </summary>
     [DataContract]
-    public class User : BaseObject
+    public class User : DatabaseObject
     {
         protected string _name;
         protected string _lastname1;
@@ -241,23 +241,34 @@ namespace SiLabI.Model
         /// Fill an User object with the data provided in a DataRow.
         /// </summary>
         /// <param name="user">The user.</param>
-        public static User Parse(DataRow row)
+        public static User Parse(DataRow row, string prefix = "")
         {
+            prefix = prefix.Trim();
+            if (!string.IsNullOrWhiteSpace(prefix))
+            {
+                prefix += ".";
+            }
+
             User user = new User();
 
-            user.Id = row.Table.Columns.Contains("id") ? Converter.ToNullableInt32(row["id"]) : null;
-            user.Name = row.Table.Columns.Contains("name") ? Converter.ToString(row["name"]) : null;
-            user.LastName1 = row.Table.Columns.Contains("last_name_1") ? Converter.ToString(row["last_name_1"]) : null;
-            user.LastName2 = row.Table.Columns.Contains("last_name_2") ? Converter.ToString(row["last_name_2"]) : null;
-            user.FullName = row.Table.Columns.Contains("full_name") ? Converter.ToString(row["full_name"]) : null;
-            user.Gender = row.Table.Columns.Contains("gender") ? Converter.ToString(row["gender"]) : null;
-            user.Email = row.Table.Columns.Contains("email") ? Converter.ToString(row["email"]) : null;
-            user.Phone = row.Table.Columns.Contains("phone") ? Converter.ToString(row["phone"]) : null;
-            user.Username = row.Table.Columns.Contains("username") ? Converter.ToString(row["username"]) : null;
-            user.CreatedAt = row.Table.Columns.Contains("created_at") ? Converter.ToDateTime(row["created_at"]) : null;
-            user.UpdatedAt = row.Table.Columns.Contains("updated_at") ? Converter.ToDateTime(row["updated_at"]) : null;
-            user.State = row.Table.Columns.Contains("state") ? Converter.ToString(row["state"]) : null;
-            user.Type = row.Table.Columns.Contains("type") ? Converter.ToString(row["type"]) : null;
+            user.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
+            user.Name = row.Table.Columns.Contains(prefix + "name") ? Converter.ToString(row[prefix + "name"]) : null;
+            user.LastName1 = row.Table.Columns.Contains(prefix + "last_name_1") ? Converter.ToString(row[prefix + "last_name_1"]) : null;
+            user.LastName2 = row.Table.Columns.Contains(prefix + "last_name_2") ? Converter.ToString(row[prefix + "last_name_2"]) : null;
+            user.FullName = row.Table.Columns.Contains(prefix + "full_name") ? Converter.ToString(row[prefix + "full_name"]) : null;
+            user.Gender = row.Table.Columns.Contains(prefix + "gender") ? Converter.ToString(row[prefix + "gender"]) : null;
+            user.Email = row.Table.Columns.Contains(prefix + "email") ? Converter.ToString(row[prefix + "email"]) : null;
+            user.Phone = row.Table.Columns.Contains(prefix + "phone") ? Converter.ToString(row[prefix + "phone"]) : null;
+            user.Username = row.Table.Columns.Contains(prefix + "username") ? Converter.ToString(row[prefix + "username"]) : null;
+            user.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
+            user.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
+            user.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
+            user.Type = row.Table.Columns.Contains(prefix + "type") ? Converter.ToString(row[prefix + "type"]) : null;
+
+            if (user.isEmpty())
+            {
+                user = null;
+            }
 
             return user;
         }

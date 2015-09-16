@@ -27,12 +27,10 @@ namespace SiLabI.Util
         public static string FormatSelectFields(List<Field> fields)
         {
             StringBuilder sb = new StringBuilder();
-            Field field;
 
             for (int i = 0; i < fields.Count; i++)
             {
-                field = fields[i];
-                sb.AppendFormat("[{0}]", field.Name);
+                sb.AppendFormat("[{0}]", fields[i]);
                 if (i < fields.Count - 1) sb.Append(", ");
             }
 
@@ -55,7 +53,7 @@ namespace SiLabI.Util
             for (int i = 0; i < fields.Count; i++)
             {
                 field = fields[i];
-                sb.AppendFormat("[{0}]", field.Name).Append(" ").Append(field.Order);
+                sb.AppendFormat("[{0}]", field).Append(" ").Append(field.Order);
                 if (i < fields.Count - 1) sb.Append(", ");
             }
 
@@ -78,7 +76,7 @@ namespace SiLabI.Util
             for (int i = 0; i < fields.Count; i++)
             {
                 field = fields[i];
-                sb.AppendFormat("[{0}]", field.Name).Append(" ");
+                sb.AppendFormat("[{0}]", field).Append(" ");
                 sb.Append(RelationshipUtils.ToString(field.Relationship)).Append(" ");
                 sb.Append("\'").Append(field.Value.Replace("*", "%")).Append("\'");
                 if (i < fields.Count - 1) sb.Append(" AND ");

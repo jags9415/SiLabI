@@ -2,6 +2,7 @@
 using SiLabI.Util;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
@@ -75,12 +76,21 @@ namespace SiLabI.Model.Query
 
                foreach (var item in splitted)
                {
-                   Field field = ValidFields.Find(element => element.Name == item);
+                   Field field = Field.Find(ValidFields, item);
+                   
                    if (field == null)
                    {
                        throw new InvalidParameterException("field", string.Format("[{0}]", item));
                    }
-                   result.Add(field);
+
+                   if (field.Type == SqlDbType.Structured)
+                   {
+                       result.AddRange(field.Children);
+                   }
+                   else
+                   {
+                       result.Add(field);
+                   }
                }
 
                this.Fields = result;
@@ -113,10 +123,14 @@ namespace SiLabI.Model.Query
                         name = str;
                     }
 
-                    Field field = ValidFields.Find(element => element.Name == name);
+                    Field field = Field.Find(ValidFields, name);
                     if (field == null)
                     {
                         throw new InvalidParameterException("sort", string.Format("[{0}]", str));
+                    }
+                    if (field.Type == SqlDbType.Structured)
+                    {
+                        throw new InvalidParameterException("sort", string.Format("[{0}]", "No se permiten ordenamientos mediante este campo."));
                     }
                     result.Add(new SortField(field, order));
                 }
@@ -177,10 +191,14 @@ namespace SiLabI.Model.Query
                 throw new InvalidParameterException("q", string.Format("Relación inválida: {0}", operation));
             }
 
-            Field field = ValidFields.Find(element => element.Name == key);
+            Field field = Field.Find(ValidFields, key);
             if (field == null)
             {
                 throw new InvalidParameterException("q", string.Format("Campo inválido: {0}", key));
+            }
+            if (field.Type == SqlDbType.Structured)
+            {
+                throw new InvalidParameterException("sort", string.Format("[{0}]", "No se permiten búsquedas mediante este campo."));
             }
             return new QueryField(field, relationship, value);
         }

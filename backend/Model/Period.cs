@@ -14,7 +14,7 @@ namespace SiLabI.Model
     /// </summary>
     /// <example>1 Semestre 2015</example>
     [DataContract]
-    public class Period
+    public class Period : BaseObject
     {
         private int? _value;
         private string _type;
@@ -95,13 +95,24 @@ namespace SiLabI.Model
             return valid;
         }
 
-        public static Period Parse(DataRow row)
+        public static Period Parse(DataRow row, string prefix = "")
         {
+            prefix = prefix.Trim();
+            if (!string.IsNullOrWhiteSpace(prefix))
+            {
+                prefix += ".";
+            }
+
             Period period = new Period();
 
-            period.Type = row.Table.Columns.Contains("period.type") ? Converter.ToString(row["period.type"]) : null;
-            period.Value = row.Table.Columns.Contains("period.value") ? Converter.ToNullableInt32(row["period.value"]) : null;
-            period.Year = row.Table.Columns.Contains("period.year") ? Converter.ToNullableInt32(row["period.year"]) : null;
+            period.Type = row.Table.Columns.Contains(prefix + "type") ? Converter.ToString(row[prefix + "type"]) : null;
+            period.Value = row.Table.Columns.Contains(prefix + "value") ? Converter.ToNullableInt32(row[prefix + "value"]) : null;
+            period.Year = row.Table.Columns.Contains(prefix + "year") ? Converter.ToNullableInt32(row[prefix + "year"]) : null;
+
+            if (period.isEmpty())
+            {
+                period = null;
+            }
 
             return period;
         }

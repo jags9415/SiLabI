@@ -38,14 +38,20 @@ namespace SiLabI.Model
         /// Fill an Operator object with the data provided in a DataRow.
         /// </summary>
         /// <param name="user">The user.</param>
-        public static Operator Parse(DataRow row)
+        public static Operator Parse(DataRow row, string prefix = "")
         {
-            Operator op = new Operator(Student.Parse(row));
-
-            op.Period = Period.Parse(row);
-            if (op.Period.Type == null && op.Period.Value == null && op.Period.Year == null)
+            prefix = prefix.Trim();
+            if (!string.IsNullOrWhiteSpace(prefix))
             {
-                op.Period = null;
+                prefix += ".";
+            }
+
+            Operator op = new Operator(Student.Parse(row, prefix));
+            op.Period = Period.Parse(row, prefix + "period");
+
+            if (op.isEmpty())
+            {
+                op = null;
             }
 
             return op;

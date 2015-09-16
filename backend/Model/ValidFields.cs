@@ -14,6 +14,7 @@ namespace SiLabI.Model
         private static List<Field> _OperatorValidFields;
         private static List<Field> _CourseValidFields;
         private static List<Field> _GroupValidFields;
+        private static List<Field> _PeriodValidFields;
 
         private static List<Field> GenericUser
         {
@@ -59,9 +60,7 @@ namespace SiLabI.Model
                 if (_OperatorValidFields == null)
                 {
                     _OperatorValidFields = new List<Field>(GenericUser);
-                    _OperatorValidFields.Add(new Field("period.value", SqlDbType.Int));
-                    _OperatorValidFields.Add(new Field("period.type", SqlDbType.VarChar));
-                    _OperatorValidFields.Add(new Field("period.year", SqlDbType.Int));
+                    _OperatorValidFields.Add(new Field("period", ValidFields.Period));
                 }
                 return _OperatorValidFields;
             }
@@ -80,6 +79,21 @@ namespace SiLabI.Model
         public static List<Field> Administrator
         {
             get { return GenericUser; }
+        }
+
+        public static List<Field> Period
+        {
+            get
+            {
+                if (_PeriodValidFields == null)
+                {
+                    _PeriodValidFields = new List<Field>();
+                    _PeriodValidFields.Add(new Field("value", SqlDbType.Int));
+                    _PeriodValidFields.Add(new Field("type", SqlDbType.VarChar));
+                    _PeriodValidFields.Add(new Field("year", SqlDbType.Int));
+                }
+                return _PeriodValidFields;
+            }
         }
 
         public static List<Field> Course
@@ -108,13 +122,13 @@ namespace SiLabI.Model
                 {
                     _GroupValidFields = new List<Field>();
                     _GroupValidFields.Add(new Field("id", SqlDbType.Int));
-                    _GroupValidFields.Add(new Field("number", SqlDbType.Int));
+                    _GroupValidFields.Add(new Field("number", SqlDbType.VarChar));
                     _GroupValidFields.Add(new Field("state", SqlDbType.VarChar));
                     _GroupValidFields.Add(new Field("created_at", SqlDbType.DateTime));
                     _GroupValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
-                    _GroupValidFields.Add(new Field("period.year", SqlDbType.Int));
-                    _GroupValidFields.Add(new Field("period.value", SqlDbType.Int));
-                    _GroupValidFields.Add(new Field("period.type", SqlDbType.VarChar));
+                    _GroupValidFields.Add(new Field("period", ValidFields.Period));
+                    _GroupValidFields.Add(new Field("course", ValidFields.Course));
+                    _GroupValidFields.Add(new Field("professor", ValidFields.Professor));
                 }
                 return _GroupValidFields;
             }

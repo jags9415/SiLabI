@@ -46,9 +46,16 @@ namespace SiLabI.Model
         /// Fill an Student object with the data provided in a DataRow.
         /// </summary>
         /// <param name="user">The user.</param>
-        public static Student Parse(DataRow row)
+        public static Student Parse(DataRow row, string prefix = "")
         {
-            return new Student(User.Parse(row));
+            Student student = new Student(User.Parse(row, prefix));
+
+            if (student.isEmpty())
+            {
+                student = null;
+            }
+
+            return student;
         }
     }
 }

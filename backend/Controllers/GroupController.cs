@@ -18,8 +18,6 @@ namespace SiLabI.Controllers
     public class GroupController
     {
         private GroupDataAccess _GroupDA;
-        private ProfessorDataAccess _ProfessorDA;
-        private CourseDataAccess _CourseDA;
 
         /// <summary>
         /// Create a new GroupController.
@@ -27,8 +25,6 @@ namespace SiLabI.Controllers
         public GroupController()
         {
             _GroupDA = new GroupDataAccess();
-            _ProfessorDA = new ProfessorDataAccess();
-            _CourseDA = new CourseDataAccess();
         }
 
         /// <summary>
@@ -229,16 +225,8 @@ namespace SiLabI.Controllers
         private Group ParseGroup(DataRow row)
         {
             Group group = Group.Parse(row);
-
-            int courseId = Converter.ToInt32(row["course"]);
-            int professorId = Converter.ToInt32(row["professor"]);
-
-            DataTable courseTable = _CourseDA.GetCourse(courseId);
-            DataTable professorTable = _ProfessorDA.GetProfessor(professorId);
-
-            group.Course = Course.Parse(courseTable.Rows[0]);
-            group.Professor = User.Parse(professorTable.Rows[0]);
-
+            group.Course = Course.Parse(row, "course");
+            group.Professor = User.Parse(row, "professor");
             return group;
         }
     }

@@ -9,7 +9,7 @@ using System.Web;
 namespace SiLabI.Model
 {
     [DataContract]
-    public class Group : BaseObject
+    public class Group : DatabaseObject
     {
         protected int? _number;
         protected Course _course;
@@ -44,20 +44,26 @@ namespace SiLabI.Model
             get { return _period; }
         }
 
-        public static Group Parse(DataRow row)
+        public static Group Parse(DataRow row, string prefix = "")
         {
+            prefix = prefix.Trim();
+            if (!string.IsNullOrWhiteSpace(prefix))
+            {
+                prefix += ".";
+            }
+
             Group group = new Group();
 
-            group.Id = row.Table.Columns.Contains("id") ? Converter.ToNullableInt32(row["id"]) : null;
-            group.Number = row.Table.Columns.Contains("number") ? Converter.ToNullableInt32(row["number"]) : null;
-            group.CreatedAt = row.Table.Columns.Contains("created_at") ? Converter.ToDateTime(row["created_at"]) : null;
-            group.UpdatedAt = row.Table.Columns.Contains("updated_at") ? Converter.ToDateTime(row["updated_at"]) : null;
-            group.State = row.Table.Columns.Contains("state") ? Converter.ToString(row["state"]) : null;
+            group.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
+            group.Number = row.Table.Columns.Contains(prefix + "number") ? Converter.ToNullableInt32(row[prefix + "number"]) : null;
+            group.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
+            group.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
+            group.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
+            group.Period = Period.Parse(row, prefix + "period");
 
-            group.Period = Period.Parse(row);
-            if (group.Period.Type == null && group.Period.Value == null && group.Period.Year == null)
+            if (group.isEmpty())
             {
-                group.Period = null;
+                group = null;
             }
 
             return group;

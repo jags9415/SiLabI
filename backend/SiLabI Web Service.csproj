@@ -97,6 +97,7 @@
     <Compile Include="Configuration\ExtendedWebHttpElement.cs" />
     <Compile Include="Configuration\ExtendedErrorHandler.cs" />
     <Compile Include="Model\BaseObject.cs" />
+    <Compile Include="Model\DatabaseObject.cs" />
     <Compile Include="Model\Course.cs" />
     <Compile Include="Model\CourseRequest.cs" />
     <Compile Include="Model\Group.cs" />
