@@ -1,0 +1,128 @@
+<div>
+  <h2>Agregar Grupo</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li><a href="#Operador/Grupos">Grupos</a></li>
+    <li class="active">Agregar</li>
+  </ol>
+  <form style="margin-bottom: 1%; margin-top: 3%;">
+    <div class="row">
+      <div class="col-md-10 col-xs-10">
+        <div class="form-group">
+          <input type="text" class="form-control" id="username" placeholder="Nombre de usuario profesor" ng-model="GroupCreate.professor_username">
+        </div>
+      </div>
+      <div class="col-md-2 col-xs-2">
+        <button type="submit" class="btn btn-default" ng-click="GroupCreate.searchProfessor()">
+          <i class="glyphicon glyphicon-search"></i>
+          <span class="hidden-xs">Buscar</span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <form>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">Profesor</label>
+          <input type="text" class="form-control" id="professorName" placeholder="username" ng-model="GroupCreate.professor.full_name" readonly>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="course">* Curso</label>
+          <ui-select id="course" ng-model="GroupCreate.course">
+            <ui-select-match placeholder="{{$select.selected.code + ' ' + $select.selected.name}}">
+              {{$select.selected.code + ' ' + $select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="course in GroupCreate.courses | filter: $select.search">
+              <span ng-bind-html="course.code | highlight: $select.search"></span>
+              <span ng-bind-html="course.name | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="period">* Periodo</label>
+          <ui-select id="period" ng-model="GroupCreate.period">
+            <ui-select-match placeholder="{{$select.selected.value + ' ' + $select.selected.type}}">
+              {{$select.selected.value + ' ' + $select.selected.type}}
+            </ui-select-match>
+            <ui-select-choices repeat="period in GroupCreate.periods | filter: $select.search" group-by="'type'">
+              <span ng-bind-html="period.value | highlight: $select.search"></span>
+              <span ng-bind-html="period.type | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="year">* Año</label>
+          <ui-select id="year" ng-model="GroupCreate.year">
+            <ui-select-match placeholder="{{GroupCreate.year}}">
+              {{$select.selected}}
+            </ui-select-match>
+            <ui-select-choices repeat="year in [{{GroupCreate.currentYear-1}}, {{GroupCreate.currentYear}}, {{GroupCreate.currentYear+1}}] | filter: $select.search">
+              <span ng-bind-html="year | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <div class="form-group">
+        <label for="coursenumber">* Número</label>
+          <input type="text" class="form-control" id="coursenumber" placeholder="Número" ng-model="GroupCreate.create_group.number">
+        </div>
+      </div>
+    </div>
+    <h4><b>Lista de estudiantes</b></h4>
+    <div class="row">
+      <div class="col-md-10 col-xs-10">
+        <div class="form-group">
+          <input type="text" class="form-control" id="username" placeholder="Buscar Estudiante" ng-model="GroupCreate.student_username">
+        </div>
+      </div>
+      <div class="col-md-2 col-xs-2">
+        <button type="submit" class="btn btn-default" ng-click="GroupCreate.searchStudent()">
+          <i class="glyphicon glyphicon-search"></i>
+          <span class="hidden-xs">Buscar</span>
+        </button>
+      </div>
+    </div>
+    <div class="table-responsive">
+    <table class="table table-striped" ng-show="GroupCreate.students.length > 0">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Carné</th>
+          <th style="text-align: center">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="student in GroupCreate.students">
+          <td>{{ student.full_name }}</td>
+          <td>{{ student.username }}</td>
+          <td style="text-align: center">
+            <a href="" class="btn btn-danger btn-sm" ng-click="GroupCreate.deleteStudent(student.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+        <button type="submit" class="btn btn-lg btn-success" ng-click="GroupCreate.create()" ng-disabled="!GroupCreate.fieldsReady()">
+          <i class="glyphicon glyphicon-plus"></i> Agregar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
