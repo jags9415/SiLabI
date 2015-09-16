@@ -26,12 +26,15 @@ namespace SiLabI.Model.Query
         {
             this.Name = name;
             this.Type = type;
-            this.Children = new List<Field>(children);
+            this.Children = new List<Field>();
             this.Parent = parent;
 
+            Field field;
             foreach (Field child in children)
             {
-                child.Parent = this;
+                field = new Field(child);
+                field.Parent = this;
+                this.Children.Add(field);
             }
         }
 
