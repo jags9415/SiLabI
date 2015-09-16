@@ -15,7 +15,7 @@ namespace SiLabI
     {
         public GetResponse<Group> GetGroups(string token, string query, string page, string limit, string sort, string fields)
         {
-            QueryString request = new QueryString(ValidFields.Course);
+            QueryString request = new QueryString(ValidFields.Group);
 
             request.AccessToken = token;
             request.ParseQuery(query);

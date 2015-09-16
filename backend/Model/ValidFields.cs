@@ -13,6 +13,7 @@ namespace SiLabI.Model
         private static List<Field> _UserValidFields;
         private static List<Field> _OperatorValidFields;
         private static List<Field> _CourseValidFields;
+        private static List<Field> _GroupValidFields;
 
         private static List<Field> GenericUser
         {
@@ -96,6 +97,26 @@ namespace SiLabI.Model
                     _CourseValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
                 }
                 return _CourseValidFields;
+            }
+        }
+
+        public static List<Field> Group
+        {
+            get
+            {
+                if (_GroupValidFields == null)
+                {
+                    _GroupValidFields = new List<Field>();
+                    _GroupValidFields.Add(new Field("id", SqlDbType.Int));
+                    _GroupValidFields.Add(new Field("number", SqlDbType.Int));
+                    _GroupValidFields.Add(new Field("state", SqlDbType.VarChar));
+                    _GroupValidFields.Add(new Field("created_at", SqlDbType.DateTime));
+                    _GroupValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
+                    _GroupValidFields.Add(new Field("period.year", SqlDbType.Int));
+                    _GroupValidFields.Add(new Field("period.value", SqlDbType.Int));
+                    _GroupValidFields.Add(new Field("period.type", SqlDbType.VarChar));
+                }
+                return _GroupValidFields;
             }
         }
     }
