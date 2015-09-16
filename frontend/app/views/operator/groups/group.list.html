@@ -1,0 +1,75 @@
+<div>
+  <h2>Grupos</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li class="active">Grupos</li>
+  </ol>
+  <div class="table-search" style="margin-bottom: 3%;">
+    <div class="row">
+      <div class="col-md-5 col-xs-5">
+        <form class="form-horizontal">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input class="form-control" placeholder="Número" name="searchInput" type="text" ng-change="GroupList.search()" ng-model="GroupList.searched.number">
+          </div>
+          <button type="submit" name="button" hidden></button>
+        </form>
+      </div>
+      <div class="col-md-5 col-xs-5">
+        <form class="form-horizontal">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input class="form-control" placeholder="Nombre Curso" name="searchInput" type="text" ng-change="GroupList.search()" ng-model="GroupList.searched.course.name">
+          </div>
+          <button type="submit" name="button" hidden></button>
+        </form>
+      </div>
+      <div class="col-md-2 col-xs-3">
+        <a href="#Operador/Grupos/Agregar" class="btn btn-block btn-success">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span class="hidden-xs">Crear</span>
+        </a>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped" ng-show="true">
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Curso</th>
+          <th>Estado</th>
+          <th style="text-align: center">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="group in GroupList.courses">
+          <td>{{ group.number }}</td>
+          <td>{{ group.course.name }}</td>
+          <td>{{ group.course.state }}</td>
+          <td style="text-align: center">
+            <a class='btn btn-info btn-sm' ng-click="GroupList.open(group.id)">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+            <a href="" class="btn btn-danger btn-sm" ng-click="GroupList.delete(group.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-show="GroupList.isLoaded() && GroupList.isEmpty()">No se encontraron resultados.</p>
+  <br>
+  <div class="row">
+    <div class="col-md-12 pagination">
+      <pagination
+        ng-change="GroupList.loadPage()" ng-model="GroupList.page" items-per-page="GroupList.limit"
+        total-items="GroupList.totalItems" max-size="5" boundary-links="true" rotate="true"
+        previous-text="<" next-text=">" first-text="<<" last-text=">>"
+      ></pagination>
+    </div>
+  </div>
+</div>
