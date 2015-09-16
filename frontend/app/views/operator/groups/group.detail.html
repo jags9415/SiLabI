@@ -1,0 +1,109 @@
+<div>
+  <h2>Grupo</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li><a href="#Operador/Grupos">Grupos</a></li>
+    <li class="active">Detalle</li>
+  </ol>
+  <form>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">Profesor</label>
+          <input type="text" class="form-control" id="professorName" placeholder="username" ng-model="GroupDetail.group.professor.full_name" readonly>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+        <label for="name">Curso</label>
+          <input type="text" class="form-control" id="courseName" ng-value="GroupDetail.group.course.code + ' ' + GroupDetail.group.course.name"  readonly>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="period">Periodo</label>
+          <input type="text" class="form-control" id="period" ng-value="GroupDetail.group.period.value + ' ' + GroupDetail.group.period.type" readonly>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="year">Año</label>
+          <input type="text" class="form-control" id="period" ng-value="GroupDetail.group.period.year" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="created_at" class="control-label">Fecha Creación</label>
+          <input type="text" class="form-control" id="created_at" name="created_at" placeholder="Fecha Creación" ng-value="GroupDetail.group.created_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly></input>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="updated_at" class="control-label">Fecha Actualización</label>
+          <input type="text" class="form-control" id="updated_at" name="updated_at" placeholder="Fecha Actualización" ng-value="GroupDetail.group.updated_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <div class="form-group">
+        <label for="coursenumber">* Número</label>
+          <input type="text" class="form-control" id="coursenumber" placeholder="Número" ng-model="GroupDetail.group.number">
+        </div>
+      </div>
+    </div>
+    <h4><b>Lista de estudiantes</b></h4>
+    <div class="row">
+      <div class="col-md-10 col-xs-10">
+        <div class="form-group">
+          <input type="text" class="form-control" id="username" placeholder="Buscar Estudiante (Carné)" ng-model="GroupDetail.student_username">
+        </div>
+      </div>
+      <div class="col-md-2 col-xs-2">
+        <button type="submit" class="btn btn-default" ng-click="GroupDetail.searchStudent()">
+          <i class="glyphicon glyphicon-search"></i>
+          <span class="hidden-xs">Buscar</span>
+        </button>
+      </div>
+    </div>
+    <div class="table-responsive">
+    <table class="table table-striped" ng-show="GroupDetail.students.length > 0">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Carné</th>
+          <th style="text-align: center">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="student in GroupDetail.students">
+          <td>{{ student.full_name }}</td>
+          <td>{{ student.username }}</td>
+          <td style="text-align: center">
+            <a href="" class="btn btn-danger btn-sm" ng-click="GroupDetail.deleteStudent(student.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row" style="margin-top: 3%;">
+      <div class="col-md-6 text-center">
+        <button type="submit" class="btn btn-lg btn-info" ng-click="GroupDetail.update()" ng-disabled="fieldsReady()">
+          <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+        </button>
+      </div>
+      <div class="col-md-6 text-center">
+        <button type="submit" class="btn btn-lg btn-danger" ng-click="GroupDetail.delete()">
+          <i class="glyphicon glyphicon-trash"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

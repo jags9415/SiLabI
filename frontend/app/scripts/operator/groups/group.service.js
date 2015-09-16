@@ -44,7 +44,7 @@
         function Delete(GroupID) {
           var requestBody = {};
           requestBody.access_token = $localStorage['access_token'];
-          return RequestService.delete('/groups/' + CourseID, requestBody);
+          return RequestService.delete('/groups/' + GroupID, requestBody);
         }
     }
 })();

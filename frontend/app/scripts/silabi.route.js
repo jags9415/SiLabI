@@ -123,6 +123,11 @@
           controller: 'GroupCreateController',
           controllerAs: 'GroupCreate'
         })
+        .when('/Operador/Grupos/:id', {
+          templateUrl: 'views/operator/groups/group.detail.html',
+          controller: 'GroupDetailController',
+          controllerAs: 'GroupDetail'
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })
