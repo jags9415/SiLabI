@@ -112,6 +112,17 @@
           controller: 'CourseDetailController',
           controllerAs: 'CourseDetail'
         })
+        .when('/Operador/Grupos', {
+          templateUrl: 'views/operator/groups/group.list.html',
+          controller: 'GroupListController',
+          controllerAs: 'GroupList',
+          reloadOnSearch: false
+        })
+        .when('/Operador/Grupos/Agregar', {
+          templateUrl: 'views/operator/groups/group.create.html',
+          controller: 'GroupCreateController',
+          controllerAs: 'GroupCreate'
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })
