@@ -1,4 +1,5 @@
-﻿using SiLabI.Model;
+﻿using SiLabI.Exceptions;
+using SiLabI.Model;
 using SiLabI.Model.Query;
 using SiLabI.Util;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace SiLabI.Data
@@ -13,7 +15,7 @@ namespace SiLabI.Data
     /// <summary>
     /// Provides the access to the data related to Users.
     /// </summary>
-    public class UserDataAccess
+    public class UserDataAccess : IDataAccess
     {
         private Connection _Connection;
 
@@ -36,33 +38,21 @@ namespace SiLabI.Data
             SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
             parameters[1] = SqlUtilities.CreateParameter("@password", SqlDbType.VarChar, password);
-            return _Connection.executeStoredProcedure("sp_Authenticate", parameters);
+            return _Connection.executeQuery("sp_Authenticate", parameters);
         }
 
-        /// <summary>
-        /// Get the amount of users that satifies the query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The amount of users that satifies the query</returns>
-        public int GetUsersCount(QueryString request)
+        public int GetCount(QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[1];
 
             parameters[0] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
             parameters[0].Value = SqlUtilities.FormatWhereFields(request.Query);
 
-            DataTable table = _Connection.executeStoredProcedure("sp_GetUsersCount", parameters);
-            DataRow row = table.Rows[0];
-
-            return table.Columns.Contains("count") ? Converter.ToInt32(row["count"]) : 0;
+            object count = _Connection.executeScalar("sp_GetUsersCount", parameters);
+            return Converter.ToInt32(count);
         }
 
-        /// <summary>
-        /// Get all the users that satisfies the query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>A DataTable that contains all the users data that satisfies the query.</returns>
-        public DataTable GetUsers(QueryString request)
+        public DataTable GetAll(QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[5];
 
@@ -78,21 +68,58 @@ namespace SiLabI.Data
             parameters[3] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
             parameters[4] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
 
-            return _Connection.executeStoredProcedure("sp_GetUsers", parameters);
+            return _Connection.executeQuery("sp_GetUsers", parameters);
         }
 
-        /// <summary>
-        /// Get a specific user.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <returns>A DataTable that contains the user data.</returns>
-        public DataTable GetUser(string username, QueryString request)
+        public DataRow GetOne(string username, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
             parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
             parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
-            return _Connection.executeStoredProcedure("sp_GetUser", parameters);
+
+            DataTable table = _Connection.executeQuery("sp_GetUserByUsername", parameters);
+            if (table.Rows.Count == 0)
+            {
+                throw new WcfException(HttpStatusCode.BadRequest, "Usuario no encontrado.");
+            }
+            else
+            {
+                return table.Rows[0];
+            }
+        }
+
+        public DataRow GetOne(int id, QueryString request)
+        {
+            SqlParameter[] parameters = new SqlParameter[2];
+            parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
+
+            DataTable table = _Connection.executeQuery("sp_GetUser", parameters);
+            if (table.Rows.Count == 0)
+            {
+                throw new WcfException(HttpStatusCode.BadRequest, "Usuario no encontrado.");
+            }
+            else
+            {
+                return table.Rows[0];
+            }
+        }
+
+        public DataRow Create(object obj)
+        {
+            throw new InvalidOperationException("Cannot perform CREATE operation on Users table.");
+        }
+
+        public DataRow Update(int id, object obj)
+        {
+            throw new InvalidOperationException("Cannot perform UPDATE operation on Users table.");
+        }
+
+        public void Delete(int id)
+        {
+            throw new InvalidOperationException("Cannot perform DELETE operation on Users table.");
         }
     }
 }

@@ -25,7 +25,7 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _OperatorController.GetOperators(request);
+            return _OperatorController.GetAll(request);
         }
 
         public Operator GetOperator(string id, string token, string fields)
@@ -41,7 +41,7 @@ namespace SiLabI
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _OperatorController.GetOperator(num, request);
+            return _OperatorController.GetOne(num, request);
         }
 
         public Operator CreateOperator(string id, OperatorRequest request)
@@ -51,7 +51,8 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            return _OperatorController.CreateOperator(num, request);
+            request.Id = num;
+            return _OperatorController.Create(request);
         }
 
         public void DeleteOperator(string id, BaseRequest request)
@@ -61,7 +62,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            _OperatorController.DeleteOperator(num, request);
+            _OperatorController.Delete(num, request);
         }
     }
 }

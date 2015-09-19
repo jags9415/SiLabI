@@ -12,9 +12,9 @@ using System.Web;
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// Course logic.
+    /// Perform CRUD operations for Courses.
     /// </summary>
-    public class CourseController
+    public class CourseController : IController<Course>
     {
         private CourseDataAccess _CourseDA;
 
@@ -26,12 +26,7 @@ namespace SiLabI.Controllers
             this._CourseDA = new CourseDataAccess();
         }
 
-        /// <summary>
-        /// Retrieves a list of courses based on a query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The list of courses.</returns>
-        public GetResponse<Course> GetCourses(QueryString request)
+        public GetResponse<Course> GetAll(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
@@ -44,8 +39,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Course> response = new GetResponse<Course>();
-            DataTable table = _CourseDA.GetCourses(request);
-            int count = _CourseDA.GetCourseCount(request);
+            DataTable table = _CourseDA.GetAll(request);
+            int count = _CourseDA.GetCount(request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -58,81 +53,55 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Get a course.
-        /// </summary>
-        /// <param name="id">The course identification.</param>
-        /// <param name="token">The access token.</param>
-        /// <returns>The course.</returns>
-        public Course GetCourse(int id, QueryString request)
+        public Course GetOne(int id, QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _CourseDA.GetCourse(id, request);
-
-            if (table.Rows.Count == 0)
-            {
-                throw new WcfException(HttpStatusCode.BadRequest, "Curso no encontrado.");
-            }
-
-            return Course.Parse(table.Rows[0]);
+            DataRow row = _CourseDA.GetOne(id, request);
+            return Course.Parse(row);
         }
 
-        /// <summary>
-        /// Creates a course.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>The course data.</returns>
-        public Course CreateCourse(CourseRequest request)
+        public Course Create(BaseRequest request)
         {
-            if (request == null || !request.IsValid())
+            CourseRequest courseRequest = (request as CourseRequest);
+            if (courseRequest == null || !courseRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Dictionary<string, object> payload = Token.Decode(courseRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Course.IsValidForCreate())
+            if (!courseRequest.Course.IsValidForCreate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de curso incompletos.");
             }
 
-            DataTable table = _CourseDA.CreateCourse(request.Course);
-            return Course.Parse(table.Rows[0]);
+            DataRow row = _CourseDA.Create(courseRequest.Course);
+            return Course.Parse(row);
         }
 
-        /// <summary>
-        /// Update a course.
-        /// </summary>
-        /// <param name="id">The course id.</param>
-        /// <param name="request">The request.</param>
-        /// <returns>The course data.</returns>
-        public Course UpdateCourse(int id, CourseRequest request)
+        public Course Update(int id, BaseRequest request)
         {
-            if (request == null || !request.IsValid())
+            CourseRequest courseRequest = (request as CourseRequest);
+            if (courseRequest == null || !courseRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Dictionary<string, object> payload = Token.Decode(courseRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Course.IsValidForUpdate())
+            if (!courseRequest.Course.IsValidForUpdate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de curso inválidos.");
             }
 
-            DataTable table = _CourseDA.UpdateCourse(id, request.Course);
-            return Course.Parse(table.Rows[0]);
+            DataRow row = _CourseDA.Update(id, courseRequest.Course);
+            return Course.Parse(row);
         }
 
-        /// <summary>
-        /// Delete a course.
-        /// </summary>
-        /// <param name="id">The course identification.</param>
-        /// <param name="request">The request.</param>
-        public void DeleteCourse(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -141,7 +110,7 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            _CourseDA.DeleteCourse(id);
+            _CourseDA.Delete(id);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _UserController.GetUsers(request);
+            return _UserController.GetAll(request);
         }
 
         public User GetUser(string username, string token, string fields)
@@ -33,7 +33,7 @@ namespace SiLabI
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _UserController.GetUser(username, request);
+            return _UserController.GetOne(username, request);
         }
     }
 }

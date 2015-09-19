@@ -48,6 +48,7 @@ namespace SiLabI.Model
         /// <returns>The data.</returns>
         public static Dictionary<string, object> Decode(string token)
         {
+            /*
             if (token == null)
             {
                 throw new MissingParameterException("access_token");
@@ -60,7 +61,8 @@ namespace SiLabI.Model
             catch (JWT.SignatureVerificationException)
             {
                 throw new InvalidParameterException("access_token");
-            }
+            }*/
+            return null;
         }
 
         /// <summary>
@@ -71,6 +73,7 @@ namespace SiLabI.Model
         /// <returns>The token validity.</returns>
         public static void CheckPayload(Dictionary<string, object> payload, UserType type)
         {
+            /*
             bool valid;
 
             switch (payload["type"].ToString())
@@ -95,7 +98,7 @@ namespace SiLabI.Model
             if (!valid)
             {
                 throw new UnathorizedOperationException();
-            }
+            }*/
         }
     }
 }

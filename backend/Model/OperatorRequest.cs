@@ -13,6 +13,7 @@ namespace SiLabI.Model
     public class OperatorRequest : BaseRequest
     {
         private Period _period;
+        private int _id;
 
         /// <summary>
         /// The period.
@@ -22,6 +23,15 @@ namespace SiLabI.Model
         {
             get { return _period; }
             set { _period = value; }
+        }
+
+        /// <summary>
+        /// The user identity.
+        /// </summary>
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
         }
 
         /// <summary>

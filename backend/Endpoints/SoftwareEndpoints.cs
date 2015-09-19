@@ -24,7 +24,7 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _SoftwareController.GetSoftwares(request);
+            return _SoftwareController.GetAll(request);
         }
 
         public Software GetSoftware(string id, string token, string fields)
@@ -40,12 +40,12 @@ namespace SiLabI
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _SoftwareController.GetSoftware(num, request);
+            return _SoftwareController.GetOne(num, request);
         }
 
         public Software CreateSoftware(SoftwareRequest request)
         {
-            return _SoftwareController.CreateSoftware(request);
+            return _SoftwareController.Create(request);
         }
 
         public Software UpdateSoftware(string id, SoftwareRequest request)
@@ -55,7 +55,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            return _SoftwareController.UpdateSoftware(num, request);
+            return _SoftwareController.Update(num, request);
         }
 
         public void DeleteSoftware(string id, BaseRequest request)
@@ -65,7 +65,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            _SoftwareController.DeleteSoftware(num, request);
+            _SoftwareController.Delete(num, request);
         }
     }
 }

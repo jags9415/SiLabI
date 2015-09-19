@@ -1,4 +1,5 @@
-﻿using SiLabI.Model;
+﻿using SiLabI.Exceptions;
+using SiLabI.Model;
 using SiLabI.Model.Query;
 using SiLabI.Util;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace SiLabI.Data
@@ -13,7 +15,7 @@ namespace SiLabI.Data
     /// <summary>
     /// Provide access to the data related to Students.
     /// </summary>
-    public class StudentDataAccess
+    public class StudentDataAccess : IDataAccess
     {
         private Connection _Connection;
 
@@ -25,30 +27,18 @@ namespace SiLabI.Data
             _Connection = new Connection();
         }
 
-        /// <summary>
-        /// Get the amount of students that satifies the query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The amount of students that satifies the query</returns>
-        public int GetStudentsCount(QueryString request)
+        public int GetCount(QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[1];
 
             parameters[0] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
             parameters[0].Value = SqlUtilities.FormatWhereFields(request.Query);
 
-            DataTable table = _Connection.executeStoredProcedure("sp_GetStudentsCount", parameters);
-            DataRow row = table.Rows[0];
-
-            return table.Columns.Contains("count") ? Converter.ToInt32(row["count"]) : 0;
+            object count = _Connection.executeScalar("sp_GetStudentsCount", parameters);
+            return Converter.ToInt32(count);
         }
 
-        /// <summary>
-        /// Get all the students that satisfies the query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>A DataTable that contains all the students data that satisfies the query.</returns>
-        public DataTable GetStudents(QueryString request)
+        public DataTable GetAll(QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[5];
 
@@ -64,44 +54,48 @@ namespace SiLabI.Data
             parameters[3] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
             parameters[4] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
 
-            return _Connection.executeStoredProcedure("sp_GetStudents", parameters);
+            return _Connection.executeQuery("sp_GetStudents", parameters);
         }
 
-        /// <summary>
-        /// Get a specific student.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <returns>A DataTable that contains the student data.</returns>
-        public DataTable GetStudent(string username, QueryString request)
+        public DataRow GetOne(string username, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
             parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
             parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
-            return _Connection.executeStoredProcedure("sp_GetStudentByUsername", parameters);
+
+            DataTable table = _Connection.executeQuery("sp_GetStudentByUsername", parameters);
+            if (table.Rows.Count == 0)
+            {
+                throw new WcfException(HttpStatusCode.BadRequest, "Estudiante no encontrado.");
+            }
+            else
+            {
+                return table.Rows[0];
+            }
         }
 
-        /// <summary>
-        /// Get a specific student.
-        /// </summary>
-        /// <param name="id">The student identification.</param>
-        /// <returns>A DataTable that contains the student data.</returns>
-        public DataTable GetStudent(int id, QueryString request)
+        public DataRow GetOne(int id, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
             parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
             parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
-            return _Connection.executeStoredProcedure("sp_GetStudent", parameters);
+
+            DataTable table = _Connection.executeQuery("sp_GetStudent", parameters);
+            if (table.Rows.Count == 0)
+            {
+                throw new WcfException(HttpStatusCode.BadRequest, "Estudiante no encontrado.");
+            }
+            else
+            {
+                return table.Rows[0];
+            }
         }
 
-        /// <summary>
-        /// Creates a student.
-        /// </summary>
-        /// <param name="student">The student data.</param>
-        /// <returns>A DataTable that contains the student data.</returns>
-        public DataTable CreateStudent(Student student)
+        public DataRow Create(object obj)
         {
+            Student student = (obj as Student);
             SqlParameter[] parameters = new SqlParameter[8];
 
             parameters[0] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, student.Name);
@@ -113,16 +107,13 @@ namespace SiLabI.Data
             parameters[6] = SqlUtilities.CreateParameter("@email", SqlDbType.VarChar, student.Email);
             parameters[7] = SqlUtilities.CreateParameter("@phone", SqlDbType.VarChar, student.Phone);
 
-            return _Connection.executeStoredProcedure("sp_CreateStudent", parameters);
+            DataTable table = _Connection.executeQuery("sp_CreateStudent", parameters);
+            return table.Rows[0];
         }
 
-        /// <summary>
-        /// Updates a student.
-        /// </summary>
-        /// <param name="student">The student data.</param>
-        /// <returns>A DataTable that contains the student data.</returns>
-        public DataTable UpdateStudent(int id, Student student)
+        public DataRow Update(int id, object obj)
         {
+            Student student = (obj as Student);
             SqlParameter[] parameters = new SqlParameter[10];
 
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
@@ -136,18 +127,15 @@ namespace SiLabI.Data
             parameters[8] = SqlUtilities.CreateParameter("@phone", SqlDbType.VarChar, student.Phone);
             parameters[9] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, student.State);
 
-            return _Connection.executeStoredProcedure("sp_UpdateStudent", parameters);
+            DataTable table = _Connection.executeQuery("sp_UpdateStudent", parameters);
+            return table.Rows[0];
         }
 
-        /// <summary>
-        /// Deletes a student.
-        /// </summary>
-        /// <param name="id">The user identification.</param>
-        public void DeleteStudent(int id)
+        public void Delete(int id)
         {
             SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, id);
-            _Connection.executeStoredProcedure("sp_DeleteStudent", parameters);
+            _Connection.executeNonQuery("sp_DeleteStudent", parameters);
         }
     }
 }

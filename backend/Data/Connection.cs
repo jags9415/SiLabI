@@ -34,35 +34,12 @@ namespace SiLabI.Data
         }
 
         /// <summary>
-        /// Execute a SELECT query and returns the data in a DataTable object.
-        /// </summary>
-        /// <param name="query">The query.</param>
-        /// <returns>The results.</returns>
-        public DataTable executeSelectQuery(string query)
-        {
-            DataTable table = new DataTable();
-
-            using (SqlConnection conn = createConnection())
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    SqlDataReader reader;
-                    conn.Open();
-                    reader = cmd.ExecuteReader();
-                    table.Load(reader);
-                }
-            }
-
-            return table;
-        }
-
-        /// <summary>
         /// Execute a Stored Procedure and returns the data in a DataTable object.
         /// </summary>
         /// <param name="name">The name of the stored procedure.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>The results.</returns>
-        public DataTable executeStoredProcedure(string name, SqlParameter[] parameters)
+        public DataTable executeQuery(string name, SqlParameter[] parameters)
         {
             DataTable table = new DataTable();
             
@@ -82,6 +59,50 @@ namespace SiLabI.Data
             }
 
             return table;
+        }
+
+        /// <summary>
+        /// Execute a Stored Procedure that doesn't return data.
+        /// </summary>
+        /// <param name="name">The name of the stored procedure.</param>
+        /// <param name="parameters">The parameters.</param>
+        public void executeNonQuery(string name, SqlParameter[] parameters)
+        {
+            using (SqlConnection conn = createConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand(name, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddRange(parameters);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Execute a Stored Procedure that returns a scalar value.
+        /// </summary>
+        /// <param name="name">The name of the stored procedure.</param>
+        /// <param name="parameters">The parameters.</param>
+        public object executeScalar(string name, SqlParameter[] parameters)
+        {
+            object value;
+
+            using (SqlConnection conn = createConnection())
+            {
+                using (SqlCommand cmd = new SqlCommand(name, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddRange(parameters);
+
+                    conn.Open();
+                    value = cmd.ExecuteScalar();
+                }
+            }
+
+            return value;
         }
     }
 }

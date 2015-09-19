@@ -12,9 +12,9 @@ using System.Web;
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// Software logic.
+    /// Perform CRUD operations for Software.
     /// </summary>
-    public class SoftwareController
+    public class SoftwareController : IController<Software>
     {
         private SoftwareDataAccess _SoftwareDA;
 
@@ -26,12 +26,7 @@ namespace SiLabI.Controllers
             this._SoftwareDA = new SoftwareDataAccess();
         }
 
-        /// <summary>
-        /// Retrieves a list of software based on a query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The list of software.</returns>
-        public GetResponse<Software> GetSoftwares(QueryString request)
+        public GetResponse<Software> GetAll(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
@@ -44,8 +39,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Software> response = new GetResponse<Software>();
-            DataTable table = _SoftwareDA.GetSoftwares(request);
-            int count = _SoftwareDA.GetSoftwareCount(request);
+            DataTable table = _SoftwareDA.GetAll(request);
+            int count = _SoftwareDA.GetCount(request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -58,81 +53,55 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Get a software.
-        /// </summary>
-        /// <param name="id">The software identification.</param>
-        /// <param name="token">The access token.</param>
-        /// <returns>The software.</returns>
-        public Software GetSoftware(int id, QueryString request)
+        public Software GetOne(int id, QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _SoftwareDA.GetSoftware(id, request);
-
-            if (table.Rows.Count == 0)
-            {
-                throw new WcfException(HttpStatusCode.BadRequest, "Software no encontrado.");
-            }
-
-            return Software.Parse(table.Rows[0]);
+            DataRow row = _SoftwareDA.GetOne(id, request);
+            return Software.Parse(row);
         }
 
-        /// <summary>
-        /// Creates a software.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>The software data.</returns>
-        public Software CreateSoftware(SoftwareRequest request)
+        public Software Create(BaseRequest request)
         {
-            if (request == null || !request.IsValid())
+            SoftwareRequest softwareRequest = (request as SoftwareRequest);
+            if (softwareRequest == null || !softwareRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Dictionary<string, object> payload = Token.Decode(softwareRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Software.IsValidForCreate())
+            if (!softwareRequest.Software.IsValidForCreate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de software incompletos.");
             }
 
-            DataTable table = _SoftwareDA.CreateSoftware(request.Software);
-            return Software.Parse(table.Rows[0]);
+            DataRow row = _SoftwareDA.Create(softwareRequest.Software);
+            return Software.Parse(row);
         }
 
-        /// <summary>
-        /// Update a software.
-        /// </summary>
-        /// <param name="id">The software id.</param>
-        /// <param name="request">The request.</param>
-        /// <returns>The software data.</returns>
-        public Software UpdateSoftware(int id, SoftwareRequest request)
+        public Software Update(int id, BaseRequest request)
         {
-            if (request == null || !request.IsValid())
+            SoftwareRequest softwareRequest = (request as SoftwareRequest);
+            if (softwareRequest == null || !softwareRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Dictionary<string, object> payload = Token.Decode(softwareRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Software.IsValidForUpdate())
+            if (!softwareRequest.Software.IsValidForUpdate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de software inválidos.");
             }
 
-            DataTable table = _SoftwareDA.UpdateSoftware(id, request.Software);
-            return Software.Parse(table.Rows[0]);
+            DataRow row = _SoftwareDA.Update(id, softwareRequest.Software);
+            return Software.Parse(row);
         }
 
-        /// <summary>
-        /// Delete a software.
-        /// </summary>
-        /// <param name="id">The software identification.</param>
-        /// <param name="request">The request.</param>
-        public void DeleteSoftware(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -141,7 +110,7 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            _SoftwareDA.DeleteSoftware(id);
+            _SoftwareDA.Delete(id);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _StudentController.GetStudents(request);
+            return _StudentController.GetAll(request);
         }
 
         public Student GetStudent(string username, string token, string fields)
@@ -36,12 +36,12 @@ namespace SiLabI
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _StudentController.GetStudent(username, request);
+            return _StudentController.GetOne(username, request);
         }
 
         public Student CreateStudent(StudentRequest request)
         {
-            return _StudentController.CreateStudent(request);
+            return _StudentController.Create(request);
         }
 
         public Student UpdateStudent(string id, StudentRequest request)
@@ -51,7 +51,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            return _StudentController.UpdateStudent(num, request);
+            return _StudentController.Update(num, request);
         }
 
         public void DeleteStudent(string id, BaseRequest request)
@@ -61,7 +61,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            _StudentController.DeleteStudent(num, request);
+            _StudentController.Delete(num, request);
         }
     }
 }

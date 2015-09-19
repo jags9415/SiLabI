@@ -13,16 +13,16 @@ using System.Web;
 namespace SiLabI.Data
 {
     /// <summary>
-    /// Provide access to data related to software.
+    /// Perform CRUD operations on the Laboratories table.
     /// </summary>
-    public class SoftwareDataAccess : IDataAccess
+    public class LaboratoryDataAccess : IDataAccess
     {
         private Connection _Connection;
 
         /// <summary>
-        /// Creates a new CourseDataAccess.
+        /// Create a new LaboratoryDataAccess.
         /// </summary>
-        public SoftwareDataAccess()
+        public LaboratoryDataAccess()
         {
             _Connection = new Connection();
         }
@@ -34,7 +34,7 @@ namespace SiLabI.Data
             parameters[0] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
             parameters[0].Value = SqlUtilities.FormatWhereFields(request.Query);
 
-            object count = _Connection.executeScalar("sp_GetSoftwaresCount", parameters);
+            object count = _Connection.executeScalar("sp_GetLaboratoriesCount", parameters);
             return Converter.ToInt32(count);
         }
 
@@ -54,7 +54,7 @@ namespace SiLabI.Data
             parameters[3] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
             parameters[4] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
 
-            return _Connection.executeQuery("sp_GetSoftwares", parameters);
+            return _Connection.executeQuery("sp_GetLaboratories", parameters);
         }
 
         public DataRow GetOne(int id, QueryString request)
@@ -63,11 +63,11 @@ namespace SiLabI.Data
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.VarChar, id);
             parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
             parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
-
-            DataTable table = _Connection.executeQuery("sp_GetSoftware", parameters);
+            
+            DataTable table = _Connection.executeQuery("sp_GetLaboratory", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Software no encontrado.");
+                throw new WcfException(HttpStatusCode.BadRequest, "Laboratorio no encontrado.");
             }
             else
             {
@@ -77,27 +77,27 @@ namespace SiLabI.Data
 
         public DataRow Create(object obj)
         {
-            Software software = (obj as Software);
+            Laboratory laboratory = (obj as Laboratory);
             SqlParameter[] parameters = new SqlParameter[2];
 
-            parameters[0] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, software.Name);
-            parameters[1] = SqlUtilities.CreateParameter("@code", SqlDbType.VarChar, software.Code);
+            parameters[0] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, laboratory.Name);
+            parameters[1] = SqlUtilities.CreateParameter("@seats", SqlDbType.Int, laboratory.Seats);
 
-            DataTable table = _Connection.executeQuery("sp_CreateSoftware", parameters);
+            DataTable table = _Connection.executeQuery("sp_CreateLaboratory", parameters);
             return table.Rows[0];
         }
 
         public DataRow Update(int id, object obj)
         {
-            Software software = (obj as Software);
+            Laboratory laboratory = (obj as Laboratory);
             SqlParameter[] parameters = new SqlParameter[4];
 
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
-            parameters[1] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, software.Name);
-            parameters[2] = SqlUtilities.CreateParameter("@code", SqlDbType.VarChar, software.Code);
-            parameters[3] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, software.State);
+            parameters[1] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, laboratory.Name);
+            parameters[2] = SqlUtilities.CreateParameter("@seats", SqlDbType.Int, laboratory.Seats);
+            parameters[3] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, laboratory.State);
 
-            DataTable table = _Connection.executeQuery("sp_UpdateSoftware", parameters);
+            DataTable table = _Connection.executeQuery("sp_UpdateLaboratory", parameters);
             return table.Rows[0];
         }
 
@@ -105,7 +105,7 @@ namespace SiLabI.Data
         {
             SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
-            _Connection.executeNonQuery("sp_DeleteSoftware", parameters);
+            _Connection.executeNonQuery("sp_DeleteLaboratory", parameters);
         }
     }
 }

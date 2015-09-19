@@ -24,7 +24,7 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _CourseController.GetCourses(request);
+            return _CourseController.GetAll(request);
         }
 
         public Course GetCourse(string id, string token, string fields)
@@ -40,12 +40,12 @@ namespace SiLabI
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _CourseController.GetCourse(num, request);
+            return _CourseController.GetOne(num, request);
         }
 
         public Course CreateCourse(CourseRequest request)
         {
-            return _CourseController.CreateCourse(request);
+            return _CourseController.Create(request);
         }
 
         public Course UpdateCourse(string id, CourseRequest request)
@@ -55,7 +55,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            return _CourseController.UpdateCourse(num, request);
+            return _CourseController.Update(num, request);
         }
 
         public void DeleteCourse(string id, BaseRequest request)
@@ -65,7 +65,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            _CourseController.DeleteCourse(num, request);
+            _CourseController.Delete(num, request);
         }
     }
 }

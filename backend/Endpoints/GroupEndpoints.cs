@@ -24,7 +24,7 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _GroupController.GetGroups(request);
+            return _GroupController.GetAll(request);
         }
 
         public Group GetGroup(string id, string token, string fields)
@@ -40,12 +40,12 @@ namespace SiLabI
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _GroupController.GetGroup(num, request);
+            return _GroupController.GetOne(num, request);
         }
 
         public Group CreateGroup(GroupRequest request)
         {
-            return _GroupController.CreateGroup(request);
+            return _GroupController.Create(request);
         }
 
         public Group UpdateGroup(string id, GroupRequest request)
@@ -55,7 +55,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            return _GroupController.UpdateGroup(num, request);
+            return _GroupController.Update(num, request);
         }
 
         public void DeleteGroup(string id, BaseRequest request)
@@ -65,7 +65,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            _GroupController.DeleteGroup(num, request);
+            _GroupController.Delete(num, request);
         }
 
         public void AddStudentsToGroup(string id, StudentByGroupRequest request)
