@@ -72,10 +72,12 @@ namespace SiLabI.Data
         /// </summary>
         /// <param name="id">The course identification.</param>
         /// <returns>A DataTable that contains the course data.</returns>
-        public DataTable GetCourse(int id)
+        public DataTable GetCourse(int id, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.VarChar, id);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
             return _Connection.executeStoredProcedure("sp_GetCourse", parameters);
         }
 

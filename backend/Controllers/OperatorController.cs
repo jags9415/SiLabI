@@ -64,11 +64,11 @@ namespace SiLabI.Controllers
         /// <param name="id">The user identification.</param>
         /// <param name="token">The access token.</param>
         /// <returns>The operator.</returns>
-        public Operator GetOperator(int id, string token)
+        public Operator GetOperator(int id, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Admin);
-            DataTable table = _OperatorDA.GetOperator(id);
+            DataTable table = _OperatorDA.GetOperator(id, request);
 
             if (table.Rows.Count == 0)
             {

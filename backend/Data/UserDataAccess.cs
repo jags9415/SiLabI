@@ -86,10 +86,12 @@ namespace SiLabI.Data
         /// </summary>
         /// <param name="username">The username.</param>
         /// <returns>A DataTable that contains the user data.</returns>
-        public DataTable GetUser(string username)
+        public DataTable GetUser(string username, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
             return _Connection.executeStoredProcedure("sp_GetUser", parameters);
         }
     }

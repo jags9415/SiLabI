@@ -12,6 +12,7 @@
  * 		GET /groups/87 HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
+ * @apiParam {String[]} [fields]		A list of fields to include in the results.
  *
  * @apiSuccess {Number}									    id 		      The group identification.
  * @apiSuccess {Number}									    number 		  The group number.

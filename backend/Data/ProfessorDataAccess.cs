@@ -72,10 +72,12 @@ namespace SiLabI.Data
         /// </summary>
         /// <param name="username">The username.</param>
         /// <returns>A DataTable that contains the professor data.</returns>
-        public DataTable GetProfessor(string username)
+        public DataTable GetProfessor(string username, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
             return _Connection.executeStoredProcedure("sp_GetProfessorByUsername", parameters);
         }
 
@@ -84,10 +86,12 @@ namespace SiLabI.Data
         /// </summary>
         /// <param name="id">The professor identification.</param>
         /// <returns>A DataTable that contains the professor data.</returns>
-        public DataTable GetProfessor(int id)
+        public DataTable GetProfessor(int id, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
             return _Connection.executeStoredProcedure("sp_GetProfessor", parameters);
         }
 

@@ -27,14 +27,20 @@ namespace SiLabI
             return _CourseController.GetCourses(request);
         }
 
-        public Course GetCourse(string id, string token)
+        public Course GetCourse(string id, string token, string fields)
         {
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            return _CourseController.GetCourse(num, token);
+
+            QueryString request = new QueryString(ValidFields.Course);
+
+            request.AccessToken = token;
+            request.ParseFields(fields);
+
+            return _CourseController.GetCourse(num, request);
         }
 
         public Course CreateCourse(CourseRequest request)

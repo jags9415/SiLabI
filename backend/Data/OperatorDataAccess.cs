@@ -72,10 +72,12 @@ namespace SiLabI.Data
         /// </summary>
         /// <param name="id">The user identification.</param>
         /// <returns>A DataTable that contains the operator data.</returns>
-        public DataTable GetOperator(int id)
+        public DataTable GetOperator(int id, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@operator_id", SqlDbType.Int, id);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
             return _Connection.executeStoredProcedure("sp_GetOperator", parameters);
         }
 

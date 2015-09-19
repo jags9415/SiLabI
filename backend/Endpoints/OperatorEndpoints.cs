@@ -28,14 +28,20 @@ namespace SiLabI
             return _OperatorController.GetOperators(request);
         }
 
-        public Operator GetOperator(string id, string token)
+        public Operator GetOperator(string id, string token, string fields)
         {
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            return _OperatorController.GetOperator(num, token);
+
+            QueryString request = new QueryString(ValidFields.Operator);
+
+            request.AccessToken = token;
+            request.ParseFields(fields);
+
+            return _OperatorController.GetOperator(num, request);
         }
 
         public Operator CreateOperator(string id, OperatorRequest request)

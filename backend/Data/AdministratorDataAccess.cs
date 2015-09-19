@@ -73,10 +73,12 @@ namespace SiLabI.Data
         /// </summary>
         /// <param name="id">The user identification.</param>
         /// <returns>A DataTable that contains the administrator data.</returns>
-        public DataTable GetAdministrator(int id)
+        public DataTable GetAdministrator(int id, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, id);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
             return _Connection.executeStoredProcedure("sp_GetAdministrator", parameters);
         }
 

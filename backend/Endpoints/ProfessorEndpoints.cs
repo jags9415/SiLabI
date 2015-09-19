@@ -27,9 +27,14 @@ namespace SiLabI
             return _ProfessorController.GetProfessors(request);
         }
 
-        public User GetProfessor(string username, string token)
+        public User GetProfessor(string username, string token, string fields)
         {
-            return _ProfessorController.GetProfessor(username, token);
+            QueryString request = new QueryString(ValidFields.Professor);
+
+            request.AccessToken = token;
+            request.ParseFields(fields);
+
+            return _ProfessorController.GetProfessor(username, request);
         }
 
         public User CreateProfessor(ProfessorRequest request)

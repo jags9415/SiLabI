@@ -65,11 +65,11 @@ namespace SiLabI.Controllers
         /// <param name="id">The group identification.</param>
         /// <param name="token">The access token.</param>
         /// <returns>The group.</returns>
-        public Group GetGroup(int id, string token)
+        public Group GetGroup(int id, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _GroupDA.GetGroup(id);
+            DataTable table = _GroupDA.GetGroup(id, request);
 
             if (table.Rows.Count == 0)
             {
@@ -202,11 +202,11 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="id">The group identification.</param>
         /// <param name="token">The access token</param>
-        public List<Student> GetGroupStudents(int id, string token)
+        public List<Student> GetGroupStudents(int id, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _GroupDA.GetGroupStudents(id);
+            DataTable table = _GroupDA.GetGroupStudents(id, request);
             List<Student> students = new List<Student>();
 
             foreach (DataRow row in table.Rows)

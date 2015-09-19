@@ -42,11 +42,11 @@ namespace SiLabI
         GetResponse<User> GetUsers(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/users/{username}/?access_token={token}",
+        [WebGet(UriTemplate = "/users/{username}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve an user.")]
-        User GetUser(string username, string token);
+        User GetUser(string username, string token, string fields);
 
         /*
          * ADMINISTRATOR ENDPOINTS.
@@ -60,11 +60,11 @@ namespace SiLabI
         GetResponse<User> GetAdministrators(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/administrators/{id}/?access_token={token}",
+        [WebGet(UriTemplate = "/administrators/{id}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve an administrator.")]
-        User GetAdministrator(string id, string token);
+        User GetAdministrator(string id, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -96,11 +96,11 @@ namespace SiLabI
         GetResponse<Operator> GetOperators(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/operators/{id}/?access_token={token}",
+        [WebGet(UriTemplate = "/operators/{id}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve an operator.")]
-        Operator GetOperator(string id, string token);
+        Operator GetOperator(string id, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -132,11 +132,11 @@ namespace SiLabI
         GetResponse<Student> GetStudents(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/students/{username}/?access_token={token}",
+        [WebGet(UriTemplate = "/students/{username}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a student.")]
-        Student GetStudent(string username, string token);
+        Student GetStudent(string username, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -177,11 +177,11 @@ namespace SiLabI
         GetResponse<User> GetProfessors(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/professors/{username}/?access_token={token}",
+        [WebGet(UriTemplate = "/professors/{username}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a professor.")]
-        User GetProfessor(string username, string token);
+        User GetProfessor(string username, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -223,11 +223,11 @@ namespace SiLabI
         GetResponse<Course> GetCourses(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/courses/{id}/?access_token={token}",
+        [WebGet(UriTemplate = "/courses/{id}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a course.")]
-        Course GetCourse(string id, string token);
+        Course GetCourse(string id, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -269,11 +269,11 @@ namespace SiLabI
         GetResponse<Group> GetGroups(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/groups/{id}/?access_token={token}",
+        [WebGet(UriTemplate = "/groups/{id}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a group.")]
-        Group GetGroup(string id, string token);
+        Group GetGroup(string id, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -303,11 +303,11 @@ namespace SiLabI
         void DeleteGroup(string id, BaseRequest request);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/groups/{id}/students/?access_token={token}",
+        [WebGet(UriTemplate = "/groups/{id}/students/?access_token={token}&q={query}&sort={sort}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve the list of students of a group.")]
-        List<Student> GetGroupStudents(string id, string token);
+        List<Student> GetGroupStudents(string id, string token, string query, string sort, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",

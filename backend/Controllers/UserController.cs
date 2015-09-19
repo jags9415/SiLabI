@@ -67,11 +67,11 @@ namespace SiLabI.Controllers
         /// <param name="username">The username.</param>
         /// <param name="token">The access token.</param>
         /// <returns>The user.</returns>
-        public User GetUser(string username, string token)
+        public User GetUser(string username, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _UserDA.GetUser(username);
+            DataTable table = _UserDA.GetUser(username, request);
 
             if (table.Rows.Count == 0)
             {

@@ -72,10 +72,12 @@ namespace SiLabI.Data
         /// </summary>
         /// <param name="id">The group identification.</param>
         /// <returns>A DataTable that contains the group data.</returns>
-        public DataTable GetGroup(int id)
+        public DataTable GetGroup(int id, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.VarChar, id);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
             return _Connection.executeStoredProcedure("sp_GetGroup", parameters);
         }
 
@@ -233,11 +235,21 @@ namespace SiLabI.Data
         /// </summary>
         /// <param name="id">The group identification.</param>
         /// <returns>A DataTable with the records of the students.</returns>
-        public DataTable GetGroupStudents(int id)
+        public DataTable GetGroupStudents(int id, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[4];
             parameters[0] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, id);
-            return _Connection.executeStoredProcedure("sp_GetGroupStudents", parameters);
+
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
+
+            parameters[2] = SqlUtilities.CreateParameter("@order_by", SqlDbType.VarChar);
+            parameters[2].Value = SqlUtilities.FormatOrderByFields(request.Sort);
+
+            parameters[3] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
+            parameters[3].Value = SqlUtilities.FormatWhereFields(request.Query);
+
+            return _Connection.executeStoredProcedure("sp_GetStudentsByGroup", parameters);
         }
     }
 }

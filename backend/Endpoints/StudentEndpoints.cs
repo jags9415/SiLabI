@@ -29,9 +29,14 @@ namespace SiLabI
             return _StudentController.GetStudents(request);
         }
 
-        public Student GetStudent(string username, string token)
+        public Student GetStudent(string username, string token, string fields)
         {
-            return _StudentController.GetStudent(username, token);
+            QueryString request = new QueryString(ValidFields.Student);
+
+            request.AccessToken = token;
+            request.ParseFields(fields);
+
+            return _StudentController.GetStudent(username, request);
         }
 
         public Student CreateStudent(StudentRequest request)

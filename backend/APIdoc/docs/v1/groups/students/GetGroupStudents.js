@@ -12,6 +12,9 @@
  *     GET /groups/45/students HTTP/1.1
  *
  * @apiParam {String}						access_token    The access token.
+ * @apiParam {String[]} [q]				A query to filter the results.
+ * @apiParam {String[]} [fields]		A list of fields to include in the results.
+ * @apiParam {String[]} [sort]			A list of fields to sort the results.
  *
  * @apiSuccess {Number}									id 				The user identification.
  * @apiSuccess {String}									name 			The first name.

@@ -64,11 +64,11 @@ namespace SiLabI.Controllers
         /// <param name="id">The course identification.</param>
         /// <param name="token">The access token.</param>
         /// <returns>The course.</returns>
-        public Course GetCourse(int id, string token)
+        public Course GetCourse(int id, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _CourseDA.GetCourse(id);
+            DataTable table = _CourseDA.GetCourse(id, request);
 
             if (table.Rows.Count == 0)
             {
