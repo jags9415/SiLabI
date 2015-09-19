@@ -15,6 +15,7 @@ namespace SiLabI.Model
         private static List<Field> _CourseValidFields;
         private static List<Field> _GroupValidFields;
         private static List<Field> _PeriodValidFields;
+        private static List<Field> _SoftwareValidFields;
 
         private static List<Field> GenericUser
         {
@@ -131,6 +132,24 @@ namespace SiLabI.Model
                     _GroupValidFields.Add(new Field("professor", ValidFields.Professor));
                 }
                 return _GroupValidFields;
+            }
+        }
+
+        public static List<Field> Software
+        {
+            get
+            {
+                if (_SoftwareValidFields == null)
+                {
+                    _SoftwareValidFields = new List<Field>();
+                    _SoftwareValidFields.Add(new Field("id", SqlDbType.Int));
+                    _SoftwareValidFields.Add(new Field("name", SqlDbType.VarChar));
+                    _SoftwareValidFields.Add(new Field("code", SqlDbType.VarChar));
+                    _SoftwareValidFields.Add(new Field("state", SqlDbType.VarChar));
+                    _SoftwareValidFields.Add(new Field("created_at", SqlDbType.DateTime));
+                    _SoftwareValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
+                }
+                return _SoftwareValidFields;
             }
         }
     }

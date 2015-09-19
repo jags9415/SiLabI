@@ -210,7 +210,6 @@ namespace SiLabI
         Description("Delete a professor.")]
         void DeleteProfessor(string id, BaseRequest request);
 
-
         /*
          * COURSES ENDPOINTS.
          */
@@ -255,7 +254,6 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete a course.")]
         void DeleteCourse(string id, BaseRequest request);
-
 
         /*
          * GROUPS ENDPOINTS.
@@ -335,5 +333,50 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete a list of students from a group.")]
         void DeleteStudentsFromGroup(string id, StudentByGroupRequest request);
+
+        /*
+         * SOFTWARE ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/software/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of software.")]
+        GetResponse<Software> GetSoftwares(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/software/{id}/?access_token={token}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a software.")]
+        Software GetSoftware(string id, string token, string fields);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/software/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create a software.")]
+        Software CreateSoftware(SoftwareRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/software/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update a software.")]
+        Software UpdateSoftware(string id, SoftwareRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/software/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a software.")]
+        void DeleteSoftware(string id, BaseRequest request);
     }
 }

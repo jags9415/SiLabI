@@ -77,6 +77,7 @@
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\OperatorController.cs" />
     <Compile Include="Controllers\ProfessorController.cs" />
+    <Compile Include="Controllers\SoftwareController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\AdministratorDataAccess.cs" />
@@ -84,10 +85,12 @@
     <Compile Include="Data\GroupDataAccess.cs" />
     <Compile Include="Data\OperatorDataAccess.cs" />
     <Compile Include="Data\ProfessorDataAccess.cs" />
+    <Compile Include="Data\SoftwareDataAccess.cs" />
     <Compile Include="Endpoints\CourseEndpoints.cs" />
     <Compile Include="Endpoints\GroupEndpoints.cs" />
     <Compile Include="Endpoints\OperatorEndpoints.cs" />
     <Compile Include="Endpoints\ProfessorEndpoints.cs" />
+    <Compile Include="Endpoints\SoftwareEndpoints.cs" />
     <Compile Include="Exceptions\InvalidParameterException.cs" />
     <Compile Include="Exceptions\MissingParameterException.cs" />
     <Compile Include="Exceptions\InvalidRequestBodyException.cs" />
@@ -106,6 +109,8 @@
     <Compile Include="Model\OperatorRequest.cs" />
     <Compile Include="Model\Period.cs" />
     <Compile Include="Model\ProfessorRequest.cs" />
+    <Compile Include="Model\Software.cs" />
+    <Compile Include="Model\SoftwareRequest.cs" />
     <Compile Include="Model\Student.cs" />
     <Compile Include="Configuration\UnknowOperationInvoker.cs" />
     <Compile Include="Model\StudentByGroupRequest.cs" />

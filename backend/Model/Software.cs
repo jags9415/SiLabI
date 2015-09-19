@@ -1,20 +1,18 @@
-﻿using SiLabI.Exceptions;
-using SiLabI.Util;
+﻿using SiLabI.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.Serialization;
 using System.Web;
 
 namespace SiLabI.Model
 {
     /// <summary>
-    /// A course data.
+    /// A software data.
     /// </summary>
     [DataContract]
-    public class Course : DatabaseObject
+    public class Software : DatabaseObject
     {
         protected string _name;
         protected string _code;
@@ -71,7 +69,7 @@ namespace SiLabI.Model
         /// Fill an Course object with the data provided in a DataRow.
         /// </summary>
         /// <param name="row">The row.</param>
-        public static Course Parse(DataRow row, string prefix = "")
+        public static Software Parse(DataRow row, string prefix = "")
         {
             prefix = prefix.Trim();
             if (!string.IsNullOrWhiteSpace(prefix))
@@ -79,21 +77,21 @@ namespace SiLabI.Model
                 prefix += ".";
             }
 
-            Course course = new Course();
+            Software software = new Software();
 
-            course.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
-            course.Name = row.Table.Columns.Contains(prefix + "name") ? Converter.ToString(row[prefix + "name"]) : null;
-            course.Code = row.Table.Columns.Contains(prefix + "code") ? Converter.ToString(row[prefix + "code"]) : null;
-            course.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
-            course.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
-            course.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
+            software.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
+            software.Name = row.Table.Columns.Contains(prefix + "name") ? Converter.ToString(row[prefix + "name"]) : null;
+            software.Code = row.Table.Columns.Contains(prefix + "code") ? Converter.ToString(row[prefix + "code"]) : null;
+            software.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
+            software.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
+            software.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
 
-            if (course.isEmpty())
+            if (software.isEmpty())
             {
-                course = null;
+                software = null;
             }
 
-            return course;
+            return software;
         }
     }
 }
