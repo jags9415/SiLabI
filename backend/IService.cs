@@ -378,5 +378,50 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete a software.")]
         void DeleteSoftware(string id, BaseRequest request);
+
+        /*
+         * LABORATORY ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/laboratories/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of laboratories.")]
+        GetResponse<Laboratory> GetLaboratories(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/laboratories/{id}/?access_token={token}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a laboratory.")]
+        Laboratory GetLaboratory(string id, string token, string fields);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/laboratories/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create a laboratory.")]
+        Laboratory CreateLaboratory(LaboratoryRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/laboratories/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update a laboratory.")]
+        Laboratory UpdateLaboratory(string id, LaboratoryRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/laboratories/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a laboratory.")]
+        void DeleteLaboratory(string id, BaseRequest request);
     }
 }

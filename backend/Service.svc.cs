@@ -31,6 +31,7 @@ namespace SiLabI
         private CourseController _CourseController;
         private GroupController _GroupController;
         private SoftwareController _SoftwareController;
+        private LaboratoryController _LaboratoryController;
 
         /// <summary>
         /// Create a new Service.
@@ -46,6 +47,7 @@ namespace SiLabI
             this._CourseController = new CourseController();
             this._GroupController = new GroupController();
             this._SoftwareController = new SoftwareController();
+            this._LaboratoryController = new LaboratoryController();
         }
     }
 }

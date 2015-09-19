@@ -16,6 +16,7 @@ namespace SiLabI.Model
         private static List<Field> _GroupValidFields;
         private static List<Field> _PeriodValidFields;
         private static List<Field> _SoftwareValidFields;
+        private static List<Field> _LaboratoryValidFields;
 
         private static List<Field> GenericUser
         {
@@ -150,6 +151,24 @@ namespace SiLabI.Model
                     _SoftwareValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
                 }
                 return _SoftwareValidFields;
+            }
+        }
+
+        public static List<Field> Laboratory
+        {
+            get
+            {
+                if (_LaboratoryValidFields == null)
+                {
+                    _LaboratoryValidFields = new List<Field>();
+                    _LaboratoryValidFields.Add(new Field("id", SqlDbType.Int));
+                    _LaboratoryValidFields.Add(new Field("name", SqlDbType.VarChar));
+                    _LaboratoryValidFields.Add(new Field("seats", SqlDbType.Int));
+                    _LaboratoryValidFields.Add(new Field("state", SqlDbType.VarChar));
+                    _LaboratoryValidFields.Add(new Field("created_at", SqlDbType.DateTime));
+                    _LaboratoryValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
+                }
+                return _LaboratoryValidFields;
             }
         }
     }
