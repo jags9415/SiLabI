@@ -1,4 +1,5 @@
-﻿using SiLabI.Model;
+﻿using SiLabI.Exceptions;
+using SiLabI.Model;
 using SiLabI.Model.Query;
 using SiLabI.Util;
 using System;
@@ -6,12 +7,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace SiLabI.Data
 {
     /// <summary>
-    /// Provide access to the data related to Groups.
+    /// Perform CRUD operations on the Groups table.
     /// </summary>
     public class GroupDataAccess
     {
@@ -25,30 +27,18 @@ namespace SiLabI.Data
             _Connection = new Connection();
         }
 
-        /// <summary>
-        /// Get the amount of groups that satifies the query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The amount of groups that satifies the query</returns>
-        public int GetGroupsCount(QueryString request)
+        public int GetCount(QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[1];
 
             parameters[0] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
             parameters[0].Value = SqlUtilities.FormatWhereFields(request.Query);
 
-            DataTable table = _Connection.executeStoredProcedure("sp_GetGroupsCount", parameters);
-            DataRow row = table.Rows[0];
-
-            return table.Columns.Contains("count") ? Converter.ToInt32(row["count"]) : 0;
+            object count = _Connection.executeScalar("sp_GetGroupsCount", parameters);
+            return Converter.ToInt32(count);
         }
 
-        /// <summary>
-        /// Get all the groups that satisfies the query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>A DataTable that contains all the groups data that satisfies the query.</returns>
-        public DataTable GetGroups(QueryString request)
+        public DataTable GetAll(QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[5];
 
@@ -64,28 +54,30 @@ namespace SiLabI.Data
             parameters[3] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
             parameters[4] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
 
-            return _Connection.executeStoredProcedure("sp_GetGroups", parameters);
+            return _Connection.executeQuery("sp_GetGroups", parameters);
         }
 
-        /// <summary>
-        /// Get a specific group.
-        /// </summary>
-        /// <param name="id">The group identification.</param>
-        /// <returns>A DataTable that contains the group data.</returns>
-        public DataTable GetGroup(int id)
+        public DataRow GetOne(int id, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.VarChar, id);
-            return _Connection.executeStoredProcedure("sp_GetGroup", parameters);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
+
+            DataTable table = _Connection.executeQuery("sp_GetGroup", parameters);
+            if (table.Rows.Count == 0)
+            {
+                throw new WcfException(HttpStatusCode.BadRequest, "Grupo no encontrado.");
+            }
+            else
+            {
+                return table.Rows[0];
+            }
         }
 
-        /// <summary>
-        /// Creates a group.
-        /// </summary>
-        /// <param name="group">The group data.</param>
-        /// <returns>A DataTable that contains the group data.</returns>
-        public DataTable CreateGroup(InnerGroupRequest group)
+        public DataRow Create(object obj)
         {
+            InnerGroupRequest group = (obj as InnerGroupRequest);
             SqlParameter[] parameters;
 
             if (group.Students == null)
@@ -110,17 +102,13 @@ namespace SiLabI.Data
             parameters[4] = SqlUtilities.CreateParameter("@period_type", SqlDbType.VarChar, group.Period.Type);
             parameters[5] = SqlUtilities.CreateParameter("@period_year", SqlDbType.Int, group.Period.Year);
 
-            return _Connection.executeStoredProcedure("sp_CreateGroup", parameters);
+            DataTable table = _Connection.executeQuery("sp_CreateGroup", parameters);
+            return table.Rows[0];
         }
 
-        /// <summary>
-        /// Updates a group.
-        /// </summary>
-        /// <param name="id">The group identification.</param>
-        /// <param name="group">The group data.</param>
-        /// <returns>A DataTable that contains the group data.</returns>
-        public DataTable UpdateGroup(int id, InnerGroupRequest group)
+        public DataRow Update(int id, object obj)
         {
+            InnerGroupRequest group = (obj as InnerGroupRequest);
             SqlParameter[] parameters;
 
             if (group.Students == null)
@@ -157,87 +145,15 @@ namespace SiLabI.Data
             parameters[3] = SqlUtilities.CreateParameter("@professor", SqlDbType.VarChar, group.Professor);
             parameters[7] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, group.State);
 
-            return _Connection.executeStoredProcedure("sp_UpdateGroup", parameters);
+            DataTable table = _Connection.executeQuery("sp_UpdateGroup", parameters);
+            return table.Rows[0];
         }
 
-        /// <summary>
-        /// Deletes a group.
-        /// </summary>
-        /// <param name="id">The group identification.</param>
-        public void DeleteGroup(int id)
+        public void Delete(int id)
         {
             SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
-            _Connection.executeStoredProcedure("sp_DeleteGroup", parameters);
-        }
-
-        /// <summary>
-        /// Add a list of students to a group.
-        /// </summary>
-        /// <param name="id">The group identification.</param>
-        /// <param name="students">The list of students usernames.</param>
-        public void AddStudentsToGroup(int id, List<string> students)
-        {
-            SqlParameter[] parameters = new SqlParameter[2];
-            
-            DataTable table = new DataTable();
-            table.Columns.Add("Username");
-            students.ForEach(x => table.Rows.Add(x));
-
-            parameters[0] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, id);
-            parameters[1] = SqlUtilities.CreateParameter("@students", SqlDbType.Structured, table);
-
-            _Connection.executeStoredProcedure("sp_AddStudentsToGroup", parameters);
-        }
-
-        /// <summary>
-        /// Update a group students list.
-        /// </summary>
-        /// <param name="id">The group identification.</param>
-        /// <param name="students">The list of students usernames.</param>
-        public void UpdateGroupStudents(int id, List<string> students)
-        {
-            SqlParameter[] parameters = new SqlParameter[2];
-
-            DataTable table = new DataTable();
-            table.Columns.Add("Username");
-            students.ForEach(x => table.Rows.Add(x));
-
-            parameters[0] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, id);
-            parameters[1] = SqlUtilities.CreateParameter("@students", SqlDbType.Structured, table);
-
-            _Connection.executeStoredProcedure("sp_UpdateGroupStudents", parameters);
-        }
-
-        /// <summary>
-        /// Delete a list of students from a group.
-        /// </summary>
-        /// <param name="id">The group identification.</param>
-        /// <param name="students">The list of students usernames.</param>
-        public void DeleteStudentsFromGroup(int id, List<string> students)
-        {
-            SqlParameter[] parameters = new SqlParameter[2];
-
-            DataTable table = new DataTable();
-            table.Columns.Add("Username");
-            students.ForEach(x => table.Rows.Add(x));
-
-            parameters[0] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, id);
-            parameters[1] = SqlUtilities.CreateParameter("@students", SqlDbType.Structured, table);
-
-            _Connection.executeStoredProcedure("sp_RemoveStudentsFromGroup", parameters);
-        }
-
-        /// <summary>
-        /// Get the list of students of a group.
-        /// </summary>
-        /// <param name="id">The group identification.</param>
-        /// <returns>A DataTable with the records of the students.</returns>
-        public DataTable GetGroupStudents(int id)
-        {
-            SqlParameter[] parameters = new SqlParameter[1];
-            parameters[0] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, id);
-            return _Connection.executeStoredProcedure("sp_GetGroupStudents", parameters);
+            _Connection.executeNonQuery("sp_DeleteGroup", parameters);
         }
     }
 }

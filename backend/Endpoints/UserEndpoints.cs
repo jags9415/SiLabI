@@ -24,12 +24,16 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _UserController.GetUsers(request);
+            return _UserController.GetAll(request);
         }
 
-        public User GetUser(string username, string token)
+        public User GetUser(string username, string token, string fields)
         {
-            return _UserController.GetUser(username, token);
+            QueryString request = new QueryString(ValidFields.User);
+            request.AccessToken = token;
+            request.ParseFields(fields);
+
+            return _UserController.GetOne(username, request);
         }
     }
 }

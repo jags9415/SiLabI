@@ -13,11 +13,12 @@ using System.Web;
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// Group logic.
+    /// Perform CRUD operations for Groups.
     /// </summary>
-    public class GroupController
+    public class GroupController : IController<Group>
     {
         private GroupDataAccess _GroupDA;
+        private StudentsByGroupDataAccess _StudentsByGroupDA;
 
         /// <summary>
         /// Create a new GroupController.
@@ -25,14 +26,10 @@ namespace SiLabI.Controllers
         public GroupController()
         {
             _GroupDA = new GroupDataAccess();
+            _StudentsByGroupDA = new StudentsByGroupDataAccess();
         }
 
-        /// <summary>
-        /// Retrieves a list of groups based on a query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The list of groups.</returns>
-        public GetResponse<Group> GetGroups(QueryString request)
+        public GetResponse<Group> GetAll(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
@@ -45,8 +42,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Group> response = new GetResponse<Group>();
-            DataTable table = _GroupDA.GetGroups(request);
-            int count = _GroupDA.GetGroupsCount(request);
+            DataTable table = _GroupDA.GetAll(request);
+            int count = _GroupDA.GetCount(request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -59,81 +56,55 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Get a group.
-        /// </summary>
-        /// <param name="id">The group identification.</param>
-        /// <param name="token">The access token.</param>
-        /// <returns>The group.</returns>
-        public Group GetGroup(int id, string token)
+        public Group GetOne(int id, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _GroupDA.GetGroup(id);
-
-            if (table.Rows.Count == 0)
-            {
-                throw new WcfException(HttpStatusCode.BadRequest, "Grupo no encontrado.");
-            }
-
-            return ParseGroup(table.Rows[0]);
+            DataRow row = _GroupDA.GetOne(id, request);
+            return ParseGroup(row);
         }
 
-        /// <summary>
-        /// Creates a group.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>The group data.</returns>
-        public Group CreateGroup(GroupRequest request)
+        public Group Create(BaseRequest request)
         {
-            if (request == null || !request.IsValid())
+            GroupRequest groupRequest = (request as GroupRequest);
+            if (groupRequest == null || !groupRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Dictionary<string, object> payload = Token.Decode(groupRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Group.IsValidForCreate())
+            if (!groupRequest.Group.IsValidForCreate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de grupo incompletos.");
             }
 
-            DataTable table = _GroupDA.CreateGroup(request.Group);
-            return ParseGroup(table.Rows[0]);
+            DataRow row = _GroupDA.Create(groupRequest.Group);
+            return ParseGroup(row);
         }
 
-        /// <summary>
-        /// Update a group.
-        /// </summary>
-        /// <param name="id">The group id.</param>
-        /// <param name="request">The request.</param>
-        /// <returns>The group data.</returns>
-        public Group UpdateGroup(int id, GroupRequest request)
+        public Group Update(int id, BaseRequest request)
         {
-            if (request == null || !request.IsValid())
+            GroupRequest groupRequest = (request as GroupRequest);
+            if (groupRequest == null || !groupRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Dictionary<string, object> payload = Token.Decode(groupRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Group.IsValidForUpdate())
+            if (!groupRequest.Group.IsValidForUpdate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de grupo inválidos.");
             }
 
-            DataTable table = _GroupDA.UpdateGroup(id, request.Group);
-            return ParseGroup(table.Rows[0]);
+            DataRow row = _GroupDA.Update(id, groupRequest.Group);
+            return ParseGroup(row);
         }
 
-        /// <summary>
-        /// Delete a group.
-        /// </summary>
-        /// <param name="id">The group identification.</param>
-        /// <param name="request">The request.</param>
-        public void DeleteGroup(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -142,7 +113,27 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            _GroupDA.DeleteGroup(id);
+            _GroupDA.Delete(id);
+        }
+
+        /// <summary>
+        /// Get the list of students of a group.
+        /// </summary>
+        /// <param name="id">The group identification.</param>
+        /// <param name="token">The access token</param>
+        public List<Student> GetGroupStudents(int id, QueryString request)
+        {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+            DataTable table = _StudentsByGroupDA.GetAll(id, request);
+            List<Student> students = new List<Student>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                students.Add(Student.Parse(row));
+            }
+
+            return students;
         }
 
         /// <summary>
@@ -159,7 +150,7 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            _GroupDA.AddStudentsToGroup(id, request.Students);
+            _StudentsByGroupDA.Create(id, request.Students);
         }
 
         /// <summary>
@@ -177,7 +168,7 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            _GroupDA.UpdateGroupStudents(id, request.Students);
+            _StudentsByGroupDA.Update(id, request.Students);
         }
 
         /// <summary>
@@ -194,27 +185,7 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            _GroupDA.DeleteStudentsFromGroup(id, request.Students);
-        }
-
-        /// <summary>
-        /// Get the list of students of a group.
-        /// </summary>
-        /// <param name="id">The group identification.</param>
-        /// <param name="token">The access token</param>
-        public List<Student> GetGroupStudents(int id, string token)
-        {
-            Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _GroupDA.GetGroupStudents(id);
-            List<Student> students = new List<Student>();
-
-            foreach (DataRow row in table.Rows)
-            {
-                students.Add(Student.Parse(row));
-            }
-
-            return students;
+            _StudentsByGroupDA.Delete(id, request.Students);
         }
 
         /// <summary>

@@ -13,9 +13,9 @@ using System.Web;
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// Professor logic.
+    /// Perform CRUD operations for Professors.
     /// </summary>
-    public class ProfessorController
+    public class ProfessorController : IController<User>
     {
         private ProfessorDataAccess _ProfessorDA;
 
@@ -27,12 +27,7 @@ namespace SiLabI.Controllers
             this._ProfessorDA = new ProfessorDataAccess();
         }
 
-        /// <summary>
-        /// Retrieves a list of professors based on a query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The list of professors.</returns>
-        public GetResponse<User> GetProfessors(QueryString request)
+        public GetResponse<User> GetAll(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
@@ -45,8 +40,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<User> response = new GetResponse<User>();
-            DataTable table = _ProfessorDA.GetProfessors(request);
-            int count = _ProfessorDA.GetProfessorsCount(request);
+            DataTable table = _ProfessorDA.GetAll(request);
+            int count = _ProfessorDA.GetCount(request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -59,81 +54,63 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Get a professor.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="token">The access token.</param>
-        /// <returns>The professor.</returns>
-        public User GetProfessor(string username, string token)
+        public User GetOne(int id, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _ProfessorDA.GetProfessor(username);
-
-            if (table.Rows.Count == 0)
-            {
-                throw new WcfException(HttpStatusCode.BadRequest, "Docente no encontrado.");
-            }
-
-            return User.Parse(table.Rows[0]);
+            DataRow row = _ProfessorDA.GetOne(id, request);
+            return User.Parse(row);
         }
 
-        /// <summary>
-        /// Creates a professor.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>The professor data.</returns>
-        public User CreateProfessor(ProfessorRequest request)
+        public User GetOne(string username, QueryString request)
         {
-            if (request == null || !request.IsValid())
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+            DataRow row = _ProfessorDA.GetOne(username, request);
+            return User.Parse(row);
+        }
+
+        public User Create(BaseRequest request)
+        {
+            ProfessorRequest professorRequest = (request as ProfessorRequest);
+            if (professorRequest == null || !professorRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Dictionary<string, object> payload = Token.Decode(professorRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Professor.IsValidForCreate())
+            if (!professorRequest.Professor.IsValidForCreate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de docente incompletos.");
             }
 
-            DataTable table = _ProfessorDA.CreateProfessor(request.Professor);
-            return User.Parse(table.Rows[0]);
+            DataRow row = _ProfessorDA.Create(professorRequest.Professor);
+            return User.Parse(row);
         }
 
-        /// <summary>
-        /// Update a professor.
-        /// </summary>
-        /// <param name="id">The professor id.</param>
-        /// <param name="request">The request.</param>
-        /// <returns>The professor data.</returns>
-        public User UpdateProfessor(int id, ProfessorRequest request)
+        public User Update(int id, BaseRequest request)
         {
-            if (request == null || !request.IsValid())
+            ProfessorRequest professorRequest = (request as ProfessorRequest);
+            if (professorRequest == null || !professorRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Dictionary<string, object> payload = Token.Decode(professorRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Professor.IsValidForUpdate())
+            if (!professorRequest.Professor.IsValidForUpdate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de docente inválidos.");
             }
 
-            DataTable table = _ProfessorDA.UpdateProfessor(id, request.Professor);
-            return User.Parse(table.Rows[0]);
+            DataRow row = _ProfessorDA.Update(id, professorRequest.Professor);
+            return User.Parse(row);
         }
 
-        /// <summary>
-        /// Delete a professor.
-        /// </summary>
-        /// <param name="id">The user identification.</param>
-        /// <param name="request">The request.</param>
-        public void DeleteProfessor(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -142,7 +119,7 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            _ProfessorDA.DeleteProfessor(id);
+            _ProfessorDA.Delete(id);
         }
     }
 }

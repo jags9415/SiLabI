@@ -27,17 +27,23 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _AdminController.GetAdministrators(request);
+            return _AdminController.GetAll(request);
         }
 
-        public User GetAdministrator(string id, string token)
+        public User GetAdministrator(string id, string token, string fields)
         {
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            return _AdminController.GetAdministrator(num, token);
+
+            QueryString request = new QueryString(ValidFields.Administrator);
+
+            request.AccessToken = token;
+            request.ParseFields(fields);
+
+            return _AdminController.GetOne(num, request);
         }
 
         public User CreateAdministrator(string id, BaseRequest request)
@@ -47,7 +53,12 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            return _AdminController.CreateAdministrator(num, request);
+
+            AdministratorRequest adminRequest = new AdministratorRequest();
+            adminRequest.Id = num;
+            adminRequest.AccessToken = request.AccessToken;
+
+            return _AdminController.Create(adminRequest);
         }
 
         public void DeleteAdministrator(string id, BaseRequest request)
@@ -57,7 +68,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            _AdminController.DeleteAdministrator(num, request);
+            _AdminController.Delete(num, request);
         }
     }
 }

@@ -16,9 +16,9 @@ using System.Web;
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// Student logic.
+    /// Perform CRUD operations for Students.
     /// </summary>
-    public class StudentController
+    public class StudentController : IController<Student>
     {
         private StudentDataAccess _StudentDA;
 
@@ -30,12 +30,7 @@ namespace SiLabI.Controllers
             this._StudentDA = new StudentDataAccess();
         }
 
-        /// <summary>
-        /// Retrieves a list of students based on a query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The list of students.</returns>
-        public GetResponse<Student> GetStudents(QueryString request)
+        public GetResponse<Student> GetAll(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
@@ -48,8 +43,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Student> response = new GetResponse<Student>();
-            DataTable table = _StudentDA.GetStudents(request);
-            int count = _StudentDA.GetStudentsCount(request);
+            DataTable table = _StudentDA.GetAll(request);
+            int count = _StudentDA.GetCount(request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -62,81 +57,63 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Get a student.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="token">The access token.</param>
-        /// <returns>The student.</returns>
-        public Student GetStudent(string username, string token)
+        public Student GetOne(string username, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _StudentDA.GetStudent(username);
-
-            if (table.Rows.Count == 0)
-            {
-                throw new WcfException(HttpStatusCode.BadRequest, "Estudiante no encontrado.");
-            }
-
-            return Student.Parse(table.Rows[0]);
+            DataRow row = _StudentDA.GetOne(username, request);
+            return Student.Parse(row);
         }
 
-        /// <summary>
-        /// Creates a student.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>The student data.</returns>
-        public Student CreateStudent(StudentRequest request)
+        public Student GetOne(int id, QueryString request)
         {
-            if (request == null || !request.IsValid())
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+            DataRow row = _StudentDA.GetOne(id, request);
+            return Student.Parse(row);
+        }
+
+        public Student Create(BaseRequest request)
+        {
+            StudentRequest studentRequest = (request as StudentRequest);
+            if (studentRequest == null || !studentRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Dictionary<string, object> payload = Token.Decode(studentRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Student.IsValidForCreate())
+            if (!studentRequest.Student.IsValidForCreate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de estudiante incompletos.");
             }
 
-            DataTable table = _StudentDA.CreateStudent(request.Student);
-            return Student.Parse(table.Rows[0]);
+            DataRow row = _StudentDA.Create(studentRequest.Student);
+            return Student.Parse(row);
         }
 
-        /// <summary>
-        /// Update a student.
-        /// </summary>
-        /// <param name="id">The student id.</param>
-        /// <param name="request">The request.</param>
-        /// <returns>The student data.</returns>
-        public Student UpdateStudent(int id, StudentRequest request)
+        public Student Update(int id, BaseRequest request)
         {
-            if (request == null || !request.IsValid())
+            StudentRequest studentRequest = (request as StudentRequest);
+            if (studentRequest == null || !studentRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Dictionary<string, object> payload = Token.Decode(studentRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            if (!request.Student.IsValidForUpdate())
+            if (!studentRequest.Student.IsValidForUpdate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de estudiante inválidos.");
             }
 
-           DataTable table = _StudentDA.UpdateStudent(id, request.Student);
-           return Student.Parse(table.Rows[0]);
+            DataRow row = _StudentDA.Update(id, studentRequest.Student);
+           return Student.Parse(row);
         }
 
-        /// <summary>
-        /// Delete a student.
-        /// </summary>
-        /// <param name="id">The user identification.</param>
-        /// <param name="request">The request.</param>
-        public void DeleteStudent(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -145,7 +122,7 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            _StudentDA.DeleteStudent(id);
+            _StudentDA.Delete(id);
         }
     }
 }

@@ -12,9 +12,9 @@ using System.Web;
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// Operator logic.
+    /// Perform CRUD operations for Operators.
     /// </summary>
-    public class OperatorController
+    public class OperatorController : IController<Operator>
     {
         private OperatorDataAccess _OperatorDA;
 
@@ -26,12 +26,7 @@ namespace SiLabI.Controllers
             this._OperatorDA = new OperatorDataAccess();
         }
 
-        /// <summary>
-        /// Retrieves a list of operators based on a query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The list of operators.</returns>
-        public GetResponse<Operator> GetOperators(QueryString request)
+        public GetResponse<Operator> GetAll(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Admin);
@@ -44,8 +39,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Operator> response = new GetResponse<Operator>();
-            DataTable table = _OperatorDA.GetOperators(request);
-            int count = _OperatorDA.GetOperatorsCount(request);
+            DataTable table = _OperatorDA.GetAll(request);
+            int count = _OperatorDA.GetCount(request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -58,32 +53,34 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Get an operator.
-        /// </summary>
-        /// <param name="id">The user identification.</param>
-        /// <param name="token">The access token.</param>
-        /// <returns>The operator.</returns>
-        public Operator GetOperator(int id, string token)
+        public Operator GetOne(int id, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Admin);
-            DataTable table = _OperatorDA.GetOperator(id);
-
-            if (table.Rows.Count == 0)
-            {
-                throw new WcfException(HttpStatusCode.BadRequest, "Operador no encontrado");
-            }
-
-            return Operator.Parse(table.Rows[0]);
+            DataRow row = _OperatorDA.GetOne(id, request);
+            return Operator.Parse(row);
         }
 
-        /// <summary>
-        /// Creates an operator.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>The user data.</returns>
-        public Operator CreateOperator(int id, OperatorRequest request)
+        public Operator Create(BaseRequest request)
+        {
+            OperatorRequest operatorRequest = (request as OperatorRequest);
+            if (operatorRequest == null || !operatorRequest.IsValid())
+            {
+                throw new InvalidRequestBodyException();
+            }
+
+            Dictionary<string, object> payload = Token.Decode(operatorRequest.AccessToken);
+            Token.CheckPayload(payload, UserType.Admin);
+            DataRow row = _OperatorDA.Create(operatorRequest);
+            return Operator.Parse(row);
+        }
+
+        public Operator Update(int id, BaseRequest request)
+        {
+            throw new InvalidOperationException("An operator cannot be updated.");
+        }
+
+        public void Delete(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -92,26 +89,7 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Admin);
-            DataTable table = _OperatorDA.CreateOperator(id, request.Period);
-
-            return Operator.Parse(table.Rows[0]);
-        }
-
-        /// <summary>
-        /// Deletes an operator.
-        /// </summary>
-        /// <param name="id">The user identification.</param>
-        /// <param name="request">The request.</param>
-        public void DeleteOperator(int id, BaseRequest request)
-        {
-            if (request == null || !request.IsValid())
-            {
-                throw new InvalidRequestBodyException();
-            }
-
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
-            _OperatorDA.DeleteOperator(id);
+            _OperatorDA.Delete(id);
         }
     }
 }

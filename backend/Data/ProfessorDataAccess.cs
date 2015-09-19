@@ -1,4 +1,5 @@
-﻿using SiLabI.Model;
+﻿using SiLabI.Exceptions;
+using SiLabI.Model;
 using SiLabI.Model.Query;
 using SiLabI.Util;
 using System;
@@ -6,14 +7,15 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace SiLabI.Data
 {
     /// <summary>
-    /// Provide access to the data related to Professors.
+    /// Perform CRUD operations on the Professors table.
     /// </summary>
-    public class ProfessorDataAccess
+    public class ProfessorDataAccess : IDataAccess
     {
         private Connection _Connection;
 
@@ -25,30 +27,18 @@ namespace SiLabI.Data
             _Connection = new Connection();
         }
 
-        /// <summary>
-        /// Get the amount of professors that satifies the query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The amount of professors that satifies the query</returns>
-        public int GetProfessorsCount(QueryString request)
+        public int GetCount(QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[1];
 
             parameters[0] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
             parameters[0].Value = SqlUtilities.FormatWhereFields(request.Query);
 
-            DataTable table = _Connection.executeStoredProcedure("sp_GetProfessorsCount", parameters);
-            DataRow row = table.Rows[0];
-
-            return table.Columns.Contains("count") ? Converter.ToInt32(row["count"]) : 0;
+            object count = _Connection.executeScalar("sp_GetProfessorsCount", parameters);
+            return Converter.ToInt32(count);
         }
 
-        /// <summary>
-        /// Get all the professors that satisfies the query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>A DataTable that contains all the professors data that satisfies the query.</returns>
-        public DataTable GetProfessors(QueryString request)
+        public DataTable GetAll(QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[5];
 
@@ -64,40 +54,48 @@ namespace SiLabI.Data
             parameters[3] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
             parameters[4] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
 
-            return _Connection.executeStoredProcedure("sp_GetProfessors", parameters);
+            return _Connection.executeQuery("sp_GetProfessors", parameters);
         }
 
-        /// <summary>
-        /// Get a specific professor.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <returns>A DataTable that contains the professor data.</returns>
-        public DataTable GetProfessor(string username)
+        public DataRow GetOne(string username, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
-            return _Connection.executeStoredProcedure("sp_GetProfessorByUsername", parameters);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
+            
+            DataTable table = _Connection.executeQuery("sp_GetProfessorByUsername", parameters);
+            if (table.Rows.Count == 0)
+            {
+                throw new WcfException(HttpStatusCode.BadRequest, "Docente no encontrado.");
+            }
+            else
+            {
+                return table.Rows[0];
+            }
         }
 
-        /// <summary>
-        /// Get a specific professor.
-        /// </summary>
-        /// <param name="id">The professor identification.</param>
-        /// <returns>A DataTable that contains the professor data.</returns>
-        public DataTable GetProfessor(int id)
+        public DataRow GetOne(int id, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
-            return _Connection.executeStoredProcedure("sp_GetProfessor", parameters);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
+
+            DataTable table = _Connection.executeQuery("sp_GetProfessor", parameters);
+            if (table.Rows.Count == 0)
+            {
+                throw new WcfException(HttpStatusCode.BadRequest, "Docente no encontrado.");
+            }
+            else
+            {
+                return table.Rows[0];
+            }
         }
 
-        /// <summary>
-        /// Creates a professor.
-        /// </summary>
-        /// <param name="professor">The professor data.</param>
-        /// <returns>A DataTable that contains the professor data.</returns>
-        public DataTable CreateProfessor(User professor)
+        public DataRow Create(object obj)
         {
+            User professor = (obj as User);
             SqlParameter[] parameters = new SqlParameter[8];
 
             parameters[0] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, professor.Name);
@@ -109,16 +107,13 @@ namespace SiLabI.Data
             parameters[6] = SqlUtilities.CreateParameter("@email", SqlDbType.VarChar, professor.Email);
             parameters[7] = SqlUtilities.CreateParameter("@phone", SqlDbType.VarChar, professor.Phone);
 
-            return _Connection.executeStoredProcedure("sp_CreateProfessor", parameters);
+            DataTable table = _Connection.executeQuery("sp_CreateProfessor", parameters);
+            return table.Rows[0];
         }
 
-        /// <summary>
-        /// Updates a professor.
-        /// </summary>
-        /// <param name="professor">The professor data.</param>
-        /// <returns>A DataTable that contains the professor data.</returns>
-        public DataTable UpdateProfessor(int id, User professor)
+        public DataRow Update(int id, object obj)
         {
+            User professor = (obj as User);
             SqlParameter[] parameters = new SqlParameter[10];
 
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
@@ -132,18 +127,15 @@ namespace SiLabI.Data
             parameters[8] = SqlUtilities.CreateParameter("@phone", SqlDbType.VarChar, professor.Phone);
             parameters[9] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, professor.State);
 
-            return _Connection.executeStoredProcedure("sp_UpdateProfessor", parameters);
+            DataTable table = _Connection.executeQuery("sp_UpdateProfessor", parameters);
+            return table.Rows[0];
         }
 
-        /// <summary>
-        /// Deletes a professor.
-        /// </summary>
-        /// <param name="id">The user identification.</param>
-        public void DeleteProfessor(int id)
+        public void Delete(int id)
         {
             SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, id);
-            _Connection.executeStoredProcedure("sp_DeleteProfessor", parameters);
+            _Connection.executeNonQuery("sp_DeleteProfessor", parameters);
         }
     }
 }

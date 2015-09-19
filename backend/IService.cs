@@ -42,11 +42,11 @@ namespace SiLabI
         GetResponse<User> GetUsers(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/users/{username}/?access_token={token}",
+        [WebGet(UriTemplate = "/users/{username}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve an user.")]
-        User GetUser(string username, string token);
+        User GetUser(string username, string token, string fields);
 
         /*
          * ADMINISTRATOR ENDPOINTS.
@@ -60,11 +60,11 @@ namespace SiLabI
         GetResponse<User> GetAdministrators(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/administrators/{id}/?access_token={token}",
+        [WebGet(UriTemplate = "/administrators/{id}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve an administrator.")]
-        User GetAdministrator(string id, string token);
+        User GetAdministrator(string id, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -96,11 +96,11 @@ namespace SiLabI
         GetResponse<Operator> GetOperators(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/operators/{id}/?access_token={token}",
+        [WebGet(UriTemplate = "/operators/{id}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve an operator.")]
-        Operator GetOperator(string id, string token);
+        Operator GetOperator(string id, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -132,11 +132,11 @@ namespace SiLabI
         GetResponse<Student> GetStudents(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/students/{username}/?access_token={token}",
+        [WebGet(UriTemplate = "/students/{username}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a student.")]
-        Student GetStudent(string username, string token);
+        Student GetStudent(string username, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -177,11 +177,11 @@ namespace SiLabI
         GetResponse<User> GetProfessors(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/professors/{username}/?access_token={token}",
+        [WebGet(UriTemplate = "/professors/{username}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a professor.")]
-        User GetProfessor(string username, string token);
+        User GetProfessor(string username, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -210,7 +210,6 @@ namespace SiLabI
         Description("Delete a professor.")]
         void DeleteProfessor(string id, BaseRequest request);
 
-
         /*
          * COURSES ENDPOINTS.
          */
@@ -223,11 +222,11 @@ namespace SiLabI
         GetResponse<Course> GetCourses(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/courses/{id}/?access_token={token}",
+        [WebGet(UriTemplate = "/courses/{id}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a course.")]
-        Course GetCourse(string id, string token);
+        Course GetCourse(string id, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -256,7 +255,6 @@ namespace SiLabI
         Description("Delete a course.")]
         void DeleteCourse(string id, BaseRequest request);
 
-
         /*
          * GROUPS ENDPOINTS.
          */
@@ -269,11 +267,11 @@ namespace SiLabI
         GetResponse<Group> GetGroups(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/groups/{id}/?access_token={token}",
+        [WebGet(UriTemplate = "/groups/{id}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a group.")]
-        Group GetGroup(string id, string token);
+        Group GetGroup(string id, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -303,11 +301,11 @@ namespace SiLabI
         void DeleteGroup(string id, BaseRequest request);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/groups/{id}/students/?access_token={token}",
+        [WebGet(UriTemplate = "/groups/{id}/students/?access_token={token}&q={query}&sort={sort}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve the list of students of a group.")]
-        List<Student> GetGroupStudents(string id, string token);
+        List<Student> GetGroupStudents(string id, string token, string query, string sort, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -335,5 +333,95 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete a list of students from a group.")]
         void DeleteStudentsFromGroup(string id, StudentByGroupRequest request);
+
+        /*
+         * SOFTWARE ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/software/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of software.")]
+        GetResponse<Software> GetSoftwares(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/software/{id}/?access_token={token}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a software.")]
+        Software GetSoftware(string id, string token, string fields);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/software/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create a software.")]
+        Software CreateSoftware(SoftwareRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/software/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update a software.")]
+        Software UpdateSoftware(string id, SoftwareRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/software/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a software.")]
+        void DeleteSoftware(string id, BaseRequest request);
+
+        /*
+         * LABORATORY ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/laboratories/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of laboratories.")]
+        GetResponse<Laboratory> GetLaboratories(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/laboratories/{id}/?access_token={token}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a laboratory.")]
+        Laboratory GetLaboratory(string id, string token, string fields);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/laboratories/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create a laboratory.")]
+        Laboratory CreateLaboratory(LaboratoryRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/laboratories/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update a laboratory.")]
+        Laboratory UpdateLaboratory(string id, LaboratoryRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/laboratories/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a laboratory.")]
+        void DeleteLaboratory(string id, BaseRequest request);
     }
 }

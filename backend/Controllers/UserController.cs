@@ -15,9 +15,9 @@ using System.Web;
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// User logic.
+    /// Perform CRUD operations for Users.
     /// </summary>
-    public class UserController
+    public class UserController : IController<User>
     {
         private UserDataAccess _UserDA;
 
@@ -29,12 +29,7 @@ namespace SiLabI.Controllers
             this._UserDA = new UserDataAccess();
         }
 
-        /// <summary>
-        /// Retrieves a list of users based on a query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The list of users.</returns>
-        public GetResponse<User> GetUsers(QueryString request)
+        public GetResponse<User> GetAll(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
@@ -47,8 +42,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<User> response = new GetResponse<User>();
-            DataTable table = _UserDA.GetUsers(request);
-            int count = _UserDA.GetUsersCount(request);     
+            DataTable table = _UserDA.GetAll(request);
+            int count = _UserDA.GetCount(request);     
 
             foreach (DataRow row in table.Rows)
             {
@@ -61,24 +56,35 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Get an user.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="token">The access token.</param>
-        /// <returns>The user.</returns>
-        public User GetUser(string username, string token)
+        public User GetOne(string username, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _UserDA.GetUser(username);
+            DataRow row = _UserDA.GetOne(username, request);
+            return User.Parse(row);
+        }
 
-            if (table.Rows.Count == 0)
-            {
-                throw new WcfException(HttpStatusCode.BadRequest, "Usuario no encontrado");
-            }
+        public User GetOne(int id, QueryString request)
+        {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+            DataRow row = _UserDA.GetOne(id, request);
+            return User.Parse(row);
+        }
 
-            return User.Parse(table.Rows[0]);
+        public User Create(BaseRequest request)
+        {
+            throw new InvalidOperationException("An user cannot be created.");
+        }
+
+        public User Update(int id, BaseRequest request)
+        {
+            throw new InvalidOperationException("An user cannot be updated.");
+        }
+
+        public void Delete(int id, BaseRequest request)
+        {
+            throw new InvalidOperationException("An user cannot be deleted.");
         }
     }
 }

@@ -20,7 +20,7 @@ namespace SiLabI.Model
         protected string _code;
 
         /// <summary>
-        /// The first name.
+        /// The name.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "name")]
         public virtual string Name
@@ -30,7 +30,7 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The first lastname.
+        /// The code.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "code")]
         public virtual string Code

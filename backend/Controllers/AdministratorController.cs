@@ -15,9 +15,9 @@ using System.Web;
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// Administrator logic.
+    /// Perform CRUD operations for Administrators.
     /// </summary>
-    public class AdministratorController
+    public class AdministratorController : IController<User>
     {
         private AdministratorDataAccess _AdminDA;
 
@@ -29,12 +29,7 @@ namespace SiLabI.Controllers
             this._AdminDA = new AdministratorDataAccess();
         }
 
-        /// <summary>
-        /// Retrieves a list of administrators based on a query.
-        /// </summary>
-        /// <param name="request">The query.</param>
-        /// <returns>The list of administrators.</returns>
-        public GetResponse<User> GetAdministrators(QueryString request)
+        public GetResponse<User> GetAll(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
@@ -47,8 +42,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<User> response = new GetResponse<User>();
-            DataTable table = _AdminDA.GetAdministrators(request);
-            int count = _AdminDA.GetAdministratorsCount(request);
+            DataTable table = _AdminDA.GetAll(request);
+            int count = _AdminDA.GetCount(request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -61,50 +56,34 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        /// <summary>
-        /// Get an administrator.
-        /// </summary>
-        /// <param name="id">The user identification.</param>
-        /// <param name="token">The access token.</param>
-        /// <returns>The administrator.</returns>
-        public User GetAdministrator(int id, string token)
+        public User GetOne(int id, QueryString request)
         {
-            Dictionary<string, object> payload = Token.Decode(token);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
-            DataTable table = _AdminDA.GetAdministrator(id);
-
-            if (table.Rows.Count == 0)
-            {
-                throw new WcfException(HttpStatusCode.BadRequest, "Administrador no encontrado");
-            }
-
-            return User.Parse(table.Rows[0]);
+            DataRow row = _AdminDA.GetOne(id, request);
+            return User.Parse(row);
         }
 
-        /// <summary>
-        /// Creates an administrator.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>The user data.</returns>
-        public User CreateAdministrator(int id, BaseRequest request)
+        public User Create(BaseRequest request)
         {
-            if (request == null || !request.IsValid())
+            AdministratorRequest adminRequest = (request as AdministratorRequest);
+            if (adminRequest == null || !adminRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-            
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+
+            Dictionary<string, object> payload = Token.Decode(adminRequest.AccessToken);
             Token.CheckPayload(payload, UserType.Admin);
-            DataTable table = _AdminDA.CreateAdministrator(id);
-            return User.Parse(table.Rows[0]);
+            DataRow row = _AdminDA.Create(adminRequest.Id);
+            return User.Parse(row);
         }
 
-        /// <summary>
-        /// Deletes an administrator.
-        /// </summary>
-        /// <param name="id">The user identification.</param>
-        /// <param name="request">The request.</param>
-        public void DeleteAdministrator(int id, BaseRequest request)
+        public User Update(int id, BaseRequest request)
+        {
+            throw new InvalidOperationException("An administrator cannot be updated.");
+        }
+
+        public void Delete(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -113,7 +92,7 @@ namespace SiLabI.Controllers
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Admin);
-            _AdminDA.DeleteAdministrator(id);
+            _AdminDA.Delete(id);
         }
     }
 }

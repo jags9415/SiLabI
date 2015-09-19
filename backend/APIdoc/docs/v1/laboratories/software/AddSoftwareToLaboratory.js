@@ -1,22 +1,22 @@
 /**
- * @api {delete} /v1/groups/:id/students Remove students from a group.
+ * @api {post} /v1/laboratories/:id/software Add software to a laboratory.
  * @apiVersion 1.0.0
- * @apiName RemoveStudentsFromGroup
- * @apiGroup Groups/Students
+ * @apiName AddSoftwareToLaboratory
+ * @apiGroup Laboratory/Software
  * @apiPermission operator
  * @apiUse BaseError
  *
- * @apiDescription Remove students from a group.
+ * @apiDescription Add software to a laboratory.
  *
  * @apiExample Example:
- *     POST /groups/45/students HTTP/1.1
+ *     POST /laboratories/45/software HTTP/1.1
  *     Content-Type: application/json
  *     {
- *       "students": ["201242273", "201390652", "201503214"],
+ *       "software": ["SF-01", "SF-02", "SF-03"],
  *       "access_token": "..."
  *     }
  *
- * @apiParam {Object[]}				  students  The students list.
+ * @apiParam {Object[]}				  software  The software list.
  * @apiParam {String}						access_token    The access token.
  *
  * @apiSuccessExample {json} Success-Response:

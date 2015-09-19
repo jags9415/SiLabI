@@ -12,6 +12,7 @@
  * 		GET /courses/87 HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
+ * @apiParam {String[]} [fields]		A list of fields to include in the results.
  *
  * @apiSuccess {Number}									    id 		      The course identification.
  * @apiSuccess {String}									    name 			  The course name.
