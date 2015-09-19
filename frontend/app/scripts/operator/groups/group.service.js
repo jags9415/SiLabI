@@ -13,6 +13,7 @@
         this.Update = Update;
         this.Create = Create;
         this.Delete = Delete;
+        this.GetStudents = GetStudents;
 
         function GetAll(request) {
           if (!request) request = {};
@@ -45,6 +46,13 @@
           var requestBody = {};
           requestBody.access_token = $localStorage['access_token'];
           return RequestService.delete('/groups/' + GroupID, requestBody);
+        }
+
+        function GetStudents(GroupID)
+        {
+          var requestBody = {};
+          requestBody.access_token = $localStorage['access_token'];
+          return RequestService.get('/groups/' + GroupID +'/students', requestBody);
         }
     }
 })();

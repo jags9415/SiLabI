@@ -7,20 +7,11 @@
   </ol>
   <div class="table-search" style="margin-bottom: 3%;">
     <div class="row">
-      <div class="col-md-5 col-xs-5">
+      <div class="col-md-10 col-xs-10">
         <form class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
             <input class="form-control" placeholder="Número" name="searchInput" type="text" ng-change="GroupList.search()" ng-model="GroupList.searched.number">
-          </div>
-          <button type="submit" name="button" hidden></button>
-        </form>
-      </div>
-      <div class="col-md-5 col-xs-5">
-        <form class="form-horizontal">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Nombre Curso" name="searchInput" type="text" ng-change="GroupList.search()" ng-model="GroupList.searched.course.name">
           </div>
           <button type="submit" name="button" hidden></button>
         </form>
@@ -45,10 +36,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="group in GroupList.courses">
+        <tr ng-repeat="group in GroupList.groups">
           <td>{{ group.number }}</td>
           <td>{{ group.course.name }}</td>
-          <td>{{ group.course.state }}</td>
+          <td>
+            <span class="label"
+              ng-class="{ 'label-success': group.state === 'Activo',
+                          'label-danger': group.state === 'Inactivo'}" >
+              {{ group.state }}
+            </span>
+          </td>
           <td style="text-align: center">
             <a class='btn btn-info btn-sm' ng-click="GroupList.open(group.id)">
               <span class="glyphicon glyphicon-eye-open"></span>

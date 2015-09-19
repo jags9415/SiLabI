@@ -15,7 +15,7 @@
       vm.searched = {};
       vm.limit = 20;
       vm.request = {
-        fields : "id,number,state"
+        fields : "id,number,course,state"
       };
 
       vm.open = openGroup;
@@ -65,7 +65,7 @@
         }
 
         if (vm.searched.name) {
-          vm.request.query.course.name = {
+          vm.request.query['course.name'] = {
             operation: "like",
             value: '*' + vm.searched.name.replace(' ', '*') + '*'
           }
@@ -75,7 +75,7 @@
       }
 
       function isEmpty() {
-        return vm.courses.length == 0;
+        return vm.groups.length == 0;
       }
 
       function isLoaded() {

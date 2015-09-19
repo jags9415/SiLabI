@@ -22,15 +22,16 @@
       vm.create_group = {};
       vm.deleteStudent = deleteStudent;
       vm.fieldsReady = fieldsReady;
+      vm.searchCourse = searchCourse;
       vm.course_request = {
-        fields : "id,code,name"
+        "fields" : "id,code,name",
+        "query": {}
       };
 
       activate();
 
       function activate() {
         getPeriods();
-        getCourses();
       }
 
       function fieldsReady () 
@@ -55,6 +56,20 @@
         if (vm.professor_username) {
           ProfessorService.GetOne(vm.professor_username)
           .then(setProfessor)
+          .catch(handleError);
+        }
+      }
+
+      function searchCourse()
+      {
+        vm.course = {};
+        if (vm.course_code) {
+          vm.course_request.query.code = {
+              operation: "eq",
+              value: vm.course_code
+            };
+          CourseService.GetAll(vm.course_request)
+          .then(setCourse)
           .catch(handleError);
         }
       }
@@ -87,9 +102,8 @@
         vm.period = periods[0];
       }
 
-      function setCourses(courses) {
-        vm.courses = courses.results;
-        vm.course = course[0];
+      function setCourse(courses) {
+        vm.course = courses.results[0];
       }
 
       function setProfessor(user) {

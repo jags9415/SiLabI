@@ -15,6 +15,8 @@
       vm.id = $routeParams.id;
       vm.update = updateGroup;
       vm.delete = deleteGroup;
+      vm.deleteStudent = deleteStudent;
+      vm.searchStudent = searchStudent;
 
       activate();
 
@@ -31,8 +33,19 @@
 
       function updateGroup() {
         if (vm.id) {
-          GroupService.Update(vm.group.id, vm.group)
-          .then(setGroup)
+          var stds = getStudentsId();
+          if(stds.length > 0)
+          {
+            vm.group.students = stds;
+          }
+
+          var request = 
+          {
+              "students": vm.group.students,
+              "number": vm.group.number
+          };
+          GroupService.Update(vm.group.id, request)
+          .then(showUpdate)
           .catch(handleError);
         }
       }
@@ -51,30 +64,31 @@
 
       function setGroup(group) {
         vm.group = group;
-        //setStudents();
+        getStudents();
+      }
+
+      function showUpdate (group) {
+        setGroup(group);
+        MessageService.success("Grupo actualizado con éxito.");
       }
 
       function setStudent(user) {
         if(!contains(user))
         {
           vm.students.push(user);
-          vm.group.students.push(user.id);
         }
       }
 
-      function setStudents () {
-        for (var i = 0; i < vm.group.students.length; i++) 
-        {
-          StudentService.GetOne(vm.student_username).then(
-            function(data) 
-            {
-              vm.students.push(data);
-            },
-            function(error)
-            {
-              handleError(error);
-            });
-        }
+      function getStudents()
+      {
+        GroupService.GetStudents(vm.group.id)
+        .then(setStudents)
+        .catch(handleError);
+      }
+
+      function setStudents(students)
+      {
+        vm.students = students;
       }
 
       function deleteStudent (id) {
@@ -84,7 +98,6 @@
           if(vm.students[i].id == id)
           {
             vm.students.splice(i, 1);
-            vm.group.students.splice(i, 1)
             break;
           }
         }
@@ -108,6 +121,15 @@
           .then(setStudent)
           .catch(handleError);
         }
+      }
+
+      function getStudentsId () {
+        var stds = [];
+        for (var i = 0; i < vm.students.length; i++) 
+        {
+          stds.push(vm.students[i].username);
+        }
+        return stds;
       }
 
       function redirectTogroups(result) {

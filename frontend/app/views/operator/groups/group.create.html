@@ -20,27 +20,32 @@
         </button>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-10 col-xs-10">
+        <div class="form-group">
+          <input type="text" class="form-control" id="coursecode" placeholder="Código de Curso" ng-model="GroupCreate.course_code">
+        </div>
+      </div>
+      <div class="col-md-2 col-xs-2">
+        <button type="submit" class="btn btn-default" ng-click="GroupCreate.searchCourse()">
+          <i class="glyphicon glyphicon-search"></i>
+          <span class="hidden-xs">Buscar</span>
+        </button>
+      </div>
+    </div>
   </form>
   <form>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
           <label for="name">Profesor</label>
-          <input type="text" class="form-control" id="professorName" placeholder="username" ng-model="GroupCreate.professor.full_name" readonly>
+          <input type="text" class="form-control" id="professorName" ng-model="GroupCreate.professor.full_name" readonly>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="course">* Curso</label>
-          <ui-select id="course" ng-model="GroupCreate.course">
-            <ui-select-match placeholder="{{$select.selected.code + ' ' + $select.selected.name}}">
-              {{$select.selected.code + ' ' + $select.selected.name}}
-            </ui-select-match>
-            <ui-select-choices repeat="course in GroupCreate.courses | filter: $select.search">
-              <span ng-bind-html="course.code | highlight: $select.search"></span>
-              <span ng-bind-html="course.name | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
+          <label for="name">* Curso</label>
+          <input type="text" class="form-control" id="professorName" ng-model="GroupCreate.course.name" readonly>
         </div>
       </div>
     </div>
