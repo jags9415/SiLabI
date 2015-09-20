@@ -5,12 +5,13 @@
     .module('silabi')
     .controller('LabListController', LabListController);
 
-  LabListController.$inject = ['$location', 'LabService', 'MessageService'];
+  LabListController.$inject = ['$location', 'LabService', 'MessageService', 'StateService'];
 
-  function LabListController($location, LabService, MessageService) {
+  function LabListController($location, LabService, MessageService, StateService) {
     var vm = this;
 
     vm.loaded = false;
+    vm.advanceSearch = false;
     vm.labs = [];
     vm.searched = {};
     vm.limit = 20;
@@ -24,6 +25,7 @@
     vm.isEmpty = isEmpty;
     vm.isLoaded = isLoaded;
     vm.loadPage = loadPage;
+    vm.toggleAdvanceSearch = toggleAdvanceSearch;
 
     activate();
 
@@ -37,6 +39,10 @@
       vm.totalPages = page;
       vm.page = page;
       loadPage();
+
+      StateService.GetLabStates()
+      .then(setStates)
+      .catch(handleError);
     }
 
     function loadPage() {
@@ -66,9 +72,16 @@
 
       if (vm.searched.seats) {
       vm.request.query.seats = {
-        operation: "eq",
-        value: vm.searched.seats.replace(' ', '*')
+        operation: "like",
+        value: vm.searched.seats
       }
+      }
+
+      if (vm.searched.state) {
+        vm.request.query.state = {
+          operation: "like",
+          value: vm.searched.state.value
+        }
       }
 
       loadPage();
@@ -80,6 +93,13 @@
 
     function isLoaded() {
       return vm.loaded;
+    }
+
+    function toggleAdvanceSearch() {
+      vm.advanceSearch = !vm.advanceSearch;
+      delete vm.searched.code;
+      delete vm.searched.name;
+      delete vm.searched.state;
     }
 
     function setLabs(data) {
@@ -97,6 +117,10 @@
       .then(loadPage)
       .catch(handleError);
       });
+    }
+
+    function setStates(states) {
+      vm.states = states;
     }
 
     function handleError(data) {

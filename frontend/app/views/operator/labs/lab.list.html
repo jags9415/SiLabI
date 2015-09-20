@@ -7,20 +7,14 @@
   </ol>
   <div class="table-search" style="margin-bottom: 3%;">
     <div class="row">
-      <div class="col-md-5 col-xs-5">
+      <div class="col-md-10 col-xs-10">
         <form class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Nombre" name="searchInput" type="text" ng-change="LabList.search()" ng-model="LabList.searched.name">
+            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="LabList.search()" ng-model="LabList.searched.name">
           </div>
-          <button type="submit" name="button" hidden></button>
-        </form>
-      </div>
-      <div class="col-md-5 col-xs-5">
-        <form class="form-horizontal">
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Asientos" name="searchInput" type="text" ng-change="LabList.search()" ng-model="LabList.searched.seats">
+            <a href="" ng-click="LabList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
           </div>
           <button type="submit" name="button" hidden></button>
         </form>
@@ -32,7 +26,7 @@
         </a>
       </div>
     </div>
-    <div class="row" ng-show="false">
+    <div class="row" ng-show="LabList.advanceSearch">
       <div class="col-md-12">
         <form class="form-inline advanced-search">
           <div class="row">
@@ -40,21 +34,26 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Usuario">
+                    <input type="number" class="form-control" id="seats" name="seats" placeholder="Asientos" ng-model="LabList.searched.seats">
                   </div>
                 </div>
                 <div class="col-md-4">
-                </div>
-                <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="email" placeholder="Correo">
+                    <ui-select id="state" ng-model="LabList.searched.state">
+                      <ui-select-match placeholder="Estado" allow-clear="true">
+                        {{$select.selected.name}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="state in LabList.states">
+                        <span ng-bind-html="state.name"></span>
+                      </ui-select-choices>
+                    </ui-select>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
-                <button type="submit" class="btn btn-default">
+                <button type="submit" class="btn btn-default" ng-click="LabList.search()">
                   <i class="glyphicon glyphicon-search"></i> Buscar
                 </button>
               </div>
