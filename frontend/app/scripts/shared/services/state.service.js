@@ -13,6 +13,7 @@
       this.GetAdministradorStates = GetAdministradorStates;
       this.GetOperatorStates = GetAdministradorStates;
       this.GetGroupStates = GetGroupStates;
+      this.GetLabStates = GetLabStates;
 
       function GetStudentStates() {
         var defer = $q.defer();
@@ -59,6 +60,26 @@
       }
 
       function GetGroupStates() {
+        var defer = $q.defer();
+        var states = [
+          {
+            name: 'Cualquiera',
+            value: '*'
+          },
+          {
+            name: 'Activo',
+            value: 'Activo'
+          },
+          {
+            name: 'Inactivo',
+            value: 'Inactivo'
+          }
+        ];
+        defer.resolve(states);
+        return defer.promise;
+      }
+
+      function GetLabStates() {
         var defer = $q.defer();
         var states = [
           {

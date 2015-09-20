@@ -7,20 +7,14 @@
   </ol>
   <div class="table-search" style="margin-bottom: 3%;">
     <div class="row">
-      <div class="col-md-5 col-xs-5">
+      <div class="col-md-10 col-xs-10">
         <form class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Código" name="searchInput" type="text" ng-change="CourseList.search()" ng-model="CourseList.searched.code">
+            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="CourseList.search()" ng-model="CourseList.searched.name">
           </div>
-          <button type="submit" name="button" hidden></button>
-        </form>
-      </div>
-      <div class="col-md-5 col-xs-5">
-        <form class="form-horizontal">
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Nombre" name="searchInput" type="text" ng-change="CourseList.search()" ng-model="CourseList.searched.name">
+            <a href="" ng-click="CourseList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
           </div>
           <button type="submit" name="button" hidden></button>
         </form>
@@ -32,7 +26,7 @@
         </a>
       </div>
     </div>
-    <div class="row" ng-show="false">
+    <div class="row" ng-show="CourseList.advanceSearch">
       <div class="col-md-12">
         <form class="form-inline advanced-search">
           <div class="row">
@@ -40,21 +34,26 @@
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Usuario">
+                    <input type="text" class="form-control" placeholder="Código" ng-model="CourseList.searched.code">
                   </div>
                 </div>
                 <div class="col-md-4">
-                </div>
-                <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="email" placeholder="Correo">
+                    <ui-select id="state" ng-model="CourseList.searched.state">
+                      <ui-select-match placeholder="Estado" allow-clear="true">
+                        {{$select.selected.name}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="state in CourseList.states">
+                        <span ng-bind-html="state.name"></span>
+                      </ui-select-choices>
+                    </ui-select>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
-                <button type="submit" class="btn btn-default">
+                <button type="submit" class="btn btn-default" ng-click="CourseList.search()">
                   <i class="glyphicon glyphicon-search"></i> Buscar
                 </button>
               </div>
@@ -71,6 +70,7 @@
         <tr>
           <th>Código</th>
           <th>Nombre</th>
+          <th>Estado</th>
           <th style="text-align: center">Acción</th>
         </tr>
       </thead>
@@ -78,6 +78,14 @@
         <tr ng-repeat="course in CourseList.courses">
           <td>{{ course.code }}</td>
           <td>{{ course.name }}</td>
+          <td>
+            <span class="label"
+              ng-class="{ 'label-success': course.state === 'Activo',
+                          'label-danger': course.state === 'Inactivo'
+                        }" >
+              {{ course.state }}
+            </span>
+          </td>
           <td style="text-align: center">
             <a class='btn btn-info btn-sm' ng-click="CourseList.open(course.id)">
               <span class="glyphicon glyphicon-eye-open"></span>

@@ -5,17 +5,18 @@
         .module('silabi')
         .controller('CourseListController', CourseListController);
 
-    CourseListController.$inject = ['$location', 'CourseService', 'MessageService'];
+    CourseListController.$inject = ['$location', 'CourseService', 'MessageService', 'StateService'];
 
-    function CourseListController($location, CourseService, MessageService) {
+    function CourseListController($location, CourseService, MessageService, StateService) {
         var vm = this;
 
         vm.loaded = false;
+        vm.advanceSearch = false;
         vm.courses = [];
         vm.searched = {};
         vm.limit = 20;
         vm.request = {
-          fields : "id,code,name"
+          fields : "id,code,name,state"
         };
 
         vm.open = openCourse;
@@ -24,6 +25,7 @@
         vm.isEmpty = isEmpty;
         vm.isLoaded = isLoaded;
         vm.loadPage = loadPage;
+        vm.toggleAdvanceSearch = toggleAdvanceSearch;
 
         activate();
 
@@ -37,6 +39,10 @@
           vm.totalPages = page;
           vm.page = page;
           loadPage();
+
+          StateService.GetLabStates()
+          .then(setStates)
+          .catch(handleError);
         }
 
         function loadPage() {
@@ -71,6 +77,13 @@
             }
           }
 
+          if (vm.searched.state) {
+            vm.request.query.state = {
+              operation: "like",
+              value: vm.searched.state.value
+            }
+          }
+
           loadPage();
         }
 
@@ -80,6 +93,13 @@
 
         function isLoaded() {
           return vm.loaded;
+        }
+
+        function toggleAdvanceSearch() {
+          vm.advanceSearch = !vm.advanceSearch;
+          delete vm.searched.code;
+          delete vm.searched.name;
+          delete vm.searched.state;
         }
 
         function setCourses(data) {
@@ -97,6 +117,11 @@
             .then(loadPage)
             .catch(handleError);
           });
+        }
+
+
+        function setStates(states) {
+          vm.states = states;
         }
 
         function handleError(data) {
