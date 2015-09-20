@@ -139,6 +139,11 @@
           controller: 'LabAddController',
           controllerAs: 'LabAdd'
         })
+        .when('/Operador/Laboratorios/:id', {
+          templateUrl: 'views/operator/labs/lab.detail.html',
+          controller: 'LabDetailController',
+          controllerAs: 'LabDetail'
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })

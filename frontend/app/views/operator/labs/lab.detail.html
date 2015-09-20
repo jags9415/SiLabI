@@ -1,0 +1,55 @@
+<div>
+  <h2>Laboratorio</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li><a href="#Operador/Laboratorios">Laboratorios</a></li>
+    <li class="active">Detalle</li>
+  </ol>
+  <form name="updateLabForm">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group" show-errors>
+          <label for="name" class="control-label">Nombre</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="LabDetail.lab.name" ng-trim required>
+          <p class="help-block" ng-if="updateLabForm.name.$error.required">Nombre requerido.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group" show-errors>
+          <label for="name" class="control-label">Asientos</label>
+          <input type="number" class="form-control" id="name" min="0" name="name" placeholder="Asientos" ng-model="LabDetail.lab.seats" ng-trim required>
+          <p class="help-block" ng-if="updateLabForm.name.$error.required">Cantidad de asientos requerida.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="created_at" class="control-label">Fecha Creación</label>
+          <input type="text" class="form-control" id="created_at" name="created_at" placeholder="Fecha Creación" ng-value="LabDetail.lab.created_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly></input>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="updated_at" class="control-label">Fecha Actualización</label>
+          <input type="text" class="form-control" id="updated_at" name="updated_at" placeholder="Fecha Actualización" ng-value="LabDetail.lab.updated_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-md-6 text-center">
+        <button type="submit" class="btn btn-lg btn-info" ng-click="LabDetail.update()" ng-disabled="updateLabForm.$invalid">
+          <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+        </button>
+      </div>
+      <div class="col-md-6 text-center">
+        <button type="submit" class="btn btn-lg btn-danger" ng-click="LabDetail.delete()">
+          <i class="glyphicon glyphicon-trash"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
