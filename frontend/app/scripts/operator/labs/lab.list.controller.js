@@ -97,7 +97,7 @@
 
     function toggleAdvanceSearch() {
       vm.advanceSearch = !vm.advanceSearch;
-      delete vm.searched.code;
+      delete vm.searched.seats;
       delete vm.searched.name;
       delete vm.searched.state;
     }
