@@ -20,7 +20,7 @@
       <div class="col-md-12">
         <div class="form-group" show-errors>
           <label for="seats" class="control-label">Asientos</label>
-          <input type="text" class="form-control" id="seats" name="seats" placeholder="Asientos" ng-model="LabAdd.lab.seats" ng-trim required>
+          <input type="number" class="form-control" id="seats" min="0" name="seats" placeholder="Asientos" ng-model="LabAdd.lab.seats" ng-trim required>
           <p class="help-block" ng-if="createLabForm.code.$error.required">Cantidad de asientos requerida.</p>
         </div>
       </div>
