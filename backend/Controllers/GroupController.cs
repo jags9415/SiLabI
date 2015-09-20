@@ -120,7 +120,7 @@ namespace SiLabI.Controllers
         /// Get the list of students of a group.
         /// </summary>
         /// <param name="id">The group identification.</param>
-        /// <param name="token">The access token</param>
+        /// <param name="request">The query.</param>
         public List<Student> GetGroupStudents(int id, QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);

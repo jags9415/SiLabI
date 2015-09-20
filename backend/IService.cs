@@ -423,5 +423,39 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete a laboratory.")]
         void DeleteLaboratory(string id, BaseRequest request);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/laboratories/{id}/software/?access_token={token}&q={query}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve the list of software of a laboratory.")]
+        List<Software> GetLaboratorySoftware(string id, string token, string query, string sort, string fields);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/laboratories/{id}/software/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Add a list of software to a laboratory.")]
+        void AddSoftwareToLaboratory(string id, SoftwareByLaboratoryRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/laboratories/{id}/software/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update the list of software of a laboratory.")]
+        void UpdateLaboratorySoftware(string id, SoftwareByLaboratoryRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/laboratories/{id}/software/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a list of software from a laboratory.")]
+        void DeleteSoftwareFromLaboratory(string id, SoftwareByLaboratoryRequest request);
     }
 }

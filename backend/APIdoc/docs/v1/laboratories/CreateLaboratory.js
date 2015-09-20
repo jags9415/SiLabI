@@ -14,7 +14,8 @@
  *     {
  *       "laboratory": {
  *         "name": "Laboratorio B1",
- *         "seats": 20
+ *         "seats": 20,
+ *         "software": ["SF-01", "SF-03", "SF-34"]
  *       },
  *       "access_token": "..."
  *     }
@@ -22,6 +23,7 @@
  * @apiParam {Object}						laboratory 		     The laboratory data.
  * @apiParam {String}						laboratory.name    The laboratory name.
  * @apiParam {String}						laboratory.seats    The laboratory available seats.
+ * @apiParam {String[]}						[laboratory.software]    The software list.
  * @apiParam {String}						access_token   The access token.
  *
  * @apiSuccess {Number}									    id 		      The laboratory identification.

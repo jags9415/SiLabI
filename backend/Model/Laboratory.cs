@@ -16,6 +16,7 @@ namespace SiLabI.Model
     {
         protected string _name;
         protected int? _seats;
+        protected List<string> _software;
 
         /// <summary>
         /// The name.
@@ -35,6 +36,16 @@ namespace SiLabI.Model
         {
             set { _seats = value; }
             get { return _seats; }
+        }
+
+        /// <summary>
+        /// The software list.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "software")]
+        public virtual List<string> Software
+        {
+            set { _software = value; }
+            get { return _software; }
         }
 
         /// <summary>

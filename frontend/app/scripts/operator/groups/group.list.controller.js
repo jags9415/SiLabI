@@ -59,8 +59,8 @@
 
         if (vm.searched.number) {
           vm.request.query.number = {
-            operation: "like",
-            value: '*' + vm.searched.number.replace(' ', '*') + '*'
+            operation: "eq",
+            value: vm.searched.number
           }
         }
 

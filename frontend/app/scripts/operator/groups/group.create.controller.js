@@ -9,24 +9,25 @@
 
     function GroupCreateController(GroupService, CourseService, StudentService, ProfessorService, PeriodService, MessageService) {
       var vm = this;
-      vm.periods = [];
-      vm.courses = [];
-      vm.students = [];
-      vm.currentYear = new Date().getFullYear();
+
+      vm.group = {};
       vm.professor = {};
       vm.course = {};
+      vm.periods = [];
+      vm.students = [];
+      vm.currentYear = new Date().getFullYear();
       vm.year = vm.currentYear;
-      vm.searchProfessor = searchProfessor;
+
+      vm.getProfessors = getProfessors;
+      vm.getCourses = getCourses;
+      vm.setProfessor = setProfessor;
+      vm.setCourse = setCourse;
+      vm.checkProfessor = checkProfessor;
+      vm.checkCourse = checkCourse;
       vm.searchStudent = searchStudent;
       vm.create = create;
-      vm.create_group = {};
       vm.deleteStudent = deleteStudent;
       vm.fieldsReady = fieldsReady;
-      vm.searchCourse = searchCourse;
-      vm.course_request = {
-        "fields" : "id,code,name",
-        "query": {}
-      };
 
       activate();
 
@@ -34,9 +35,8 @@
         getPeriods();
       }
 
-      function fieldsReady () 
-      {
-        return vm.professor && vm.period && vm.year && vm.course && vm.create_group.number; 
+      function fieldsReady () {
+        return vm.professor && vm.period && vm.year && vm.course && vm.group.number;
       }
 
       function getPeriods() {
@@ -45,18 +45,51 @@
         .catch(handleError);
       }
 
-      function getCourses () {
-        CourseService.GetAll(vm.course_request)
-        .then(setCourses)
-        .catch(handleError);
+      function getProfessors(name) {
+        var request = {
+          limit: 10,
+          query: {
+            full_name: {
+              operation: "like",
+              value: '*' + name + '*'
+            }
+          }
+        }
+
+        return ProfessorService.GetAll(request)
+        .then(function(data) {
+          return data.results;
+        });
       }
 
-      function searchProfessor() {
-        vm.professor = {};
-        if (vm.professor_username) {
-          ProfessorService.GetOne(vm.professor_username)
-          .then(setProfessor)
-          .catch(handleError);
+      function getCourses(name) {
+        var request = {
+          limit: 10,
+          query: {
+            name: {
+              operation: "like",
+              value: '*' + name + '*'
+            }
+          }
+        }
+
+        return CourseService.GetAll(request)
+        .then(function(data) {
+          return data.results;
+        });
+      }
+
+      function checkProfessor() {
+        if (vm.professor_name != vm.professor.full_name || _.isEmpty(vm.professor)) {
+          vm.professor_name = "";
+          vm.professor = {};
+        }
+      }
+
+      function checkCourse() {
+        if (vm.course_name != vm.course.name || _.isEmpty(vm.course)) {
+          vm.course_name = "";
+          vm.course = {};
         }
       }
 
@@ -84,14 +117,15 @@
       }
 
       function create() {
-        if (vm.professor && vm.period && vm.year && vm.course && vm.create_group.number) 
-        {
+        console.log(vm.professor);
+        if (vm.professor && vm.period && vm.year && vm.course && vm.group.number) {
           vm.period.year = vm.year;
-          vm.create_group.period = vm.period;
-          vm.create_group.course = vm.course.code;
-          vm.create_group.professor = vm.professor.username;
-          vm.create_group.students = getStudents();
-          GroupService.Create(vm.create_group)
+          vm.group.period = vm.period;
+          vm.group.course = vm.course.code;
+          vm.group.professor = vm.professor.username;
+          vm.group.students = getStudents();
+
+          GroupService.Create(vm.group)
           .then(handleCreateSuccess)
           .catch(handleError);
         }
@@ -102,8 +136,8 @@
         vm.period = periods[0];
       }
 
-      function setCourse(courses) {
-        vm.course = courses.results[0];
+      function setCourse(course) {
+        vm.course = course;
       }
 
       function setProfessor(user) {
@@ -111,15 +145,14 @@
       }
 
       function setStudent(user) {
-        if(!contains(user))
-        {
+        if(!contains(user)) {
           vm.students.push(user);
         }
       }
 
       function deleteStudent (id) {
         var i;
-        for (i = 0; i < vm.students.length; i++) 
+        for (i = 0; i < vm.students.length; i++)
         {
           if(vm.students[i].id == id)
           {
@@ -129,8 +162,8 @@
         }
       }
 
-      function contains (element) {
-        for (var i = 0; i < vm.students.length; i++) 
+      function contains(element) {
+        for (var i = 0; i < vm.students.length; i++)
         {
           if(vm.students[i].id == element.id)
           {
@@ -142,7 +175,7 @@
 
       function getStudents () {
         var stds = [];
-        for (var i = 0; i < vm.students.length; i++) 
+        for (var i = 0; i < vm.students.length; i++)
         {
           stds.push(vm.students[i].username);
         }

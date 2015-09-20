@@ -67,5 +67,53 @@ namespace SiLabI
             }
             _LaboratoryController.Delete(num, request);
         }
+
+        public void AddSoftwareToLaboratory(string id, SoftwareByLaboratoryRequest request)
+        {
+            int num;
+            if (!Int32.TryParse(id, out num))
+            {
+                throw new InvalidParameterException("id");
+            }
+            _LaboratoryController.AddSoftwareToLaboratory(num, request);
+        }
+
+        public void UpdateLaboratorySoftware(string id, SoftwareByLaboratoryRequest request)
+        {
+            int num;
+            if (!Int32.TryParse(id, out num))
+            {
+                throw new InvalidParameterException("id");
+            }
+            _LaboratoryController.UpdateLaboratorySoftware(num, request);
+        }
+
+        public void DeleteSoftwareFromLaboratory(string id, SoftwareByLaboratoryRequest request)
+        {
+            int num;
+            if (!Int32.TryParse(id, out num))
+            {
+                throw new InvalidParameterException("id");
+            }
+            _LaboratoryController.DeleteSoftwareFromLaboratory(num, request);
+        }
+
+        public List<Software> GetLaboratorySoftware(string id, string token, string query, string sort, string fields)
+        {
+            int num;
+            if (!Int32.TryParse(id, out num))
+            {
+                throw new InvalidParameterException("id");
+            }
+
+            QueryString request = new QueryString(ValidFields.Software);
+
+            request.AccessToken = token;
+            request.ParseQuery(query);
+            request.ParseSort(sort);
+            request.ParseFields(fields);
+
+            return _LaboratoryController.GetLaboratorySoftware(num, request);
+        }
     }
 }

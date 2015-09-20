@@ -22,6 +22,7 @@
  * @apiParam {String}						             [laboratory.name]    The laboratory name.
  * @apiParam {Number}						             [laboratory.seats]   The laboratory available seats.
  * @apiParam {String="Activo, Inactivo"}	   [laboratory.state]	  The laboratory state.
+ * @apiParam {String[]}					            [laboratory.software]    The software list.
  * @apiParam {String}						             access_token     The access token.
  *
  * @apiSuccess {Number}									    id 		      The laboratory identification.

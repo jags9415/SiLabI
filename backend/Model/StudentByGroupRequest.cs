@@ -24,6 +24,6 @@ namespace SiLabI.Model
         public override bool IsValid()
         {
             return base.IsValid() && Students != null;
-        }
+        }
     }
 }

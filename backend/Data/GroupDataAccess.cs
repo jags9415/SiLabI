@@ -87,11 +87,7 @@ namespace SiLabI.Data
             else
             {
                 parameters = new SqlParameter[7];
-
-                DataTable students = new DataTable();
-                students.Columns.Add("Username");
-                group.Students.ForEach(x => students.Rows.Add(x));
-
+                DataTable students = createStudentTable(group.Students);
                 parameters[6] = SqlUtilities.CreateParameter("@students", SqlDbType.Structured, students);
             }
 
@@ -118,11 +114,7 @@ namespace SiLabI.Data
             else
             {
                 parameters = new SqlParameter[9];
-
-                DataTable students = new DataTable();
-                students.Columns.Add("Username");
-                group.Students.ForEach(x => students.Rows.Add(x));
-
+                DataTable students = createStudentTable(group.Students);
                 parameters[8] = SqlUtilities.CreateParameter("@students", SqlDbType.Structured, students);
             }
             
@@ -154,6 +146,14 @@ namespace SiLabI.Data
             SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
             _Connection.executeNonQuery("sp_DeleteGroup", parameters);
+        }
+
+        private DataTable createStudentTable(List<string> usernames)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Username");
+            usernames.ForEach(x => table.Rows.Add(x));
+            return table;
         }
     }
 }

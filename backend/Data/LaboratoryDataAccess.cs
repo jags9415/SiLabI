@@ -78,7 +78,18 @@ namespace SiLabI.Data
         public DataRow Create(object obj)
         {
             Laboratory laboratory = (obj as Laboratory);
-            SqlParameter[] parameters = new SqlParameter[2];
+            SqlParameter[] parameters;
+
+            if (laboratory.Software == null)
+            {
+                parameters = new SqlParameter[2];
+            }
+            else
+            {
+                parameters = new SqlParameter[3];
+                DataTable software = createSoftwareTable(laboratory.Software);
+                parameters[2] = SqlUtilities.CreateParameter("@software", SqlDbType.Structured, software);
+            }
 
             parameters[0] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, laboratory.Name);
             parameters[1] = SqlUtilities.CreateParameter("@seats", SqlDbType.Int, laboratory.Seats);
@@ -90,7 +101,18 @@ namespace SiLabI.Data
         public DataRow Update(int id, object obj)
         {
             Laboratory laboratory = (obj as Laboratory);
-            SqlParameter[] parameters = new SqlParameter[4];
+            SqlParameter[] parameters;
+
+            if (laboratory.Software == null)
+            {
+                parameters = new SqlParameter[4];
+            }
+            else
+            {
+                parameters = new SqlParameter[5];
+                DataTable software = createSoftwareTable(laboratory.Software);
+                parameters[4] = SqlUtilities.CreateParameter("@software", SqlDbType.Structured, software);
+            }
 
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
             parameters[1] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, laboratory.Name);
@@ -106,6 +128,14 @@ namespace SiLabI.Data
             SqlParameter[] parameters = new SqlParameter[1];
             parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
             _Connection.executeNonQuery("sp_DeleteLaboratory", parameters);
+        }
+
+        private DataTable createSoftwareTable(List<string> codes)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Code");
+            codes.ForEach(x => table.Rows.Add(x));
+            return table;
         }
     }
 }

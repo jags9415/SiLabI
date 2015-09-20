@@ -90,6 +90,7 @@
     <Compile Include="Data\LaboratoryDataAccess.cs" />
     <Compile Include="Data\OperatorDataAccess.cs" />
     <Compile Include="Data\ProfessorDataAccess.cs" />
+    <Compile Include="Data\SoftwareByLaboratoryDataAccess.cs" />
     <Compile Include="Data\SoftwareDataAccess.cs" />
     <Compile Include="Data\StudentsByGroupDataAccess.cs" />
     <Compile Include="Endpoints\CourseEndpoints.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Model\Period.cs" />
     <Compile Include="Model\ProfessorRequest.cs" />
     <Compile Include="Model\Software.cs" />
+    <Compile Include="Model\SoftwareByLaboratoryRequest.cs" />
     <Compile Include="Model\SoftwareRequest.cs" />
     <Compile Include="Model\Student.cs" />
     <Compile Include="Configuration\UnknowOperationInvoker.cs" />

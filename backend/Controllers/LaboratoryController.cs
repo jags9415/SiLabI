@@ -17,6 +17,7 @@ namespace SiLabI.Controllers
     public class LaboratoryController : IController<Laboratory>
     {
         private LaboratoryDataAccess _LaboratoryDA;
+        private SoftwareByLaboratoryDataAccess _SoftwareByLaboratoryDA;
 
         /// <summary>
         /// Create a new LaboratoryController.
@@ -24,6 +25,7 @@ namespace SiLabI.Controllers
         public LaboratoryController()
         {
             _LaboratoryDA = new LaboratoryDataAccess();
+            _SoftwareByLaboratoryDA = new SoftwareByLaboratoryDataAccess();
         }
 
         public GetResponse<Laboratory> GetAll(QueryString request)
@@ -111,6 +113,78 @@ namespace SiLabI.Controllers
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
             _LaboratoryDA.Delete(id);
+        }
+
+        /// <summary>
+        /// Get the software list of a laboratory.
+        /// </summary>
+        /// <param name="id">The laboratory identification.</param>
+        /// <param name="request">The query.</param>
+        public List<Software> GetLaboratorySoftware(int id, QueryString request)
+        {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+            DataTable table = _SoftwareByLaboratoryDA.GetAll(id, request);
+            List<Software> software = new List<Software>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                software.Add(Software.Parse(row));
+            }
+
+            return software;
+        }
+
+        /// <summary>
+        /// Add a software list to a laboratory.
+        /// </summary>
+        /// <param name="id">The laboratory identification.</param>
+        /// <param name="request">The request.</param>
+        public void AddSoftwareToLaboratory(int id, SoftwareByLaboratoryRequest request)
+        {
+            if (request == null || !request.IsValid())
+            {
+                throw new InvalidRequestBodyException();
+            }
+
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+            _SoftwareByLaboratoryDA.Create(id, request.Software);
+        }
+
+        /// <summary>
+        /// Update the software list of a laboratory.
+        /// This delete the laboratory list and insert the given software.
+        /// </summary>
+        /// <param name="id">The laboratory identification.</param>
+        /// <param name="request">The request.</param>
+        public void UpdateLaboratorySoftware(int id, SoftwareByLaboratoryRequest request)
+        {
+            if (request == null || !request.IsValid())
+            {
+                throw new InvalidRequestBodyException();
+            }
+
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+            _SoftwareByLaboratoryDA.Update(id, request.Software);
+        }
+
+        /// <summary>
+        /// Delete a software list from a laboratory.
+        /// </summary>
+        /// <param name="id">The laboratory identification.</param>
+        /// <param name="request">The request.</param>
+        public void DeleteSoftwareFromLaboratory(int id, SoftwareByLaboratoryRequest request)
+        {
+            if (request == null || !request.IsValid())
+            {
+                throw new InvalidRequestBodyException();
+            }
+
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+            _SoftwareByLaboratoryDA.Delete(id, request.Software);
         }
     }
 }
