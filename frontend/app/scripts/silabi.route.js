@@ -128,6 +128,12 @@
           controller: 'GroupDetailController',
           controllerAs: 'GroupDetail'
         })
+        .when('/Operador/Laboratorios', {
+          templateUrl: 'views/operator/labs/lab.list.html',
+          controller: 'LabListController',
+          controllerAs: 'LabList',
+          reloadOnSearch: false
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })

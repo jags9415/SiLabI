@@ -1,0 +1,112 @@
+<div>
+  <h2>Laboratorios</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li class="active">Laboratorios</li>
+  </ol>
+  <div class="table-search" style="margin-bottom: 3%;">
+    <div class="row">
+      <div class="col-md-5 col-xs-5">
+        <form class="form-horizontal">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input class="form-control" placeholder="Nombre" name="searchInput" type="text" ng-change="LabList.search()" ng-model="LabList.searched.name">
+          </div>
+          <button type="submit" name="button" hidden></button>
+        </form>
+      </div>
+      <div class="col-md-5 col-xs-5">
+        <form class="form-horizontal">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input class="form-control" placeholder="Asientos" name="searchInput" type="text" ng-change="LabList.search()" ng-model="LabList.searched.seats">
+          </div>
+          <button type="submit" name="button" hidden></button>
+        </form>
+      </div>
+      <div class="col-md-2 col-xs-3">
+        <a href="#Operador/Labs/Agregar" class="btn btn-block btn-success">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span class="hidden-xs">Crear</span>
+        </a>
+      </div>
+    </div>
+    <div class="row" ng-show="false">
+      <div class="col-md-12">
+        <form class="form-inline advanced-search">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Usuario">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="email" placeholder="Correo">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <button type="submit" class="btn btn-default">
+                  <i class="glyphicon glyphicon-search"></i> Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped" ng-show="true">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Asientos</th>
+          <th>Estado</th>
+          <th style="text-align: center">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="lab in LabList.labs">
+          <td>{{ lab.name }}</td>
+          <td>{{ lab.seats }}</td>
+          <td>
+            <span class="label"
+              ng-class="{ 'label-success': lab.state === 'Activo',
+                          'label-danger': lab.state === 'Inactivo'}" >
+              {{ lab.state }}
+            </span>
+          </td>
+          <td style="text-align: center">
+            <a class='btn btn-info btn-sm' ng-click="LabList.open(lab.id)">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+            <a href="" class="btn btn-danger btn-sm" ng-click="LabList.delete(lab.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-show="LabList.isLoaded() && LabList.isEmpty()">No se encontraron resultados.</p>
+  <br>
+  <div class="row">
+    <div class="col-md-12 pagination">
+      <pagination
+        ng-change="LabList.loadPage()" ng-model="LabList.page" items-per-page="LabList.limit"
+        total-items="LabList.totalItems" max-size="5" boundary-links="true" rotate="true"
+        previous-text="<" next-text=">" first-text="<<" last-text=">>"
+      ></pagination>
+    </div>
+  </div>
+</div>
