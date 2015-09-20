@@ -134,6 +134,11 @@
           controllerAs: 'LabList',
           reloadOnSearch: false
         })
+        .when('/Operador/Laboratorios/Agregar', {
+          templateUrl: 'views/operator/labs/lab.create.html',
+          controller: 'LabAddController',
+          controllerAs: 'LabAdd'
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })

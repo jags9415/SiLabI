@@ -1,0 +1,36 @@
+<div>
+  <h2>Agregar Laboratorio</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li><a href="#Operador/Laboratorios">Laboratorios</a></li>
+    <li class="active">Agregar</li>
+  </ol>
+  <form name="createLabForm">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group" show-errors>
+          <label for="name" class="control-label">Nombre</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="LabAdd.lab.name" ng-trim required>
+          <p class="help-block" ng-if="createLabForm.name.$error.required">Nombre requerido.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group" show-errors>
+          <label for="seats" class="control-label">Asientos</label>
+          <input type="text" class="form-control" id="seats" name="seats" placeholder="Asientos" ng-model="LabAdd.lab.seats" ng-trim required>
+          <p class="help-block" ng-if="createLabForm.code.$error.required">Cantidad de asientos requerida.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+        <button type="submit" class="btn btn-lg btn-success" ng-click="LabAdd.create()" ng-disabled="createLabForm.$invalid">
+          <i class="glyphicon glyphicon-plus"></i> Agregar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
