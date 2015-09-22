@@ -13,6 +13,7 @@
     this.Update = Update;
     this.Create = Create;
     this.Delete = Delete;
+    this.GetSoftware = GetSoftware;
 
     function GetAll(request) {
       if (!request) request = {};
@@ -27,10 +28,14 @@
       return RequestService.get('/laboratories/' + LabID, request);
     }
 
-    function Update(LabID, NewLabInfo) {
+    function Update(LabID, NewLabInfo, SoftwareCodes) {
       var requestBody = {};
+      var softwareRequest = {};
       requestBody.laboratory = NewLabInfo;
+      softwareRequest.software = SoftwareCodes;
       requestBody.access_token = $localStorage['access_token'];
+      softwareRequest.access_token = $localStorage['access_token'];
+      RequestService.put('/laboratories/' + LabID + '/software', softwareRequest);
       return RequestService.put('/laboratories/' + LabID, requestBody);
     }
 
@@ -45,6 +50,12 @@
       var requestBody = {};
       requestBody.access_token = $localStorage['access_token'];
       return RequestService.delete('/laboratories/' + LabID, requestBody);
+    }
+
+    function GetSoftware(LabID) {
+      var request = {};
+      request.access_token = $localStorage['access_token'];
+      return RequestService.get('/laboratories/' + LabID + '/software', request);
     }
   }
 })();
