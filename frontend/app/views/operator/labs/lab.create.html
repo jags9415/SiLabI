@@ -25,6 +25,42 @@
         </div>
       </div>
     </div>
+    <h4><b>Lista de software</b></h4>
+    <div class="row">
+      <div class="col-md-10 col-xs-10">
+        <div class="form-group">
+          <input type="text" class="form-control" id="username" placeholder="Buscar Software (Código)" ng-model="LabAdd.software_code">
+        </div>
+      </div>
+      <div class="col-md-2 col-xs-2">
+        <button type="button" class="btn btn-default btn-block" ng-click="LabAdd.searchSoftware()">
+          <i class="glyphicon glyphicon-search"></i>
+          <span class="hidden-xs">Buscar</span>
+        </button>
+      </div>
+    </div>
+    <div class="table-responsive">
+    <table class="table table-striped" ng-show="LabAdd.software.length > 0">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th style="text-align: center">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="software in LabAdd.software">
+          <td>{{ software.code }}</td>
+          <td>{{ software.name }}</td>
+          <td style="text-align: center">
+            <a href="" class="btn btn-danger btn-sm" ng-click="LabAdd.deleteSoftware(software.code)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
         <button type="submit" class="btn btn-lg btn-success" ng-click="LabAdd.create()" ng-disabled="createLabForm.$invalid">
