@@ -1,5 +1,5 @@
 /**
- * @api {get} /v1/software/:id Retrieve a software.
+ * @api {get} /v1/software/:code Retrieve a software.
  * @apiVersion 1.0.0
  * @apiName GetSoftware
  * @apiGroup Software
@@ -9,7 +9,7 @@
  * @apiDescription Retrieve a software.
  *
  * @apiExample Example:
- * 		GET /software/87 HTTP/1.1
+ * 		GET /software/SF-12 HTTP/1.1
  *
  * @apiParam {String}	access_token	The access token.
  * @apiParam {String[]} [fields]		A list of fields to include in the results.
