@@ -346,11 +346,11 @@ namespace SiLabI
         GetResponse<Software> GetSoftwares(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/software/{id}/?access_token={token}&fields={fields}",
+        [WebGet(UriTemplate = "/software/{code}/?access_token={token}&fields={fields}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a software.")]
-        Software GetSoftware(string id, string token, string fields);
+        Software GetSoftware(string code, string token, string fields);
 
         [OperationContract]
         [WebInvoke(Method = "POST",

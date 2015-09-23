@@ -27,20 +27,14 @@ namespace SiLabI
             return _SoftwareController.GetAll(request);
         }
 
-        public Software GetSoftware(string id, string token, string fields)
+        public Software GetSoftware(string code, string token, string fields)
         {
-            int num;
-            if (!Int32.TryParse(id, out num))
-            {
-                throw new InvalidParameterException("id");
-            }
-
             QueryString request = new QueryString(ValidFields.Software);
 
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _SoftwareController.GetOne(num, request);
+            return _SoftwareController.GetOne(code, request);
         }
 
         public Software CreateSoftware(SoftwareRequest request)

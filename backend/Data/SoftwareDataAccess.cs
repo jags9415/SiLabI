@@ -60,11 +60,29 @@ namespace SiLabI.Data
         public DataRow GetOne(int id, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[2];
-            parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.VarChar, id);
+            parameters[0] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
             parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
             parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
 
             DataTable table = _Connection.executeQuery("sp_GetSoftware", parameters);
+            if (table.Rows.Count == 0)
+            {
+                throw new WcfException(HttpStatusCode.BadRequest, "Software no encontrado.");
+            }
+            else
+            {
+                return table.Rows[0];
+            }
+        }
+
+        public DataRow GetOne(string code, QueryString request)
+        {
+            SqlParameter[] parameters = new SqlParameter[2];
+            parameters[0] = SqlUtilities.CreateParameter("@code", SqlDbType.VarChar, code);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
+
+            DataTable table = _Connection.executeQuery("sp_GetSoftwareByCode", parameters);
             if (table.Rows.Count == 0)
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Software no encontrado.");

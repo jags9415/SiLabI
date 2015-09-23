@@ -61,6 +61,14 @@ namespace SiLabI.Controllers
             return Software.Parse(row);
         }
 
+        public Software GetOne(string code, QueryString request)
+        {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+            DataRow row = _SoftwareDA.GetOne(code, request);
+            return Software.Parse(row);
+        }
+
         public Software Create(BaseRequest request)
         {
             SoftwareRequest softwareRequest = (request as SoftwareRequest);
