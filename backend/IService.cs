@@ -457,5 +457,50 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete a list of software from a laboratory.")]
         void DeleteSoftwareFromLaboratory(string id, SoftwareByLaboratoryRequest request);
+
+        /*
+         * APPOINTMENT ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/appointments/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of appointments.")]
+        GetResponse<Appointment> GetAppointments(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/appointments/{id}/?access_token={token}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve an appointment.")]
+        Appointment GetAppointment(string id, string token, string fields);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/appointments/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create an appointment.")]
+        Appointment CreateAppointment(AppointmentRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/appointments/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update an appointment.")]
+        Appointment UpdateAppointment(string id, AppointmentRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/appointments/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete an appointment.")]
+        void DeleteAppointment(string id, BaseRequest request);
     }
 }

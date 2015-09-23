@@ -17,6 +17,7 @@ namespace SiLabI.Model
         private static List<Field> _PeriodValidFields;
         private static List<Field> _SoftwareValidFields;
         private static List<Field> _LaboratoryValidFields;
+        private static List<Field> _AppointmentValidFields;
 
         private static List<Field> GenericUser
         {
@@ -169,6 +170,26 @@ namespace SiLabI.Model
                     _LaboratoryValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
                 }
                 return _LaboratoryValidFields;
+            }
+        }
+
+        public static List<Field> Appointment
+        {
+            get
+            {
+                if (_AppointmentValidFields == null)
+                {
+                    _AppointmentValidFields = new List<Field>();
+                    _AppointmentValidFields.Add(new Field("id", SqlDbType.Int));
+                    _AppointmentValidFields.Add(new Field("state", SqlDbType.VarChar));
+                    _AppointmentValidFields.Add(new Field("created_at", SqlDbType.DateTime));
+                    _AppointmentValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
+                    _AppointmentValidFields.Add(new Field("date", SqlDbType.DateTime));
+                    _AppointmentValidFields.Add(new Field("student", ValidFields.Student));
+                    _AppointmentValidFields.Add(new Field("laboratory", ValidFields.Laboratory));
+                    _AppointmentValidFields.Add(new Field("software", ValidFields.Software));
+                }
+                return _AppointmentValidFields;
             }
         }
     }

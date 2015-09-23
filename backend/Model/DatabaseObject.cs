@@ -42,14 +42,7 @@ namespace SiLabI.Model
         [DataMember(EmitDefaultValue = false, Name = "state")]
         public virtual string State
         {
-            set
-            {
-                if (!Validator.IsValidState(value))
-                {
-                    throw new InvalidParameterException("state", "Ingrese 'Activo' o 'Inactivo'");
-                }
-                _state = value;
-            }
+            set { _state = value; }
             get { return _state; }
         }
 

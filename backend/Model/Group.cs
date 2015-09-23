@@ -60,6 +60,8 @@ namespace SiLabI.Model
             group.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
             group.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
             group.Period = Period.Parse(row, prefix + "period");
+            group.Course = Course.Parse(row, prefix + "course");
+            group.Professor = User.Parse(row, prefix + "professor");
 
             if (group.isEmpty())
             {

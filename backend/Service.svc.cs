@@ -32,6 +32,7 @@ namespace SiLabI
         private GroupController _GroupController;
         private SoftwareController _SoftwareController;
         private LaboratoryController _LaboratoryController;
+        private AppointmentController _AppointmentController;
 
         /// <summary>
         /// Create a new Service.
@@ -48,6 +49,7 @@ namespace SiLabI
             this._GroupController = new GroupController();
             this._SoftwareController = new SoftwareController();
             this._LaboratoryController = new LaboratoryController();
+            this._AppointmentController = new AppointmentController();
         }
     }
 }

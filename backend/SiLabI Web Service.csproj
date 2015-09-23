@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Configuration\CorsSupportBehavior.cs" />
     <Compile Include="Controllers\AdministratorController.cs" />
+    <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\IController.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\AdministratorDataAccess.cs" />
+    <Compile Include="Data\AppointmentDataAccess.cs" />
     <Compile Include="Data\CourseDataAccess.cs" />
     <Compile Include="Data\IDataAccess.cs" />
     <Compile Include="Data\GroupDataAccess.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Data\SoftwareByLaboratoryDataAccess.cs" />
     <Compile Include="Data\SoftwareDataAccess.cs" />
     <Compile Include="Data\StudentsByGroupDataAccess.cs" />
+    <Compile Include="Endpoints\AppointmentEndpoints.cs" />
     <Compile Include="Endpoints\CourseEndpoints.cs" />
     <Compile Include="Endpoints\GroupEndpoints.cs" />
     <Compile Include="Endpoints\LaboratoryEndpoints.cs" />
@@ -108,6 +111,8 @@
     <Compile Include="Configuration\ExtendedWebHttpElement.cs" />
     <Compile Include="Configuration\ExtendedErrorHandler.cs" />
     <Compile Include="Model\AdministratorRequest.cs" />
+    <Compile Include="Model\Appointment.cs" />
+    <Compile Include="Model\AppointmentRequest.cs" />
     <Compile Include="Model\BaseObject.cs" />
     <Compile Include="Model\DatabaseObject.cs" />
     <Compile Include="Model\Course.cs" />

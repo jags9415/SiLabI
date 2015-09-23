@@ -47,7 +47,7 @@ namespace SiLabI.Controllers
 
             foreach (DataRow row in table.Rows)
             {
-                response.Results.Add(ParseGroup(row));
+                response.Results.Add(Group.Parse(row));
             }
 
             response.CurrentPage = request.Page;
@@ -61,7 +61,7 @@ namespace SiLabI.Controllers
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _GroupDA.GetOne(id, request);
-            return ParseGroup(row);
+            return Group.Parse(row);
         }
 
         public Group Create(BaseRequest request)
@@ -81,7 +81,7 @@ namespace SiLabI.Controllers
             }
 
             DataRow row = _GroupDA.Create(groupRequest.Group);
-            return ParseGroup(row);
+            return Group.Parse(row);
         }
 
         public Group Update(int id, BaseRequest request)
@@ -101,7 +101,7 @@ namespace SiLabI.Controllers
             }
 
             DataRow row = _GroupDA.Update(id, groupRequest.Group);
-            return ParseGroup(row);
+            return Group.Parse(row);
         }
 
         public void Delete(int id, BaseRequest request)
@@ -186,19 +186,6 @@ namespace SiLabI.Controllers
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
             _StudentsByGroupDA.Delete(id, request.Students);
-        }
-
-        /// <summary>
-        /// Parse a Row into A Group and fetch the Course and Professor data.
-        /// </summary>
-        /// <param name="row">The row.</param>
-        /// <returns>The group.</returns>
-        private Group ParseGroup(DataRow row)
-        {
-            Group group = Group.Parse(row);
-            group.Course = Course.Parse(row, "course");
-            group.Professor = User.Parse(row, "professor");
-            return group;
         }
     }
 }

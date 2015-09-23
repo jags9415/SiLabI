@@ -17,12 +17,12 @@ INSERT INTO States (Type, Name) VALUES
 ('SOFTWARE', 'Activo'),
 ('SOFTWARE', 'Inactivo'),
 ('APPOINTMENT', 'Por iniciar'),
-('APPOINTMENT', 'En curso'),
 ('APPOINTMENT', 'Cancelada'),
 ('APPOINTMENT', 'Finalizada'),
+('APPOINTMENT', 'Inactiva'),
 ('RESERVATION', 'Por iniciar'),
-('RESERVATION', 'En curso'),
 ('RESERVATION', 'Cancelada'),
-('RESERVATION', 'Finalizada');
+('RESERVATION', 'Finalizada'),
+('RESERVATION', 'Inactiva');
 
 USE [master];
