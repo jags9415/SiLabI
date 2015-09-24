@@ -27,7 +27,7 @@
         }
 
         function handleCreateSuccess(result) {
-          MessageService.success("Laboratorio creado con éxito.");
+          MessageService.success("Sala de Laboratorio creada con éxito.");
 
           // Reset form data.
           vm.lab = {};

@@ -42,7 +42,7 @@
 
       function deleteLab() {
         if (vm.lab) {
-          MessageService.confirm("¿Desea realmente eliminar este laboratorio?")
+          MessageService.confirm("¿Desea realmente eliminar esta Sala de Laboratorio?")
           .then(function () {
             LabService.Delete(vm.lab.id)
             .then(redirectToLabs)

@@ -111,7 +111,7 @@
     }
 
     function deleteLab(id) {
-      MessageService.confirm("¿Desea realmente eliminar este Laboratorio?")
+      MessageService.confirm("¿Desea realmente eliminar esta Sala de Laboratorio?")
       .then(function() {
       LabService.Delete(id)
       .then(loadPage)
