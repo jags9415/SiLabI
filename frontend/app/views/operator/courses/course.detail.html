@@ -8,16 +8,14 @@
   </ol>
   <form name="updateCourseForm">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="form-group" show-errors>
           <label for="name" class="control-label">Código</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Código" ng-model="CourseDetail.course.code" ng-trim required>
           <p class="help-block" ng-if="updateCourseForm.name.$error.required">Código requerido.</p>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="form-group" show-errors>
           <label for="name" class="control-label">Nombre</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="CourseDetail.course.name" ng-trim required>

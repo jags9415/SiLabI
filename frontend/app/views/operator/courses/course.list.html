@@ -26,18 +26,18 @@
         </a>
       </div>
     </div>
-    <div class="row" ng-show="CourseList.advanceSearch">
+    <div class="row" collapse="!CourseList.advanceSearch">
       <div class="col-md-12">
         <form class="form-inline advanced-search">
           <div class="row">
             <div class="col-md-10">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <input type="text" class="form-control" placeholder="Código" ng-model="CourseList.searched.code">
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <ui-select id="state" ng-model="CourseList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">

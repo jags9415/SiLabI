@@ -65,8 +65,8 @@
 
           if (vm.searched.code) {
             vm.request.query.code = {
-              operation: "like",
-              value: '*' + vm.searched.code.replace(' ', '*') + '*'
+              operation: "eq",
+              value: vm.searched.code
             }
           }
 

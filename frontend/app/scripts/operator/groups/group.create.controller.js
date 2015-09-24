@@ -93,20 +93,6 @@
         }
       }
 
-      function searchCourse()
-      {
-        vm.course = {};
-        if (vm.course_code) {
-          vm.course_request.query.code = {
-              operation: "eq",
-              value: vm.course_code
-            };
-          CourseService.GetAll(vm.course_request)
-          .then(setCourse)
-          .catch(handleError);
-        }
-      }
-
       function searchStudent() {
         vm.student = {};
         if (vm.student_username) {
@@ -141,6 +127,7 @@
       }
 
       function setProfessor(user) {
+        console.log(user);
         vm.professor = user;
       }
 

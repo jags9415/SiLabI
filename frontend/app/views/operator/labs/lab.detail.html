@@ -8,16 +8,14 @@
   </ol>
   <form name="updateLabForm">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="form-group" show-errors>
           <label for="name" class="control-label">Nombre</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="LabDetail.lab.name" ng-trim required>
           <p class="help-block" ng-if="updateLabForm.name.$error.required">Nombre requerido.</p>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="form-group" show-errors>
           <label for="name" class="control-label">Asientos</label>
           <input type="number" class="form-control" id="name" min="0" name="name" placeholder="Asientos" ng-model="LabDetail.lab.seats" ng-trim required>
@@ -43,13 +41,13 @@
     <div class="row">
       <div class="col-md-10 col-xs-10">
         <div class="form-group">
-          <input type="text" class="form-control" id="username" placeholder="Buscar Software (Código)" ng-model="LabDetail.software_code">
+          <input type="text" class="form-control" id="username" placeholder="Agregar Software (Código)" ng-model="LabDetail.software_code">
         </div>
       </div>
       <div class="col-md-2 col-xs-2">
-        <button type="button" class="btn btn-default btn-block" ng-click="LabDetail.searchSoftware()">
-          <i class="glyphicon glyphicon-search"></i>
-          <span class="hidden-xs">Buscar</span>
+        <button type="button" class="btn btn-success btn-block" ng-click="LabDetail.searchSoftware()">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span class="hidden-xs">Agregar</span>
         </button>
       </div>
     </div>
@@ -67,8 +65,11 @@
           <td>{{ software.code }}</td>
           <td>{{ software.name }}</td>
           <td style="text-align: center">
+            <a class='btn btn-info btn-sm' href="{{'#Operador/Software/' + software.code}}">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
             <a href="" class="btn btn-danger btn-sm" ng-click="LabDetail.deleteSoftware(software.code)">
-              <span class="glyphicon glyphicon-trash"></span>
+              <span class="glyphicon glyphicon-remove"></span>
             </a>
           </td>
         </tr>
