@@ -54,7 +54,7 @@ namespace SiLabI.Model
             set
             {
                 _createdAt = value;
-                CreatedAt_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
+                CreatedAt_ISO8601 = value.HasValue ? value.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
             }
             get { return _createdAt; }
         }
@@ -67,7 +67,7 @@ namespace SiLabI.Model
             set
             {
                 _updatedAt = value;
-                UpdatedAt_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
+                UpdatedAt_ISO8601 = value.HasValue ? value.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
             }
             get { return _updatedAt; }
         }

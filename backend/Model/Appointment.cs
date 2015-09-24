@@ -11,6 +11,7 @@ namespace SiLabI.Model
     /// <summary>
     /// An appointment data.
     /// </summary>
+    [DataContract]
     public class Appointment : DatabaseObject
     {
         protected Student _student;
@@ -56,7 +57,7 @@ namespace SiLabI.Model
             set
             {
                 _date = value;
-                Date_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
+                Date_ISO8601 = value.HasValue ? value.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
             }
             get { return _date; }
         }
