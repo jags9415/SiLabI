@@ -1,13 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="600px" height="100px" viewBox="0 0 600 100" enable-background="new 0 0 600 100" xml:space="preserve">
-<rect x="43.348" y="17.721" fill="none" width="140.928" height="64.558"/>
-<text transform="matrix(1 0 0 1 43.3481 71.2168)" fill="#FFFFFF" font-family="'Lato-Bold'" font-size="72">TEC</text>
-<line fill="#FF0000" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" x1="197.5" y1="18" x2="197.5" y2="69"/>
-<rect x="217.06" y="22.348" fill="none" width="352.959" height="31.242"/>
-<text transform="matrix(1 0 0 1 217.0596 40.1797)" fill="#FFFFFF" font-family="'Lato-Bold'" font-size="24">Escuela Ciencias del Lenguaje</text>
-<rect x="217.06" y="46.784" fill="none" width="301.923" height="21.139"/>
-<text transform="matrix(1 0 0 1 217.0596 64.6152)" fill="#FFFFFF" font-family="'Lato-Bold'" font-size="24">Laboratorio de Inglés</text>
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Capa_1"
+   x="0px"
+   y="0px"
+   width="600px"
+   height="100px"
+   viewBox="0 0 600 100"
+   enable-background="new 0 0 600 100"
+   xml:space="preserve"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="logo_tec.svg"><metadata
+     id="metadata23"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview21"
+     showgrid="false"
+     inkscape:zoom="0.91"
+     inkscape:cx="277.60311"
+     inkscape:cy="99.161064"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Capa_1" /><defs
+     id="defs3"><style
+       type="text/css"
+       id="style5">@import url(http://fonts.googleapis.com/css?family=Tinos);</style></defs><rect
+     x="43.348"
+     y="17.721"
+     fill="none"
+     width="140.928"
+     height="64.558"
+     id="rect7" /><text
+     font-size="72"
+     id="text9"
+     x="43.667877"
+     y="71.366188"
+     style="font-size:71.50584412px;fill:#ffffff;font-family:'Tinos, Serif'"
+     transform="scale(1.0008956,0.99910516)">TEC</text>
+<line
+     stroke-miterlimit="10"
+     x1="197.5"
+     y1="17.735701"
+     x2="197.5"
+     y2="77.495102"
+     id="line11"
+     style="fill:#ff0000;stroke:#ff0000;stroke-width:3.24742651;stroke-miterlimit:10" /><rect
+     x="217.06"
+     y="22.348"
+     fill="none"
+     width="352.959"
+     height="31.242"
+     id="rect13" /><text
+     font-size="24"
+     id="text15"
+     x="217.10123"
+     y="39.817249"
+     style="font-size:24.20701218px;fill:#ffffff;font-family:'Tinos, Serif'"
+     transform="scale(1.0009247,0.99907616)">Escuela de Ciencias del Lenguaje</text>
+<rect
+     x="217.06"
+     y="46.784"
+     fill="none"
+     width="301.923"
+     height="21.139"
+     id="rect17" /><text
+     font-size="24"
+     id="text19"
+     x="217.98422"
+     y="69.572578"
+     style="font-size:24.07093811px;fill:#ffffff;font-family:'Tinos, Serif'"
+     transform="scale(0.99690098,1.0031087)">Laboratorio de Inglés</text>
 </svg>
