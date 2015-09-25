@@ -144,6 +144,12 @@
           controller: 'LabDetailController',
           controllerAs: 'LabDetail'
         })
+        .when('/Operador/Software', {
+          templateUrl: 'views/operator/software/software.list.html',
+          controller: 'SoftwareListController',
+          controllerAs: 'SoftwareList',
+          reloadOnSearch: false
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })

@@ -1,0 +1,110 @@
+<div>
+  <h2>Software</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li class="active">Software</li>
+  </ol>
+  <div class="table-search" style="margin-bottom: 3%;">
+    <div class="row">
+      <div class="col-md-10 col-xs-10">
+        <form class="form-horizontal">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="SoftwareList.search()" ng-model="SoftwareList.searched.name">
+          </div>
+          <div class="input-group">
+            <a href="" ng-click="SoftwareList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
+          </div>
+          <button type="submit" name="button" hidden></button>
+        </form>
+      </div>
+      <div class="col-md-2 col-xs-3">
+        <a href="#Operador/Software/Agregar" class="btn btn-block btn-success">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span class="hidden-xs">Crear</span>
+        </a>
+      </div>
+    </div>
+    <div class="row" collapse="!SoftwareList.advanceSearch">
+      <div class="col-md-12">
+        <form class="form-inline advanced-search">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="code" name="code" placeholder="Código" ng-model="SoftwareList.searched.code">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <ui-select id="state" ng-model="SoftwareList.searched.state">
+                      <ui-select-match placeholder="Estado" allow-clear="true">
+                        {{$select.selected.name}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="state in SoftwareList.states">
+                        <span ng-bind-html="state.name"></span>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <button type="submit" class="btn btn-default" ng-click="SoftwareList.search()">
+                  <i class="glyphicon glyphicon-search"></i> Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+  <div class="table-responsive">
+    <table class="table table-striped" ng-show="true">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Código</th>
+          <th>Estado</th>
+          <th style="text-align: center">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="sf in SoftwareList.software_list">
+          <td>{{ sf.name }}</td>
+          <td>{{ sf.code }}</td>
+          <td>
+            <span class="label"
+              ng-class="{ 'label-success': sf.state === 'Activo',
+                          'label-danger': sf.state === 'Inactivo'}" >
+              {{ sf.state }}
+            </span>
+          </td>
+          <td style="text-align: center">
+            <a class='btn btn-info btn-sm' ng-click="SoftwareList.open(sf.id)">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+            <a href="" class="btn btn-danger btn-sm" ng-click="SoftwareList.delete(sf.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-show="SoftwareList.isLoaded() && SoftwareList.isEmpty()">No se encontraron resultados.</p>
+  <br>
+  <div class="row">
+    <div class="col-md-12 pagination">
+      <pagination
+        ng-change="SoftwareList.loadPage()" ng-model="SoftwareList.page" items-per-page="SoftwareList.limit"
+        total-items="SoftwareList.totalItems" max-size="5" boundary-links="true" rotate="true"
+        previous-text="<" next-text=">" first-text="<<" last-text=">>"
+      ></pagination>
+    </div>
+  </div>
+</div>
