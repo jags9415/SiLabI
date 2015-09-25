@@ -29,14 +29,14 @@
 
     function Update(SoftwareID, NewSoftwareInfo) {
       var requestBody = {};
-      requestBody.laboratory = NewSoftwareInfo;
+      requestBody.software = NewSoftwareInfo;
       requestBody.access_token = $localStorage['access_token'];
       return RequestService.put('/software/' + SoftwareID, requestBody);
     }
 
     function Create(Software) {
       var requestBody = {};
-      requestBody.laboratory = Software;
+      requestBody.software = Software;
       requestBody.access_token = $localStorage['access_token'];
       return RequestService.post('/software', requestBody);
     }

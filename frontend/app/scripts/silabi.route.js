@@ -150,6 +150,12 @@
           controllerAs: 'SoftwareList',
           reloadOnSearch: false
         })
+        .when('/Operador/Software/Agregar', {
+          templateUrl: 'views/operator/software/software.create.html',
+          controller: 'SoftwareCreateController',
+          controllerAs: 'SoftwareCreate',
+          reloadOnSearch: false
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })
