@@ -156,6 +156,12 @@
           controllerAs: 'SoftwareCreate',
           reloadOnSearch: false
         })
+        .when('/Operador/Software/:code', {
+          templateUrl: 'views/operator/software/software.detail.html',
+          controller: 'SoftwareDetailController',
+          controllerAs: 'SoftwareDetail',
+          reloadOnSearch: false
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })
