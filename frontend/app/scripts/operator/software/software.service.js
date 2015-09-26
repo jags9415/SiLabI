@@ -31,7 +31,6 @@
       var requestBody = {};
       requestBody.software = NewSoftwareInfo;
       requestBody.access_token = $localStorage['access_token'];
-      console.log(requestBody);
       return RequestService.put('/software/' + SoftwareID, requestBody);
     }
 

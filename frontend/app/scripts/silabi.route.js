@@ -159,7 +159,12 @@
         .when('/Operador/Software/:code', {
           templateUrl: 'views/operator/software/software.detail.html',
           controller: 'SoftwareDetailController',
-          controllerAs: 'SoftwareDetail',
+          controllerAs: 'SoftwareDetail'
+        })
+        .when('/Operador/Citas', {
+          templateUrl: 'views/operator/appointments/appointment.list.html',
+          controller: 'AppointmentListController',
+          controllerAs: 'AppointmentList',
           reloadOnSearch: false
         })
         .when('/404', {

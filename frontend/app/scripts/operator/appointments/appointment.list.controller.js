@@ -1,0 +1,133 @@
+(function() {
+    'use strict';
+
+    angular
+        .module('silabi')
+        .controller('AppointmentListController', AppointmentListController);
+
+    AppointmentListController.$inject = ['$scope', 'AppointmentService', 'MessageService', 'StateService', '$location'];
+
+    function AppointmentListController($scope, AppointmentService, MessageService, StateService, $location) {
+      var vm = this;
+
+      vm.loaded = false;
+      vm.appointments = [];
+      vm.searched = {};
+      vm.limit = 20;
+      vm.request = {
+        fields : "id,student,laboratory,state,software,date"
+      };
+      vm.states = [];  
+
+      vm.open = openAppointment;
+      vm.delete = deleteAppointment;
+      vm.search = searchAppointment;
+      vm.isEmpty = isEmpty;
+      vm.isLoaded = isLoaded;
+      vm.loadPage = loadPage;
+      vm.toggleAdvanceSearch = toggleAdvanceSearch;
+
+      activate();
+
+      function activate() {
+        var page = parseInt($location.search()['page']);
+
+        if (isNaN(page)) {
+          page = 1;
+        }
+
+        vm.totalPages = page;
+        vm.page = page;
+        loadPage();
+
+        StateService.GetLabStates()
+      .then(setStates)
+      .catch(handleError);
+      }
+
+      function loadPage() {
+        $location.search('page', vm.page);
+
+        vm.request.page = vm.page;
+        vm.request.limit = vm.limit;
+
+        AppointmentService.GetAll(vm.request)
+        .then(setAppointments)
+        .catch(handleError);
+      }
+
+      function openAppointment(id) {
+        $location.url('/Operador/Appointment/' + id);
+      }
+
+      function searchAppointment() {
+        vm.request.query = {};
+
+        if (vm.searched.name) {
+          vm.request.query.name = {
+            operation: "like",
+            value: '*' + vm.searched.name.replace(' ', '*') + '*'
+          }
+        }
+
+        if (vm.searched.code) {
+          vm.request.query.code = {
+            operation: "eq",
+            value: vm.searched.code
+          }
+        }
+
+        if (vm.searched.state) {
+        vm.request.query.state = {
+          operation: "like",
+          value: vm.searched.state.value
+        }
+      }
+
+
+        loadPage();
+      }
+
+      function toggleAdvanceSearch() {
+      vm.advanceSearch = !vm.advanceSearch;
+      delete vm.searched.code;
+      delete vm.searched.name;
+      delete vm.searched.state;
+    }
+
+
+      function isEmpty() {
+        return vm.appointments.length == 0;
+      }
+
+      function isLoaded() {
+        return vm.loaded;
+      }
+
+      function setAppointments(data) {
+        console.log(data.results);
+        vm.appointments = data.results;
+        vm.page = data.current_page;
+        vm.totalPages = data.total_pages;
+        vm.totalItems = vm.limit * vm.totalPages;
+        vm.loaded = true;
+      }
+
+      function setStates(states) {
+      vm.states = states;
+    }
+
+      function deleteAppointment(id) {
+        MessageService.confirm("¿Desea realmente eliminar este software?")
+        .then(function() {
+          AppointmentService.Delete(id)
+          .then(loadPage)
+          .catch(handleError);
+        });
+      }
+
+      function handleError(data) {
+        MessageService.error(data.description);
+      }
+    }
+})();
