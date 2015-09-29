@@ -81,6 +81,7 @@
     <Compile Include="Controllers\OperatorController.cs" />
     <Compile Include="Controllers\ProfessorController.cs" />
     <Compile Include="Controllers\SoftwareController.cs" />
+    <Compile Include="Controllers\StudentAppointmentController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\AdministratorDataAccess.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Model\AdministratorRequest.cs" />
     <Compile Include="Model\Appointment.cs" />
     <Compile Include="Model\AppointmentRequest.cs" />
+    <Compile Include="Model\AvailableAppointment.cs" />
     <Compile Include="Model\BaseObject.cs" />
     <Compile Include="Model\DatabaseObject.cs" />
     <Compile Include="Model\Course.cs" />

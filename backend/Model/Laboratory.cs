@@ -17,6 +17,8 @@ namespace SiLabI.Model
         protected string _name;
         protected int? _seats;
         protected List<string> _software;
+        protected int? _appointmentPriority;
+        protected int? _reservationPriority;
 
         /// <summary>
         /// The name.
@@ -49,6 +51,26 @@ namespace SiLabI.Model
         }
 
         /// <summary>
+        /// The appointment priority
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "appointment_priority")]
+        public virtual int? AppointmentPriority
+        {
+            set { _appointmentPriority = value; }
+            get { return _appointmentPriority; }
+        }
+
+        /// <summary>
+        /// The reservation priority
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "reservation_priority")]
+        public virtual int? ReservationPriority
+        {
+            set { _reservationPriority = value; }
+            get { return _reservationPriority; }
+        }
+
+        /// <summary>
         /// Check if the object properties are valid for a create operation.
         /// </summary>
         /// <returns></returns>
@@ -58,6 +80,8 @@ namespace SiLabI.Model
 
             valid &= !string.IsNullOrWhiteSpace(Name);
             valid &= Seats.HasValue && Seats >= 0;
+            valid &= AppointmentPriority.HasValue && AppointmentPriority > 0;
+            valid &= ReservationPriority.HasValue && ReservationPriority > 0;
 
             return valid;
         }
@@ -72,6 +96,8 @@ namespace SiLabI.Model
 
             if (Name != null) valid &= !string.IsNullOrWhiteSpace(Name);
             if (Seats.HasValue) valid &= Seats >= 0;
+            if (AppointmentPriority.HasValue) valid &= AppointmentPriority > 0;
+            if (ReservationPriority.HasValue) valid &= ReservationPriority > 0;
 
             return valid;
         }
@@ -93,6 +119,8 @@ namespace SiLabI.Model
             laboratory.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
             laboratory.Name = row.Table.Columns.Contains(prefix + "name") ? Converter.ToString(row[prefix + "name"]) : null;
             laboratory.Seats = row.Table.Columns.Contains(prefix + "seats") ? Converter.ToNullableInt32(row[prefix + "seats"]) : null;
+            laboratory.AppointmentPriority = row.Table.Columns.Contains(prefix + "appointment_priority") ? Converter.ToNullableInt32(row[prefix + "appointment_priority"]) : null;
+            laboratory.ReservationPriority = row.Table.Columns.Contains(prefix + "reservation_priority") ? Converter.ToNullableInt32(row[prefix + "reservation_priority"]) : null;
             laboratory.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
             laboratory.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
             laboratory.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;

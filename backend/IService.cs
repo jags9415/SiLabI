@@ -502,5 +502,57 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete an appointment.")]
         void DeleteAppointment(string id, BaseRequest request);
+
+        /*
+         * STUDENT APPOINTMENTS ENDPOINTS
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/students/{username}/appointments/available/?access_token={token}&q={query}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of available appointments dates for a certain student.")]
+        List<AvailableAppointment> GetAvailableAppointments(string token, string username, string query, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/students/{username}/appointments/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of appointments.")]
+        GetResponse<Appointment> GetStudentAppointments(string token, string username, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/students/{username}/appointments/{id}/?access_token={token}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve an appointment.")]
+        Appointment GetStudentAppointment(string id, string username, string token, string fields);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/students/{username}/appointments/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create an appointment.")]
+        Appointment CreateStudentAppointment(string username, AppointmentRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/students/{username}/appointments/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update an appointment.")]
+        Appointment UpdateStudentAppointment(string username, string id, AppointmentRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/students/{username}/appointments/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete an appointment.")]
+        void DeleteStudentAppointment(string username, string id, BaseRequest request);
     }
 }

@@ -42,20 +42,23 @@ namespace SiLabI.Model
         /// <param name="user">The user to clone.</param>
         public User(User user)
         {
-            this.Id = user.Id;
-            this.Name = user.Name;
-            this.LastName1 = user.LastName1;
-            this.LastName2 = user.LastName2;
-            this.FullName = user.FullName;
-            this.Gender = user.Gender;
-            this.Username = user.Username;
-            this.Password = user.Password;
-            this.Email = user.Email;
-            this.Phone = user.Phone;
-            this.State = user.State;
-            this.Type = user.Type;
-            this.CreatedAt = user.CreatedAt;
-            this.UpdatedAt = user.UpdatedAt;
+            if (user != null)
+            {
+                this.Id = user.Id;
+                this.Name = user.Name;
+                this.LastName1 = user.LastName1;
+                this.LastName2 = user.LastName2;
+                this.FullName = user.FullName;
+                this.Gender = user.Gender;
+                this.Username = user.Username;
+                this.Password = user.Password;
+                this.Email = user.Email;
+                this.Phone = user.Phone;
+                this.State = user.State;
+                this.Type = user.Type;
+                this.CreatedAt = user.CreatedAt;
+                this.UpdatedAt = user.UpdatedAt;
+            }
         }
 
         /// <summary>

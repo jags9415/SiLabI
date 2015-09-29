@@ -16,7 +16,7 @@ BEGIN
 	IF NOT EXISTS (SELECT 1 FROM Appointments WHERE FK_Laboratory_Id = @APPOINTMENT_laboratory AND FK_Software_Id = @APPOINTMENT_software AND FK_Student_Id = @APPOINTMENT_student)
 	BEGIN
 		INSERT INTO Appointments(Date, FK_State_Id, FK_Student_Id, FK_Laboratory_Id, FK_Software_Id) VALUES
-		(GETDATE(), @APPOINTMENT_state, @APPOINTMENT_student, @APPOINTMENT_laboratory, @APPOINTMENT_software)
+		('2015-09-22T09:00:00.000Z', @APPOINTMENT_state, @APPOINTMENT_student, @APPOINTMENT_laboratory, @APPOINTMENT_software)
 
 		SET @APPOINTMENT_i = @APPOINTMENT_i + 1;
 	END

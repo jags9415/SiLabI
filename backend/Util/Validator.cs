@@ -117,5 +117,35 @@ namespace SiLabI.Util
             var valid = new[] { "Bimestre", "Trimestre", "Cuatrimestre", "Semestre" };
             return period == null || valid.Any(item => item.Equals(period, StringComparison.OrdinalIgnoreCase));
         }
+
+        public static bool IsValidAppointmentDate(DateTime date)
+        {
+            // Check if date is later than today.
+            if (DateTime.Now.CompareTo(date) > 0)
+            {
+                return false;
+            }
+            // Check that date is in the next 2 weeks.
+            if (DateTime.Now.AddDays(14).Date.CompareTo(date.Date) < 0)
+            {
+                return false;
+            }
+            // Checks that day is not weekend.
+            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                return false;
+            }
+            // Check that hour is between 8:00 am and 5:00 pm.
+            if (date.Hour < 8 || date.Hour > 17)
+            {
+                return false;
+            }
+            // Check that no minute, seconds or milliseconds are provided.
+            if (date.Minute != 0 || date.Second != 0 || date.Millisecond != 0)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

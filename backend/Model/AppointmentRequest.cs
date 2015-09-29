@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SiLabI.Exceptions;
+using SiLabI.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -60,7 +62,14 @@ namespace SiLabI.Model
         /// </summary>
         public virtual DateTime? Date
         {
-            set { _date = value; }
+            set
+            { 
+                if (value.HasValue && !Validator.IsValidAppointmentDate(value.Value))
+                {
+                    throw new InvalidParameterException("date", "Ingrese una dia entre L-V, hora entre 8:00 - 17:00, posterior a hoy");
+                }
+                _date = value;
+            }
             get { return _date; }
         }
 
@@ -72,7 +81,7 @@ namespace SiLabI.Model
         {
             get
             {
-                return Date.HasValue ? Date.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : String.Empty;
+                return Date.HasValue ? Date.Value.ToString("yyyy-MM-ddTHH:mm:ss.fff") : String.Empty;
             }
             set 
             {
@@ -88,8 +97,6 @@ namespace SiLabI.Model
         {
             bool valid = true;
 
-            valid &= !string.IsNullOrWhiteSpace(Student);
-            valid &= !string.IsNullOrWhiteSpace(Laboratory);
             valid &= !string.IsNullOrWhiteSpace(Software);
             valid &= Date.HasValue;
 
@@ -112,6 +119,7 @@ namespace SiLabI.Model
         }
     }
 
+    [DataContract]
     public class AppointmentRequest : BaseRequest
     {
         protected InnerAppointmentRequest _appointment;

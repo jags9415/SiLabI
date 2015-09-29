@@ -18,6 +18,7 @@ namespace SiLabI.Model
         private static List<Field> _SoftwareValidFields;
         private static List<Field> _LaboratoryValidFields;
         private static List<Field> _AppointmentValidFields;
+        private static List<Field> _AvailableAppointmentValidFields;
 
         private static List<Field> GenericUser
         {
@@ -166,6 +167,8 @@ namespace SiLabI.Model
                     _LaboratoryValidFields.Add(new Field("name", SqlDbType.VarChar));
                     _LaboratoryValidFields.Add(new Field("seats", SqlDbType.Int));
                     _LaboratoryValidFields.Add(new Field("state", SqlDbType.VarChar));
+                    _LaboratoryValidFields.Add(new Field("appointment_priority", SqlDbType.Int));
+                    _LaboratoryValidFields.Add(new Field("reservation_priority", SqlDbType.Int));
                     _LaboratoryValidFields.Add(new Field("created_at", SqlDbType.DateTime));
                     _LaboratoryValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
                 }
@@ -190,6 +193,21 @@ namespace SiLabI.Model
                     _AppointmentValidFields.Add(new Field("software", ValidFields.Software));
                 }
                 return _AppointmentValidFields;
+            }
+        }
+
+        public static List<Field> AvailableAppointment
+        {
+            get
+            {
+                if (_AvailableAppointmentValidFields == null)
+                {
+                    _AvailableAppointmentValidFields = new List<Field>();
+                    _AvailableAppointmentValidFields.Add(new Field("spaces", SqlDbType.Int));
+                    _AvailableAppointmentValidFields.Add(new Field("date", SqlDbType.DateTime));
+                    _AvailableAppointmentValidFields.Add(new Field("laboratory", ValidFields.Laboratory));
+                }
+                return _AvailableAppointmentValidFields;
             }
         }
     }

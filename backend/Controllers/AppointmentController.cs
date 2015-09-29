@@ -2,6 +2,7 @@
 using SiLabI.Exceptions;
 using SiLabI.Model;
 using SiLabI.Model.Query;
+using SiLabI.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,10 +27,9 @@ namespace SiLabI.Controllers
             _AppointmentDA = new AppointmentDataAccess();
         }
 
-        public GetResponse<Appointment> GetAll(QueryString request)
+        public virtual GetResponse<Appointment> GetAll(QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Student);
 
             // By default search only active appointments.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -37,23 +37,9 @@ namespace SiLabI.Controllers
                 Field field = Field.Find(ValidFields.Appointment, "state");
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Por iniciar"));
             }
-
-            // If requester is an student, only can retrieve their own appointments.
-            /*
-            if (payload["type"] == "Estudiante")
-            {
-                if (request.Query.Exists(element => element.Parent.Name == "student"))
-                {
-                    throw new UnathorizedOperationException();
-                }
-
-                Field field = Field.Find(ValidFields.Appointment, "student.username");
-                request.Query.Add(new QueryField(field, Relationship.EQ, payload["username"] as string));
-            }
-             */
-
+  
             GetResponse<Appointment> response = new GetResponse<Appointment>();
-            DataTable table = _AppointmentDA.GetAll(request);
+            DataTable table = _AppointmentDA.GetAll(payload["id"], request);
             int count = _AppointmentDA.GetCount(request);
 
             foreach (DataRow row in table.Rows)
@@ -67,15 +53,34 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public Appointment GetOne(int id, QueryString request)
+        public virtual List<AvailableAppointment> GetAvailable(string username, QueryString request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Student);
-            DataRow row = _AppointmentDA.GetOne(id, request);
+
+            if (payload["type"] as string == "Estudiante" && payload["username"] as string != username)
+            {
+                throw new UnathorizedOperationException("No se permite buscar citas de otros usuarios");
+            }
+
+            List<AvailableAppointment> response = new List<AvailableAppointment>();
+            DataTable table = _AppointmentDA.GetAvailable(username, request);
+
+            foreach (DataRow row in table.Rows)
+            {
+                response.Add(AvailableAppointment.Parse(row));
+            }
+
+            return response;
+        }
+
+        public virtual Appointment GetOne(int id, QueryString request)
+        {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            DataRow row = _AppointmentDA.GetOne(payload["id"], id, request);
             return Appointment.Parse(row);
         }
 
-        public Appointment Create(BaseRequest request)
+        public virtual Appointment Create(BaseRequest request)
         {
             AppointmentRequest appointmentRequest = (request as AppointmentRequest);
             if (appointmentRequest == null || !appointmentRequest.IsValid())
@@ -84,18 +89,17 @@ namespace SiLabI.Controllers
             }
 
             Dictionary<string, object> payload = Token.Decode(appointmentRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Student);
 
-            if (!appointmentRequest.Appointment.IsValidForCreate())
+            if (!appointmentRequest.Appointment.IsValidForCreate() || appointmentRequest.Appointment.Student == null)
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de cita incompletos.");
             }
 
-            DataRow row = _AppointmentDA.Create(appointmentRequest.Appointment);
+            DataRow row = _AppointmentDA.Create(payload["id"], appointmentRequest.Appointment);
             return Appointment.Parse(row);
         }
 
-        public Appointment Update(int id, BaseRequest request)
+        public virtual Appointment Update(int id, BaseRequest request)
         {
             AppointmentRequest appointmentRequest = (request as AppointmentRequest);
             if (appointmentRequest == null || !appointmentRequest.IsValid())
@@ -104,18 +108,17 @@ namespace SiLabI.Controllers
             }
 
             Dictionary<string, object> payload = Token.Decode(appointmentRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Student);
 
             if (!appointmentRequest.Appointment.IsValidForUpdate())
             {
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de cita inválidos.");
             }
 
-            DataRow row = _AppointmentDA.Update(id, appointmentRequest.Appointment);
+            DataRow row = _AppointmentDA.Update(payload["id"], id, appointmentRequest.Appointment);
             return Appointment.Parse(row);
         }
 
-        public void Delete(int id, BaseRequest request)
+        public virtual void Delete(int id, BaseRequest request)
         {
             if (request == null || !request.IsValid())
             {
@@ -123,8 +126,7 @@ namespace SiLabI.Controllers
             }
 
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Student);
-            _AppointmentDA.Delete(id);
+            _AppointmentDA.Delete(payload["id"], id);
         }
     }
 }

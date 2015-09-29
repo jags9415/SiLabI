@@ -14,6 +14,11 @@ namespace SiLabI.Exceptions
         /// <summary>
         /// Creates a new UnathorizedOperationException.
         /// </summary>
-        public UnathorizedOperationException() : base(HttpStatusCode.Unauthorized, "No tiene permisos para realizar esta operación.") { }
+        public UnathorizedOperationException(string message) : base(HttpStatusCode.Unauthorized, message) { }
+
+        /// <summary>
+        /// Creates a new UnathorizedOperationException.
+        /// </summary>
+        public UnathorizedOperationException() : this("No tiene permisos para realizar esta operación.") { }
     }
 }

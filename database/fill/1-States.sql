@@ -19,10 +19,8 @@ INSERT INTO States (Type, Name) VALUES
 ('APPOINTMENT', 'Por iniciar'),
 ('APPOINTMENT', 'Cancelada'),
 ('APPOINTMENT', 'Finalizada'),
-('APPOINTMENT', 'Inactiva'),
 ('RESERVATION', 'Por iniciar'),
 ('RESERVATION', 'Cancelada'),
-('RESERVATION', 'Finalizada'),
-('RESERVATION', 'Inactiva');
+('RESERVATION', 'Finalizada');
 
 USE [master];

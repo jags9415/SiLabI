@@ -9,25 +9,14 @@ using System.Web;
 namespace SiLabI.Model
 {
     /// <summary>
-    /// An appointment data.
+    /// An available appointment data.
     /// </summary>
     [DataContract]
-    public class Appointment : DatabaseObject
+    public class AvailableAppointment : BaseObject
     {
-        protected Student _student;
         protected Laboratory _laboratory;
-        protected Software _software;
         protected DateTime? _date;
-
-        /// <summary>
-        /// The student.
-        /// </summary>
-        [DataMember(EmitDefaultValue = false, Name = "student")]
-        public virtual Student Student
-        {
-            set { _student = value; }
-            get { return _student; }
-        }
+        protected int? _spaces;
 
         /// <summary>
         /// The laboratory.
@@ -40,13 +29,13 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The student.
+        /// The available spaces.
         /// </summary>
-        [DataMember(EmitDefaultValue = false, Name = "software")]
-        public virtual Software Software
+        [DataMember(EmitDefaultValue = false, Name = "spaces")]
+        public virtual int? Spaces
         {
-            set { _software = value; }
-            get { return _software; }
+            set { _spaces = value; }
+            get { return _spaces; }
         }
 
         /// <summary>
@@ -69,10 +58,10 @@ namespace SiLabI.Model
         private string Date_ISO8601 { get; set; }
 
         /// <summary>
-        /// Fill an Appointment object with the data provided in a DataRow.
+        /// Fill an AvailableAppointment object with the data provided in a DataRow.
         /// </summary>
         /// <param name="row">The row.</param>
-        public static Appointment Parse(DataRow row, string prefix = "")
+        public static AvailableAppointment Parse(DataRow row, string prefix = "")
         {
             prefix = prefix.Trim();
             if (!string.IsNullOrWhiteSpace(prefix))
@@ -80,16 +69,11 @@ namespace SiLabI.Model
                 prefix += ".";
             }
 
-            Appointment appointment = new Appointment();
+            AvailableAppointment appointment = new AvailableAppointment();
 
-            appointment.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
             appointment.Date = row.Table.Columns.Contains(prefix + "date") ? Converter.ToDateTime(row[prefix + "date"]) : null;
-            appointment.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
-            appointment.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
-            appointment.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
-            appointment.Student = Student.Parse(row, prefix + "student");
+            appointment.Spaces = row.Table.Columns.Contains(prefix + "spaces") ? Converter.ToNullableInt32(row[prefix + "spaces"]) : null;
             appointment.Laboratory = Laboratory.Parse(row, prefix + "laboratory");
-            appointment.Software = Software.Parse(row, prefix + "software");
 
             if (appointment.isEmpty())
             {
