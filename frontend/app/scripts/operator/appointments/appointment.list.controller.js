@@ -73,12 +73,12 @@
           }
         }
 
-        /*if (vm.searched.laboratory.name) {
+        if (vm.searched.laboratory.name) {
           vm.request.query.laboratory.name = {
             operation: "eq",
             value: vm.searched.laboratory.name
           }
-        }*/
+        }
 
         if (vm.searched.state) {
         vm.request.query.state = {

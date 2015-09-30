@@ -11,25 +11,83 @@
         <form class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="GroupList.search()" ng-model="GroupList.searched.number">
+            <input class="form-control" placeholder="Buscar por nombre" name="searchInput" type="text" ng-change="GroupList.search()" ng-model="GroupList.searched.name">
+          </div>
+          <div class="input-group">
+            <a href="" ng-click="GroupList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
           </div>
           <button type="submit" name="button" hidden></button>
         </form>
       </div>
       <div class="col-md-2 col-xs-3">
-        <a href="#Operador/Grupos/Agregar" class="btn btn-block btn-success">
+        <a href="#Operador/Cursos/Agregar" class="btn btn-block btn-success">
           <i class="glyphicon glyphicon-plus"></i>
           <span class="hidden-xs">Crear</span>
         </a>
       </div>
     </div>
-  </div>
+    <div class="row" collapse="!GroupList.advanceSearch">
+      <div class="col-md-12">
+        <form class="form-inline advanced-search">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Número" ng-model="GroupList.searched.number">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Profesor" ng-model="GroupList.searched.professor.name">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <ui-select id="period" ng-model="GroupList.searched.period">
+                      <ui-select-match placeholder="Periodo" allow-clear="true">
+                        {{$select.selected.value + ' ' + $select.selected.type}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="period in GroupList.periods">
+                        <span ng-bind-html="period.value + ' ' + period.type"></span>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <ui-select id="state" ng-model="GroupList.searched.state">
+                      <ui-select-match placeholder="Estado" allow-clear="true">
+                        {{$select.selected.name}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="state in GroupList.states">
+                        <span ng-bind-html="state.name"></span>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <button type="submit" class="btn btn-default" ng-click="GroupList.search()">
+                  <i class="glyphicon glyphicon-search"></i> Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
   <div class="table-responsive">
     <table class="table table-striped" ng-show="true">
       <thead>
         <tr>
           <th>Número</th>
-          <th>Curso</th>
+          <th>Nombre</th>
+          <th>Profesor</th>
+          <th>Periodo</th>
           <th>Estado</th>
           <th style="text-align: center">Acción</th>
         </tr>
@@ -38,6 +96,8 @@
         <tr ng-repeat="group in GroupList.groups">
           <td>{{ group.number }}</td>
           <td>{{ group.course.name }}</td>
+          <td>{{ group.professor.full_name }}</td>
+          <td>{{ group.period.value + ' ' +  group.period.type + ' ' + group.period.year }}</td>
           <td>
             <span class="label"
               ng-class="{ 'label-success': group.state === 'Activo',

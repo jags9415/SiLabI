@@ -5,102 +5,156 @@
         .module('silabi')
         .controller('GroupListController', GroupListController);
 
-    GroupListController.$inject = ['$scope', 'GroupService', 'MessageService', '$location'];
+    GroupListController.$inject = ['$scope', 'GroupService', 'MessageService', '$location', 'StateService', 'PeriodService'];
 
-    function GroupListController($scope, GroupService, MessageService, $location) {
-      var vm = this;
+function GroupListController($scope, GroupService, MessageService, $location, StateService, PeriodService) {
+    var vm = this;
+    vm.advanceSearch = false;
+    vm.loaded = false;
+    vm.groups = [];
+    vm.searched = {
+      professor : {}
+    };
+    vm.limit = 20;
+    vm.request = {
+      fields : "id,number,course,professor,period,state"
+    };
+    vm.states = []; 
+    vm.periods = [];
+    vm.open = openGroup;
+    vm.delete = deleteGroup;
+    vm.search = searchGroup;
+    vm.isEmpty = isEmpty;
+    vm.isLoaded = isLoaded;
+    vm.loadPage = loadPage;
+    vm.toggleAdvanceSearch = toggleAdvanceSearch;
 
-      vm.loaded = false;
-      vm.groups = [];
-      vm.searched = {};
-      vm.limit = 20;
-      vm.request = {
-        fields : "id,number,course,state"
-      };
+    activate();
 
-      vm.open = openGroup;
-      vm.delete = deleteGroup;
-      vm.search = searchGroup;
-      vm.isEmpty = isEmpty;
-      vm.isLoaded = isLoaded;
-      vm.loadPage = loadPage;
+    function activate() {
+      var page = parseInt($location.search()['page']);
 
-      activate();
-
-      function activate() {
-        var page = parseInt($location.search()['page']);
-
-        if (isNaN(page)) {
-          page = 1;
-        }
-
-        vm.totalPages = page;
-        vm.page = page;
-        loadPage();
+      if (isNaN(page)) {
+        page = 1;
       }
 
-      function loadPage() {
-        $location.search('page', vm.page);
+      vm.totalPages = page;
+      vm.page = page;
+      loadPage();
 
-        vm.request.page = vm.page;
-        vm.request.limit = vm.limit;
+      StateService.GetLabStates()
+      .then(setStates)
+      .catch(handleError);
 
-        GroupService.GetAll(vm.request)
-        .then(setGroups)
-        .catch(handleError);
-      }
-
-      function openGroup(id) {
-        $location.url('/Operador/Grupos/' + id);
-      }
-
-      function searchGroup() {
-        vm.request.query = {};
-
-        if (vm.searched.number) {
-          vm.request.query.number = {
-            operation: "eq",
-            value: vm.searched.number
-          }
-        }
-
-        if (vm.searched.name) {
-          vm.request.query['course.name'] = {
-            operation: "like",
-            value: '*' + vm.searched.name.replace(' ', '*') + '*'
-          }
-        }
-
-        loadPage();
-      }
-
-      function isEmpty() {
-        return vm.groups.length == 0;
-      }
-
-      function isLoaded() {
-        return vm.loaded;
-      }
-
-      function setGroups(data) {
-        vm.groups = data.results;
-        vm.page = data.current_page;
-        vm.totalPages = data.total_pages;
-        vm.totalItems = vm.limit * vm.totalPages;
-        vm.loaded = true;
-      }
-
-      function deleteGroup(id) {
-        MessageService.confirm("¿Desea realmente eliminar este grupo?")
-        .then(function() {
-          GroupService.Delete(id)
-          .then(loadPage)
-          .catch(handleError);
-        });
-      }
-
-      function handleError(data) {
-        MessageService.error(data.description);
-      }
+      PeriodService.GetAll(vm.request)
+      .then(setPeriods)
+      .catch(handleError);
     }
+
+    function loadPage() {
+      $location.search('page', vm.page);
+
+      vm.request.page = vm.page;
+      vm.request.limit = vm.limit;
+
+      GroupService.GetAll(vm.request)
+      .then(setGroups)
+      .catch(handleError);
+    }
+
+    function openGroup(id) {
+      $location.url('/Operador/Grupos/' + id);
+    }
+
+    function setStates(states) {
+    vm.states = states;
+    }
+
+    function setPeriods(periods) {
+    vm.periods = periods;
+    }
+
+
+    function searchGroup() {
+      vm.request.query = {};
+
+      if (vm.searched.number) {
+        vm.request.query.number = {
+          operation: "eq",
+          value: vm.searched.number
+        }
+      }
+
+      if (vm.searched.professor.name) {
+        vm.request.query['professor.full_name'] = {
+          operation: "like",
+          value: '*' + vm.searched.professor.name.replace(' ', '*') + '*'
+        }
+      }
+
+      if (vm.searched.state) {
+        vm.request.query.state = {
+          operation: "eq",
+          value: vm.searched.state.value
+        }
+      }
+
+      if (vm.searched.period) {
+        vm.request.query['period.value'] = {
+          operation: "eq",
+          value: vm.searched.period.value
+        }
+
+        vm.request.query['period.type'] = {
+          operation: "eq",
+          value: vm.searched.period.type
+        }
+      }
+
+      if (vm.searched.name) {
+        vm.request.query['course.name'] = {
+          operation: "like",
+          value: '*' + vm.searched.name.replace(' ', '*') + '*'
+        }
+      }
+
+      loadPage();
+    }
+
+    function isEmpty() {
+      return vm.groups.length == 0;
+    }
+
+    function isLoaded() {
+      return vm.loaded;
+    }
+
+    function toggleAdvanceSearch() {
+    vm.advanceSearch = !vm.advanceSearch;
+    delete vm.searched.code;
+    delete vm.searched.name;
+    delete vm.searched.state;
+  }
+
+    function setGroups(data) {
+      vm.groups = data.results;
+      vm.page = data.current_page;
+      vm.totalPages = data.total_pages;
+      vm.totalItems = vm.limit * vm.totalPages;
+      vm.loaded = true;
+    }
+
+    function deleteGroup(id) {
+      MessageService.confirm("¿Desea realmente eliminar este grupo?")
+      .then(function() {
+        GroupService.Delete(id)
+        .then(loadPage)
+        .catch(handleError);
+      });
+    }
+
+    function handleError(data) {
+      MessageService.error(data.description);
+    }
+  }
 })();
