@@ -92,13 +92,14 @@
       </thead>
       <tbody>
         <tr ng-repeat="app in AppointmentList.appointments">
-          <td>{{ app.Student.username }}</td>
+          <td>{{ app.student.username }}</td>
           <td>{{ app.date | date : 'fullDate' }}</td>
-          <td>{{ app.Software.code }}</td>
-          <td>{{ app.Laboratory.name }}</td>
+          <td>{{ app.software.code }}</td>
+          <td>{{ app.laboratory.name }}</td>
           <td>
               <span class="label"
-              ng-class="{ 'label-success': app.state === 'Por Iniciar',
+              ng-class="{ 'label-primary': app.state === 'Por iniciar',
+                          'label-success': app.state === 'Finalizada',
                           'label-danger': app.state === 'Cancelada'}" >
               {{ app.state }}
             </span>

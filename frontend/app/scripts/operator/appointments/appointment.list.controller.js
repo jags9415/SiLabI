@@ -9,7 +9,7 @@
 
     function AppointmentListController($scope, AppointmentService, MessageService, StateService, $location) {
       var vm = this;
-
+      vm.advanceSearch = false;
       vm.loaded = false;
       vm.appointments = [];
       vm.searched = {};
@@ -61,21 +61,24 @@
       }
 
       function searchAppointment() {
-        vm.request.query = {};
+        vm.request.query = {
+          student : {},
+          laboratory : {}
+        };
 
-        if (vm.searched.name) {
-          vm.request.query.name = {
+        if (vm.searched.student.username) {
+          vm.request.query.student.username = {
             operation: "like",
-            value: '*' + vm.searched.name.replace(' ', '*') + '*'
+            value: '*' + vm.searched.student.username.replace(' ', '*') + '*'
           }
         }
 
-        if (vm.searched.code) {
-          vm.request.query.code = {
+        /*if (vm.searched.laboratory.name) {
+          vm.request.query.laboratory.name = {
             operation: "eq",
-            value: vm.searched.code
+            value: vm.searched.laboratory.name
           }
-        }
+        }*/
 
         if (vm.searched.state) {
         vm.request.query.state = {
@@ -118,7 +121,7 @@
     }
 
       function deleteAppointment(id) {
-        MessageService.confirm("¿Desea realmente eliminar este software?")
+        MessageService.confirm("¿Desea realmente eliminar esta cita?")
         .then(function() {
           AppointmentService.Delete(id)
           .then(loadPage)
