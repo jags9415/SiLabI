@@ -13,6 +13,7 @@
           'ui.mask',
           'ui.bootstrap',
           'ui.bootstrap.showErrors',
-          'ngPasswordStrength'
+          'ngPasswordStrength',
+          'ui.date'
         ]);
 })();

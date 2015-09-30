@@ -14,6 +14,7 @@
       this.GetOperatorStates = GetAdministradorStates;
       this.GetGroupStates = GetGroupStates;
       this.GetLabStates = GetLabStates;
+      this.GetAppointmentStates = GetAppointmentStates;
 
       function GetStudentStates() {
         var defer = $q.defer();
@@ -73,6 +74,30 @@
           {
             name: 'Inactivo',
             value: 'Inactivo'
+          }
+        ];
+        defer.resolve(states);
+        return defer.promise;
+      }
+
+      function GetAppointmentStates() {
+        var defer = $q.defer();
+        var states = [
+          {
+            name: 'Cualquiera',
+            value: '*'
+          },
+          {
+            name: 'Por iniciar',
+            value: 'Por iniciar'
+          },
+          {
+            name: 'Cancelada',
+            value: 'Cancelada'
+          },
+          {
+            name: 'Finalizada',
+            value: 'Finalizada'
           }
         ];
         defer.resolve(states);
