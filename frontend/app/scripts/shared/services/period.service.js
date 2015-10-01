@@ -69,10 +69,6 @@
           {
             value: 5,
             type: 'Bimestre'
-          },
-          {
-            value: 6,
-            type: 'Bimestre'
           }
         ];
 

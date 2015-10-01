@@ -11,7 +11,7 @@
         <form class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar por nombre" name="searchInput" type="text" ng-change="GroupList.search()" ng-model="GroupList.searched.name">
+            <input class="form-control" placeholder="Buscar por curso" name="searchInput" type="text" ng-change="GroupList.search()" ng-model="GroupList.searched.name">
           </div>
           <div class="input-group">
             <a href="" ng-click="GroupList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
@@ -48,7 +48,7 @@
                       <ui-select-match placeholder="Periodo" allow-clear="true">
                         {{$select.selected.value + ' ' + $select.selected.type}}
                       </ui-select-match>
-                      <ui-select-choices repeat="period in GroupList.periods">
+                      <ui-select-choices repeat="period in GroupList.periods" group-by="'type'">
                         <span ng-bind-html="period.value + ' ' + period.type"></span>
                       </ui-select-choices>
                     </ui-select>
