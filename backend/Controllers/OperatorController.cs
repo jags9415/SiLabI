@@ -36,8 +36,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Operator> response = new GetResponse<Operator>();
-            DataTable table = _OperatorDA.GetAll(request);
-            int count = _OperatorDA.GetCount(request);
+            DataTable table = _OperatorDA.GetAll(payload["id"], request);
+            int count = _OperatorDA.GetCount(payload["id"], request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -52,7 +52,7 @@ namespace SiLabI.Controllers
 
         public Operator GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _OperatorDA.GetOne(id, request);
+            DataRow row = _OperatorDA.GetOne(payload["id"], id, request);
             return Operator.Parse(row);
         }
 
@@ -64,7 +64,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            DataRow row = _OperatorDA.Create(operatorRequest);
+            DataRow row = _OperatorDA.Create(payload["id"], operatorRequest);
             return Operator.Parse(row);
         }
 
@@ -80,7 +80,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _OperatorDA.Delete(id);
+            _OperatorDA.Delete(payload["id"], id);
         }
     }
 }

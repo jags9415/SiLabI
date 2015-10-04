@@ -17,14 +17,14 @@ namespace SiLabI.Data
         /// </summary>
         /// <param name="request">The query.</param>
         /// <returns>The amount of rows that satifies the query.</returns>
-        int GetCount(QueryString request);
+        int GetCount(object requesterId, QueryString request);
 
         /// <summary>
         /// Get all the rows that satisfies q query.
         /// </summary>
         /// <param name="request">The query.</param>
         /// <returns>A DataTable that contains all the rows that satisfies the query.</returns>
-        DataTable GetAll(QueryString request);
+        DataTable GetAll(object requesterId, QueryString request);
 
         /// <summary>
         /// Get a specific row.
@@ -32,14 +32,14 @@ namespace SiLabI.Data
         /// <param name="id">The row identity.</param>
         /// <param name="request">The query.</param>
         /// <returns>The row.</returns>
-        DataRow GetOne(int id, QueryString request);
+        DataRow GetOne(object requesterId, int id, QueryString request);
 
         /// <summary>
         /// Insert a row.
         /// </summary>
         /// <param name="obj">The row data.</param>
         /// <returns>The inserted row.</returns>
-        DataRow Create(object obj);
+        DataRow Create(object requesterId, object obj);
 
         /// <summary>
         /// Updates a row.
@@ -47,12 +47,12 @@ namespace SiLabI.Data
         /// <param name="id">The row identity.</param>
         /// <param name="obj">The row data.</param>
         /// <returns>The updated row.</returns>
-        DataRow Update(int id, object obj);
+        DataRow Update(object requesterId, int id, object obj);
 
         /// <summary>
         /// Delete a row.
         /// </summary>
         /// <param name="id">The row identity.</param>
-        void Delete(int id);
+        void Delete(object requesterId, int id);
     }
 }

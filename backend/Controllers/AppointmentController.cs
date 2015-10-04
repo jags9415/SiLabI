@@ -38,7 +38,7 @@ namespace SiLabI.Controllers
   
             GetResponse<Appointment> response = new GetResponse<Appointment>();
             DataTable table = _AppointmentDA.GetAll(payload["id"], request);
-            int count = _AppointmentDA.GetCount(request);
+            int count = _AppointmentDA.GetCount(payload["id"], request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -59,7 +59,7 @@ namespace SiLabI.Controllers
             }
 
             List<AvailableAppointment> response = new List<AvailableAppointment>();
-            DataTable table = _AppointmentDA.GetAvailable(username, request);
+            DataTable table = _AppointmentDA.GetAvailable(payload["id"], username, request);
 
             foreach (DataRow row in table.Rows)
             {

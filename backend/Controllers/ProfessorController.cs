@@ -37,8 +37,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<User> response = new GetResponse<User>();
-            DataTable table = _ProfessorDA.GetAll(request);
-            int count = _ProfessorDA.GetCount(request);
+            DataTable table = _ProfessorDA.GetAll(payload["id"], request);
+            int count = _ProfessorDA.GetCount(payload["id"], request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -53,13 +53,13 @@ namespace SiLabI.Controllers
 
         public User GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _ProfessorDA.GetOne(id, request);
+            DataRow row = _ProfessorDA.GetOne(payload["id"], id, request);
             return User.Parse(row);
         }
 
         public User GetOne(string username, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _ProfessorDA.GetOne(username, request);
+            DataRow row = _ProfessorDA.GetOne(payload["id"], username, request);
             return User.Parse(row);
         }
 
@@ -76,7 +76,7 @@ namespace SiLabI.Controllers
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de docente incompletos.");
             }
 
-            DataRow row = _ProfessorDA.Create(professorRequest.Professor);
+            DataRow row = _ProfessorDA.Create(payload["id"], professorRequest.Professor);
             return User.Parse(row);
         }
 
@@ -93,7 +93,7 @@ namespace SiLabI.Controllers
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de docente inválidos.");
             }
 
-            DataRow row = _ProfessorDA.Update(id, professorRequest.Professor);
+            DataRow row = _ProfessorDA.Update(payload["id"], id, professorRequest.Professor);
             return User.Parse(row);
         }
 
@@ -104,7 +104,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _ProfessorDA.Delete(id);
+            _ProfessorDA.Delete(payload["id"], id);
         }
     }
 }

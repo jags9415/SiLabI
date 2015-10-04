@@ -40,8 +40,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Student> response = new GetResponse<Student>();
-            DataTable table = _StudentDA.GetAll(request);
-            int count = _StudentDA.GetCount(request);
+            DataTable table = _StudentDA.GetAll(payload["id"], request);
+            int count = _StudentDA.GetCount(payload["id"], request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -56,13 +56,13 @@ namespace SiLabI.Controllers
 
         public Student GetOne(string username, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _StudentDA.GetOne(username, request);
+            DataRow row = _StudentDA.GetOne(payload["id"], username, request);
             return Student.Parse(row);
         }
 
         public Student GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _StudentDA.GetOne(id, request);
+            DataRow row = _StudentDA.GetOne(payload["id"], id, request);
             return Student.Parse(row);
         }
 
@@ -79,7 +79,7 @@ namespace SiLabI.Controllers
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de estudiante incompletos.");
             }
 
-            DataRow row = _StudentDA.Create(studentRequest.Student);
+            DataRow row = _StudentDA.Create(payload["id"], studentRequest.Student);
             return Student.Parse(row);
         }
 
@@ -96,7 +96,7 @@ namespace SiLabI.Controllers
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de estudiante inválidos.");
             }
 
-            DataRow row = _StudentDA.Update(id, studentRequest.Student);
+            DataRow row = _StudentDA.Update(payload["id"], id, studentRequest.Student);
            return Student.Parse(row);
         }
 
@@ -107,7 +107,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _StudentDA.Delete(id);
+            _StudentDA.Delete(payload["id"], id);
         }
     }
 }

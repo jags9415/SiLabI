@@ -39,8 +39,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Group> response = new GetResponse<Group>();
-            DataTable table = _GroupDA.GetAll(request);
-            int count = _GroupDA.GetCount(request);
+            DataTable table = _GroupDA.GetAll(payload["id"], request);
+            int count = _GroupDA.GetCount(payload["id"], request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -55,7 +55,7 @@ namespace SiLabI.Controllers
 
         public Group GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _GroupDA.GetOne(id, request);
+            DataRow row = _GroupDA.GetOne(payload["id"], id, request);
             return Group.Parse(row);
         }
 
@@ -72,7 +72,7 @@ namespace SiLabI.Controllers
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de grupo incompletos.");
             }
 
-            DataRow row = _GroupDA.Create(groupRequest.Group);
+            DataRow row = _GroupDA.Create(payload["id"], groupRequest.Group);
             return Group.Parse(row);
         }
 
@@ -89,7 +89,7 @@ namespace SiLabI.Controllers
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de grupo inválidos.");
             }
 
-            DataRow row = _GroupDA.Update(id, groupRequest.Group);
+            DataRow row = _GroupDA.Update(payload["id"], id, groupRequest.Group);
             return Group.Parse(row);
         }
 
@@ -100,7 +100,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _GroupDA.Delete(id);
+            _GroupDA.Delete(payload["id"], id);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace SiLabI.Controllers
         /// <param name="request">The query.</param>
         public List<Student> GetGroupStudents(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataTable table = _StudentsByGroupDA.GetAll(id, request);
+            DataTable table = _StudentsByGroupDA.GetAll(payload["id"], id, request);
             List<Student> students = new List<Student>();
 
             foreach (DataRow row in table.Rows)
@@ -133,7 +133,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _StudentsByGroupDA.Create(id, request.Students);
+            _StudentsByGroupDA.Create(payload["id"], id, request.Students);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _StudentsByGroupDA.Update(id, request.Students);
+            _StudentsByGroupDA.Update(payload["id"], id, request.Students);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _StudentsByGroupDA.Delete(id, request.Students);
+            _StudentsByGroupDA.Delete(payload["id"], id, request.Students);
         }
     }
 }

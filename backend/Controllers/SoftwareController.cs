@@ -36,8 +36,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Software> response = new GetResponse<Software>();
-            DataTable table = _SoftwareDA.GetAll(request);
-            int count = _SoftwareDA.GetCount(request);
+            DataTable table = _SoftwareDA.GetAll(payload["id"], request);
+            int count = _SoftwareDA.GetCount(payload["id"], request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -52,13 +52,13 @@ namespace SiLabI.Controllers
 
         public Software GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _SoftwareDA.GetOne(id, request);
+            DataRow row = _SoftwareDA.GetOne(payload["id"], id, request);
             return Software.Parse(row);
         }
 
         public Software GetOne(string code, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _SoftwareDA.GetOne(code, request);
+            DataRow row = _SoftwareDA.GetOne(payload["id"], code, request);
             return Software.Parse(row);
         }
 
@@ -75,7 +75,7 @@ namespace SiLabI.Controllers
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de software incompletos.");
             }
 
-            DataRow row = _SoftwareDA.Create(softwareRequest.Software);
+            DataRow row = _SoftwareDA.Create(payload["id"], softwareRequest.Software);
             return Software.Parse(row);
         }
 
@@ -92,7 +92,7 @@ namespace SiLabI.Controllers
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de software inválidos.");
             }
 
-            DataRow row = _SoftwareDA.Update(id, softwareRequest.Software);
+            DataRow row = _SoftwareDA.Update(payload["id"], id, softwareRequest.Software);
             return Software.Parse(row);
         }
 
@@ -103,7 +103,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _SoftwareDA.Delete(id);
+            _SoftwareDA.Delete(payload["id"], id);
         }
     }
 }

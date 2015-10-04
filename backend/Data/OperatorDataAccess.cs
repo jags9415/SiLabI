@@ -27,42 +27,49 @@ namespace SiLabI.Data
             _Connection = new Connection();
         }
 
-        public int GetCount(QueryString request)
+        public int GetCount(object requesterId, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
 
-            parameters[0] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
-            parameters[0].Value = SqlUtilities.FormatWhereFields(request.Query);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+
+            parameters[1] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatWhereFields(request.Query);
 
             object count = _Connection.executeScalar("sp_GetOperatorsCount", parameters);
             return Converter.ToInt32(count);
         }
 
-        public DataTable GetAll(QueryString request)
+        public DataTable GetAll(object requesterId, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[5];
+            SqlParameter[] parameters = new SqlParameter[6];
 
-            parameters[0] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
-            parameters[0].Value = SqlUtilities.FormatSelectFields(request.Fields);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
 
-            parameters[1] = SqlUtilities.CreateParameter("@order_by", SqlDbType.VarChar);
-            parameters[1].Value = SqlUtilities.FormatOrderByFields(request.Sort);
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
 
-            parameters[2] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
-            parameters[2].Value = SqlUtilities.FormatWhereFields(request.Query);
+            parameters[2] = SqlUtilities.CreateParameter("@order_by", SqlDbType.VarChar);
+            parameters[2].Value = SqlUtilities.FormatOrderByFields(request.Sort);
 
-            parameters[3] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
-            parameters[4] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
+            parameters[3] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
+            parameters[3].Value = SqlUtilities.FormatWhereFields(request.Query);
+
+            parameters[4] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
+            parameters[5] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
 
             return _Connection.executeQuery("sp_GetOperators", parameters);
         }
 
-        public DataRow GetOne(int id, QueryString request)
+        public DataRow GetOne(object requesterId, int id, QueryString request)
         {
-            SqlParameter[] parameters = new SqlParameter[2];
-            parameters[0] = SqlUtilities.CreateParameter("@operator_id", SqlDbType.Int, id);
-            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
-            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
+            SqlParameter[] parameters = new SqlParameter[3];
+
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[1] = SqlUtilities.CreateParameter("@operator_id", SqlDbType.Int, id);
+
+            parameters[2] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[2].Value = SqlUtilities.FormatSelectFields(request.Fields);
 
             DataTable table = _Connection.executeQuery("sp_GetOperator", parameters);
             if (table.Rows.Count == 0)
@@ -75,30 +82,32 @@ namespace SiLabI.Data
             }
         }
 
-        public DataRow Create(object obj)
+        public DataRow Create(object requesterId, object obj)
         {
             OperatorRequest request = (obj as OperatorRequest);
-            SqlParameter[] parameters = new SqlParameter[4];
+            SqlParameter[] parameters = new SqlParameter[5];
 
-            parameters[0] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, request.Id);
-            parameters[1] = SqlUtilities.CreateParameter("@period_value", SqlDbType.Int, request.Period.Value);
-            parameters[2] = SqlUtilities.CreateParameter("@period_type", SqlDbType.VarChar, request.Period.Type);
-            parameters[3] = SqlUtilities.CreateParameter("@period_year", SqlDbType.Int, request.Period.Year);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[1] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, request.Id);
+            parameters[2] = SqlUtilities.CreateParameter("@period_value", SqlDbType.Int, request.Period.Value);
+            parameters[3] = SqlUtilities.CreateParameter("@period_type", SqlDbType.VarChar, request.Period.Type);
+            parameters[4] = SqlUtilities.CreateParameter("@period_year", SqlDbType.Int, request.Period.Year);
 
             DataTable table = _Connection.executeQuery("sp_CreateOperator", parameters);
             return table.Rows[0];
         }
 
-        public DataRow Update(int id, object obj)
+        public DataRow Update(object requesterId, int id, object obj)
         {
             throw new InvalidOperationException("Cannot perform UPDATE operation on Operators table.");
         }
 
-        public void Delete(int id)
+        public void Delete(object requesterId, int id)
         {
-            SqlParameter[] parameters = new SqlParameter[1];
+            SqlParameter[] parameters = new SqlParameter[2];
 
-            parameters[0] = SqlUtilities.CreateParameter("@operator_id", SqlDbType.Int, id);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[1] = SqlUtilities.CreateParameter("@operator_id", SqlDbType.Int, id);
 
             _Connection.executeNonQuery("sp_DeleteOperator", parameters);
         }

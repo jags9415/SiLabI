@@ -36,8 +36,8 @@ namespace SiLabI.Controllers
             }
 
             GetResponse<Course> response = new GetResponse<Course>();
-            DataTable table = _CourseDA.GetAll(request);
-            int count = _CourseDA.GetCount(request);
+            DataTable table = _CourseDA.GetAll(payload["id"], request);
+            int count = _CourseDA.GetCount(payload["id"], request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -52,7 +52,7 @@ namespace SiLabI.Controllers
 
         public Course GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _CourseDA.GetOne(id, request);
+            DataRow row = _CourseDA.GetOne(payload["id"], id, request);
             return Course.Parse(row);
         }
 
@@ -69,7 +69,7 @@ namespace SiLabI.Controllers
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de curso incompletos.");
             }
 
-            DataRow row = _CourseDA.Create(courseRequest.Course);
+            DataRow row = _CourseDA.Create(payload["id"], courseRequest.Course);
             return Course.Parse(row);
         }
 
@@ -86,7 +86,7 @@ namespace SiLabI.Controllers
                 throw new WcfException(HttpStatusCode.BadRequest, "Datos de curso inválidos.");
             }
 
-            DataRow row = _CourseDA.Update(id, courseRequest.Course);
+            DataRow row = _CourseDA.Update(payload["id"], id, courseRequest.Course);
             return Course.Parse(row);
         }
 
@@ -97,7 +97,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _CourseDA.Delete(id);
+            _CourseDA.Delete(payload["id"], id);
         }
     }
 }
