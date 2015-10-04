@@ -18,7 +18,7 @@
  * @apiSuccess {Date}									      date 		    The appointment number.
  * @apiSuccess {Date}									      created_at  The creation date.
  * @apiSuccess {Date}									      updated_at  The last update date.
- * @apiSuccess {String="Por iniciar, Cancelada, Finalizada,  Inactiva"}	state			  The appointment state.
+ * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	state			  The appointment state.
  * @apiSuccess {Object}									    student 			The student data.
  * @apiSuccess {Object}                     laboratory		The laboratory data.
  * @apiSuccess {Object}                     software  		The software data.
