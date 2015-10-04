@@ -5,8 +5,8 @@ DECLARE @SBL_labs_count INT, @SBL_software_count INT, @SBL_i INT, @SBL_j INT;
 SET @SBL_i = 1;
 SET @SBL_j = 1;
 
-SET @SBL_labs_count = 5;
-SET @SBL_software_count = 150;
+SELECT @SBL_labs_count = COUNT(1) FROM Laboratories;
+SELECT @SBL_software_count = COUNT(1) FROM Software;
 
 WHILE @SBL_i <= @SBL_labs_count
 BEGIN

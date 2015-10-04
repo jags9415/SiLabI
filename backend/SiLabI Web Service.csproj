@@ -93,6 +93,7 @@
     <Compile Include="Data\LaboratoryDataAccess.cs" />
     <Compile Include="Data\OperatorDataAccess.cs" />
     <Compile Include="Data\ProfessorDataAccess.cs" />
+    <Compile Include="Data\ReservationDataAccess.cs" />
     <Compile Include="Data\SoftwareByLaboratoryDataAccess.cs" />
     <Compile Include="Data\SoftwareDataAccess.cs" />
     <Compile Include="Data\StudentsByGroupDataAccess.cs" />
@@ -127,6 +128,8 @@
     <Compile Include="Model\OperatorRequest.cs" />
     <Compile Include="Model\Period.cs" />
     <Compile Include="Model\ProfessorRequest.cs" />
+    <Compile Include="Model\Reservation.cs" />
+    <Compile Include="Model\ReservationRequest.cs" />
     <Compile Include="Model\Software.cs" />
     <Compile Include="Model\SoftwareByLaboratoryRequest.cs" />
     <Compile Include="Model\SoftwareRequest.cs" />
