@@ -15,6 +15,8 @@ namespace SiLabI
     {
         public GetResponse<Group> GetGroups(string token, string query, string page, string limit, string sort, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Operator);
             QueryString request = new QueryString(ValidFields.Group);
 
             request.AccessToken = token;
@@ -24,11 +26,14 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _GroupController.GetAll(request);
+            return _GroupController.GetAll(request, payload);
         }
 
         public Group GetGroup(string id, string token, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
@@ -40,66 +45,92 @@ namespace SiLabI
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _GroupController.GetOne(num, request);
+            return _GroupController.GetOne(num, request, payload);
         }
 
         public Group CreateGroup(GroupRequest request)
         {
-            return _GroupController.Create(request);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
+            return _GroupController.Create(request, payload);
         }
 
         public Group UpdateGroup(string id, GroupRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            return _GroupController.Update(num, request);
+
+            return _GroupController.Update(num, request, payload);
         }
 
         public void DeleteGroup(string id, BaseRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            _GroupController.Delete(num, request);
+
+            _GroupController.Delete(num, request, payload);
         }
 
         public void AddStudentsToGroup(string id, StudentByGroupRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            _GroupController.AddStudentsToGroup(num, request);
+
+            _GroupController.AddStudentsToGroup(num, request, payload);
         }
 
         public void UpdateGroupStudents(string id, StudentByGroupRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            _GroupController.UpdateGroupStudents(num, request);
+
+            _GroupController.UpdateGroupStudents(num, request, payload);
         }
 
         public void DeleteStudentsFromGroup(string id, StudentByGroupRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            _GroupController.DeleteStudentsFromGroup(num, request);
+
+            _GroupController.DeleteStudentsFromGroup(num, request, payload);
         }
 
         public List<Student> GetGroupStudents(string id, string token, string query, string sort, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
@@ -113,7 +144,7 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _GroupController.GetGroupStudents(num, request);
+            return _GroupController.GetGroupStudents(num, request, payload);
         }
     }
 }

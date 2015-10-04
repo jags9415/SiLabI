@@ -29,15 +29,12 @@ namespace SiLabI.Controllers
             _StudentsByGroupDA = new StudentsByGroupDataAccess();
         }
 
-        public GetResponse<Group> GetAll(QueryString request)
+        public GetResponse<Group> GetAll(QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
-
             // By default search only active groups.
             if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("state", SqlDbType.VarChar);
+                Field field = Field.Find(ValidFields.Group, "state");
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -56,24 +53,19 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public Group GetOne(int id, QueryString request)
+        public Group GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _GroupDA.GetOne(id, request);
             return Group.Parse(row);
         }
 
-        public Group Create(BaseRequest request)
+        public Group Create(BaseRequest request, Dictionary<string, object> payload)
         {
             GroupRequest groupRequest = (request as GroupRequest);
             if (groupRequest == null || !groupRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(groupRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
 
             if (!groupRequest.Group.IsValidForCreate())
             {
@@ -84,16 +76,13 @@ namespace SiLabI.Controllers
             return Group.Parse(row);
         }
 
-        public Group Update(int id, BaseRequest request)
+        public Group Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             GroupRequest groupRequest = (request as GroupRequest);
             if (groupRequest == null || !groupRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(groupRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
 
             if (!groupRequest.Group.IsValidForUpdate())
             {
@@ -104,15 +93,13 @@ namespace SiLabI.Controllers
             return Group.Parse(row);
         }
 
-        public void Delete(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _GroupDA.Delete(id);
         }
 
@@ -121,10 +108,8 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="id">The group identification.</param>
         /// <param name="request">The query.</param>
-        public List<Student> GetGroupStudents(int id, QueryString request)
+        public List<Student> GetGroupStudents(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataTable table = _StudentsByGroupDA.GetAll(id, request);
             List<Student> students = new List<Student>();
 
@@ -141,15 +126,13 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="id">The group identification.</param>
         /// <param name="request">The request.</param>
-        public void AddStudentsToGroup(int id, StudentByGroupRequest request)
+        public void AddStudentsToGroup(int id, StudentByGroupRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _StudentsByGroupDA.Create(id, request.Students);
         }
 
@@ -159,15 +142,13 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="id">The group identification.</param>
         /// <param name="request">The request.</param>
-        public void UpdateGroupStudents(int id, StudentByGroupRequest request)
+        public void UpdateGroupStudents(int id, StudentByGroupRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _StudentsByGroupDA.Update(id, request.Students);
         }
 
@@ -176,15 +157,13 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="id">The group identification.</param>
         /// <param name="request">The request.</param>
-        public void DeleteStudentsFromGroup(int id, StudentByGroupRequest request)
+        public void DeleteStudentsFromGroup(int id, StudentByGroupRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _StudentsByGroupDA.Delete(id, request.Students);
         }
     }

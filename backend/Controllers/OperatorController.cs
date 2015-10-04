@@ -26,15 +26,12 @@ namespace SiLabI.Controllers
             this._OperatorDA = new OperatorDataAccess();
         }
 
-        public GetResponse<Operator> GetAll(QueryString request)
+        public GetResponse<Operator> GetAll(QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
-
             // By default search only active operators.
             if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("state", SqlDbType.VarChar);
+                Field field = Field.Find(ValidFields.Operator, "state");
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -53,15 +50,13 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public Operator GetOne(int id, QueryString request)
+        public Operator GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
             DataRow row = _OperatorDA.GetOne(id, request);
             return Operator.Parse(row);
         }
 
-        public Operator Create(BaseRequest request)
+        public Operator Create(BaseRequest request, Dictionary<string, object> payload)
         {
             OperatorRequest operatorRequest = (request as OperatorRequest);
             if (operatorRequest == null || !operatorRequest.IsValid())
@@ -69,26 +64,22 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(operatorRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
             DataRow row = _OperatorDA.Create(operatorRequest);
             return Operator.Parse(row);
         }
 
-        public Operator Update(int id, BaseRequest request)
+        public Operator Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             throw new InvalidOperationException("An operator cannot be updated.");
         }
 
-        public void Delete(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
             _OperatorDA.Delete(id);
         }
     }

@@ -27,7 +27,7 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _AppointmentController.GetAll(request);
+            return _AppointmentController.GetAll(request, payload);
         }
 
         public Appointment GetAppointment(string id, string token, string fields)
@@ -46,7 +46,7 @@ namespace SiLabI
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _AppointmentController.GetOne(num, request);
+            return _AppointmentController.GetOne(num, request, payload);
         }
 
         public Appointment CreateAppointment(AppointmentRequest request)
@@ -54,7 +54,7 @@ namespace SiLabI
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Operator);
 
-            return _AppointmentController.Create(request);
+            return _AppointmentController.Create(request, payload);
         }
 
         public Appointment UpdateAppointment(string id, AppointmentRequest request)
@@ -67,7 +67,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            return _AppointmentController.Update(num, request);
+            return _AppointmentController.Update(num, request, payload);
         }
 
         public void DeleteAppointment(string id, BaseRequest request)
@@ -80,11 +80,13 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            _AppointmentController.Delete(num, request);
+            _AppointmentController.Delete(num, request, payload);
         }
 
         public List<AvailableAppointment> GetAvailableAppointments(string token, string username, string query, string sort, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Student);
             QueryString request = new QueryString(ValidFields.AvailableAppointment);
 
             request.AccessToken = token;
@@ -92,7 +94,7 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _AppointmentController.GetAvailable(username, request);
+            return _AppointmentController.GetAvailable(username, request, payload);
         }
 
         public GetResponse<Appointment> GetStudentAppointments(string token, string username, string query, string page, string limit, string sort, string fields)
@@ -109,7 +111,7 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _StudentAppointmentController.GetAll(username, request);
+            return _StudentAppointmentController.GetAll(username, request, payload);
         }
 
         public Appointment GetStudentAppointment(string id, string username, string token, string fields)
@@ -128,7 +130,7 @@ namespace SiLabI
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _AppointmentController.GetOne(num, request);
+            return _AppointmentController.GetOne(num, request, payload);
         }
 
         public Appointment CreateStudentAppointment(string username, AppointmentRequest request)
@@ -136,7 +138,7 @@ namespace SiLabI
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Token.CheckPayload(payload, UserType.Student);
 
-            return _StudentAppointmentController.Create(username, request);
+            return _StudentAppointmentController.Create(username, request, payload);
         }
 
         public Appointment UpdateStudentAppointment(string username, string id, AppointmentRequest request)
@@ -149,7 +151,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            return _StudentAppointmentController.Update(num, request);
+            return _StudentAppointmentController.Update(num, request, payload);
         }
 
         public void DeleteStudentAppointment(string username, string id, BaseRequest request)
@@ -162,7 +164,7 @@ namespace SiLabI
             {
                 throw new InvalidParameterException("id");
             }
-            _AppointmentController.Delete(num, request);
+            _AppointmentController.Delete(num, request, payload);
         }
     }
 }

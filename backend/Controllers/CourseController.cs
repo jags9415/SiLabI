@@ -26,15 +26,12 @@ namespace SiLabI.Controllers
             this._CourseDA = new CourseDataAccess();
         }
 
-        public GetResponse<Course> GetAll(QueryString request)
+        public GetResponse<Course> GetAll(QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
-
             // By default search only active courses.
             if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("state", SqlDbType.VarChar);
+                Field field = Field.Find(ValidFields.Course, "state");
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -53,24 +50,19 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public Course GetOne(int id, QueryString request)
+        public Course GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _CourseDA.GetOne(id, request);
             return Course.Parse(row);
         }
 
-        public Course Create(BaseRequest request)
+        public Course Create(BaseRequest request, Dictionary<string, object> payload)
         {
             CourseRequest courseRequest = (request as CourseRequest);
             if (courseRequest == null || !courseRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(courseRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
 
             if (!courseRequest.Course.IsValidForCreate())
             {
@@ -81,16 +73,13 @@ namespace SiLabI.Controllers
             return Course.Parse(row);
         }
 
-        public Course Update(int id, BaseRequest request)
+        public Course Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             CourseRequest courseRequest = (request as CourseRequest);
             if (courseRequest == null || !courseRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(courseRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
 
             if (!courseRequest.Course.IsValidForUpdate())
             {
@@ -101,15 +90,13 @@ namespace SiLabI.Controllers
             return Course.Parse(row);
         }
 
-        public void Delete(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _CourseDA.Delete(id);
         }
     }

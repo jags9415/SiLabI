@@ -26,15 +26,12 @@ namespace SiLabI.Controllers
             this._SoftwareDA = new SoftwareDataAccess();
         }
 
-        public GetResponse<Software> GetAll(QueryString request)
+        public GetResponse<Software> GetAll(QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
-
-            // By default search only active courses.
+            // By default search only active software.
             if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("state", SqlDbType.VarChar);
+                Field field = Field.Find(ValidFields.Software, "state");
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -53,32 +50,25 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public Software GetOne(int id, QueryString request)
+        public Software GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _SoftwareDA.GetOne(id, request);
             return Software.Parse(row);
         }
 
-        public Software GetOne(string code, QueryString request)
+        public Software GetOne(string code, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _SoftwareDA.GetOne(code, request);
             return Software.Parse(row);
         }
 
-        public Software Create(BaseRequest request)
+        public Software Create(BaseRequest request, Dictionary<string, object> payload)
         {
             SoftwareRequest softwareRequest = (request as SoftwareRequest);
             if (softwareRequest == null || !softwareRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(softwareRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
 
             if (!softwareRequest.Software.IsValidForCreate())
             {
@@ -89,16 +79,13 @@ namespace SiLabI.Controllers
             return Software.Parse(row);
         }
 
-        public Software Update(int id, BaseRequest request)
+        public Software Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             SoftwareRequest softwareRequest = (request as SoftwareRequest);
             if (softwareRequest == null || !softwareRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(softwareRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
 
             if (!softwareRequest.Software.IsValidForUpdate())
             {
@@ -109,15 +96,13 @@ namespace SiLabI.Controllers
             return Software.Parse(row);
         }
 
-        public void Delete(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _SoftwareDA.Delete(id);
         }
     }

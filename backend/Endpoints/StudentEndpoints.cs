@@ -17,6 +17,8 @@ namespace SiLabI
     {
         public GetResponse<Student> GetStudents(string token, string query, string page, string limit, string sort, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Operator);
             QueryString request = new QueryString(ValidFields.Student);
 
             request.AccessToken = token;
@@ -26,42 +28,55 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _StudentController.GetAll(request);
+            return _StudentController.GetAll(request, payload);
         }
 
         public Student GetStudent(string username, string token, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Operator);
             QueryString request = new QueryString(ValidFields.Student);
 
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _StudentController.GetOne(username, request);
+            return _StudentController.GetOne(username, request, payload);
         }
 
         public Student CreateStudent(StudentRequest request)
         {
-            return _StudentController.Create(request);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
+            return _StudentController.Create(request, payload);
         }
 
         public Student UpdateStudent(string id, StudentRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            return _StudentController.Update(num, request);
+
+            return _StudentController.Update(num, request, payload);
         }
 
         public void DeleteStudent(string id, BaseRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            _StudentController.Delete(num, request);
+
+            _StudentController.Delete(num, request, payload);
         }
     }
 }

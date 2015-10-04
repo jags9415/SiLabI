@@ -27,10 +27,8 @@ namespace SiLabI.Controllers
             _AppointmentDA = new AppointmentDataAccess();
         }
 
-        public virtual GetResponse<Appointment> GetAll(QueryString request)
+        public virtual GetResponse<Appointment> GetAll(QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-
             // By default search only active appointments.
             if (!request.Query.Exists(element => element.Name == "state"))
             {
@@ -53,10 +51,8 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public virtual List<AvailableAppointment> GetAvailable(string username, QueryString request)
+        public virtual List<AvailableAppointment> GetAvailable(string username, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-
             if (payload["type"] as string == "Estudiante" && payload["username"] as string != username)
             {
                 throw new UnathorizedOperationException("No se permite buscar citas de otros usuarios");
@@ -73,22 +69,19 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public virtual Appointment GetOne(int id, QueryString request)
+        public virtual Appointment GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             DataRow row = _AppointmentDA.GetOne(payload["id"], id, request);
             return Appointment.Parse(row);
         }
 
-        public virtual Appointment Create(BaseRequest request)
+        public virtual Appointment Create(BaseRequest request, Dictionary<string, object> payload)
         {
             AppointmentRequest appointmentRequest = (request as AppointmentRequest);
             if (appointmentRequest == null || !appointmentRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(appointmentRequest.AccessToken);
 
             if (!appointmentRequest.Appointment.IsValidForCreate() || appointmentRequest.Appointment.Student == null)
             {
@@ -99,15 +92,13 @@ namespace SiLabI.Controllers
             return Appointment.Parse(row);
         }
 
-        public virtual Appointment Update(int id, BaseRequest request)
+        public virtual Appointment Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             AppointmentRequest appointmentRequest = (request as AppointmentRequest);
             if (appointmentRequest == null || !appointmentRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(appointmentRequest.AccessToken);
 
             if (!appointmentRequest.Appointment.IsValidForUpdate())
             {
@@ -118,14 +109,13 @@ namespace SiLabI.Controllers
             return Appointment.Parse(row);
         }
 
-        public virtual void Delete(int id, BaseRequest request)
+        public virtual void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             _AppointmentDA.Delete(payload["id"], id);
         }
     }

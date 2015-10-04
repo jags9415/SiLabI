@@ -27,15 +27,12 @@ namespace SiLabI.Controllers
             this._ProfessorDA = new ProfessorDataAccess();
         }
 
-        public GetResponse<User> GetAll(QueryString request)
+        public GetResponse<User> GetAll(QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
-
             // By default search only active professors.
             if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("state", SqlDbType.VarChar);
+                Field field = Field.Find(ValidFields.Professor, "state");
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -54,32 +51,25 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public User GetOne(int id, QueryString request)
+        public User GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _ProfessorDA.GetOne(id, request);
             return User.Parse(row);
         }
 
-        public User GetOne(string username, QueryString request)
+        public User GetOne(string username, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _ProfessorDA.GetOne(username, request);
             return User.Parse(row);
         }
 
-        public User Create(BaseRequest request)
+        public User Create(BaseRequest request, Dictionary<string, object> payload)
         {
             ProfessorRequest professorRequest = (request as ProfessorRequest);
             if (professorRequest == null || !professorRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(professorRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
 
             if (!professorRequest.Professor.IsValidForCreate())
             {
@@ -90,16 +80,13 @@ namespace SiLabI.Controllers
             return User.Parse(row);
         }
 
-        public User Update(int id, BaseRequest request)
+        public User Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             ProfessorRequest professorRequest = (request as ProfessorRequest);
             if (professorRequest == null || !professorRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(professorRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
 
             if (!professorRequest.Professor.IsValidForUpdate())
             {
@@ -110,15 +97,13 @@ namespace SiLabI.Controllers
             return User.Parse(row);
         }
 
-        public void Delete(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _ProfessorDA.Delete(id);
         }
     }

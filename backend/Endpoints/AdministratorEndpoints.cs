@@ -18,6 +18,8 @@ namespace SiLabI
     {
         public GetResponse<User> GetAdministrators(string token, string query, string page, string limit, string sort, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Admin);
             QueryString request = new QueryString(ValidFields.Administrator);
 
             request.AccessToken = token;
@@ -27,11 +29,14 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _AdminController.GetAll(request);
+            return _AdminController.GetAll(request, payload);
         }
 
         public User GetAdministrator(string id, string token, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Admin);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
@@ -43,11 +48,14 @@ namespace SiLabI
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _AdminController.GetOne(num, request);
+            return _AdminController.GetOne(num, request, payload);
         }
 
         public User CreateAdministrator(string id, BaseRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Admin);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
@@ -58,17 +66,21 @@ namespace SiLabI
             adminRequest.Id = num;
             adminRequest.AccessToken = request.AccessToken;
 
-            return _AdminController.Create(adminRequest);
+            return _AdminController.Create(adminRequest, payload);
         }
 
         public void DeleteAdministrator(string id, BaseRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Admin);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            _AdminController.Delete(num, request);
+
+            _AdminController.Delete(num, request, payload);
         }
     }
 }

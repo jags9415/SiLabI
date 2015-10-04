@@ -29,15 +29,12 @@ namespace SiLabI.Controllers
             this._UserDA = new UserDataAccess();
         }
 
-        public GetResponse<User> GetAll(QueryString request)
+        public GetResponse<User> GetAll(QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
-
             // By default search only active users.
             if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("state", SqlDbType.VarChar);
+                Field field = Field.Find(ValidFields.User, "state");
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -56,33 +53,29 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public User GetOne(string username, QueryString request)
+        public User GetOne(string username, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _UserDA.GetOne(username, request);
             return User.Parse(row);
         }
 
-        public User GetOne(int id, QueryString request)
+        public User GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _UserDA.GetOne(id, request);
             return User.Parse(row);
         }
 
-        public User Create(BaseRequest request)
+        public User Create(BaseRequest request, Dictionary<string, object> payload)
         {
             throw new InvalidOperationException("An user cannot be created.");
         }
 
-        public User Update(int id, BaseRequest request)
+        public User Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             throw new InvalidOperationException("An user cannot be updated.");
         }
 
-        public void Delete(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             throw new InvalidOperationException("An user cannot be deleted.");
         }

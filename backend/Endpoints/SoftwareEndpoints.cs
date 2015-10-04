@@ -15,6 +15,8 @@ namespace SiLabI
     {
         public GetResponse<Software> GetSoftwares(string token, string query, string page, string limit, string sort, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Operator);
             QueryString request = new QueryString(ValidFields.Software);
 
             request.AccessToken = token;
@@ -24,42 +26,55 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _SoftwareController.GetAll(request);
+            return _SoftwareController.GetAll(request, payload);
         }
 
         public Software GetSoftware(string code, string token, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Operator);
             QueryString request = new QueryString(ValidFields.Software);
 
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _SoftwareController.GetOne(code, request);
+            return _SoftwareController.GetOne(code, request, payload);
         }
 
         public Software CreateSoftware(SoftwareRequest request)
         {
-            return _SoftwareController.Create(request);
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
+            return _SoftwareController.Create(request, payload);
         }
 
         public Software UpdateSoftware(string id, SoftwareRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            return _SoftwareController.Update(num, request);
+
+            return _SoftwareController.Update(num, request, payload);
         }
 
         public void DeleteSoftware(string id, BaseRequest request)
         {
+            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
+            Token.CheckPayload(payload, UserType.Operator);
+
             int num;
             if (!Int32.TryParse(id, out num))
             {
                 throw new InvalidParameterException("id");
             }
-            _SoftwareController.Delete(num, request);
+
+            _SoftwareController.Delete(num, request, payload);
         }
     }
 }

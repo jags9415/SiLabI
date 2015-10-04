@@ -15,6 +15,9 @@ namespace SiLabI
     {
         public GetResponse<User> GetUsers(string token, string query, string page, string limit, string sort, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Operator);
+
             QueryString request = new QueryString(ValidFields.User);
 
             request.AccessToken = token;
@@ -24,16 +27,19 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _UserController.GetAll(request);
+            return _UserController.GetAll(request, payload);
         }
 
         public User GetUser(string username, string token, string fields)
         {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Operator);
+
             QueryString request = new QueryString(ValidFields.User);
             request.AccessToken = token;
             request.ParseFields(fields);
 
-            return _UserController.GetOne(username, request);
+            return _UserController.GetOne(username, request, payload);
         }
     }
 }

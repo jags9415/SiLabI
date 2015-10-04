@@ -28,15 +28,12 @@ namespace SiLabI.Controllers
             _SoftwareByLaboratoryDA = new SoftwareByLaboratoryDataAccess();
         }
 
-        public GetResponse<Laboratory> GetAll(QueryString request)
+        public GetResponse<Laboratory> GetAll(QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
-
             // By default search only active courses.
             if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("state", SqlDbType.VarChar);
+                Field field = Field.Find(ValidFields.Laboratory, "state");
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -55,24 +52,19 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public Laboratory GetOne(int id, QueryString request)
+        public Laboratory GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _LaboratoryDA.GetOne(id, request);
             return Laboratory.Parse(row);
         }
 
-        public Laboratory Create(BaseRequest request)
+        public Laboratory Create(BaseRequest request, Dictionary<string, object> payload)
         {
             LaboratoryRequest laboratoryRequest = (request as LaboratoryRequest);
             if (laboratoryRequest == null || !laboratoryRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(laboratoryRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
 
             if (!laboratoryRequest.Laboratory.IsValidForCreate())
             {
@@ -83,16 +75,13 @@ namespace SiLabI.Controllers
             return Laboratory.Parse(row);
         }
 
-        public Laboratory Update(int id, BaseRequest request)
+        public Laboratory Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             LaboratoryRequest laboratoryRequest = (request as LaboratoryRequest);
             if (laboratoryRequest == null || !laboratoryRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(laboratoryRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
 
             if (!laboratoryRequest.Laboratory.IsValidForUpdate())
             {
@@ -103,15 +92,13 @@ namespace SiLabI.Controllers
             return Laboratory.Parse(row);
         }
 
-        public void Delete(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _LaboratoryDA.Delete(id);
         }
 
@@ -120,10 +107,8 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="id">The laboratory identification.</param>
         /// <param name="request">The query.</param>
-        public List<Software> GetLaboratorySoftware(int id, QueryString request)
+        public List<Software> GetLaboratorySoftware(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataTable table = _SoftwareByLaboratoryDA.GetAll(id, request);
             List<Software> software = new List<Software>();
 
@@ -140,15 +125,13 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="id">The laboratory identification.</param>
         /// <param name="request">The request.</param>
-        public void AddSoftwareToLaboratory(int id, SoftwareByLaboratoryRequest request)
+        public void AddSoftwareToLaboratory(int id, SoftwareByLaboratoryRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _SoftwareByLaboratoryDA.Create(id, request.Software);
         }
 
@@ -158,15 +141,13 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="id">The laboratory identification.</param>
         /// <param name="request">The request.</param>
-        public void UpdateLaboratorySoftware(int id, SoftwareByLaboratoryRequest request)
+        public void UpdateLaboratorySoftware(int id, SoftwareByLaboratoryRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _SoftwareByLaboratoryDA.Update(id, request.Software);
         }
 
@@ -175,15 +156,13 @@ namespace SiLabI.Controllers
         /// </summary>
         /// <param name="id">The laboratory identification.</param>
         /// <param name="request">The request.</param>
-        public void DeleteSoftwareFromLaboratory(int id, SoftwareByLaboratoryRequest request)
+        public void DeleteSoftwareFromLaboratory(int id, SoftwareByLaboratoryRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             _SoftwareByLaboratoryDA.Delete(id, request.Software);
         }
     }

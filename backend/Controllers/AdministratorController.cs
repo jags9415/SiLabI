@@ -29,15 +29,12 @@ namespace SiLabI.Controllers
             this._AdminDA = new AdministratorDataAccess();
         }
 
-        public GetResponse<User> GetAll(QueryString request)
+        public GetResponse<User> GetAll(QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
-
             // By default search only active administrators.
             if (!request.Query.Exists(element => element.Name == "state"))
             {
-                Field field = new Field("state", SqlDbType.VarChar);
+                Field field = Field.Find(ValidFields.Administrator, "state");
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
@@ -56,15 +53,13 @@ namespace SiLabI.Controllers
             return response;
         }
 
-        public User GetOne(int id, QueryString request)
+        public User GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Operator);
             DataRow row = _AdminDA.GetOne(id, request);
             return User.Parse(row);
         }
 
-        public User Create(BaseRequest request)
+        public User Create(BaseRequest request, Dictionary<string, object> payload)
         {
             AdministratorRequest adminRequest = (request as AdministratorRequest);
             if (adminRequest == null || !adminRequest.IsValid())
@@ -72,26 +67,22 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(adminRequest.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
             DataRow row = _AdminDA.Create(adminRequest.Id);
             return User.Parse(row);
         }
 
-        public User Update(int id, BaseRequest request)
+        public User Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             throw new InvalidOperationException("An administrator cannot be updated.");
         }
 
-        public void Delete(int id, BaseRequest request)
+        public void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
 
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
             _AdminDA.Delete(id);
         }
     }

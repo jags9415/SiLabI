@@ -18,9 +18,8 @@ namespace SiLabI.Controllers
         /// </summary>
         public StudentAppointmentController() : base() { }
 
-        public GetResponse<Appointment> GetAll(string username, QueryString request)
+        public GetResponse<Appointment> GetAll(string username, QueryString request, Dictionary<string, object> payload)
         {
-            Dictionary<string, object> payload = Token.Decode(request.AccessToken);
             Field field;
 
             if (payload["type"] as string == "Estudiante")
@@ -41,18 +40,16 @@ namespace SiLabI.Controllers
             field = Field.Find(ValidFields.Appointment, "student.username");
             request.Query.Add(new QueryField(field, Relationship.EQ, payload["username"] as string));
 
-            return base.GetAll(request);
+            return base.GetAll(request, payload);
         }
 
-        public Appointment Create(string username, BaseRequest request)
+        public Appointment Create(string username, BaseRequest request, Dictionary<string, object> payload)
         {
             AppointmentRequest appointmentRequest = (request as AppointmentRequest);
             if (appointmentRequest == null || !appointmentRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(appointmentRequest.AccessToken);
          
             if (payload["type"] as string == "Estudiante")
             {
@@ -75,18 +72,16 @@ namespace SiLabI.Controllers
                 }
             }
 
-            return base.Create(request);
+            return base.Create(request, payload);
         }
 
-        public override Appointment Update(int id, BaseRequest request)
+        public override Appointment Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             AppointmentRequest appointmentRequest = (request as AppointmentRequest);
             if (appointmentRequest == null || !appointmentRequest.IsValid())
             {
                 throw new InvalidRequestBodyException();
             }
-
-            Dictionary<string, object> payload = Token.Decode(appointmentRequest.AccessToken);
 
             if (payload["type"] as string == "Estudiante")
             {
@@ -104,7 +99,7 @@ namespace SiLabI.Controllers
                 }
             }
 
-            return base.Update(id, request);
+            return base.Update(id, request, payload);
         }
     }
 }
