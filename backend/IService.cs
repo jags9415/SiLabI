@@ -554,5 +554,95 @@ namespace SiLabI
             RequestFormat = WebMessageFormat.Json),
         Description("Delete an appointment.")]
         void DeleteStudentAppointment(string username, string id, BaseRequest request);
+
+        /*
+         * RESERVATION ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/reservations/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of reservations.")]
+        GetResponse<Reservation> GetReservations(string token, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/reservations/{id}/?access_token={token}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a reservation.")]
+        Reservation GetReservation(string id, string token, string fields);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/reservations/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create a reservation.")]
+        Reservation CreateReservation(ReservationRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/reservations/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update a reservation.")]
+        Reservation UpdateReservation(string id, ReservationRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/reservations/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a reservation.")]
+        void DeleteReservation(string id, BaseRequest request);
+
+        /*
+         * PROFESSOR RESERVATIONS ENDPOINTS
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/professors/{username}/reservations/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of reservations.")]
+        GetResponse<Reservation> GetProfessorReservations(string token, string username, string query, string page, string limit, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/professors/{username}/reservations/{id}/?access_token={token}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a reservation.")]
+        Reservation GetProfessorReservation(string id, string username, string token, string fields);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "/professors/{username}/reservations/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Create a reservation.")]
+        Reservation CreateProfessorReservation(string username, ReservationRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/professors/{username}/reservations/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update a reservation.")]
+        Reservation UpdateProfessorReservation(string username, string id, ReservationRequest request);
+
+        [OperationContract]
+        [WebInvoke(Method = "DELETE",
+            UriTemplate = "/professors/{username}/reservations/{id}/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Delete a reservation.")]
+        void DeleteProfessorReservation(string username, string id, BaseRequest request);
     }
 }

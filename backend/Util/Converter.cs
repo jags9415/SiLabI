@@ -27,6 +27,11 @@ namespace SiLabI.Util
         /// <returns>The integer.</returns>
         public static Int32? ToNullableInt32(object obj)
         {
+            if (obj == null || Convert.IsDBNull(obj))
+            {
+                return null;
+            }
+
             return Converter.ToInt32(obj);
         }
 
@@ -37,7 +42,7 @@ namespace SiLabI.Util
         /// <returns>The datetime.</returns>
         public static DateTime? ToDateTime(object obj)
         {
-            if (obj == null)
+            if (obj == null || Convert.IsDBNull(obj))
             {
                 return null;
             }
@@ -52,6 +57,11 @@ namespace SiLabI.Util
         /// <returns>The string.</returns>
         public static string ToString(object obj)
         {
+            if (obj == null || Convert.IsDBNull(obj))
+            {
+                return null;
+            }
+
             return string.IsNullOrEmpty(obj as string) ? string.Empty : Convert.ToString(obj);
         }
     }

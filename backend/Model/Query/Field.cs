@@ -114,5 +114,24 @@ namespace SiLabI.Model.Query
 
             return field;
         }
+
+        public static List<Field> Flatten(List<Field> fields)
+        {
+            List<Field> result = new List<Field>();
+
+            foreach (Field field in fields)
+            {
+                if (field.Type == SqlDbType.Structured)
+                {
+                    result.AddRange(Field.Flatten(field.Children));
+                }
+                else
+                {
+                    result.Add(field);
+                }
+            }
+
+            return result;
+        }
     }
 }

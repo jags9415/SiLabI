@@ -10,7 +10,7 @@ SET @APPOINTMENT_rows = 200;
 WHILE @APPOINTMENT_i < @APPOINTMENT_rows
 BEGIN
 	SELECT TOP 1 @APPOINTMENT_student = FK_User_Id FROM Students ORDER BY NEWID();
-	SELECT TOP 1 @APPOINTMENT_laboratory = PK_Laboratory_Id FROM Laboratories ORDER BY NEWID();
+	SELECT TOP 1 @APPOINTMENT_laboratory = PK_Laboratory_Id FROM Laboratories WHERE Name = 'Laboratorio B';
 	SELECT TOP 1 @APPOINTMENT_software = PK_Software_Id FROM Software ORDER BY NEWID();
 
 	IF NOT EXISTS (SELECT 1 FROM Appointments WHERE FK_Laboratory_Id = @APPOINTMENT_laboratory AND FK_Software_Id = @APPOINTMENT_software AND FK_Student_Id = @APPOINTMENT_student)

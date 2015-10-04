@@ -11,12 +11,17 @@ using System.Web;
 
 namespace SiLabI.Controllers
 {
-    public class StudentAppointmentController : AppointmentController
+    public class StudentAppointmentController
     {
+        private AppointmentController _appointmentController;
+
         /// <summary>
         /// Create a StudentAppointmentController.
         /// </summary>
-        public StudentAppointmentController() : base() { }
+        public StudentAppointmentController()
+        {
+            _appointmentController = new AppointmentController();
+        }
 
         public GetResponse<Appointment> GetAll(string username, QueryString request, Dictionary<string, object> payload)
         {
@@ -40,7 +45,7 @@ namespace SiLabI.Controllers
             field = Field.Find(ValidFields.Appointment, "student.username");
             request.Query.Add(new QueryField(field, Relationship.EQ, payload["username"] as string));
 
-            return base.GetAll(request, payload);
+            return _appointmentController.GetAll(request, payload);
         }
 
         public Appointment Create(string username, BaseRequest request, Dictionary<string, object> payload)
@@ -72,10 +77,10 @@ namespace SiLabI.Controllers
                 }
             }
 
-            return base.Create(request, payload);
+            return _appointmentController.Create(request, payload);
         }
 
-        public override Appointment Update(int id, BaseRequest request, Dictionary<string, object> payload)
+        public Appointment Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             AppointmentRequest appointmentRequest = (request as AppointmentRequest);
             if (appointmentRequest == null || !appointmentRequest.IsValid())
@@ -99,7 +104,7 @@ namespace SiLabI.Controllers
                 }
             }
 
-            return base.Update(id, request, payload);
+            return _appointmentController.Update(id, request, payload);
         }
     }
 }

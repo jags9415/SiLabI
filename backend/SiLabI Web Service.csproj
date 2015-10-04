@@ -80,6 +80,8 @@
     <Compile Include="Controllers\LaboratoryController.cs" />
     <Compile Include="Controllers\OperatorController.cs" />
     <Compile Include="Controllers\ProfessorController.cs" />
+    <Compile Include="Controllers\ProfessorReservationController.cs" />
+    <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\SoftwareController.cs" />
     <Compile Include="Controllers\StudentAppointmentController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Endpoints\LaboratoryEndpoints.cs" />
     <Compile Include="Endpoints\OperatorEndpoints.cs" />
     <Compile Include="Endpoints\ProfessorEndpoints.cs" />
+    <Compile Include="Endpoints\ReservationEndpoints.cs" />
     <Compile Include="Endpoints\SoftwareEndpoints.cs" />
     <Compile Include="Exceptions\InvalidParameterException.cs" />
     <Compile Include="Exceptions\MissingParameterException.cs" />

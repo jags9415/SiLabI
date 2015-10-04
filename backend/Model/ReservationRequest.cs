@@ -141,7 +141,6 @@ namespace SiLabI.Model
         {
             bool valid = true;
 
-            valid &= !string.IsNullOrWhiteSpace(Professor);
             valid &= StartTime.HasValue;
             valid &= EndTime.HasValue;
 

@@ -85,7 +85,7 @@ namespace SiLabI.Model.Query
 
                    if (field.Type == SqlDbType.Structured)
                    {
-                       result.AddRange(field.Children);
+                       result.AddRange(Field.Flatten(field.Children));
                    }
                    else
                    {
