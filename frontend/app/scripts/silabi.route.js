@@ -167,6 +167,12 @@
           controllerAs: 'AppointmentList',
           reloadOnSearch: false
         })
+        .when('/Estudiante/:student_id/Citas', {
+          templateUrl: 'views/student/appointments/appointment.list.html',
+          controller: 'StudentAppListController',
+          controllerAs: 'AppointmentList',
+          reloadOnSearch: false
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })

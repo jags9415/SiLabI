@@ -1,0 +1,128 @@
+<div>
+  <h2>Citas</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li class="active">Citas</li>
+  </ol>
+  <div class="table-search" style="margin-bottom: 3%;">
+    <div class="row">
+      <div class="col-md-10 col-xs-10">
+        <form class="form-horizontal">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input class="form-control" placeholder="Buscar por carné" name="searchInput" type="text" ng-change="AppointmentList.search()" ng-model="AppointmentList.searched.student.username">
+          </div>
+          <div class="input-group">
+            <a href="" ng-click="AppointmentList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
+          </div>
+          <button type="submit" name="button" hidden></button>
+        </form>
+      </div>
+      <div class="col-md-2 col-xs-3">
+        <a href="#Operador/Software/Agregar" class="btn btn-block btn-success">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span class="hidden-xs">Crear</span>
+        </a>
+      </div>
+    </div>
+    <div class="row" ng-show="AppointmentList.advanceSearch">
+      <div class="col-md-12">
+        <form class="form-inline advanced-search">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="lab" name="lab" placeholder="Laboratorio" ng-model="AppointmentList.searched.laboratory.name">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="software" name="software" placeholder="Software" ng-model="AppointmentList.searched.software.code">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input ui-date class="form-control" id="date" placeholder="Fecha" name="date" ng-model="AppointmentList.searched.date">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="hour" name="hour" ng-model="AppointmentList.searched.hour" ui-mask="99:99">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <ui-select id="state" ng-model="AppointmentList.searched.state">
+                      <ui-select-match placeholder="Estado" allow-clear="true">
+                        {{$select.selected.name}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="state in AppointmentList.states">
+                        <span ng-bind-html="state.name"></span>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <button type="submit" class="btn btn-default" ng-click="AppointmentList.search()">
+                  <i class="glyphicon glyphicon-search"></i> Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+  <div class="table-responsive" ng-hide="AppointmentList.isLoaded() && AppointmentList.isEmpty()">
+    <table class="table table-striped" ng-show="true">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Software</th>
+          <th>Laboratorio</th>
+          <th style="text-align: center">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="app in AppointmentList.appointments">
+          <td>
+              <span class="label"
+              ng-class="{ 'label-primary': app.state === 'Por iniciar',
+                          'label-success': app.state === 'Finalizada',
+                          'label-danger': app.state === 'Cancelada'}" >
+              {{ app.state }}
+            </span>
+          </td>
+          <td>{{ app.date | date : 'fullDate' }}</td>
+          <td>{{ app.software.code }}</td>
+          <td>{{ app.laboratory.name }}</td>
+          <td style="text-align: center">
+            <a class='btn btn-info btn-sm' ng-click="AppointmentList.open(app.id)">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+            <a href="" class="btn btn-danger btn-sm" ng-click="AppointmentList.delete(app.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-show="AppointmentList.isLoaded() && AppointmentList.isEmpty()">No se encontraron resultados.</p>
+  <br>
+  <div class="row">
+    <div class="col-md-12 pagination" ng-hide="AppointmentList.isLoaded() && AppointmentList.isEmpty()">
+      <pagination
+        ng-change="AppointmentList.loadPage()" ng-model="AppointmentList.page" items-per-page="AppointmentList.limit"
+        total-items="AppointmentList.totalItems" max-size="5" boundary-links="true" rotate="true"
+        previous-text="<" next-text=">" first-text="<<" last-text=">>"
+      ></pagination>
+    </div>
+  </div>
+</div>

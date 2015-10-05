@@ -9,10 +9,23 @@
         var directive = {
             restrict: 'EA',
             templateUrl: 'views/shared/sidebar/student.html',
-            controller: 'SideBarController',
+            controller: studentsSidebarController,
             controllerAs: 'SideBar',
             bindToController: true
         };
         return directive;
+    }
+
+    studentsSidebarController.$inject = ['$location', '$localStorage'];
+
+    function studentsSidebarController($location, $localStorage) {
+      var vm = this;
+      vm.goToAppointments = goToAppointments;
+
+      function goToAppointments() {
+        var student_id = $localStorage['username'];
+        console.log(student_id);
+        $location.path('Estudiante/' + student_id + '/Citas');
+      }
     }
 })();
