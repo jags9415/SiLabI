@@ -83,18 +83,35 @@
       if (vm.searched.state) {
       vm.request.query.state = {
         operation: "eq",
-        value: vm.searched.state.value
+        value: '*' + vm.searched.state.value
       }
-      console.log(vm.searched.state.value);
+    }
+
+    if (vm.searched.software) {
+      vm.request.query['software.code'] = {
+        operation: "like",
+        value: vm.searched.software.replace(' ', '*') + '*'
+      }
     }
 
     if (vm.searched.date) {
-      vm.request.query.date = {
-        operation: "eq",
-        value: vm.searched.date
+      if(vm.searched.hour)
+        {
+          var date = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), vm.searched.hour.slice(0, 2));
+          vm.request.query.date = {
+            operation: "eq",
+            value: date.toJSON()
+          }
+        }
+        else
+        {
+          var date = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), "18");
+          vm.request.query.date = {
+          operation: "le",
+          value: date.toJSON()
+          }
+        }
       }
-    }
-
       loadPage();
     }
 
