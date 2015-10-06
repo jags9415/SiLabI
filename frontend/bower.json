@@ -27,6 +27,12 @@
   "appPath": "app",
   "moduleName": "silabi-frontend",
   "overrides": {
+    "jquery-ui": {
+      "main": [
+        "jquery-ui.js",
+        "themes/smoothness/jquery-ui.css"
+      ]
+    },
     "bootstrap": {
       "main": [
         "less/bootstrap.less",
