@@ -98,7 +98,6 @@
       if(vm.searched.hour)
         {
           var date = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), vm.searched.hour.slice(0, 2));
-          console.log(date.toJSON());
           vm.request.query.date = {
             operation: "eq",
             value: date.toJSON()
