@@ -167,6 +167,12 @@
           controllerAs: 'AppointmentList',
           reloadOnSearch: false
         })
+        .when('/Operador/Citas/Agregar', {
+          templateUrl: 'views/operator/appointments/appointment.create.html',
+          controller: 'AppointmentCreateController',
+          controllerAs: 'AppointmentCreate',
+          reloadOnSearch: false
+        })
         .when('/Estudiante/:student_id/Citas', {
           templateUrl: 'views/student/appointments/appointment.list.html',
           controller: 'StudentAppListController',

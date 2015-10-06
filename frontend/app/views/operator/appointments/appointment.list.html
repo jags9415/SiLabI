@@ -20,7 +20,7 @@
         </form>
       </div>
       <div class="col-md-2 col-xs-3">
-        <a href="#Operador/Software/Agregar" class="btn btn-block btn-success">
+        <a href="#Operador/Citas/Agregar" class="btn btn-block btn-success">
           <i class="glyphicon glyphicon-plus"></i>
           <span class="hidden-xs">Crear</span>
         </a>
@@ -93,7 +93,7 @@
       <tbody>
         <tr ng-repeat="app in AppointmentList.appointments">
           <td>{{ app.student.username }}</td>
-          <td>{{ app.date | date : 'fullDate' }}</td>
+          <td>{{ app.date | date : 'medium' }}</td>
           <td>{{ app.software.code }}</td>
           <td>{{ app.laboratory.name }}</td>
           <td>
