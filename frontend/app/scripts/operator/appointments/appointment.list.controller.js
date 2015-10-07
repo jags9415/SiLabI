@@ -102,6 +102,7 @@
             operation: "eq",
             value: date.toJSON()
           }
+          console.log(date.toJSON());
         }
         else
         {
