@@ -9,7 +9,7 @@ using System.Web;
 namespace SiLabI.Model
 {
     /// <summary>
-    /// An reservation data.
+    /// A reservation data.
     /// </summary>
     [DataContract]
     public class Reservation : DatabaseObject
@@ -22,7 +22,7 @@ namespace SiLabI.Model
         protected Software _software;
 
         /// <summary>
-        /// The student.
+        /// The professor data.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "professor")]
         public virtual User Professor
@@ -32,7 +32,7 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The laboratory.
+        /// The laboratory data.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "laboratory")]
         public virtual Laboratory Laboratory
@@ -42,7 +42,7 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The student.
+        /// The software data.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "software")]
         public virtual Software Software
@@ -52,7 +52,7 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The group.
+        /// The group data.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "group")]
         public virtual Group Group
@@ -89,20 +89,24 @@ namespace SiLabI.Model
 
         /// <summary>
         /// The start time in ISO-8601 format.
+        /// This private field is used to send the date in a pretty format.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "start_time")]
         private string StartTime_ISO8601 { get; set; }
 
         /// <summary>
         /// The end time in ISO-8601 format.
+        /// This private field is used to send the date in a pretty format.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "end_time")]
         private string EndTime_ISO8601 { get; set; }
 
         /// <summary>
-        /// Fill a Reservation object with the data provided in a DataRow.
+        /// Fill an Reservation object with the data provided in a DataRow.
         /// </summary>
         /// <param name="row">The row.</param>
+        /// <param name="prefix">A string that will be prefixed to the column names of the row.</param>
+        /// <returns>The Reservation.</returns>
         public static Reservation Parse(DataRow row, string prefix = "")
         {
             prefix = prefix.Trim();

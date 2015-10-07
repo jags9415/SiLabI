@@ -37,7 +37,9 @@ namespace SiLabI.Model
         /// <summary>
         /// Fill an Operator object with the data provided in a DataRow.
         /// </summary>
-        /// <param name="user">The user.</param>
+        /// <param name="row">The row.</param>
+        /// <param name="prefix">A string that will be prefixed to the column names of the row.</param>
+        /// <returns>The Operator.</returns>
         public static Operator Parse(DataRow row, string prefix = "")
         {
             prefix = prefix.Trim();
@@ -46,15 +48,15 @@ namespace SiLabI.Model
                 prefix += ".";
             }
 
-            Operator op = new Operator(Student.Parse(row, prefix));
-            op.Period = Period.Parse(row, prefix + "period");
+            Operator @operator = new Operator(Student.Parse(row, prefix));
+            @operator.Period = Period.Parse(row, prefix + "period");
 
-            if (op.isEmpty())
+            if (@operator.isEmpty())
             {
-                op = null;
+                @operator = null;
             }
 
-            return op;
+            return @operator;
         }
     }
 }

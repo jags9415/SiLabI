@@ -7,6 +7,7 @@ using System.Web;
 namespace SiLabI.Model
 {
     /// <summary>
+    /// Wrapper to a paginated query.
     /// When retrieving a paginated query use this class to wrap the results and send the pagination information.
     /// </summary>
     /// <typeparam name="T">The requested type of data.</typeparam>

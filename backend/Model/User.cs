@@ -32,7 +32,7 @@ namespace SiLabI.Model
         protected string _type;
 
         /// <summary>
-        /// Creates a new empty user.
+        /// Creates a empty user.
         /// </summary>
         public User() { }
 
@@ -62,7 +62,7 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The first name.
+        /// The name.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "name")]
         public virtual string Name
@@ -209,7 +209,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for a create operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for a create operation.</returns>
         public override bool IsValidForCreate()
         {
             bool valid = true;
@@ -226,7 +226,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for an update operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for an update operation.</returns>
         public override bool IsValidForUpdate()
         {
             bool valid = true;
@@ -243,7 +243,9 @@ namespace SiLabI.Model
         /// <summary>
         /// Fill an User object with the data provided in a DataRow.
         /// </summary>
-        /// <param name="user">The user.</param>
+        /// <param name="row">The row.</param>
+        /// <param name="prefix">A string that will be prefixed to the column names of the row.</param>
+        /// <returns>The User.</returns>
         public static User Parse(DataRow row, string prefix = "")
         {
             prefix = prefix.Trim();

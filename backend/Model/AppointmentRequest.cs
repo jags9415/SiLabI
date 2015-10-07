@@ -96,7 +96,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for a create operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for a create operation.</returns>
         public bool IsValidForCreate()
         {
             bool valid = true;
@@ -110,7 +110,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for an update operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for an update operation.</returns>
         public bool IsValidForUpdate()
         {
             bool valid = true;

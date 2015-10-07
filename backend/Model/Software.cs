@@ -18,7 +18,7 @@ namespace SiLabI.Model
         protected string _code;
 
         /// <summary>
-        /// The name.
+        /// The software name.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "name")]
         public virtual string Name
@@ -28,7 +28,7 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The code.
+        /// The software code.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "code")]
         public virtual string Code
@@ -40,7 +40,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for a create operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for a create operation.</returns>
         public override bool IsValidForCreate()
         {
             bool valid = true;
@@ -54,7 +54,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for an update operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for an update operation.</returns>
         public override bool IsValidForUpdate()
         {
             bool valid = true;
@@ -66,9 +66,11 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// Fill an Course object with the data provided in a DataRow.
+        /// Fill an Software object with the data provided in a DataRow.
         /// </summary>
         /// <param name="row">The row.</param>
+        /// <param name="prefix">A string that will be prefixed to the column names of the row.</param>
+        /// <returns>The Software.</returns>
         public static Software Parse(DataRow row, string prefix = "")
         {
             prefix = prefix.Trim();

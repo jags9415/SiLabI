@@ -6,13 +6,16 @@ using System.Web;
 
 namespace SiLabI.Model
 {
+    /// <summary>
+    /// A POST or PUT request body to the endpoints /laboratories
+    /// </summary>
     [DataContract]
     public class LaboratoryRequest : BaseRequest
     {
         private Laboratory _laboratory;
 
         /// <summary>
-        /// The laboratory.
+        /// The laboratory data.
         /// </summary>
         [DataMember(Name = "laboratory")]
         public virtual Laboratory Laboratory
@@ -24,7 +27,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid.</returns>
         public override bool IsValid()
         {
             return base.IsValid() && Laboratory != null;

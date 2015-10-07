@@ -6,6 +6,9 @@ using System.Web;
 
 namespace SiLabI.Model
 {
+    /// <summary>
+    /// Contains the group data in a POST or PUT request to the endpoints /groups
+    /// </summary>
     [DataContract]
     public class InnerGroupRequest
     {
@@ -67,7 +70,7 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The list of students.
+        /// The list of students usernames.
         /// </summary>
         [DataMember(Name = "students")]
         public virtual List<string> Students
@@ -79,7 +82,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for a create operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for a create operation.</returns>
         public bool IsValidForCreate()
         {
             bool valid = true;
@@ -95,7 +98,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for an update operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for an update operation.</returns>
         public bool IsValidForUpdate()
         {
             bool valid = true;
@@ -110,6 +113,9 @@ namespace SiLabI.Model
         }
     }
 
+    /// <summary>
+    /// A POST or PUT request body to the endpoints /groups
+    /// </summary>
     [DataContract]
     public class GroupRequest : BaseRequest
     {
@@ -128,7 +134,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid.</returns>
         public override bool IsValid()
         {
             return base.IsValid() && Group != null;

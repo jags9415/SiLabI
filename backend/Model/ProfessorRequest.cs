@@ -7,11 +7,17 @@ using System.Web;
 
 namespace SiLabI.Model
 {
+    /// <summary>
+    /// A POST or PUT request body to the endpoints /professors
+    /// </summary>
     [DataContract]
     public class ProfessorRequest : BaseRequest
     {
         protected User _professor;
 
+        /// <summary>
+        /// The professor data.
+        /// </summary>
         [DataMember(Name = "professor")]
         public User Professor
         {
@@ -29,7 +35,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid</returns>
         public override bool IsValid()
         {
             return base.IsValid() && Professor != null;

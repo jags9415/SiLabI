@@ -17,7 +17,7 @@ namespace SiLabI
         public PaginatedResponse<Operator> GetOperators(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Admin);
+            Token.CheckPayload(payload, UserType.Administrator);
             QueryString request = new QueryString(ValidFields.Operator);
 
             request.AccessToken = token;
@@ -33,7 +33,7 @@ namespace SiLabI
         public Operator GetOperator(string id, string token, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Admin);
+            Token.CheckPayload(payload, UserType.Administrator);
 
             int num;
             if (!Int32.TryParse(id, out num))
@@ -52,7 +52,7 @@ namespace SiLabI
         public Operator CreateOperator(string id, OperatorRequest request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
+            Token.CheckPayload(payload, UserType.Administrator);
 
             int num;
             if (!Int32.TryParse(id, out num))
@@ -67,7 +67,7 @@ namespace SiLabI
         public void DeleteOperator(string id, BaseRequest request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
+            Token.CheckPayload(payload, UserType.Administrator);
 
             int num;
             if (!Int32.TryParse(id, out num))

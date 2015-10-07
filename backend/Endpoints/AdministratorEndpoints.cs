@@ -19,7 +19,7 @@ namespace SiLabI
         public PaginatedResponse<User> GetAdministrators(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Admin);
+            Token.CheckPayload(payload, UserType.Administrator);
             QueryString request = new QueryString(ValidFields.Administrator);
 
             request.AccessToken = token;
@@ -35,7 +35,7 @@ namespace SiLabI
         public User GetAdministrator(string id, string token, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Admin);
+            Token.CheckPayload(payload, UserType.Administrator);
 
             int num;
             if (!Int32.TryParse(id, out num))
@@ -54,7 +54,7 @@ namespace SiLabI
         public User CreateAdministrator(string id, BaseRequest request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
+            Token.CheckPayload(payload, UserType.Administrator);
 
             int num;
             if (!Int32.TryParse(id, out num))
@@ -72,7 +72,7 @@ namespace SiLabI
         public void DeleteAdministrator(string id, BaseRequest request)
         {
             Dictionary<string, object> payload = Token.Decode(request.AccessToken);
-            Token.CheckPayload(payload, UserType.Admin);
+            Token.CheckPayload(payload, UserType.Administrator);
 
             int num;
             if (!Int32.TryParse(id, out num))

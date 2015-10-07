@@ -11,6 +11,9 @@ using System.Web;
 
 namespace SiLabI.Model
 {
+    /// <summary>
+    /// A student data.
+    /// </summary>
     [DataContract]
     public class Student : User
     {
@@ -45,7 +48,9 @@ namespace SiLabI.Model
         /// <summary>
         /// Fill an Student object with the data provided in a DataRow.
         /// </summary>
-        /// <param name="user">The user.</param>
+        /// <param name="row">The row.</param>
+        /// <param name="prefix">A string that will be prefixed to the column names of the row.</param>
+        /// <returns>The Student.</returns>
         public static Student Parse(DataRow row, string prefix = "")
         {
             Student student = new Student(User.Parse(row, prefix));

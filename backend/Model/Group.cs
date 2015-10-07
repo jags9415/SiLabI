@@ -8,6 +8,9 @@ using System.Web;
 
 namespace SiLabI.Model
 {
+    /// <summary>
+    /// A group data.
+    /// </summary>
     [DataContract]
     public class Group : DatabaseObject
     {
@@ -16,6 +19,9 @@ namespace SiLabI.Model
         protected User _professor;
         protected Period _period;
 
+        /// <summary>
+        /// The group number.
+        /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "number")]
         public virtual int? Number
         {
@@ -23,6 +29,9 @@ namespace SiLabI.Model
             get { return _number; }
         }
 
+        /// <summary>
+        /// The course data.
+        /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "course")]
         public virtual Course Course
         {
@@ -30,6 +39,9 @@ namespace SiLabI.Model
             get { return _course; }
         }
 
+        /// <summary>
+        /// The professor data.
+        /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "professor")]
         public virtual User Professor
         {
@@ -37,6 +49,9 @@ namespace SiLabI.Model
             get { return _professor; }
         }
 
+        /// <summary>
+        /// The period.
+        /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "period")]
         public virtual Period Period
         {
@@ -44,6 +59,12 @@ namespace SiLabI.Model
             get { return _period; }
         }
 
+        /// <summary>
+        /// Fill an Group object with the data provided in a DataRow.
+        /// </summary>
+        /// <param name="row">The row.</param>
+        /// <param name="prefix">A string that will be prefixed to the column names of the row.</param>
+        /// <returns>The Group.</returns>
         public static Group Parse(DataRow row, string prefix = "")
         {
             prefix = prefix.Trim();

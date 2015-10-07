@@ -62,16 +62,16 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// Check if the period is valid.
+        /// Check if the period is valid for a create operation.
         /// </summary>
-        /// <returns>True if the period is valid.</returns>
+        /// <returns>True if the period is valid for a create operation.</returns>
         public bool isValidForCreate()
         {
             bool valid = true;
 
             valid &= Type != null && Validator.IsValidPeriod(Type);
-            valid &= Year != null && Year > 0;
-            valid &= Value != null && Value > 0;
+            valid &= Year != null && Year > 2000;
+            valid &= Value != null && Value > 0 && Value <= 6;
 
             return valid;
         }
@@ -79,7 +79,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the period is valid for an update operation.
         /// </summary>
-        /// <returns>True if the period is valid.</returns>
+        /// <returns>True if the period is valid for an update operation.</returns>
         public bool isValidForUpdate()
         {
             bool valid = true;
@@ -87,14 +87,20 @@ namespace SiLabI.Model
             if (Type != null || Value != null)
             {
                 valid &= Type != null && Validator.IsValidPeriod(Type);
-                valid &= Value != null && Value > 0;
+                valid &= Value != null && Value > 0 && Value <= 6;
             }
-            
-            if (Year != null) valid &= Year > 0;
+
+            if (Year != null) valid &= Year > 2000;
 
             return valid;
         }
 
+        /// <summary>
+        /// Fill an Period object with the data provided in a DataRow.
+        /// </summary>
+        /// <param name="row">The row.</param>
+        /// <param name="prefix">A string that will be prefixed to the column names of the row.</param>
+        /// <returns>The Period.</returns>
         public static Period Parse(DataRow row, string prefix = "")
         {
             prefix = prefix.Trim();

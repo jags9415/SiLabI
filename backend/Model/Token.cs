@@ -10,7 +10,10 @@ using System.Web;
 
 namespace SiLabI.Model
 {
-    public enum UserType { Student, Professor, Operator, Admin }
+    /// <summary>
+    /// The types of users.
+    /// </summary>
+    public enum UserType { Student, Professor, Operator, Administrator }
 
     /// <summary>
     /// Encode and Decode JWT tokens.
@@ -79,7 +82,7 @@ namespace SiLabI.Model
                     valid = true;
                     break;
                 case "Operador":
-                    valid = (type != UserType.Admin);
+                    valid = (type != UserType.Administrator);
                     break;
                 case "Docente":
                     valid = (type == UserType.Professor);

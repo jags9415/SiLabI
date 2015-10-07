@@ -21,7 +21,7 @@ namespace SiLabI.Model
         protected int? _reservationPriority;
 
         /// <summary>
-        /// The name.
+        /// The laboratory name.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "name")]
         public virtual string Name
@@ -31,7 +31,7 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The code.
+        /// The numbers of seats in the laboratory.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "seats")]
         public virtual int? Seats
@@ -41,7 +41,7 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The software list.
+        /// The list of software codes that the laboratory contains.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "software")]
         public virtual List<string> Software
@@ -51,7 +51,10 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The appointment priority
+        /// The priority of the laboratory for appointments.
+        /// 1 = HIGH
+        /// 2 = MEDIUM
+        /// 3 = LOW
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "appointment_priority")]
         public virtual int? AppointmentPriority
@@ -61,7 +64,10 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The reservation priority
+        /// The priority of the laboratory for reservation.
+        /// 1 = HIGH
+        /// 2 = MEDIUM
+        /// 3 = LOW
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "reservation_priority")]
         public virtual int? ReservationPriority
@@ -73,7 +79,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for a create operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for a create operation.</returns>
         public override bool IsValidForCreate()
         {
             bool valid = true;
@@ -89,7 +95,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for an update operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for an update operation.</returns>
         public override bool IsValidForUpdate()
         {
             bool valid = true;
@@ -106,6 +112,8 @@ namespace SiLabI.Model
         /// Fill an Laboratory object with the data provided in a DataRow.
         /// </summary>
         /// <param name="row">The row.</param>
+        /// <param name="prefix">A string that will be prefixed to the column names of the row.</param>
+        /// <returns>The Laboratory.</returns>
         public static Laboratory Parse(DataRow row, string prefix = "")
         {
             prefix = prefix.Trim();

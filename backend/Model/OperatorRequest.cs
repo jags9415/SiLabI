@@ -7,7 +7,7 @@ using System.Web;
 namespace SiLabI.Model
 {
     /// <summary>
-    /// Request body for creating and operator.
+    /// A POST request body to the endpoints /operators
     /// </summary>
     [DataContract]
     public class OperatorRequest : BaseRequest
@@ -26,7 +26,7 @@ namespace SiLabI.Model
         }
 
         /// <summary>
-        /// The user identity.
+        /// The student identity.
         /// </summary>
         public int Id
         {
@@ -37,7 +37,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid.</returns>
         public override bool IsValid()
         {
             return base.IsValid() && Period != null && Period.isValidForCreate();
