@@ -74,7 +74,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetCourse", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Curso no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Curso no encontrado.");
             }
             else
             {

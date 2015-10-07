@@ -27,7 +27,7 @@ namespace SiLabI.Controllers
             this._ProfessorDA = new ProfessorDataAccess();
         }
 
-        public GetResponse<User> GetAll(QueryString request, Dictionary<string, object> payload)
+        public PaginatedResponse<User> GetAll(QueryString request, Dictionary<string, object> payload)
         {
             // By default search only active professors.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -36,7 +36,7 @@ namespace SiLabI.Controllers
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
-            GetResponse<User> response = new GetResponse<User>();
+            PaginatedResponse<User> response = new PaginatedResponse<User>();
             DataTable table = _ProfessorDA.GetAll(payload["id"], request);
             int count = _ProfessorDA.GetCount(payload["id"], request);
 
@@ -73,7 +73,7 @@ namespace SiLabI.Controllers
 
             if (!professorRequest.Professor.IsValidForCreate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de docente incompletos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de docente incompletos.");
             }
 
             DataRow row = _ProfessorDA.Create(payload["id"], professorRequest.Professor);
@@ -90,7 +90,7 @@ namespace SiLabI.Controllers
 
             if (!professorRequest.Professor.IsValidForUpdate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de docente inválidos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de docente inválidos.");
             }
 
             DataRow row = _ProfessorDA.Update(payload["id"], id, professorRequest.Professor);

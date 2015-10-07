@@ -74,7 +74,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetReservation", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Reservación no encontrada.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Reservación no encontrada.");
             }
             else
             {

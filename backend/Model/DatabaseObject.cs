@@ -10,6 +10,7 @@ namespace SiLabI.Model
 {
     /// <summary>
     /// A database object.
+    /// All database objects contains four common fields: id, created_at, updated_at and state.
     /// </summary>
     [DataContract]
     public abstract class DatabaseObject : BaseObject
@@ -20,7 +21,7 @@ namespace SiLabI.Model
         protected string _state;
 
         /// <summary>
-        /// The user identification number.
+        /// The identification number.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "id")]
         public virtual int? Id
@@ -74,12 +75,14 @@ namespace SiLabI.Model
 
         /// <summary>
         /// The creation date in ISO-8601 format.
+        /// This private field is used to send the date in a pretty format.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "created_at")]
         private string CreatedAt_ISO8601 { get; set; }
 
         /// <summary>
         /// The last update date in ISO-8601 format.
+        /// This private field is used to send the date in a pretty format.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "updated_at")]
         private string UpdatedAt_ISO8601 { get; set; }
@@ -87,7 +90,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for a create operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for a create operation.</returns>
         public virtual bool IsValidForCreate()
         {
             return true;
@@ -96,7 +99,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid for an update operation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid for an update operation.</returns>
         public virtual bool IsValidForUpdate()
         {
             return true;

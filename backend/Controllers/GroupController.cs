@@ -29,7 +29,7 @@ namespace SiLabI.Controllers
             _StudentsByGroupDA = new StudentsByGroupDataAccess();
         }
 
-        public GetResponse<Group> GetAll(QueryString request, Dictionary<string, object> payload)
+        public PaginatedResponse<Group> GetAll(QueryString request, Dictionary<string, object> payload)
         {
             // By default search only active groups.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -38,7 +38,7 @@ namespace SiLabI.Controllers
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
-            GetResponse<Group> response = new GetResponse<Group>();
+            PaginatedResponse<Group> response = new PaginatedResponse<Group>();
             DataTable table = _GroupDA.GetAll(payload["id"], request);
             int count = _GroupDA.GetCount(payload["id"], request);
 
@@ -69,7 +69,7 @@ namespace SiLabI.Controllers
 
             if (!groupRequest.Group.IsValidForCreate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de grupo incompletos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de grupo incompletos.");
             }
 
             DataRow row = _GroupDA.Create(payload["id"], groupRequest.Group);
@@ -86,7 +86,7 @@ namespace SiLabI.Controllers
 
             if (!groupRequest.Group.IsValidForUpdate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de grupo inválidos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de grupo inválidos.");
             }
 
             DataRow row = _GroupDA.Update(payload["id"], id, groupRequest.Group);
@@ -101,6 +101,31 @@ namespace SiLabI.Controllers
             }
 
             _GroupDA.Delete(payload["id"], id);
+        }
+
+        public List<Group> GetStudentGroups(string student, QueryString request, Dictionary<string, object> payload)
+        {
+            if (payload["type"] as string == "Estudiante" && payload["username"] as string != student)
+            {
+                throw new UnathorizedOperationException("No se permite buscar grupos de otros usuarios");
+            }
+
+            // By default search only active groups.
+            if (!request.Query.Exists(element => element.Name == "state"))
+            {
+                Field field = Field.Find(ValidFields.Group, "state");
+                request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
+            }
+
+            List<Group> response = new List<Group>();
+            DataTable table = _GroupDA.GetAllByStudent(payload["id"], student, request);
+
+            foreach (DataRow row in table.Rows)
+            {
+                response.Add(Group.Parse(row));
+            }
+
+            return response;
         }
 
         /// <summary>

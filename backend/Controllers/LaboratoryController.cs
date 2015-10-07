@@ -28,7 +28,7 @@ namespace SiLabI.Controllers
             _SoftwareByLaboratoryDA = new SoftwareByLaboratoryDataAccess();
         }
 
-        public GetResponse<Laboratory> GetAll(QueryString request, Dictionary<string, object> payload)
+        public PaginatedResponse<Laboratory> GetAll(QueryString request, Dictionary<string, object> payload)
         {
             // By default search only active courses.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -37,7 +37,7 @@ namespace SiLabI.Controllers
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
-            GetResponse<Laboratory> response = new GetResponse<Laboratory>();
+            PaginatedResponse<Laboratory> response = new PaginatedResponse<Laboratory>();
             DataTable table = _LaboratoryDA.GetAll(payload["id"], request);
             int count = _LaboratoryDA.GetCount(payload["id"], request);
 
@@ -68,7 +68,7 @@ namespace SiLabI.Controllers
 
             if (!laboratoryRequest.Laboratory.IsValidForCreate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de laboratorio incompletos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de laboratorio incompletos.");
             }
 
             DataRow row = _LaboratoryDA.Create(payload["id"], laboratoryRequest.Laboratory);
@@ -85,7 +85,7 @@ namespace SiLabI.Controllers
 
             if (!laboratoryRequest.Laboratory.IsValidForUpdate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de laboratorio inválidos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de laboratorio inválidos.");
             }
 
             DataRow row = _LaboratoryDA.Update(payload["id"], id, laboratoryRequest.Laboratory);

@@ -67,6 +67,13 @@
     function searchAppointment() {
       vm.request.query = {};
 
+      if (vm.searched.softwareCode) {
+        vm.request.query['software.code'] = {
+          operation: "like",
+          value: '*' + vm.searched.softwareCode.replace(' ', '*') + '*'
+        }
+      }
+
       if (vm.searched.laboratory.name) {
         vm.request.query['laboratory.name'] = {
           operation: "like",
@@ -76,16 +83,8 @@
 
       if (vm.searched.state) {
       vm.request.query.state = {
-        operation: "eq",
+        operation: "like",
         value: vm.searched.state.value
-      }
-      console.log(vm.searched.state.value);
-    }
-
-    if (vm.searched.date) {
-      vm.request.query.date = {
-        operation: "eq",
-        value: vm.searched.date
       }
     }
 

@@ -36,9 +36,9 @@ namespace SiLabI.Configuration
         {
             Error error;
 
-            if (exception is WcfException)
+            if (exception is SiLabIException)
             {
-                error = (exception as WcfException).Error;
+                error = (exception as SiLabIException).Error;
             }
             else
             {

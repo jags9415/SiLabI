@@ -13,7 +13,7 @@ namespace SiLabI
     /// </summary>
     public partial class Service
     {
-        public GetResponse<Group> GetGroups(string token, string query, string page, string limit, string sort, string fields)
+        public PaginatedResponse<Group> GetGroups(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);
@@ -145,6 +145,21 @@ namespace SiLabI
             request.ParseFields(fields);
 
             return _GroupController.GetGroupStudents(num, request, payload);
+        }
+
+        public List<Group> GetStudentGroups(string student, string token, string query, string sort, string fields)
+        {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Student);
+
+            QueryString request = new QueryString(ValidFields.Group);
+
+            request.AccessToken = token;
+            request.ParseQuery(query);
+            request.ParseSort(sort);
+            request.ParseFields(fields);
+
+            return _GroupController.GetStudentGroups(student, request, payload);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Web;
 namespace SiLabI.Model
 {
     /// <summary>
-    /// Represent a period.
+    /// Represent a period of a year.
     /// </summary>
     /// <example>1 Semestre 2015</example>
     [DataContract]

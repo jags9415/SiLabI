@@ -51,7 +51,6 @@ namespace SiLabI.Model
             if (token == null)
             {
                 throw new MissingParameterException("access_token");
-                //return new Dictionary<string, object>();
             }
 
             try
@@ -72,7 +71,6 @@ namespace SiLabI.Model
         /// <returns>The token validity.</returns>
         public static void CheckPayload(Dictionary<string, object> payload, UserType type)
         {
-            
             bool valid;
 
             switch (payload["type"].ToString())

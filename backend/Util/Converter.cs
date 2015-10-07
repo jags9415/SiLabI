@@ -21,7 +21,7 @@ namespace SiLabI.Util
         }
 
         /// <summary>
-        /// Cast an object to an integer.
+        /// Cast an object to an nullable integer.
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns>The integer.</returns>
@@ -62,7 +62,7 @@ namespace SiLabI.Util
                 return null;
             }
 
-            return string.IsNullOrEmpty(obj as string) ? string.Empty : Convert.ToString(obj);
+            return Convert.ToString(obj);
         }
     }
 }

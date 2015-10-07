@@ -74,7 +74,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetAppointment", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Cita no encontrada.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Cita no encontrada.");
             }
             else
             {

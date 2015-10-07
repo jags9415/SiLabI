@@ -14,7 +14,7 @@ namespace SiLabI.Model.Query
 {
     /// <summary>
     /// Stores the information used in a GET request for searching, filtering, sorting and paginate.
-    /// A query string have format ?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}
+    /// A query string have format ?access_token={token}&q={query}&sort={sort}&fields={fields}&page={page}&limit={limit}
     /// </summary>
     public class QueryString
     {
@@ -33,10 +33,9 @@ namespace SiLabI.Model.Query
         }
 
         /// <summary>
-        /// Parse the offset parameter.
+        /// Parse the page parameter.
         /// </summary>
         /// <param name="page">The page.</param>
-        /// <returns>The parse offset. 0 by default.</returns>
         public void ParsePage(string page)
         {
             int result = 1;
@@ -51,7 +50,6 @@ namespace SiLabI.Model.Query
         /// Parse the limit parameter.
         /// </summary>
         /// <param name="limit">The limit.</param>
-        /// <returns>The parsed limit. 20 by default.</returns>
         public void ParseLimit(string limit)
         {
             int result = 20;
@@ -66,7 +64,6 @@ namespace SiLabI.Model.Query
         /// Parse the fields parameter.
         /// </summary>
         /// <param name="fields">The fields.</param>
-        /// <returns>The parsed fields.</returns>
         public void ParseFields(string fields)
         {
             if (fields != null)
@@ -107,6 +104,7 @@ namespace SiLabI.Model.Query
             {
                 List<SortField> result = new List<SortField>();
                 string[] splitted = sort.Split(new[] { "," }, StringSplitOptions.None);
+                
                 string name;
                 SortOrder order;
 
@@ -220,6 +218,9 @@ namespace SiLabI.Model.Query
 
         /// <summary>
         /// The fields to retrieve.
+        /// <example>
+        /// ?fields=id,code,name,period.type
+        /// </example>
         /// </summary>
         public List<Field> Fields { get; set; }
 
@@ -236,7 +237,7 @@ namespace SiLabI.Model.Query
         /// Search elements by field.
         /// </summary>
         /// <example>
-        /// ?q=name%3Djose%2Cgender%3Dmale
+        /// ?q=name+eq+jose,created_at+ge+2015-03-01
         /// </example>
         public List<QueryField> Query { get; set; }
 

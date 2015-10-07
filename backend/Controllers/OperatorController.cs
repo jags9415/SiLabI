@@ -26,7 +26,7 @@ namespace SiLabI.Controllers
             this._OperatorDA = new OperatorDataAccess();
         }
 
-        public GetResponse<Operator> GetAll(QueryString request, Dictionary<string, object> payload)
+        public PaginatedResponse<Operator> GetAll(QueryString request, Dictionary<string, object> payload)
         {
             // By default search only active operators.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -35,7 +35,7 @@ namespace SiLabI.Controllers
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
-            GetResponse<Operator> response = new GetResponse<Operator>();
+            PaginatedResponse<Operator> response = new PaginatedResponse<Operator>();
             DataTable table = _OperatorDA.GetAll(payload["id"], request);
             int count = _OperatorDA.GetCount(payload["id"], request);
 

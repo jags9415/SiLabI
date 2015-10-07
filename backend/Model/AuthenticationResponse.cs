@@ -7,7 +7,7 @@ using System.Web;
 namespace SiLabI.Model
 {
     /// <summary>
-    /// Authentication response.
+    /// An response from the endpoint /authenticate
     /// </summary>
     [DataContract]
     public class AuthenticationResponse

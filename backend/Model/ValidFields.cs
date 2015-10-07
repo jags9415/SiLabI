@@ -7,6 +7,9 @@ using System.Web;
 
 namespace SiLabI.Model
 {
+    /// <summary>
+    /// Contains the list of valid fields for each model object.
+    /// </summary>
     public class ValidFields
     {
         private static List<Field> _GenericUserValidFields;

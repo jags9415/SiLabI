@@ -7,11 +7,11 @@ using System.Web;
 namespace SiLabI.Model
 {
     /// <summary>
-    /// Response to a GET request.
+    /// When retrieving a paginated query use this class to wrap the results and send the pagination information.
     /// </summary>
     /// <typeparam name="T">The requested type of data.</typeparam>
     [DataContract]
-    public class GetResponse<T>
+    public class PaginatedResponse<T>
     {
         private int _total;
         private int _current;
@@ -19,7 +19,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Creates a new GetResponse
         /// </summary>
-        public GetResponse()
+        public PaginatedResponse()
         {
             this.Results = new List<T>();
             this.TotalPages = 1;

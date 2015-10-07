@@ -45,7 +45,7 @@ namespace SiLabI.Controllers
                 
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "InvalidCredentials", "Credenciales inválidos");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "InvalidCredentials", "Credenciales inválidos");
             }
 
             User user = User.Parse(table.Rows[0]);

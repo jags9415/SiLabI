@@ -61,6 +61,25 @@ namespace SiLabI.Data
             return _Connection.executeQuery("sp_GetGroups", parameters);
         }
 
+        public DataTable GetAllByStudent(object requesterId, string student, QueryString request)
+        {
+            SqlParameter[] parameters = new SqlParameter[5];
+
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[1] = SqlUtilities.CreateParameter("@student", SqlDbType.VarChar, student);
+
+            parameters[2] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[2].Value = SqlUtilities.FormatSelectFields(request.Fields);
+
+            parameters[3] = SqlUtilities.CreateParameter("@order_by", SqlDbType.VarChar);
+            parameters[3].Value = SqlUtilities.FormatOrderByFields(request.Sort);
+
+            parameters[4] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
+            parameters[4].Value = SqlUtilities.FormatWhereFields(request.Query);
+
+            return _Connection.executeQuery("sp_GetGroupsByStudent", parameters);
+        }
+
         public DataRow GetOne(object requesterId, int id, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[3];
@@ -74,7 +93,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetGroup", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Grupo no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Grupo no encontrado.");
             }
             else
             {
