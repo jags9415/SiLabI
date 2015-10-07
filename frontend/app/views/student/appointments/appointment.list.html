@@ -11,7 +11,7 @@
         <form class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar por carné" name="searchInput" type="text" ng-change="AppointmentList.search()" ng-model="AppointmentList.searched.student.username">
+            <input class="form-control" placeholder="Buscar por código de software" name="searchInput" type="text" ng-change="AppointmentList.search()" ng-model="AppointmentList.searched.softwareCode">
           </div>
           <div class="input-group">
             <a href="" ng-click="AppointmentList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
@@ -35,21 +35,6 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <input type="text" class="form-control" id="lab" name="lab" placeholder="Laboratorio" ng-model="AppointmentList.searched.laboratory.name">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="software" name="software" placeholder="Software" ng-model="AppointmentList.searched.software.code">
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <input ui-date class="form-control" id="date" placeholder="Fecha" name="date" ng-model="AppointmentList.searched.date">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="hour" name="hour" ng-model="AppointmentList.searched.hour" ui-mask="99:99">
                   </div>
                 </div>
                 <div class="col-md-3">

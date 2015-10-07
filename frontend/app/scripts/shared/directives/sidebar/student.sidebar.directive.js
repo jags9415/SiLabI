@@ -24,7 +24,6 @@
 
       function goToAppointments() {
         var student_id = $localStorage['username'];
-        console.log(student_id);
         $location.path('Estudiante/' + student_id + '/Citas');
       }
     }
