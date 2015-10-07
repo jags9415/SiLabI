@@ -2,6 +2,7 @@
 using SiLabI.Exceptions;
 using SiLabI.Model;
 using SiLabI.Model.Query;
+using SiLabI.Model.Request;
 using System;
 using System.Collections.Generic;
 using System.Data;

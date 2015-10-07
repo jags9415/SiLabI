@@ -4,24 +4,24 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace SiLabI.Model
+namespace SiLabI.Model.Request
 {
     /// <summary>
-    /// A POST, PUT or DELETE request body to the endpoints /laboratories/{id}/software
+    /// A POST, PUT or DELETE request body to the endpoints /groups/{id}/students
     /// </summary>
     [DataContract]
-    public class SoftwareByLaboratoryRequest : BaseRequest
+    public class StudentByGroupRequest : BaseRequest
     {
-        protected List<string> _software;
+        protected List<string> _students;
 
         /// <summary>
-        /// The list of software codes.
+        /// The list of students usernames.
         /// </summary>
-        [DataMember(Name = "software")]
-        public virtual List<string> Software
+        [DataMember(Name = "students")]
+        public virtual List<string> Students
         {
-            set { _software = value; }
-            get { return _software; }
+            set { _students = value; }
+            get { return _students; }
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace SiLabI.Model
         /// <returns>True if the object properties are valid.</returns>
         public override bool IsValid()
         {
-            return base.IsValid() && Software != null;
+            return base.IsValid() && Students != null;
         }
     }
 }

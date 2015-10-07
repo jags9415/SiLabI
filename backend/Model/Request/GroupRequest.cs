@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace SiLabI.Model
+namespace SiLabI.Model.Request
 {
     /// <summary>
     /// Contains the group data in a POST or PUT request to the endpoints /groups

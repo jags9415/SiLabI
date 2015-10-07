@@ -5,40 +5,40 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace SiLabI.Model
+namespace SiLabI.Model.Request
 {
     /// <summary>
-    /// A POST or PUT request body to the endpoints /professors
+    /// A POST or PUT request body to the endpoints /software
     /// </summary>
     [DataContract]
-    public class ProfessorRequest : BaseRequest
+    public class SoftwareRequest : BaseRequest
     {
-        protected User _professor;
+        protected Software _software;
 
         /// <summary>
-        /// The professor data.
+        /// The software data.
         /// </summary>
-        [DataMember(Name = "professor")]
-        public User Professor
+        [DataMember(Name = "software")]
+        public Software Software
         {
             set
             {
                 if (value == null)
                 {
-                    throw new MissingParameterException("professor");
+                    throw new MissingParameterException("software");
                 }
-                _professor = value;
+                _software = value;
             }
-            get { return _professor; }
+            get { return _software; }
         }
 
         /// <summary>
         /// Check if the object properties are valid.
         /// </summary>
-        /// <returns>True if the object properties are valid</returns>
+        /// <returns>True if the object properties are valid.</returns>
         public override bool IsValid()
         {
-            return base.IsValid() && Professor != null;
+            return base.IsValid() && Software != null;
         }
     }
 }

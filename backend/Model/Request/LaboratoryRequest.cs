@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace SiLabI.Model
+namespace SiLabI.Model.Request
 {
     /// <summary>
     /// A POST or PUT request body to the endpoints /laboratories

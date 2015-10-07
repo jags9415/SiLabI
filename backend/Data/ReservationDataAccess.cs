@@ -1,6 +1,7 @@
 ﻿using SiLabI.Exceptions;
 using SiLabI.Model;
 using SiLabI.Model.Query;
+using SiLabI.Model.Request;
 using SiLabI.Util;
 using System;
 using System.Collections.Generic;

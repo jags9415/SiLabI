@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel.Web;
 using System.Web;
 
-namespace SiLabI.Model
+namespace SiLabI.Model.Request
 {
     /// <summary>
     /// A POST or PUT request body to the endpoints /students

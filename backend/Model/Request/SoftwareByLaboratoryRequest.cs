@@ -1,34 +1,26 @@
-﻿using SiLabI.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace SiLabI.Model
+namespace SiLabI.Model.Request
 {
     /// <summary>
-    /// A POST or PUT request body to the endpoints /software
+    /// A POST, PUT or DELETE request body to the endpoints /laboratories/{id}/software
     /// </summary>
     [DataContract]
-    public class SoftwareRequest : BaseRequest
+    public class SoftwareByLaboratoryRequest : BaseRequest
     {
-        protected Software _software;
+        protected List<string> _software;
 
         /// <summary>
-        /// The software data.
+        /// The list of software codes.
         /// </summary>
         [DataMember(Name = "software")]
-        public Software Software
+        public virtual List<string> Software
         {
-            set
-            {
-                if (value == null)
-                {
-                    throw new MissingParameterException("software");
-                }
-                _software = value;
-            }
+            set { _software = value; }
             get { return _software; }
         }
 
