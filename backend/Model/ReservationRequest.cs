@@ -76,9 +76,9 @@ namespace SiLabI.Model
         {
             set
             {
-                if (value.HasValue && !Validator.IsValidAppointmentDate(value.Value))
+                if (value.HasValue && !Validator.IsValidReservationDate(value.Value))
                 {
-                    throw new InvalidParameterException("date", "Ingrese una dia entre L-V, hora entre 8:00 - 17:00, posterior a hoy");
+                    throw new InvalidParameterException("start_time", "Ingrese una dia posterior a hoy, hora entre 8:00 - 17:00");
                 }
                 _startTime = value;
             }
@@ -92,9 +92,9 @@ namespace SiLabI.Model
         {
             set
             {
-                if (value.HasValue && !Validator.IsValidAppointmentDate(value.Value))
+                if (value.HasValue && !Validator.IsValidReservationDate(value.Value))
                 {
-                    throw new InvalidParameterException("date", "Ingrese una dia entre L-V, hora entre 8:00 - 17:00, posterior a hoy");
+                    throw new InvalidParameterException("end_time", "Ingrese una dia posterior a hoy, hora entre 8:00 - 18:00");
                 }
                 _endTime = value;
             }
@@ -157,9 +157,8 @@ namespace SiLabI.Model
 
             if (Professor != null) valid &= !string.IsNullOrWhiteSpace(Professor);
             if (Laboratory != null) valid &= !string.IsNullOrWhiteSpace(Laboratory);
-            if (Software != null) valid &= !string.IsNullOrWhiteSpace(Software);
             if (State != null) valid &= !string.IsNullOrWhiteSpace(State);
-            if (Group != null) valid &= Group > 0;
+            if (Group != null) valid &= Group >= 0;
 
             return valid;
         }

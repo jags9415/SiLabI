@@ -74,7 +74,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetLaboratory", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Laboratorio no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Laboratorio no encontrado.");
             }
             else
             {

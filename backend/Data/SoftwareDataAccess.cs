@@ -74,7 +74,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetSoftware", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Software no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Software no encontrado.");
             }
             else
             {
@@ -95,7 +95,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetSoftwareByCode", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Software no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Software no encontrado.");
             }
             else
             {

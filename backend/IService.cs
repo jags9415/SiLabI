@@ -39,7 +39,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of users.")]
-        GetResponse<User> GetUsers(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<User> GetUsers(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/users/{username}/?access_token={token}&fields={fields}",
@@ -57,7 +57,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of administrators.")]
-        GetResponse<User> GetAdministrators(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<User> GetAdministrators(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/administrators/{id}/?access_token={token}&fields={fields}",
@@ -93,7 +93,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of operators.")]
-        GetResponse<Operator> GetOperators(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<Operator> GetOperators(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/operators/{id}/?access_token={token}&fields={fields}",
@@ -129,7 +129,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of students.")]
-        GetResponse<Student> GetStudents(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<Student> GetStudents(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/students/{username}/?access_token={token}&fields={fields}",
@@ -174,7 +174,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of professors.")]
-        GetResponse<User> GetProfessors(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<User> GetProfessors(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/professors/{username}/?access_token={token}&fields={fields}",
@@ -219,7 +219,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of courses.")]
-        GetResponse<Course> GetCourses(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<Course> GetCourses(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/courses/{id}/?access_token={token}&fields={fields}",
@@ -264,7 +264,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of groups.")]
-        GetResponse<Group> GetGroups(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<Group> GetGroups(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/groups/{id}/?access_token={token}&fields={fields}",
@@ -335,6 +335,17 @@ namespace SiLabI
         void DeleteStudentsFromGroup(string id, StudentByGroupRequest request);
 
         /*
+         * STUDENT GROUPS ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/students/{username}/groups/?access_token={token}&q={query}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve the list of groups of a student.")]
+        List<Group> GetStudentGroups(string username, string token, string query, string sort, string fields);
+
+        /*
          * SOFTWARE ENDPOINTS.
          */
 
@@ -343,7 +354,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of software.")]
-        GetResponse<Software> GetSoftwares(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<Software> GetSoftwares(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/software/{code}/?access_token={token}&fields={fields}",
@@ -388,7 +399,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of laboratories.")]
-        GetResponse<Laboratory> GetLaboratories(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<Laboratory> GetLaboratories(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/laboratories/{id}/?access_token={token}&fields={fields}",
@@ -467,7 +478,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of appointments.")]
-        GetResponse<Appointment> GetAppointments(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<Appointment> GetAppointments(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/appointments/{id}/?access_token={token}&fields={fields}",
@@ -519,7 +530,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of appointments.")]
-        GetResponse<Appointment> GetStudentAppointments(string token, string username, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<Appointment> GetStudentAppointments(string token, string username, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/students/{username}/appointments/{id}/?access_token={token}&fields={fields}",
@@ -564,7 +575,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of reservations.")]
-        GetResponse<Reservation> GetReservations(string token, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<Reservation> GetReservations(string token, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/reservations/{id}/?access_token={token}&fields={fields}",
@@ -609,7 +620,7 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of reservations.")]
-        GetResponse<Reservation> GetProfessorReservations(string token, string username, string query, string page, string limit, string sort, string fields);
+        PaginatedResponse<Reservation> GetProfessorReservations(string token, string username, string query, string page, string limit, string sort, string fields);
 
         [OperationContract]
         [WebGet(UriTemplate = "/professors/{username}/reservations/{id}/?access_token={token}&fields={fields}",

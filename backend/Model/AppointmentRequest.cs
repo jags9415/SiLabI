@@ -8,6 +8,9 @@ using System.Web;
 
 namespace SiLabI.Model
 {
+    /// <summary>
+    /// Contains the appointment data in a POST or PUT request to the endpoints /appointments
+    /// </summary>
     [DataContract]
     public class InnerAppointmentRequest
     {
@@ -66,7 +69,7 @@ namespace SiLabI.Model
             { 
                 if (value.HasValue && !Validator.IsValidAppointmentDate(value.Value))
                 {
-                    throw new InvalidParameterException("date", "Ingrese una dia entre L-V, hora entre 8:00 - 17:00, posterior a hoy");
+                    throw new InvalidParameterException("date", "Fecha inválida.");
                 }
                 _date = value;
             }
@@ -75,6 +78,7 @@ namespace SiLabI.Model
 
         /// <summary>
         /// The date in ISO-8601 format.
+        /// This private field is used to parse the field in a pretty format.
         /// </summary>
         [DataMember(EmitDefaultValue = false, Name = "date")]
         private string Date_ISO8601
@@ -119,6 +123,9 @@ namespace SiLabI.Model
         }
     }
 
+    /// <summary>
+    /// A POST or PUT request body to the endpoints /appointments
+    /// </summary>
     [DataContract]
     public class AppointmentRequest : BaseRequest
     {
@@ -137,7 +144,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid.</returns>
         public override bool IsValid()
         {
             return base.IsValid() && Appointment != null;

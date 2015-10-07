@@ -5,6 +5,9 @@ using System.Web;
 
 namespace SiLabI.Model
 {
+    /// <summary>
+    /// A POST request body to the endpoints /administrators
+    /// </summary>
     public class AdministratorRequest : BaseRequest
     {
         private int _id;

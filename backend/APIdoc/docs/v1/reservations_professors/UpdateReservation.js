@@ -23,8 +23,8 @@
  * @apiParam {Date}      [reservation.start_time]   The reservation start time.
  * @apiParam {Date}      [reservation.end_time]     The reservation end time.
  * @apiParam {String}    [reservation.laboratory]   The laboratory name.
- * @apiParam {Number}    [reservation.group]        The group identification number.
- * @apiParam {String}    [reservation.software]     The software code.
+ * @apiParam {Number}    [reservation.group]        The group identification number. [To delete this field send 0]
+ * @apiParam {String}    [reservation.software]     The software code. [To delete this field send an empty string]
  * @apiParam {String}    access_token               The access token.
  *
  * @apiSuccess {Number}									                      id 		        The reservation identification.

@@ -6,28 +6,28 @@ using System.Web;
 
 namespace SiLabI.Model.Query
 {
+    /// <summary>
+    /// Define a sorting order.
+    /// </summary>
     public enum SortOrder { ASC, DESC };
 
     /// <summary>
     /// A sort field used to order the results.
-    /// For example +name, -age
-    /// 
-    /// Is contained in the ?sort={sort} subquery.
     /// </summary>
     public class SortField : Field
     {
         /// <summary>
         /// Create a SortField.
         /// </summary>
-        /// <param name="name">The field name.</param>
-        /// <param name="order">The sort order</param>
+        /// <param name="name">The field.</param>
+        /// <param name="order">The sorting order.</param>
         public SortField(Field field, SortOrder order) : base(field)
         {
             this.Order = order;
         }
 
         /// <summary>
-        /// The order of the query.
+        /// The sorting order.
         /// </summary>
         public SortOrder Order { get; set; }
     }

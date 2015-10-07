@@ -15,6 +15,7 @@ namespace SiLabI.Data
         /// <summary>
         /// Get all the rows that satisfies the query.
         /// </summary>
+        /// <param name="requesterId">The identification number of the user who is making the request.</param>
         /// <param name="request">The query.</param>
         /// <returns>A DataTable that contains all the rows that satisfies the query.</returns>
         DataTable GetAll(object requesterId, int id, QueryString request);
@@ -22,6 +23,7 @@ namespace SiLabI.Data
         /// <summary>
         /// Insert one or more relationships in the intermediate table.
         /// </summary>
+        /// <param name="requesterId">The identification number of the user who is making the request.</param>
         /// <param name="id">The primary foreign key.</param>
         /// <param name="obj">The data to insert.</param>
         /// <returns>The inserted row.</returns>
@@ -30,6 +32,7 @@ namespace SiLabI.Data
         /// <summary>
         /// Update the relationships in the intermediate table.
         /// </summary>
+        /// <param name="requesterId">The identification number of the user who is making the request.</param>
         /// <param name="id">The primary foreign key.</param>
         /// <param name="obj">The new data.</param>
         /// <returns>The updated row.</returns>
@@ -38,6 +41,7 @@ namespace SiLabI.Data
         /// <summary>
         /// Delete one or more relationships in the intermediate table.
         /// </summary>
+        /// <param name="requesterId">The identification number of the user who is making the request.</param>
         /// <param name="id">The primary foreign key.</param>
         /// <param name="obj">The data to delete.</param>
         void Delete(object requesterId, int id, object obj);

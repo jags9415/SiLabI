@@ -10,7 +10,7 @@ using System.Web;
 namespace SiLabI.Model
 {
     /// <summary>
-    /// Authentication request.
+    /// A POST request body to the endpoint /authenticate
     /// </summary>
     [DataContract]
     public class AuthenticationRequest
@@ -55,7 +55,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid.</returns>
         public virtual bool IsValid()
         {
             return Username != null && Password != null;

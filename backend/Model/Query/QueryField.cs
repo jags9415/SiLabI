@@ -9,10 +9,7 @@ using System.Web;
 namespace SiLabI.Model.Query
 {
     /// <summary>
-    /// A field that indicates a query.
-    /// For example name==jose age>=21
-    /// 
-    /// Is contained in the ?q={query} subquery.
+    /// A field used in a query.
     /// </summary>
     public class QueryField : Field
     {
@@ -20,8 +17,8 @@ namespace SiLabI.Model.Query
         /// Creates a new QueryField
         /// </summary>
         /// <param name="field">The field</param>
-        /// <param name="relationship">The query operator.</param>
-        /// <param name="value">The query value.</param>
+        /// <param name="relationship">The relationship.</param>
+        /// <param name="value">The value.</param>
         public QueryField(Field field, Relationship relationship, string value) : base(field)
         {
             this.Relationship = relationship;
@@ -58,7 +55,7 @@ namespace SiLabI.Model.Query
         public Relationship Relationship { get; set; }
 
         /// <summary>
-        /// The query value.
+        /// The value.
         /// </summary>
         public string Value { get; set; }
     }

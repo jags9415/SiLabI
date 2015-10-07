@@ -37,7 +37,7 @@ namespace SiLabI.Model
         /// <summary>
         /// Check if the object properties are valid.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True if the object properties are valid.</returns>
         public virtual bool IsValid()
         {
             return !string.IsNullOrWhiteSpace(AccessToken);

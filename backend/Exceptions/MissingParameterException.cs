@@ -9,7 +9,7 @@ namespace SiLabI.Exceptions
     /// <summary>
     /// This exception is thrown when a user do not send an required parameter.
     /// </summary>
-    public class MissingParameterException : WcfException
+    public class MissingParameterException : SiLabIException
     {
         protected string _parameter;
 

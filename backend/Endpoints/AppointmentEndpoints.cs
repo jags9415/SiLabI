@@ -13,7 +13,7 @@ namespace SiLabI
     /// </summary>
     public partial class Service
     {
-        public GetResponse<Appointment> GetAppointments(string token, string query, string page, string limit, string sort, string fields)
+        public PaginatedResponse<Appointment> GetAppointments(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);
@@ -97,7 +97,7 @@ namespace SiLabI
             return _AppointmentController.GetAvailable(username, request, payload);
         }
 
-        public GetResponse<Appointment> GetStudentAppointments(string token, string username, string query, string page, string limit, string sort, string fields)
+        public PaginatedResponse<Appointment> GetStudentAppointments(string token, string username, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Student);
