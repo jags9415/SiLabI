@@ -20,22 +20,19 @@ namespace SiLabI.Controllers
             _reservationController = new ReservationController();
         }
 
-        public GetResponse<Reservation> GetAll(string username, QueryString request, Dictionary<string, object> payload)
+        public PaginatedResponse<Reservation> GetAll(string username, QueryString request, Dictionary<string, object> payload)
         {
             Field field;
 
-            if (payload["type"] as string == "Docente")
+            if (username != payload["username"] as string)
             {
-                if (username != payload["username"] as string)
-                {
-                    throw new UnathorizedOperationException("No se permite buscar reservaciones de otros docentes");
-                }
+                throw new UnathorizedOperationException("No se permite buscar reservaciones de otros usuarios");
+            }
 
-                // Block search on professor field.
-                if (request.Query.Exists(element => element.Parent.Name == "professor"))
-                {
-                    throw new UnathorizedOperationException("No se permite buscar reservaciones de otros docentes");
-                }
+            // Block search on professor field.
+            if (request.Query.Exists(element => element.Parent != null && element.Parent.Name == "professor"))
+            {
+                throw new UnathorizedOperationException("No se permite buscar reservaciones de otros usuarios");
             }
 
             // Search only the professor reservations.
@@ -53,22 +50,16 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
          
-            if (payload["type"] as string == "Docente")
+            if (reservationRequest.Reservation.Professor != null && reservationRequest.Reservation.Professor != username)
             {
-                if (reservationRequest.Reservation.Professor == null)
-                {
-                    reservationRequest.Reservation.Professor = payload["username"] as string;
-                }
-                else if (reservationRequest.Reservation.Professor != username)
-                {
-                    throw new UnathorizedOperationException("No se permite crear reservaciones para otros docentes");
-                }
-                else if (reservationRequest.Reservation.Professor != payload["username"] as string)
-                {
-                    throw new UnathorizedOperationException("No se permite crear reservaciones para otros docentes");
-                }
+                throw new UnathorizedOperationException("No se permite crear reservaciones para otros usuarios");
+            }
+            if (username != payload["username"] as string)
+            {
+                throw new UnathorizedOperationException("No se permite crear reservaciones para otros usuarios");
             }
 
+            reservationRequest.Reservation.Professor = username;
             return _reservationController.Create(request, payload);
         }
 
@@ -80,16 +71,13 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            if (payload["type"] as string == "Docente")
+            if (reservationRequest.Reservation.Professor != null)
             {
-                if (reservationRequest.Reservation.Professor != null)
-                {
-                    throw new UnathorizedOperationException("No se permite cambiar el docente de la reservación");
-                }
-                if (reservationRequest.Reservation.State != null)
-                {
-                    throw new UnathorizedOperationException("No se permite cambiar el estado de la reservación");
-                }
+                throw new UnathorizedOperationException("No se permite cambiar el usuario de la reservación");
+            }
+            if (reservationRequest.Reservation.State != null)
+            {
+                throw new UnathorizedOperationException("No se permite cambiar el estado de la reservación");
             }
 
             return _reservationController.Update(id, request, payload);

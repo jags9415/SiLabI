@@ -13,7 +13,7 @@ namespace SiLabI
     /// </summary>
     public partial class Service
     {
-        public GetResponse<Reservation> GetReservations(string token, string query, string page, string limit, string sort, string fields)
+        public PaginatedResponse<Reservation> GetReservations(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);
@@ -85,7 +85,7 @@ namespace SiLabI
             _ReservationController.Delete(num, request, payload);
         }
 
-        public GetResponse<Reservation> GetProfessorReservations(string token, string username, string query, string page, string limit, string sort, string fields)
+        public PaginatedResponse<Reservation> GetProfessorReservations(string token, string username, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Professor);

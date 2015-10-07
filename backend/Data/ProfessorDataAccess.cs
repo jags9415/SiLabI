@@ -74,7 +74,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetProfessorByUsername", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Docente no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Docente no encontrado.");
             }
             else
             {
@@ -95,7 +95,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetProfessor", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Docente no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Docente no encontrado.");
             }
             else
             {

@@ -24,12 +24,12 @@
  * @apiParam {Object}								professor 				The professor data.
  * @apiParam {String}								[professor.name] 		The first name.
  * @apiParam {String}								[professor.last_name_1]	The first last name.
- * @apiParam {String}								[professor.last_name_2]	The second last name.
+ * @apiParam {String}								[professor.last_name_2]	The second last name. [To delete this field send an empty string]
  * @apiParam {String}								[professor.username]	The username.
  * @apiParam {String}								[professor.password]	The password.
  * @apiParam {String="Masculino, Femenino"}			[professor.gender]		The gender.
- * @apiParam {String}								[professor.email]		The email address.
- * @apiParam {String}								[professor.phone]		The phone number.
+ * @apiParam {String}								[professor.email]		The email address. [To delete this field send an empty string]
+ * @apiParam {String}								[professor.phone]		The phone number. [To delete this field send an empty string]
  * @apiParam {String="Activo, Inactivo, Bloqueado"}	[professor.state]		The user state.
  * @apiParam {String}								access_token			The access token.
  *

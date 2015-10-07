@@ -8,7 +8,7 @@ using System.Web;
 namespace SiLabI.Controllers
 {
     /// <summary>
-    /// Perform CRUD operations for a type of object.
+    /// Perform CRUD operations for a specific type of object.
     /// </summary>
     /// <typeparam name="T">The object type.</typeparam>
     public interface IController<T>
@@ -19,7 +19,7 @@ namespace SiLabI.Controllers
         /// <param name="request">The query.</param>
         /// <param name="payload">The token payload.</param>
         /// <returns>A GetResponse containing the object list and the pagination information.</returns>
-        GetResponse<T> GetAll(QueryString request, Dictionary<string, object> payload);
+        PaginatedResponse<T> GetAll(QueryString request, Dictionary<string, object> payload);
 
         /// <summary>
         /// Get a specific object.

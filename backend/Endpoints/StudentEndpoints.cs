@@ -15,7 +15,7 @@ namespace SiLabI
     /// </summary>
     public partial class Service
     {
-        public GetResponse<Student> GetStudents(string token, string query, string page, string limit, string sort, string fields)
+        public PaginatedResponse<Student> GetStudents(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);

@@ -27,7 +27,7 @@ namespace SiLabI.Controllers
             _AppointmentDA = new AppointmentDataAccess();
         }
 
-        public virtual GetResponse<Appointment> GetAll(QueryString request, Dictionary<string, object> payload)
+        public virtual PaginatedResponse<Appointment> GetAll(QueryString request, Dictionary<string, object> payload)
         {
             // By default search only active appointments.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -36,7 +36,7 @@ namespace SiLabI.Controllers
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Por iniciar"));
             }
   
-            GetResponse<Appointment> response = new GetResponse<Appointment>();
+            PaginatedResponse<Appointment> response = new PaginatedResponse<Appointment>();
             DataTable table = _AppointmentDA.GetAll(payload["id"], request);
             int count = _AppointmentDA.GetCount(payload["id"], request);
 
@@ -85,7 +85,7 @@ namespace SiLabI.Controllers
 
             if (!appointmentRequest.Appointment.IsValidForCreate() || appointmentRequest.Appointment.Student == null)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de cita incompletos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de cita incompletos.");
             }
 
             DataRow row = _AppointmentDA.Create(payload["id"], appointmentRequest.Appointment);
@@ -102,7 +102,7 @@ namespace SiLabI.Controllers
 
             if (!appointmentRequest.Appointment.IsValidForUpdate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de cita inválidos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de cita inválidos.");
             }
 
             DataRow row = _AppointmentDA.Update(payload["id"], id, appointmentRequest.Appointment);

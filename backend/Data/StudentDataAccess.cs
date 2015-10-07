@@ -74,7 +74,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetStudentByUsername", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Estudiante no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Estudiante no encontrado.");
             }
             else
             {
@@ -95,7 +95,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetStudent", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Estudiante no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Estudiante no encontrado.");
             }
             else
             {

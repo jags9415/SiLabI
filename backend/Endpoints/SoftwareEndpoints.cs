@@ -13,7 +13,7 @@ namespace SiLabI
     /// </summary>
     public partial class Service
     {
-        public GetResponse<Software> GetSoftwares(string token, string query, string page, string limit, string sort, string fields)
+        public PaginatedResponse<Software> GetSoftwares(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Operator);

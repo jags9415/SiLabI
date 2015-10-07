@@ -90,7 +90,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetUserByUsername", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Usuario no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Usuario no encontrado.");
             }
             else
             {
@@ -111,7 +111,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetUser", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Usuario no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Usuario no encontrado.");
             }
             else
             {

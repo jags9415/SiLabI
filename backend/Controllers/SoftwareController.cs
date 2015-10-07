@@ -26,7 +26,7 @@ namespace SiLabI.Controllers
             this._SoftwareDA = new SoftwareDataAccess();
         }
 
-        public GetResponse<Software> GetAll(QueryString request, Dictionary<string, object> payload)
+        public PaginatedResponse<Software> GetAll(QueryString request, Dictionary<string, object> payload)
         {
             // By default search only active software.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -35,7 +35,7 @@ namespace SiLabI.Controllers
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
-            GetResponse<Software> response = new GetResponse<Software>();
+            PaginatedResponse<Software> response = new PaginatedResponse<Software>();
             DataTable table = _SoftwareDA.GetAll(payload["id"], request);
             int count = _SoftwareDA.GetCount(payload["id"], request);
 
@@ -72,7 +72,7 @@ namespace SiLabI.Controllers
 
             if (!softwareRequest.Software.IsValidForCreate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de software incompletos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de software incompletos.");
             }
 
             DataRow row = _SoftwareDA.Create(payload["id"], softwareRequest.Software);
@@ -89,7 +89,7 @@ namespace SiLabI.Controllers
 
             if (!softwareRequest.Software.IsValidForUpdate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de software inválidos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de software inválidos.");
             }
 
             DataRow row = _SoftwareDA.Update(payload["id"], id, softwareRequest.Software);

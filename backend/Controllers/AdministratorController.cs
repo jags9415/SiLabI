@@ -29,7 +29,7 @@ namespace SiLabI.Controllers
             this._AdminDA = new AdministratorDataAccess();
         }
 
-        public GetResponse<User> GetAll(QueryString request, Dictionary<string, object> payload)
+        public PaginatedResponse<User> GetAll(QueryString request, Dictionary<string, object> payload)
         {
             // By default search only active administrators.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -38,7 +38,7 @@ namespace SiLabI.Controllers
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
-            GetResponse<User> response = new GetResponse<User>();
+            PaginatedResponse<User> response = new PaginatedResponse<User>();
             DataTable table = _AdminDA.GetAll(payload["id"], request);
             int count = _AdminDA.GetCount(payload["id"], request);
 

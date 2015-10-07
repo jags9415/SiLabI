@@ -12,17 +12,18 @@ using System.Web;
 namespace SiLabI.Util
 {
     /// <summary>
-    /// Provide utilities for SQL querys.
+    /// Provide utilities for SQL queries.
     /// </summary>
     public class SqlUtilities
     {
         /// <summary>
         /// Format a list of fields to SQL SELECT format.
+        /// The fields are formatted using delimited identifiers.
         /// </summary>
         /// <param name="fields">The list of fields.</param>
         /// <returns>The formatted string.</returns>
         /// <example>
-        /// "[name], [username], [state]"
+        /// "[name], [username], [period.value]"
         /// </example>
         public static string FormatSelectFields(List<Field> fields)
         {
@@ -39,6 +40,7 @@ namespace SiLabI.Util
 
         /// <summary>
         /// Format a list of fields to SQL ORDER BY format.
+        /// The fields are formatted using delimited identifiers.
         /// </summary>
         /// <param name="fields">The list of fields.</param>
         /// <returns>The formatted string.</returns>
@@ -62,6 +64,8 @@ namespace SiLabI.Util
 
         /// <summary>
         /// Format a list of fields to SQL WHERE format.
+        /// The fields are formatted using delimited identifiers and joined using the AND operation.
+        /// The value is formatted using quoted identifiers.
         /// </summary>
         /// <param name="fields">The list of fields.</param>
         /// <returns>The formatted string.</returns>
@@ -86,7 +90,7 @@ namespace SiLabI.Util
         }
 
         /// <summary>
-        /// Create a SqlParameter
+        /// Create a SqlParameter.
         /// </summary>
         /// <param name="name">The parameter name.</param>
         /// <param name="type">The parameter type.</param>
@@ -97,7 +101,7 @@ namespace SiLabI.Util
         }
 
         /// <summary>
-        /// Create a SqlParameter
+        /// Create a SqlParameter.
         /// </summary>
         /// <param name="name">The parameter name.</param>
         /// <param name="type">The parameter type.</param>

@@ -75,7 +75,7 @@ namespace SiLabI.Data
             DataTable table = _Connection.executeQuery("sp_GetAdministrator", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Administrador no encontrado.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Administrador no encontrado.");
             }
             else
             {

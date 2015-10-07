@@ -26,7 +26,7 @@ namespace SiLabI.Controllers
             _ReservationDA = new ReservationDataAccess();
         }
 
-        public GetResponse<Reservation> GetAll(QueryString request, Dictionary<string, object> payload)
+        public PaginatedResponse<Reservation> GetAll(QueryString request, Dictionary<string, object> payload)
         {
             // By default search only active reservations.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -35,7 +35,7 @@ namespace SiLabI.Controllers
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Por iniciar"));
             }
 
-            GetResponse<Reservation> response = new GetResponse<Reservation>();
+            PaginatedResponse<Reservation> response = new PaginatedResponse<Reservation>();
             DataTable table = _ReservationDA.GetAll(payload["id"], request);
             int count = _ReservationDA.GetCount(payload["id"], request);
 
@@ -66,7 +66,7 @@ namespace SiLabI.Controllers
 
             if (!reservationRequest.Reservation.IsValidForCreate() || reservationRequest.Reservation.Professor == null)
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de reservación incompletos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de reservación incompletos.");
             }
 
             DataRow row = _ReservationDA.Create(payload["id"], reservationRequest.Reservation);
@@ -83,7 +83,7 @@ namespace SiLabI.Controllers
 
             if (!reservationRequest.Reservation.IsValidForUpdate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de reservación inválidos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de reservación inválidos.");
             }
 
             DataRow row = _ReservationDA.Update(payload["id"], id, reservationRequest.Reservation);

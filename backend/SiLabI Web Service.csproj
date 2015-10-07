@@ -111,7 +111,7 @@
     <Compile Include="Exceptions\MissingParameterException.cs" />
     <Compile Include="Exceptions\InvalidRequestBodyException.cs" />
     <Compile Include="Exceptions\UnathorizedOperationException.cs" />
-    <Compile Include="Exceptions\WcfException.cs" />
+    <Compile Include="Exceptions\SiLabIException.cs" />
     <Compile Include="Configuration\ExtendedWebHttpBehavior.cs" />
     <Compile Include="Configuration\ExtendedWebHttpElement.cs" />
     <Compile Include="Configuration\ExtendedErrorHandler.cs" />
@@ -151,7 +151,7 @@
     <Compile Include="Model\BaseRequest.cs" />
     <Compile Include="Data\Connection.cs" />
     <Compile Include="Exceptions\Error.cs" />
-    <Compile Include="Model\GetResponse.cs" />
+    <Compile Include="Model\PaginatedResponse.cs" />
     <Compile Include="Model\Query\Field.cs" />
     <Compile Include="Model\Query\QueryString.cs" />
     <Compile Include="Model\Query\QueryField.cs" />

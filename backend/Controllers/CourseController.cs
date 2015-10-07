@@ -26,7 +26,7 @@ namespace SiLabI.Controllers
             this._CourseDA = new CourseDataAccess();
         }
 
-        public GetResponse<Course> GetAll(QueryString request, Dictionary<string, object> payload)
+        public PaginatedResponse<Course> GetAll(QueryString request, Dictionary<string, object> payload)
         {
             // By default search only active courses.
             if (!request.Query.Exists(element => element.Name == "state"))
@@ -35,7 +35,7 @@ namespace SiLabI.Controllers
                 request.Query.Add(new QueryField(field, Relationship.EQ, "Activo"));
             }
 
-            GetResponse<Course> response = new GetResponse<Course>();
+            PaginatedResponse<Course> response = new PaginatedResponse<Course>();
             DataTable table = _CourseDA.GetAll(payload["id"], request);
             int count = _CourseDA.GetCount(payload["id"], request);
 
@@ -66,7 +66,7 @@ namespace SiLabI.Controllers
 
             if (!courseRequest.Course.IsValidForCreate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de curso incompletos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de curso incompletos.");
             }
 
             DataRow row = _CourseDA.Create(payload["id"], courseRequest.Course);
@@ -83,7 +83,7 @@ namespace SiLabI.Controllers
 
             if (!courseRequest.Course.IsValidForUpdate())
             {
-                throw new WcfException(HttpStatusCode.BadRequest, "Datos de curso inválidos.");
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de curso inválidos.");
             }
 
             DataRow row = _CourseDA.Update(payload["id"], id, courseRequest.Course);

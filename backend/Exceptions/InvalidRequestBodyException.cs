@@ -7,9 +7,9 @@ using System.Web;
 namespace SiLabI.Exceptions
 {
     /// <summary>
-    /// This exception is thrown when an user send a request with no body.
+    /// This exception is thrown when an user sends a request with an invalid body.
     /// </summary>
-    public class InvalidRequestBodyException : WcfException
+    public class InvalidRequestBodyException : SiLabIException
     {
         /// <summary>
         /// Create a new InvalidRequestBodyException.

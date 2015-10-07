@@ -14,7 +14,7 @@ namespace SiLabI
     /// </summary>
     public partial class Service
     {
-        public GetResponse<Operator> GetOperators(string token, string query, string page, string limit, string sort, string fields)
+        public PaginatedResponse<Operator> GetOperators(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Admin);
