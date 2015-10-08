@@ -15,7 +15,7 @@ namespace SiLabI.Controllers
     public interface IController<T>
     {
         /// <summary>
-        /// Get all objects that satisfies a query.
+        /// Get all the objects that satisfies a query.
         /// </summary>
         /// <param name="request">The query.</param>
         /// <param name="payload">The token payload.</param>

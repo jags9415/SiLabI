@@ -30,6 +30,12 @@ namespace SiLabI.Controllers
             this._AdminDA = new AdministratorDataAccess();
         }
 
+        /// <summary>
+        /// Get all the administrators that satisfies a query.
+        /// </summary>
+        /// <param name="request">The query.</param>
+        /// <param name="payload">The token payload.</param>
+        /// <returns>A GetResponse containing the administrator list and the pagination information.</returns>
         public PaginatedResponse<User> GetAll(QueryString request, Dictionary<string, object> payload)
         {
             // By default search only active administrators.
@@ -54,12 +60,25 @@ namespace SiLabI.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Get a specific administrator.
+        /// </summary>
+        /// <param name="id">The user identity.</param>
+        /// <param name="request">The query.</param>
+        /// <param name="payload">The token payload.</param>
+        /// <returns>The administrator.</returns>
         public User GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
             DataRow row = _AdminDA.GetOne(payload["id"], id, request);
             return User.Parse(row);
         }
 
+        /// <summary>
+        /// Assign the administrador role to an user.
+        /// </summary>
+        /// <param name="request">The create request.</param>
+        /// <param name="payload">The token payload.</param>
+        /// <returns>The created administrator.</returns>
         public User Create(BaseRequest request, Dictionary<string, object> payload)
         {
             AdministratorRequest adminRequest = (request as AdministratorRequest);
@@ -72,11 +91,24 @@ namespace SiLabI.Controllers
             return User.Parse(row);
         }
 
+        /// <summary>
+        /// Update an administrator.
+        /// </summary>
+        /// <param name="id">The user identity.</param>
+        /// <param name="request">The update request.</param>
+        /// <param name="payload">The token payload.</param>
+        /// <returns>The updated administrator.</returns>
         public User Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             throw new InvalidOperationException("An administrator cannot be updated.");
         }
 
+        /// <summary>
+        /// Remove the administrador role from an user.
+        /// </summary>
+        /// <param name="id">The user identity.</param>
+        /// <param name="request">The delete request.</param>
+        /// <param name="payload">The token payload.</param>
         public void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
             if (request == null || !request.IsValid())

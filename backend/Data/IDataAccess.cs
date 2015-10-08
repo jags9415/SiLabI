@@ -13,7 +13,7 @@ namespace SiLabI.Data
     public interface IDataAccess
     {
         /// <summary>
-        /// Get the amount of rows that satifies q query.
+        /// Get the amount of rows that satifies a query.
         /// </summary>
         /// <param name="requesterId">The identification number of the user who is making the request.</param>
         /// <param name="request">The query.</param>
@@ -21,7 +21,7 @@ namespace SiLabI.Data
         int GetCount(object requesterId, QueryString request);
 
         /// <summary>
-        /// Get all the rows that satisfies q query.
+        /// Get all the rows that satisfies a query.
         /// </summary>
         /// <param name="requesterId">The identification number of the user who is making the request.</param>
         /// <param name="request">The query.</param>
