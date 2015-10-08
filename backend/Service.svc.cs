@@ -19,7 +19,8 @@ namespace SiLabI
     /// <summary>
     /// The web service implementation.
     /// </summary>
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed),
+    ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public partial class Service : IService
     {
         private AuthenticationController _AuthController;
