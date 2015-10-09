@@ -13,6 +13,9 @@ namespace SiLabI.Model.Query
     /// </summary>
     public class QueryField : Field
     {
+        private Relationship _relationship;
+        private string _value;
+
         /// <summary>
         /// Creates a new QueryField
         /// </summary>
@@ -52,11 +55,30 @@ namespace SiLabI.Model.Query
         /// <summary>
         /// The relationship.
         /// </summary>
-        public Relationship Relationship { get; set; }
+        public Relationship Relationship
+        {
+            get { return _relationship; }
+            set { _relationship = value; }
+        }
 
         /// <summary>
         /// The value.
         /// </summary>
-        public string Value { get; set; }
+        public string Value
+        {
+            get { return _value; }
+            set
+            { 
+                if (Type == SqlDbType.DateTime)
+                {
+                    var date = DateTime.Parse(value);
+                    _value = date.ToString("yyyy-MM-ddTHH:mm:ss.fff");
+                }
+                else
+                {
+                    _value = value;
+                }
+            }
+        }
     }
 }
