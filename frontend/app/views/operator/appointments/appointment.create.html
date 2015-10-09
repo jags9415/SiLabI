@@ -21,21 +21,36 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="form-group">
           <label for="name">Estudiante</label>
           <input class="form-control" type="text" ng-model="AppointmentCreate.student.full_name" readonly>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="lab">* Laboratorio</label>
-          <ui-select id="lab" ng-model="AppointmentCreate.laboratory">
-            <ui-select-match placeholder="{{$select.selected.name}}">
-              {{$select.selected.name}}
+          <label for="name">* Fechas Disponiles</label>
+          <ui-select id="course" ng-model="AppointmentCreate.selected_date" on-select="AppointmentCreate.setAvailableHours()">
+            <ui-select-match placeholder="{{$select.selected.day}}">
+              {{$select.selected.day}}
             </ui-select-match>
-            <ui-select-choices repeat="lab in AppointmentCreate.laboratories | filter: $select.search">
-              <span ng-bind-html="lab.name | highlight: $select.search"></span>
+            <ui-select-choices repeat="date in AppointmentCreate.available_dates | filter: $select.search">
+              <span ng-bind-html="date.day | date : 'fullDate' | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">* Horas Disponibles</label>
+          <ui-select id="course" ng-model="AppointmentCreate.selected_hour">
+            <ui-select-match placeholder="{{$select.selected}}">
+              {{$select.selected}}
+            </ui-select-match>
+            <ui-select-choices repeat="hour in AppointmentCreate.available_hours | filter: $select.search">
+              <span ng-bind-html="hour | date : 'mediumTime' | highlight: $select.search"></span>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -44,27 +59,13 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">* Fecha</label>
-          <input ui-date class="form-control" id="date" placeholder="Seleccionar" name="date" ng-model="AppointmentCreate.date">
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="name">* Hora</label>
-          <input type="text" class="form-control" id="hour" name="hour" ng-model="AppointmentCreate.hour" ui-mask="99:99">
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="course">* Curso</label>
-          <ui-select id="course" ng-model="AppointmentCreate.course">
-            <ui-select-match placeholder="{{$select.selected.name}}">
-              {{$select.selected.name}}
+          <label for="course">* Grupo</label>
+          <ui-select id="course" ng-model="AppointmentCreate.group">
+            <ui-select-match placeholder="{{$select.selected.course.name}}">
+              {{$select.selected.course.name}}
             </ui-select-match>
-            <ui-select-choices repeat="course in AppointmentCreate.courses | filter: $select.search">
-              <span ng-bind-html="course.name | highlight: $select.search"></span>
+            <ui-select-choices repeat="group in AppointmentCreate.groups | filter: $select.search">
+              <span ng-bind-html="group.course.name | highlight: $select.search"></span>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -78,6 +79,21 @@
             </ui-select-match>
             <ui-select-choices repeat="sf in AppointmentCreate.software_list | filter: $select.search">
               <span ng-bind-html="sf.code | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="lab">* Laboratorio</label>
+          <ui-select id="lab" ng-model="AppointmentCreate.laboratory">
+            <ui-select-match placeholder="{{$select.selected.name}}">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="lab in AppointmentCreate.laboratories | filter: $select.search">
+              <span ng-bind-html="lab.name | highlight: $select.search"></span>
             </ui-select-choices>
           </ui-select>
         </div>

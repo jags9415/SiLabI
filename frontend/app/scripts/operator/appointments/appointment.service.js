@@ -13,6 +13,7 @@
     this.Update = Update;
     this.Create = Create;
     this.Delete = Delete;
+    this.GetAvailable = GetAvailable;
 
     function GetAll(request) {
       if (!request) request = {};
@@ -45,6 +46,12 @@
       var requestBody = {};
       requestBody.access_token = $localStorage['access_token'];
       return RequestService.delete('/appointments/' + AppointmentID, requestBody);
+    }
+
+    function GetAvailable(request, Username){
+      if(!request) request = {};
+      request.access_token = $localStorage['access_token'];
+      return RequestService.get('/students/' + Username+ '/appointments/available', request);
     }
   }
 })();
