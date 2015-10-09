@@ -106,13 +106,14 @@ namespace SiLabI.Data
         public DataRow Create(object requesterId, object obj)
         {
             InnerAppointmentRequest appointment = (obj as InnerAppointmentRequest);
-            SqlParameter[] parameters = new SqlParameter[5];
+            SqlParameter[] parameters = new SqlParameter[6];
 
             parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
             parameters[1] = SqlUtilities.CreateParameter("@student", SqlDbType.VarChar, appointment.Student);
             parameters[2] = SqlUtilities.CreateParameter("@laboratory", SqlDbType.VarChar, appointment.Laboratory);
             parameters[3] = SqlUtilities.CreateParameter("@software", SqlDbType.VarChar, appointment.Software);
             parameters[4] = SqlUtilities.CreateParameter("@date", SqlDbType.DateTime, appointment.Date);
+            parameters[5] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, appointment.Group);
 
             DataTable table = _Connection.executeQuery("sp_CreateAppointment", parameters);
             return table.Rows[0];
@@ -121,7 +122,7 @@ namespace SiLabI.Data
         public DataRow Update(object requesterId, int id, object obj)
         {
             InnerAppointmentRequest appointment = (obj as InnerAppointmentRequest);
-            SqlParameter[] parameters = new SqlParameter[7];
+            SqlParameter[] parameters = new SqlParameter[8];
 
             parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
             parameters[1] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
@@ -130,6 +131,7 @@ namespace SiLabI.Data
             parameters[4] = SqlUtilities.CreateParameter("@software", SqlDbType.VarChar, appointment.Software);
             parameters[5] = SqlUtilities.CreateParameter("@date", SqlDbType.DateTime, appointment.Date);
             parameters[6] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, appointment.State);
+            parameters[7] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, appointment.Group);
 
             DataTable table = _Connection.executeQuery("sp_UpdateAppointment", parameters);
             return table.Rows[0];

@@ -17,6 +17,7 @@ namespace SiLabI.Model.Request
         protected string _student;
         protected string _laboratory;
         protected string _software;
+        protected int? _group;
         protected string _state;
         protected DateTime? _date;
 
@@ -48,6 +49,16 @@ namespace SiLabI.Model.Request
         {
             set { _software = value; }
             get { return _software; }
+        }
+
+        /// <summary>
+        /// The group identity.
+        /// </summary>
+        [DataMember(Name = "group")]
+        public virtual int? Group
+        {
+            set { _group = value; }
+            get { return _group; }
         }
 
         /// <summary>
@@ -102,6 +113,7 @@ namespace SiLabI.Model.Request
             bool valid = true;
 
             valid &= !string.IsNullOrWhiteSpace(Software);
+            valid &= Group.HasValue && Group > 0;
             valid &= Date.HasValue;
 
             return valid;
@@ -118,6 +130,7 @@ namespace SiLabI.Model.Request
             if (Student != null) valid &= !string.IsNullOrWhiteSpace(Student);
             if (Laboratory != null) valid &= !string.IsNullOrWhiteSpace(Laboratory);
             if (Software != null) valid &= !string.IsNullOrWhiteSpace(Software);
+            if (Group.HasValue) valid &= Group > 0;
 
             return valid;
         }

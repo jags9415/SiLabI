@@ -17,6 +17,7 @@ namespace SiLabI.Model
         protected Student _student;
         protected Laboratory _laboratory;
         protected Software _software;
+        protected Group _group;
         protected DateTime? _date;
 
         /// <summary>
@@ -47,6 +48,16 @@ namespace SiLabI.Model
         {
             set { _software = value; }
             get { return _software; }
+        }
+
+        /// <summary>
+        /// The group data.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "group")]
+        public virtual Group Group
+        {
+            set { _group = value; }
+            get { return _group; }
         }
 
         /// <summary>
@@ -93,6 +104,7 @@ namespace SiLabI.Model
             appointment.Student = Student.Parse(row, prefix + "student");
             appointment.Laboratory = Laboratory.Parse(row, prefix + "laboratory");
             appointment.Software = Software.Parse(row, prefix + "software");
+            appointment.Group = Group.Parse(row, prefix + "group");
 
             if (appointment.isEmpty())
             {

@@ -193,6 +193,7 @@ namespace SiLabI.Model
                     _AppointmentValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
                     _AppointmentValidFields.Add(new Field("date", SqlDbType.DateTime));
                     _AppointmentValidFields.Add(new Field("student", ValidFields.Student));
+                    _AppointmentValidFields.Add(new Field("group", ValidFields.Group));
                     _AppointmentValidFields.Add(new Field("laboratory", ValidFields.Laboratory));
                     _AppointmentValidFields.Add(new Field("software", ValidFields.Software));
                 }

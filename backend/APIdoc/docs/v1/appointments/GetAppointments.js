@@ -33,17 +33,18 @@
  * @apiParam {Number}   [page=1]      The page number.
  * @apiParam {Number}   [limit=20]    The amount of results by page.
  *
- * @apiSuccess {Number}							        total_pages			        The total amount of pages for this query.
- * @apiSuccess {Number}	  								  current_page	          The current page number.
- * @apiSuccess {Object[]} 								  results 				        The list of appointments.
- * @apiSuccess {Number}									    results.id 		      The appointment identification.
- * @apiSuccess {Date}									      results.date 		    The appointment number.
- * @apiSuccess {Date}									      results.created_at  The creation date.
- * @apiSuccess {Date}									      results.updated_at  The last update date.
- * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	results.state			  The appointment state.
- * @apiSuccess {Object}									    results.student 			The student data.
- * @apiSuccess {Object}                     results.laboratory		The laboratory data.
- * @apiSuccess {Object}                     results.software  		The software data.
+ * @apiSuccess {Number}														      	    total_pages			      The total amount of pages for this query.
+ * @apiSuccess {Number}	  												      		  current_page	        The current page number.
+ * @apiSuccess {Object[]} 												      	    results 				      The list of appointments.
+ * @apiSuccess {Number}														            results.id 		        The appointment identification.
+ * @apiSuccess {Date}															      	    results.date 		      The appointment number.
+ * @apiSuccess {Date}																      	  results.created_at    The creation date.
+ * @apiSuccess {Date}									      								  results.updated_at    The last update date.
+ * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	results.state			    The appointment state.
+ * @apiSuccess {Object}															      		results.student 			The student data.
+ * @apiSuccess {Object}           								            results.laboratory		The laboratory data.
+ * @apiSuccess {Object}           								            results.software  		The software data.
+ * @apiSuccess {Object}           								            results.group     		The group data.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -83,6 +84,40 @@
  *             "id": 1136,
  *             "name": "Software #12",
  *             "code": "SF-12",
+ *             "state": "Activo",
+ *             "created_at": "2015-08-27T22:14:20.646Z",
+ *             "updated_at": "2015-08-27T22:14:20.646Z"
+ *           },
+ *           "group": {
+ *             "id": 1136,
+ *             "number": 40,
+ *             "course": {
+ *               "id": 1136,
+ *               "name": "Inglés II Para Computación",
+ *               "code": "CI-1312",
+ *               "state": "Activo",
+ *               "created_at": "2015-08-27T22:14:20.646Z",
+ *               "updated_at": "2015-08-27T22:14:20.646Z"
+ *             },
+ *             "professor": {
+ *               "id": 54,
+ *               "created_at": "2015-08-27T22:14:20.646Z",
+ *               "email": "gjacksonhi@squidoo.com",
+ *               "gender": "Masculino",
+ *               "last_name_1": "Lynch",
+ *               "last_name_2": "Jackson",
+ *               "name": "Gregory",
+ *               "full_name": "Gregory Lynch Jackson",
+ *               "phone": "7-(384)880-7491",
+ *               "state": "Activo",
+ *               "updated_at": "2015-08-27T22:14:20.646Z",
+ *               "username": "gjacksonhi"
+ *             },
+ *             "period": {
+ *               "value": 1,
+ *               "type": "Semestre",
+ *               "year": 2015
+ *             }
  *             "state": "Activo",
  *             "created_at": "2015-08-27T22:14:20.646Z",
  *             "updated_at": "2015-08-27T22:14:20.646Z"

@@ -13,34 +13,36 @@
  *     Content-Type: application/json
  *     {
  *       "appointment": {
- *         "date": "2015-08-27T15:00:00.000Z"
+ *         "date": "2015-08-27T15:00:00.000"
  *       },
  *       "access_token": "..."
  *     }
  *
- * @apiParam {Object}						appointment 		      The appointment data.
- * @apiParam {String}						[appointment.student]    The student username.
- * @apiParam {String}						[appointment.laboratory]    The laboratory name.
- * @apiParam {String}						[appointment.software] The software code.
- * @apiParam {Date}					    [appointment.date]  The date.
- * @apiParam {String}					    [appointment.state]  The state.
- * @apiParam {String}						access_token    The access token.
+ * @apiParam {Object}						appointment 		           The appointment data.
+ * @apiParam {String}						[appointment.student]      The student username.
+ * @apiParam {String}						[appointment.laboratory]   The laboratory name.
+ * @apiParam {String}						[appointment.software]     The software code.
+ * @apiParam {Number}						[appointment.group]        The group identity.
+ * @apiParam {Date}					    [appointment.date]         The date.
+ * @apiParam {String}					  [appointment.state]        The state.
+ * @apiParam {String}						access_token               The access token.
  *
- * @apiSuccess {Number}									    id 		      The appointment identification.
- * @apiSuccess {Date}									    date 		    The appointment number.
- * @apiSuccess {Date}									      created_at  The creation date.
- * @apiSuccess {Date}									      updated_at  The last update date.
- * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	state			  The appointment state.
- * @apiSuccess {Object}									    student 			The student data.
- * @apiSuccess {Object}                     laboratory		The laboratory data.
- * @apiSuccess {Object}                     software  		The software data.
+ * @apiSuccess {Number}									                       id 		      The appointment identification.
+ * @apiSuccess {Date}									                         date 		    The appointment number.
+ * @apiSuccess {Date}					                    			       created_at   The creation date.
+ * @apiSuccess {Date}									                         updated_at   The last update date.
+ * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	 state			  The appointment state.
+ * @apiSuccess {Object}									                       student 			The student data.
+ * @apiSuccess {Object}                                        laboratory		The laboratory data.
+ * @apiSuccess {Object}                                        software  		The software data.
+ * @apiSuccess {Object}                                        group  		  The group data.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "id": 87,
  *       "state": "Por iniciar",
- *       "date": 2015-08-27T15:00:00.000Z,
+ *       "date": "2015-08-27T13:00:00.000Z",
  *       "created_at": "2015-08-27T22:14:20.646Z",
  *       "updated_at": "2015-08-27T22:14:20.646Z",
  *       "student": {
@@ -69,6 +71,40 @@
  *         "id": 1136,
  *         "name": "Software #12",
  *         "code": "SF-12",
+ *         "state": "Activo",
+ *         "created_at": "2015-08-27T22:14:20.646Z",
+ *         "updated_at": "2015-08-27T22:14:20.646Z"
+ *       },
+ *       "group": {
+ *         "id": 1136,
+ *         "number": 40,
+ *         "course": {
+ *           "id": 1136,
+ *           "name": "Inglés II Para Computación",
+ *           "code": "CI-1312",
+ *           "state": "Activo",
+ *           "created_at": "2015-08-27T22:14:20.646Z",
+ *           "updated_at": "2015-08-27T22:14:20.646Z"
+ *         },
+ *         "professor": {
+ *           "id": 54,
+ *           "created_at": "2015-08-27T22:14:20.646Z",
+ *           "email": "gjacksonhi@squidoo.com",
+ *           "gender": "Masculino",
+ *           "last_name_1": "Lynch",
+ *           "last_name_2": "Jackson",
+ *           "name": "Gregory",
+ *           "full_name": "Gregory Lynch Jackson",
+ *           "phone": "7-(384)880-7491",
+ *           "state": "Activo",
+ *           "updated_at": "2015-08-27T22:14:20.646Z",
+ *           "username": "gjacksonhi"
+ *         },
+ *         "period": {
+ *           "value": 1,
+ *           "type": "Semestre",
+ *           "year": 2015
+ *         }
  *         "state": "Activo",
  *         "created_at": "2015-08-27T22:14:20.646Z",
  *         "updated_at": "2015-08-27T22:14:20.646Z"
