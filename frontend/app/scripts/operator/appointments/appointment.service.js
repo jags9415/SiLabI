@@ -38,7 +38,6 @@
       var requestBody = {};
       requestBody.appointment = Appointment;
       requestBody.access_token = $localStorage['access_token'];
-      console.log(requestBody);
       return RequestService.post('/appointments', requestBody);
     }
 

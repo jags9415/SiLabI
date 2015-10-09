@@ -60,7 +60,7 @@
     }
 
     function openAppointment(id) {
-      $location.url('/Operador/Appointment/' + id);
+      $location.url('/Operador/Citas/' + id);
     }
 
     function searchAppointment() {
@@ -83,7 +83,7 @@
       if (vm.searched.state) {
       vm.request.query.state = {
         operation: "eq",
-        value: '*' + vm.searched.state.value
+        value: vm.searched.state.value
       }
     }
 
@@ -102,7 +102,6 @@
             operation: "eq",
             value: date.toJSON()
           }
-          console.log(date.toJSON());
         }
         else
         {

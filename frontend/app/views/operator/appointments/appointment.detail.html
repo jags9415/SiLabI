@@ -17,13 +17,13 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="lab">* Laboratorio</label>
-          <ui-select id="lab" ng-model="AppointmentDetail.laboratory">
+          <label for="lab" class="control-label">* Laboratorio</label>
+          <ui-select id="lab" ng-model="AppointmentDetail.laboratory.name">
             <ui-select-match placeholder="{{AppointmentDetail.laboratory.name}}">
-              {{$select.selected}}
+              {{ $select.selected}}
             </ui-select-match>
-            <ui-select-choices repeat="lab in AppointmentDetail.laboratories | filter: $select.search">
-              <span ng-bind-html="lab.name | highlight: $select.search"></span>
+            <ui-select-choices repeat="lab in AppointmentDetail.laboratories">
+              <span ng-bind-html="lab.name"></span>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -46,13 +46,13 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="course">* Curso</label>
-          <ui-select id="course" ng-model="AppointmentDetail.course">
-            <ui-select-match placeholder="{{$select.selected.name}}">
-              {{$select.selected.name}}
+          <label for="course">* Estado</label>
+          <ui-select id="course" ng-model="AppointmentDetail.appointment.state">
+            <ui-select-match placeholder="{{$select.selected}}">
+              {{$select.selected}}
             </ui-select-match>
-            <ui-select-choices repeat="course in AppointmentDetail.courses | filter: $select.search">
-              <span ng-bind-html="course.name | highlight: $select.search"></span>
+            <ui-select-choices repeat="state in AppointmentDetail.states ">
+              <span ng-bind-html="state.name "></span>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -60,7 +60,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="software">* Software</label>
-          <ui-select id="software" ng-model="AppointmentDetail.software">
+          <ui-select id="software" ng-model="AppointmentDetail.software.code">
             <ui-select-match placeholder="{{AppointmentDetail.software.code}}">
               {{$select.selected}}
             </ui-select-match>

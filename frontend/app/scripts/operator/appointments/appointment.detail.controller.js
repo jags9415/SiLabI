@@ -15,6 +15,7 @@ function AppointmentDetailController($scope, AppointmentService, MessageService,
   vm.software_list = [];
   vm.courses = [];  
   vm.laboratories = [];
+  vm.states = [];  
 
   vm.searchStudent = searchStudent;
   vm.fieldsReady = fieldsReady;
@@ -37,7 +38,7 @@ function AppointmentDetailController($scope, AppointmentService, MessageService,
 
 
   function fieldsReady () {
-    return vm.student_username && vm.laboratory  && vm.software && vm.date && vm.hour;
+    return vm.laboratory  && vm.software && vm.date && vm.hour;
   }
 
   function searchStudent()
@@ -57,6 +58,16 @@ function getSoftware () {
   .catch(handleError);
 }
 
+function getStates () {
+StateService.GetAppointmentStates()
+  .then(setStates)
+  .catch(handleError);
+}
+
+function setStates(states) {
+  vm.states = states;
+}
+
 function getLaboratories () {
 
   LabService.GetAll()
@@ -65,10 +76,15 @@ function getLaboratories () {
 }
 
 function setAppointment (data) {
+  vm.appointment = data;
   vm.student = data.student;
   vm.date = data.date;
   vm.laboratory = data.laboratory;
   vm.software = data.software;
+  var i = data.date.indexOf("T");
+  var date_day = data.date.substring(0, i);
+  var date_hour = data.date.substring(i+1, data.date.length - 7);
+  vm.hour = date_hour;  
 }
 
 function setLaboratories (data) {
@@ -81,23 +97,21 @@ vm.software_list = data.results;
 
 function updateAppointment () {
   var date = new Date(vm.date.getFullYear(), vm.date.getMonth(), vm.date.getUTCDate(), vm.hour.slice(0, 2));
+  console.log(date.toJSON());
   var app =
   {
-    "student": vm.student_username,
     "laboratory": vm.laboratory.name,
     "software": vm.software.code,
     "date": date.toJSON()
   }
-  AppointmentService.Create(app)
+  AppointmentService.Update(vm.id, app)
   .then(handleSuccess)
   .catch(handleError);
 }
 
 function handleSuccess (data) {
-  MessageService.success("Cita creada con éxito.");
-        delete vm.student;
-        delete vm.student_username;
-        delete vm.courses;
+  MessageService.success("Cita actualizada con éxito.");
+  setAppointment(data);
 }
 
 function handleError(data) {

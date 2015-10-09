@@ -173,6 +173,12 @@
           controllerAs: 'AppointmentCreate',
           reloadOnSearch: false
         })
+        .when('/Operador/Citas/:id', {
+          templateUrl: 'views/operator/appointments/appointment.detail.html',
+          controller: 'AppointmentDetailController',
+          controllerAs: 'AppointmentDetail',
+          reloadOnSearch: false
+        })
         .when('/Estudiante/:student_id/Citas', {
           templateUrl: 'views/student/appointments/appointment.list.html',
           controller: 'StudentAppListController',
