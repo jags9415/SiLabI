@@ -45,12 +45,12 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="name">* Horas Disponibles</label>
-          <ui-select id="course" ng-model="AppointmentCreate.selected_hour">
-            <ui-select-match placeholder="{{$select.selected}}">
-              {{$select.selected}}
+          <ui-select id="course" ng-model="AppointmentCreate.selected_hour" on-select="AppointmentCreate.changeLaboratory()">
+            <ui-select-match placeholder="{{$select.selected.hour}}">
+              {{$select.selected.hour}}
             </ui-select-match>
             <ui-select-choices repeat="hour in AppointmentCreate.available_hours | filter: $select.search">
-              <span ng-bind-html="hour | date : 'mediumTime' | highlight: $select.search"></span>
+              <span ng-bind-html="hour.full_date | date : 'mediumTime' | highlight: $select.search"></span>
             </ui-select-choices>
           </ui-select>
         </div>
@@ -73,7 +73,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="software">* Software</label>
-          <ui-select id="software" ng-model="AppointmentCreate.software">
+          <ui-select id="software" ng-model="AppointmentCreate.selected_software">
             <ui-select-match placeholder="{{$select.selected.code}}">
               {{$select.selected.code}}
             </ui-select-match>
@@ -88,7 +88,7 @@
       <div class="col-md-12">
         <div class="form-group">
           <label for="lab">* Laboratorio</label>
-          <ui-select id="lab" ng-model="AppointmentCreate.laboratory">
+          <ui-select id="lab" ng-model="AppointmentCreate.selected_laboratory">
             <ui-select-match placeholder="{{$select.selected.name}}">
               {{$select.selected.name}}
             </ui-select-match>

@@ -27,6 +27,7 @@ function AppointmentCreateController($scope, AppointmentService, MessageService,
   vm.fieldsReady = fieldsReady;
   vm.create = createAppointment;
   vm.setAvailableHours = setAvailableHours;
+  vm.changeLaboratory = changeLaboratory;
 
   activate();
 
@@ -97,64 +98,33 @@ function getAvailableDates()
   }
 }
 
-function setAvailableDates(data)
-{
-
-  for (var i = 0; i < data.length; i++) {
-    var date = data[i].date;
-    var current_date = date.substring(0, date.indexOf("T"));
-    if(getRepetitions(current_date, vm.available_dates) == 0)
-    {
-      var current_json = {"day":current_date, "hours":getHours(current_date, data)};
-      vm.available_dates.push(current_json);
-    }
-  }
+function setAvailableDates (dates) {
+  vm.available_dates = AppointmentService.ParseAvailableDates(dates);
+  console.log(vm.available_dates);
 }
+
 
 function setAvailableHours() {
   if(vm.selected_date)
   {
-    vm.available_hours = vm.selected_date.hours;
+    vm.available_hours = vm.selected_date.hoursByLab;
   }
 }
 
-function getRepetitions(date, array)
-{
-  var count = 0;
-  for (var i = 0; i < array.length; i++) {
-    var current_date = array[i].day;
-    if(current_date === date)
-    {
-      count++;
-    }
-  }
-  return count;
-}
-
-function getHours(date, datesArray)
-{
-  var hours = [];
-  for (var i = 0; i < datesArray.length; i++) 
+function changeLaboratory () {
+  if(vm.selected_hour)
   {
-    var new_date = datesArray[i].date;
-    var current_date = new_date.substring(0, new_date.indexOf("T"));
-    if(current_date === date)
-    {
-      var index = new_date.indexOf("T") + 1;
-      var hour = new_date.substring(index, new_date.length);
-      hours.push(hour);
-    }
+    vm.selected_laboratory = vm.selected_hour.laboratory;
+    console.log(vm.selected_hour);
   }
-  return hours;
 }
-
 
 function createAppointment () {
   var app =
   {
     "student": vm.student_username,
     "laboratory": vm.laboratory.name,
-    "software": vm.software.code,
+    "software": vm.selected_software.code,
     "date": vm.selected_date.day+"T"+vm.selected_hour,
     "group": vm.group.id
   }
