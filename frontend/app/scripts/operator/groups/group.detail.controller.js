@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('GroupDetailController', GroupDetailController);
 
-    GroupDetailController.$inject = ['$scope', '$routeParams', '$location', 'GroupService', 'StudentService', 'MessageService'];
+    GroupDetailController.$inject = ['$scope', '$routeParams', '$location', 'GroupService', 'ProfessorService', 'CourseService', 'StudentService', 'MessageService'];
 
-    function GroupDetailController($scope, $routeParams, $location, GroupService, StudentService, MessageService) {
+    function GroupDetailController($scope, $routeParams, $location, GroupService, ProfessorService, CourseService, StudentService, MessageService) {
       var vm = this;
       vm.group = {};
       vm.students = [];
@@ -24,6 +24,18 @@
       vm.searchStudent = searchStudent;
       vm.sliceStudents = sliceStudents;
 
+      vm.getProfessors = getProfessors;
+      vm.setProfessor = setProfessor;
+      vm.checkProfessor = checkProfessor;
+
+      vm.getCourses = getCourses;
+      vm.setCourse = setCourse;
+      vm.checkCourse = checkCourse;
+
+      vm.groupRequest = {
+        fields: "id,period,number,created_at,updated_at,professor.full_name,professor.username,course.code,course.name"
+      }
+
       vm.studentRequest = {
         fields: "id,username,full_name"
       }
@@ -31,7 +43,7 @@
       activate();
 
       function activate() {
-        GroupService.GetOne(vm.id)
+        GroupService.GetOne(vm.id, vm.groupRequest)
         .then(setGroup)
         .then(setStudents)
         .catch(handleError);
@@ -40,7 +52,9 @@
       function updateGroup() {
         if (vm.group) {
           var request = {
-              "number": vm.group.number
+              "number": vm.group.number,
+              "professor": vm.group.professor.username,
+              "course": vm.group.course.code
           };
 
           if (vm.isStudentsModified) {
@@ -65,8 +79,70 @@
         }
       }
 
+      function getProfessors(name) {
+        var request = {
+          fields: "id,username,full_name",
+          limit: 10,
+          query: {
+            full_name: {
+              operation: "like",
+              value: '*' + name + '*'
+            }
+          }
+        }
+
+        return ProfessorService.GetAll(request)
+        .then(function(data) {
+          return data.results;
+        });
+      }
+
+      function getCourses(name) {
+        var request = {
+          field: "id,code,name",
+          limit: 10,
+          query: {
+            name: {
+              operation: "like",
+              value: '*' + name + '*'
+            }
+          }
+        }
+
+        return CourseService.GetAll(request)
+        .then(function(data) {
+          return data.results;
+        });
+      }
+
+      function checkProfessor() {
+        if (vm.professor_name != vm.group.professor.full_name || _.isEmpty(vm.group.professor)) {
+          vm.professor_name = "";
+          vm.group.professor = {};
+        }
+      }
+
+      function checkCourse() {
+        if (vm.course_name != vm.group.course.name || _.isEmpty(vm.group.course)) {
+          vm.course_name = "";
+          vm.group.course = {};
+        }
+      }
+
+      function setProfessor(user) {
+        vm.group.professor = user;
+        vm.professor_name = user.full_name;
+      }
+
+      function setCourse(course) {
+        vm.group.course = course;
+        vm.course_name = course.name;
+      }
+
       function setGroup(group) {
         vm.group = group;
+        vm.professor_name = group.professor.full_name;
+        vm.course_name = group.course.name;
         return GroupService.GetStudents(vm.group.id, vm.studentRequest);
       }
 

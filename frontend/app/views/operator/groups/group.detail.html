@@ -9,15 +9,17 @@
   <form name="updateGroupForm">
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
-        <label for="name">Curso</label>
-          <input type="text" class="form-control" id="courseName" ng-value="GroupDetail.group.course.code + ' ' + GroupDetail.group.course.name" readonly>
+        <div class="form-group" show-errors>
+          <label for="professor">* Docente</label>
+          <input id="professor" name="professor" class="form-control" type="text" placeholder="Docente" ng-model="GroupDetail.professor_name" typeahead="professor.full_name for professor in GroupDetail.getProfessors($viewValue)" typeahead-editable="false" typeahead-on-select="GroupDetail.setProfessor($item)" ng-blur="GroupDetail.checkProfessor()" required>
+          <p class="help-block" ng-if="updateGroupForm.professor.$error.required">Docente requerido.</p>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
-          <label for="name">Profesor</label>
-          <input type="text" class="form-control" id="professorName" placeholder="username" ng-model="GroupDetail.group.professor.full_name" readonly>
+        <div class="form-group" show-errors>
+          <label for="course">* Curso</label>
+          <input id="course" name="course" class="form-control" type="text" placeholder="Curso" ng-model="GroupDetail.course_name" typeahead="course.name for course in GroupDetail.getCourses($viewValue)" typeahead-editable="false" typeahead-on-select="GroupDetail.setCourse($item)" ng-blur="GroupDetail.checkCourse()" required>
+          <p class="help-block" ng-if="updateGroupForm.course.$error.required">Curso requerido.</p>
         </div>
       </div>
     </div>
