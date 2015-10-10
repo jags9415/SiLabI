@@ -13,12 +13,15 @@
       vm.lab = {};
       vm.id = $routeParams.id;
       vm.software = [];
+      vm.slicedSoftware = [];
+      vm.page = 1;
+      vm.limit = 20;
 
       vm.update = updateLab;
       vm.delete = deleteLab;
-
       vm.searchSoftware = searchSoftware;
       vm.deleteSoftware = deleteSoftware;
+      vm.sliceSoftware = sliceSoftware;
 
       activate();
 
@@ -26,6 +29,7 @@
         LabService.GetOne(vm.id)
         .then(setLab)
         .catch(handleError);
+
         LabService.GetSoftware(vm.id)
         .then(initSoftware)
         .catch(handleError);
@@ -58,6 +62,7 @@
 
       function initSoftware(software) {
         vm.software = software;
+        sliceSoftware();
       }
 
       function redirectToLabs(result) {
@@ -74,7 +79,6 @@
           .then(setSoftware)
           .catch(handleError);
         }
-        vm.software_code = "";
       }
 
       function contains(software) {
@@ -88,6 +92,7 @@
       function setSoftware(software) {
         if (!contains(software)) {
           vm.software.push(software);
+          vm.software_code = "";
         }
         else {
           MessageService.info("El software seleccionado ya se encuentra en la lista.")
@@ -109,6 +114,10 @@
             break;
           }
         }
+      }
+
+      function sliceSoftware() {
+        vm.slicedSoftware = vm.software.slice((vm.page - 1) * vm.limit, vm.page * vm.limit);
       }
     }
 })();

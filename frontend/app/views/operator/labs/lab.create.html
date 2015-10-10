@@ -41,30 +41,39 @@
       </div>
     </div>
     <div class="table-responsive">
-    <table class="table table-striped" ng-show="LabAdd.software.length > 0">
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Nombre</th>
-          <th style="text-align: center">Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="software in LabAdd.software">
-          <td>{{ software.code }}</td>
-          <td>{{ software.name }}</td>
-          <td style="text-align: center">
-            <a class='btn btn-info btn-sm' href="{{'#Operador/Software/' + software.code}}">
-              <span class="glyphicon glyphicon-eye-open"></span>
-            </a>
-            <a href="" class="btn btn-danger btn-sm" ng-click="LabAdd.deleteSoftware(software.code)">
-              <span class="glyphicon glyphicon-trash"></span>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <table class="table table-striped" ng-show="LabAdd.software.length > 0">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th style="text-align: center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="software in LabAdd.slicedSoftware">
+            <td>{{ software.code }}</td>
+            <td>{{ software.name }}</td>
+            <td style="text-align: center">
+              <a class='btn btn-info btn-sm' href="{{'#Operador/Software/' + software.code}}">
+                <span class="glyphicon glyphicon-eye-open"></span>
+              </a>
+              <a href="" class="btn btn-danger btn-sm" ng-click="LabAdd.deleteSoftware(software.code)">
+                <span class="glyphicon glyphicon-trash"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row" ng-show="LabAdd.software.length > LabAdd.limit">
+      <div class="col-md-12 pagination">
+        <pagination
+          ng-model="LabAdd.page" items-per-page="LabAdd.limit" total-items="LabAdd.software.length"
+          ng-change="LabAdd.sliceSoftware()" max-size="5" boundary-links="true" rotate="true"
+          previous-text="<" next-text=">" first-text="<<" last-text=">>">
+        </pagination>
+      </div>
+    </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
         <button type="submit" class="btn btn-lg btn-success" ng-click="LabAdd.create()" ng-disabled="createLabForm.$invalid">

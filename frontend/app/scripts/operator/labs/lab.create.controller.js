@@ -11,11 +11,14 @@
         var vm = this;
         vm.lab = {};
         vm.software = [];
+        vm.slicedSoftware = [];
+        vm.page = 1;
+        vm.limit = 20;
 
         vm.create = create;
-
         vm.searchSoftware = searchSoftware;
         vm.deleteSoftware = deleteSoftware;
+        vm.sliceSoftware = sliceSoftware;
 
         function create() {
           if (vm.lab) {
@@ -47,7 +50,6 @@
             .then(setSoftware)
             .catch(handleError);
           }
-          vm.software_code = "";
         }
 
         function contains(software) {
@@ -60,7 +62,9 @@
 
         function setSoftware(software) {
           if (!contains(software)) {
-            vm.software.push(software);
+            vm.software.unshift(software);
+            vm.software_code = "";
+            sliceSoftware();
           }
           else {
             MessageService.info("El software seleccionado ya se encuentra en la lista.")
@@ -76,12 +80,17 @@
         }
 
         function deleteSoftware(code) {
-          for (var i = 0; i < vm.software.length; i++){
-            if(vm.software[i].code === code){
+          for (var i = 0; i < vm.software.length; i++) {
+            if (vm.software[i].code === code) {
               vm.software.splice(i, 1);
+              sliceSoftware();
               break;
             }
           }
+        }
+
+        function sliceSoftware() {
+          vm.slicedSoftware = vm.software.slice((vm.page - 1) * vm.limit, vm.page * vm.limit);
         }
     }
 })();

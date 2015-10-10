@@ -52,30 +52,39 @@
       </div>
     </div>
     <div class="table-responsive">
-    <table class="table table-striped" ng-show="LabDetail.software.length > 0">
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Nombre</th>
-          <th style="text-align: center">Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="software in LabDetail.software">
-          <td>{{ software.code }}</td>
-          <td>{{ software.name }}</td>
-          <td style="text-align: center">
-            <a class='btn btn-info btn-sm' href="{{'#Operador/Software/' + software.code}}">
-              <span class="glyphicon glyphicon-eye-open"></span>
-            </a>
-            <a href="" class="btn btn-danger btn-sm" ng-click="LabDetail.deleteSoftware(software.code)">
-              <span class="glyphicon glyphicon-remove"></span>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <table class="table table-striped" ng-show="LabDetail.software.length > 0">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th style="text-align: center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="software in LabDetail.slicedSoftware">
+            <td>{{ software.code }}</td>
+            <td>{{ software.name }}</td>
+            <td style="text-align: center">
+              <a class='btn btn-info btn-sm' href="{{'#Operador/Software/' + software.code}}">
+                <span class="glyphicon glyphicon-eye-open"></span>
+              </a>
+              <a href="" class="btn btn-danger btn-sm" ng-click="LabDetail.deleteSoftware(software.code)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <div class="col-md-12 pagination">
+        <pagination
+          ng-model="LabDetail.page" items-per-page="LabDetail.limit" total-items="LabDetail.software.length"
+          ng-change="LabDetail.sliceSoftware()" max-size="5" boundary-links="true" rotate="true"
+          previous-text="<" next-text=">" first-text="<<" last-text=">>">
+        </pagination>
+      </div>
+    </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-6 text-center">
         <button type="submit" class="btn btn-lg btn-info" ng-click="LabDetail.update()" ng-disabled="updateLabForm.$invalid">
