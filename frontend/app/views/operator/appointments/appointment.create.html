@@ -55,7 +55,7 @@
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
             <ui-select id="course" ng-model="AppointmentCreate.selected_hour" on-select="AppointmentCreate.changeLaboratory()">
               <ui-select-match placeholder="{{$select.selected.hour}}">
-                {{$select.selected.hour}}
+                {{$select.selected.full_date | date: 'mediumTime'}}
               </ui-select-match>
               <ui-select-choices repeat="hour in AppointmentCreate.available_hours | filter: $select.search">
                 <span ng-bind-html="hour.full_date | date : 'mediumTime' | highlight: $select.search"></span>
