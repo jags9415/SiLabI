@@ -12,6 +12,7 @@
         vm.lab = {};
         vm.software = [];
         vm.slicedSoftware = [];
+        vm.isSoftwareModified = false;
         vm.page = 1;
         vm.limit = 15;
 
@@ -22,7 +23,7 @@
 
         function create() {
           if (vm.lab) {
-            vm.lab.software = getAddedSoftware();
+            vm.lab.software = getSoftwareCodes();
             LabService.Create(vm.lab)
             .then(handleCreateSuccess)
             .catch(handleError);
@@ -30,11 +31,12 @@
         }
 
         function handleCreateSuccess(result) {
-          MessageService.success("Sala de Laboratorio creada con éxito.");
+          MessageService.success("Laboratorio creado.");
 
           // Reset form data.
           vm.lab = {};
           vm.software = [];
+          vm.isSoftwareModified = false;
 
           // Reset form validations.
           $scope.$broadcast('show-errors-reset');
@@ -47,23 +49,20 @@
         function searchSoftware() {
           if (vm.software_code) {
             SoftwareService.GetOne(vm.software_code)
-            .then(setSoftware)
+            .then(addSoftware)
             .catch(handleError);
           }
         }
 
         function contains(software) {
-          for (var i = 0; i < vm.software.length; i++){
-            if(vm.software[i].code == software.code)
-              return true;
-          }
-          return false;
+          return _.any(vm.software, _.matches(software));
         }
 
-        function setSoftware(software) {
+        function addSoftware(software) {
           if (!contains(software)) {
             vm.software.unshift(software);
             vm.software_code = "";
+            vm.isSoftwareModified = true;
             sliceSoftware();
           }
           else {
@@ -71,22 +70,19 @@
           }
         }
 
-        function getAddedSoftware() {
-          var software_codes = [];
-          for (var i = 0; i < vm.software.length; i++){
-            software_codes.push(vm.software[i].code);
-          }
-          return software_codes;
-        }
-
         function deleteSoftware(code) {
           for (var i = 0; i < vm.software.length; i++) {
             if (vm.software[i].code === code) {
               vm.software.splice(i, 1);
+              vm.isSoftwareModified = true;
               sliceSoftware();
               break;
             }
           }
+        }
+
+        function getSoftwareCodes() {
+          return _.map(vm.software, 'code');
         }
 
         function sliceSoftware() {
