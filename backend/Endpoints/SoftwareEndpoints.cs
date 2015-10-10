@@ -17,7 +17,7 @@ namespace SiLabI
         public PaginatedResponse<Software> GetSoftwares(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Any);
             QueryString request = new QueryString(ValidFields.Software);
 
             request.AccessToken = token;
@@ -33,7 +33,7 @@ namespace SiLabI
         public Software GetSoftware(string code, string token, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Any);
             QueryString request = new QueryString(ValidFields.Software);
 
             request.AccessToken = token;

@@ -17,7 +17,7 @@ namespace SiLabI
         public PaginatedResponse<Laboratory> GetLaboratories(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Any);
             QueryString request = new QueryString(ValidFields.Laboratory);
 
             request.AccessToken = token;
@@ -33,7 +33,7 @@ namespace SiLabI
         public Laboratory GetLaboratory(string id, string token, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Any);
 
             int num;
             if (!Int32.TryParse(id, out num))
@@ -130,7 +130,7 @@ namespace SiLabI
         public List<Software> GetLaboratorySoftware(string id, string token, string query, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Any);
 
             int num;
             if (!Int32.TryParse(id, out num))

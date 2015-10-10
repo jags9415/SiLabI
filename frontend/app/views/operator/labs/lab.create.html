@@ -21,7 +21,8 @@
         <div class="form-group" show-errors>
           <label for="seats" class="control-label">Asientos</label>
           <input type="number" class="form-control" id="seats" min="0" name="seats" placeholder="Asientos" ng-model="LabAdd.lab.seats" ng-trim required>
-          <p class="help-block" ng-if="createLabForm.code.$error.required">Cantidad de asientos requerida.</p>
+          <p class="help-block" ng-if="createLabForm.seats.$error.required">Cantidad de asientos requerida.</p>
+          <p class="help-block" ng-if="createLabForm.seats.$error.number  || createLabForm.seats.$error.min">Ingrese un número positivo.</p>
         </div>
       </div>
     </div>
@@ -33,9 +34,9 @@
         </div>
       </div>
       <div class="col-md-2 col-xs-2">
-        <button type="button" class="btn btn-default btn-block" ng-click="LabAdd.searchSoftware()">
-          <i class="glyphicon glyphicon-search"></i>
-          <span class="hidden-xs">Buscar</span>
+        <button type="button" class="btn btn-success btn-block" ng-click="LabAdd.searchSoftware()">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span class="hidden-xs">Agregar</span>
         </button>
       </div>
     </div>
@@ -53,6 +54,9 @@
           <td>{{ software.code }}</td>
           <td>{{ software.name }}</td>
           <td style="text-align: center">
+            <a class='btn btn-info btn-sm' href="{{'#Operador/Software/' + software.code}}">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
             <a href="" class="btn btn-danger btn-sm" ng-click="LabAdd.deleteSoftware(software.code)">
               <span class="glyphicon glyphicon-trash"></span>
             </a>

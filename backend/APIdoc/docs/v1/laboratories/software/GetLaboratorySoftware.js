@@ -3,7 +3,7 @@
  * @apiVersion 1.0.0
  * @apiName GetLaboratorySoftware.
  * @apiGroup Laboratory/Software
- * @apiPermission operator
+ * @apiPermission any
  * @apiUse BaseError
  *
  * @apiDescription Get the laboratory software.

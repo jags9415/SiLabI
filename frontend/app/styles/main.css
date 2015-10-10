@@ -18,6 +18,10 @@ body {
   color: white;
 }
 
+.form-control[readonly] {
+    background-color: white;
+}
+
 hr {
   display: block;
   height: 1px;

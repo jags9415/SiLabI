@@ -6,18 +6,20 @@
     <li><a href="#Operador/Grupos">Grupos</a></li>
     <li class="active">Agregar</li>
   </ol>
-  <form>
+  <form name="createGroupForm">
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
-          <label for="name">* Docente</label>
-          <input class="form-control" type="text" placeholder="Docente" ng-model="GroupCreate.professor_name" typeahead="professor.full_name for professor in GroupCreate.getProfessors($viewValue)" typeahead-editable="false" typeahead-on-select="GroupCreate.setProfessor($item)" ng-blur="GroupCreate.checkProfessor()">
+        <div class="form-group" show-errors>
+          <label for="professor">* Docente</label>
+          <input id="professor" name="professor" class="form-control" type="text" placeholder="Docente" ng-model="GroupCreate.professor_name" typeahead="professor.full_name for professor in GroupCreate.getProfessors($viewValue)" typeahead-editable="false" typeahead-on-select="GroupCreate.setProfessor($item)" ng-blur="GroupCreate.checkProfessor()" required>
+          <p class="help-block" ng-if="createGroupForm.professor.$error.required">Docente requerido.</p>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group" show-errors>
           <label for="course">* Curso</label>
-          <input class="form-control" type="text" placeholder="Curso" ng-model="GroupCreate.course_name" typeahead="course.name for course in GroupCreate.getCourses($viewValue)" typeahead-editable="false" typeahead-on-select="GroupCreate.setCourse($item)" ng-blur="GroupCreate.checkCourse()">
+          <input id="course" name="course" class="form-control" type="text" placeholder="Curso" ng-model="GroupCreate.course_name" typeahead="course.name for course in GroupCreate.getCourses($viewValue)" typeahead-editable="false" typeahead-on-select="GroupCreate.setCourse($item)" ng-blur="GroupCreate.checkCourse()" required>
+          <p class="help-block" ng-if="createGroupForm.course.$error.required">Curso requerido.</p>
         </div>
       </div>
     </div>
@@ -52,9 +54,11 @@
     </div>
     <div class="row">
       <div class="col-md-12 col-xs-12">
-        <div class="form-group">
-        <label for="coursenumber">* Número</label>
-          <input type="text" class="form-control" id="coursenumber" placeholder="Número" ng-model="GroupCreate.group.number">
+        <div class="form-group" show-errors>
+        <label for="number">* Número</label>
+          <input type="number" min="0" class="form-control" id="number" name="number" placeholder="Número" ng-model="GroupCreate.group.number" required>
+          <p class="help-block" ng-if="createGroupForm.number.$error.required">Número de grupo requerido.</p>
+          <p class="help-block" ng-if="createGroupForm.number.$error.number  || createGroupForm.number.$error.min">Ingrese un número positivo.</p>
         </div>
       </div>
     </div>
@@ -66,9 +70,9 @@
         </div>
       </div>
       <div class="col-md-2 col-xs-2">
-        <button type="submit" class="btn btn-default btn-block" ng-click="GroupCreate.searchStudent()">
-          <i class="glyphicon glyphicon-search"></i>
-          <span class="hidden-xs">Buscar</span>
+        <button type="submit" class="btn btn-success btn-block" ng-click="GroupCreate.searchStudent()">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span class="hidden-xs">Agregar</span>
         </button>
       </div>
     </div>
@@ -76,18 +80,21 @@
     <table class="table table-striped" ng-show="GroupCreate.students.length > 0">
       <thead>
         <tr>
-          <th>Nombre</th>
           <th>Carné</th>
+          <th>Nombre</th>
           <th style="text-align: center">Acción</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="student in GroupCreate.students">
-          <td>{{ student.full_name }}</td>
           <td>{{ student.username }}</td>
+          <td>{{ student.full_name }}</td>
           <td style="text-align: center">
+            <a class='btn btn-info btn-sm' href="{{'#Operador/Estudiantes/' + student.username}}">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
             <a href="" class="btn btn-danger btn-sm" ng-click="GroupCreate.deleteStudent(student.id)">
-              <span class="glyphicon glyphicon-trash"></span>
+              <span class="glyphicon glyphicon-remove"></span>
             </a>
           </td>
         </tr>

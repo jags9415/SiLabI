@@ -17,7 +17,7 @@ namespace SiLabI
         public PaginatedResponse<Group> GetGroups(string token, string query, string page, string limit, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Any);
             QueryString request = new QueryString(ValidFields.Group);
 
             request.AccessToken = token;
@@ -33,7 +33,7 @@ namespace SiLabI
         public Group GetGroup(string id, string token, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Any);
 
             int num;
             if (!Int32.TryParse(id, out num))
