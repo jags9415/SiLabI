@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('GroupCreateController', GroupCreateController);
 
-    GroupCreateController.$inject = ['GroupService', 'CourseService', 'StudentService', 'ProfessorService', 'PeriodService', 'MessageService'];
+    GroupCreateController.$inject = ['$scope', 'GroupService', 'CourseService', 'StudentService', 'ProfessorService', 'PeriodService', 'MessageService'];
 
-    function GroupCreateController(GroupService, CourseService, StudentService, ProfessorService, PeriodService, MessageService) {
+    function GroupCreateController($scope, GroupService, CourseService, StudentService, ProfessorService, PeriodService, MessageService) {
       var vm = this;
 
       vm.group = {};
@@ -20,6 +20,10 @@
       vm.limit = 15;
       vm.currentYear = new Date().getFullYear();
       vm.year = vm.currentYear;
+
+      vm.studentRequest = {
+        fields: "id,username,full_name"
+      }
 
       vm.sliceStudents = sliceStudents;
       vm.getProfessors = getProfessors;
@@ -95,8 +99,8 @@
       function searchStudent() {
         vm.student = {};
         if (vm.student_username) {
-          StudentService.GetOne(vm.student_username)
-          .then(setStudent)
+          StudentService.GetOne(vm.student_username, vm.studentRequest)
+          .then(addStudent)
           .catch(handleError);
         }
       }
@@ -107,7 +111,7 @@
           vm.group.period = vm.period;
           vm.group.course = vm.course.code;
           vm.group.professor = vm.professor.username;
-          vm.group.students = getStudents();
+          vm.group.students = getStudentsUsername();
 
           GroupService.Create(vm.group)
           .then(handleCreateSuccess)
@@ -128,7 +132,7 @@
         vm.professor = user;
       }
 
-      function setStudent(user) {
+      function addStudent(user) {
         if (!contains(user)) {
           vm.students.unshift(user);
           vm.student_username = "";
@@ -149,27 +153,25 @@
         }
       }
 
-      function contains(element) {
-        for (var i = 0; i < vm.students.length; i++) {
-          if (vm.students[i].id == element.id) {
-            return true;
-          }
-        }
-        return false;
+      function contains(student) {
+        return _.any(vm.students, _.matches(student));
       }
 
-      function getStudents () {
-        var stds = [];
-        for (var i = 0; i < vm.students.length; i++) {
-          stds.push(vm.students[i].username);
-        }
-        return stds;
+      function getStudentsUsername() {
+        return _.map(vm.students, 'username');
       }
 
       function handleCreateSuccess() {
-        MessageService.success("Grupo creado con éxito.");
-        delete vm.professor;
-        delete vm.students;
+        MessageService.success("Grupo creado.");
+        $scope.$broadcast('show-errors-reset');
+        vm.group = {};
+        vm.professor = {};
+        vm.students = [];
+        vm.course = {};
+        delete vm.student_username;
+        delete vm.professor_name;
+        delete vm.course_name;
+        sliceStudents();
       }
 
       function handleError(data) {

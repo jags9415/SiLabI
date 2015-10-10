@@ -22,37 +22,36 @@
         }
 
 
-        function GetOne(GroupID) {
+        function GetOne(id, request) {
+          if (!request) request = {};
+          request.access_token = $localStorage['access_token'];
+          return RequestService.get('/groups/' + id, request);
+        }
+
+        function Update(id, group) {
+          var request = {};
+          request.group = group;
+          request.access_token = $localStorage['access_token'];
+          return RequestService.put('/groups/' + id, request);
+        }
+
+        function Create(group) {
+          var request = {};
+          request.group = group;
+          request.access_token = $localStorage['access_token'];
+          return RequestService.post('/groups', request);
+        }
+
+        function Delete(id) {
           var request = {};
           request.access_token = $localStorage['access_token'];
-          return RequestService.get('/groups/' + GroupID, request);
+          return RequestService.delete('/groups/' + id, request);
         }
 
-        function Update(GroupID, GroupInfo) {
-          var requestBody = {};
-          requestBody.group = GroupInfo;
-          requestBody.access_token = $localStorage['access_token'];
-          return RequestService.put('/groups/' + GroupID, requestBody);
-        }
-
-        function Create(Group) {
-          var requestBody = {};
-          requestBody.group = Group;
-          requestBody.access_token = $localStorage['access_token'];
-          return RequestService.post('/groups', requestBody);
-        }
-
-        function Delete(GroupID) {
-          var requestBody = {};
-          requestBody.access_token = $localStorage['access_token'];
-          return RequestService.delete('/groups/' + GroupID, requestBody);
-        }
-
-        function GetStudents(GroupID)
-        {
-          var requestBody = {};
-          requestBody.access_token = $localStorage['access_token'];
-          return RequestService.get('/groups/' + GroupID +'/students', requestBody);
+        function GetStudents(id, request) {
+          if (!request) request = {};
+          request.access_token = $localStorage['access_token'];
+          return RequestService.get('/groups/' + id +'/students', request);
         }
     }
 })();

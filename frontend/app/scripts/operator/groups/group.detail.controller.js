@@ -5,15 +5,16 @@
       .module('silabi')
       .controller('GroupDetailController', GroupDetailController);
 
-    GroupDetailController.$inject = ['$routeParams', '$location', 'GroupService', 'StudentService', 'MessageService'];
+    GroupDetailController.$inject = ['$scope', '$routeParams', '$location', 'GroupService', 'StudentService', 'MessageService'];
 
-    function GroupDetailController($routeParams, $location, GroupService, StudentService, MessageService) {
+    function GroupDetailController($scope, $routeParams, $location, GroupService, StudentService, MessageService) {
       var vm = this;
       vm.group = {};
       vm.students = [];
       vm.slicedStudents = [];
       vm.student = {};
       vm.id = $routeParams.id;
+      vm.isStudentsModified = false;
       vm.page = 1;
       vm.limit = 15;
 
@@ -23,26 +24,28 @@
       vm.searchStudent = searchStudent;
       vm.sliceStudents = sliceStudents;
 
+      vm.studentRequest = {
+        fields: "id,username,full_name"
+      }
+
       activate();
 
       function activate() {
         GroupService.GetOne(vm.id)
         .then(setGroup)
+        .then(setStudents)
         .catch(handleError);
       }
 
       function updateGroup() {
-        if (vm.id) {
-          var stds = getStudentsId();
-
-          if (stds.length > 0) {
-            vm.group.students = stds;
-          }
-
+        if (vm.group) {
           var request = {
-              "students": vm.group.students,
               "number": vm.group.number
           };
+
+          if (vm.isStudentsModified) {
+            request.students = getStudentsUsername();
+          }
 
           GroupService.Update(vm.group.id, request)
           .then(showUpdate)
@@ -55,7 +58,7 @@
           MessageService.confirm("¿Desea realmente eliminar este grupo?")
           .then(function () {
             GroupService.Delete(vm.group.id)
-            .then(redirectTogroups)
+            .then(redirectToGroups)
             .catch(handleError);
             }
           );
@@ -64,24 +67,7 @@
 
       function setGroup(group) {
         vm.group = group;
-        getStudents();
-      }
-
-      function showUpdate (group) {
-        setGroup(group);
-        MessageService.success("Grupo actualizado con éxito.");
-      }
-
-      function setStudent(user) {
-        if (!contains(user)) {
-          vm.students.push(user);
-        }
-      }
-
-      function getStudents() {
-        GroupService.GetStudents(vm.group.id)
-        .then(setStudents)
-        .catch(handleError);
+        return GroupService.GetStudents(vm.group.id, vm.studentRequest);
       }
 
       function setStudents(students) {
@@ -89,43 +75,52 @@
         sliceStudents();
       }
 
-      function deleteStudent (id) {
+      function showUpdate(group) {
+        setGroup(group);
+        $scope.$broadcast('show-errors-reset');
+        vm.isStudentsModified = false;
+        MessageService.success("Grupo actualizado.");
+      }
+
+      function searchStudent() {
+        if (vm.student_username) {
+          StudentService.GetOne(vm.student_username, vm.studentRequest)
+          .then(addStudent)
+          .catch(handleError);
+        }
+      }
+
+      function addStudent(user) {
+        if (!contains(user)) {
+          vm.students.unshift(user);
+          sliceStudents();
+          vm.isStudentsModified = true;
+        }
+        else {
+          MessageService.info("El estudiante seleccionado ya se encuentra en la lista.");
+        }
+      }
+
+      function deleteStudent(id) {
         for (var i = 0; i < vm.students.length; i++) {
-          if(vm.students[i].id == id) {
+          if (vm.students[i].id == id) {
             vm.students.splice(i, 1);
             sliceStudents();
+            vm.isStudentsModified = true;
             break;
           }
         }
       }
 
-      function contains (element) {
-        for (var i = 0; i < vm.students.length; i++) {
-          if (vm.students[i].id == element.id) {
-            return true;
-          }
-        }
-        return false;
+      function contains(student) {
+        return _.any(vm.students, _.matches(student));
       }
 
-      function searchStudent() {
-        vm.student = {};
-        if (vm.student_username) {
-          StudentService.GetOne(vm.student_username)
-          .then(setStudent)
-          .catch(handleError);
-        }
+      function getStudentsUsername() {
+        return _.map(vm.students, 'username');
       }
 
-      function getStudentsId () {
-        var stds = [];
-        for (var i = 0; i < vm.students.length; i++) {
-          stds.push(vm.students[i].username);
-        }
-        return stds;
-      }
-
-      function redirectTogroups(result) {
+      function redirectToGroups(result) {
         $location.path('/Operador/Grupos');
       }
 
