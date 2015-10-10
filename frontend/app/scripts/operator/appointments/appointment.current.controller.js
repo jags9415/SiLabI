@@ -27,9 +27,7 @@
 
     vm.request = {
       fields : "id,attendance,student.username,student.full_name,software.name",
-      sort: {
-        field: "student.name"
-      },
+      sort: [{field: "student.name"}],
       query: {}
     };
 
@@ -67,8 +65,6 @@
     }
 
     function loadAppointments() {
-      console.log(getSelectedDateTime().toISOString());
-
       vm.request.query["state"] = {
         operation: 'ne',
         value: 'Cancelada'
