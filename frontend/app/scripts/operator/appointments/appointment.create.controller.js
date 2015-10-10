@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('AppointmentCreateController', AppointmentCreateController);
 
-  AppointmentCreateController.$inject = ['$scope', 'AppointmentService', 'MessageService', 'StudentService', 'SoftwareService', 'LabService', '$location'];
+  AppointmentCreateController.$inject = ['$scope', 'AppointmentService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', 'LabService', '$location'];
 
-function AppointmentCreateController($scope, AppointmentService, MessageService, StudentService, SoftwareService, LabService, $location) {
+function AppointmentCreateController($scope, AppointmentService, AppointmentDateService, MessageService, StudentService, SoftwareService, LabService, $location) {
   var vm = this;
   vm.student = {};
   vm.software_list = [];
@@ -15,29 +15,25 @@ function AppointmentCreateController($scope, AppointmentService, MessageService,
   vm.laboratories = [];
   vm.available_dates = [];
   vm.available_hours = [];
-  vm.request = {
-      fields : "date,laboratory"
-    };
-
-  vm.groups_request = {
-  fields : "id,course"
-};
-
+  vm.request = {fields : "date,laboratory"};
+  vm.groups_request = {fields : "id,course"};
+  vm.software_request = {};
   vm.searchStudent = searchStudent;
   vm.fieldsReady = fieldsReady;
   vm.create = createAppointment;
   vm.setAvailableHours = setAvailableHours;
   vm.changeLaboratory = changeLaboratory;
+  vm.searchSoftware = searchSoftware;
+  vm.setSoftware = setSoftware;
 
   activate();
 
   function activate() {
-    getSoftware();
     getLaboratories();
   }
 
   function fieldsReady () {
-    return vm.student_username && vm.laboratory  && vm.software && vm.selected_date && vm.selected_date && vm.group;
+    return vm.student_username && vm.selected_laboratory  && vm.selected_software && vm.selected_date && vm.selected_date && vm.group;
   }
 
   function searchStudent()
@@ -50,12 +46,6 @@ function AppointmentCreateController($scope, AppointmentService, MessageService,
     }
   }
 
-function getSoftware () {
-
-  SoftwareService.GetAll()
-  .then(setSoftware)
-  .catch(handleError);
-}
 
 function getLaboratories () {
 
@@ -80,8 +70,20 @@ function setLaboratories (data) {
   vm.laboratories = data.results;
 }
 
-function setSoftware(data) {
-vm.software_list = data.results;
+function searchSoftware (input) {
+  vm.software_request.query = {};
+  vm.software_request.query.code = {
+    operation: "like",
+    value: '*' + input + '*'
+  }
+  return SoftwareService.GetAll(vm.software_request)
+    .then(function(data) {
+      return data.results;
+    });
+}
+
+function setSoftware (data) {
+  vm.selected_software = data;
 }
 
 function setGroups (groups) {
@@ -99,8 +101,7 @@ function getAvailableDates()
 }
 
 function setAvailableDates (dates) {
-  vm.available_dates = AppointmentService.ParseAvailableDates(dates);
-  console.log(vm.available_dates);
+  vm.available_dates = AppointmentDateService.ParseAvailableDates(dates);
 }
 
 
@@ -115,7 +116,6 @@ function changeLaboratory () {
   if(vm.selected_hour)
   {
     vm.selected_laboratory = vm.selected_hour.laboratory;
-    console.log(vm.selected_hour);
   }
 }
 
@@ -123,9 +123,9 @@ function createAppointment () {
   var app =
   {
     "student": vm.student_username,
-    "laboratory": vm.laboratory.name,
+    "laboratory": vm.selected_laboratory.name,
     "software": vm.selected_software.code,
-    "date": vm.selected_date.day+"T"+vm.selected_hour,
+    "date": vm.selected_date.day+"T"+vm.selected_hour.hour+":00.000",
     "group": vm.group.id
   }
   AppointmentService.Create(app)
@@ -135,11 +135,12 @@ function createAppointment () {
 
 function handleSuccess (data) {
   MessageService.success("Cita creada con éxito.");
-        delete vm.student;
-        delete vm.student_username;
-        delete vm.courses;
-        delete vm.available_dates;
-        delete vm.available_hours;
+  delete vm.student;
+  delete vm.student_username;
+  delete vm.groups;
+  delete vm.available_dates;
+  delete vm.available_hours;
+  delete vm.software_list;
 }
 
 function handleError(data) {

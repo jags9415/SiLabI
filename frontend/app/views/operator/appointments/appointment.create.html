@@ -87,14 +87,7 @@
           <label for="software">* Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list-alt"></i></span>
-            <ui-select id="software" ng-model="AppointmentCreate.selected_software">
-              <ui-select-match placeholder="{{$select.selected.code}}">
-                {{$select.selected.code}}
-              </ui-select-match>
-              <ui-select-choices repeat="sf in AppointmentCreate.software_list | filter: $select.search">
-                <span ng-bind-html="sf.code | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
+            <input class="form-control" placeholder="Buscar Software" name="searchInput" type="text" typeahead="software.code for software in AppointmentCreate.searchSoftware($viewValue)" typeahead-on-select="AppointmentCreate.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentCreate.selected_software">
           </div>
         </div>
       </div>
