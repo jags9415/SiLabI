@@ -190,6 +190,11 @@
           controllerAs: 'AppointmentList',
           reloadOnSearch: false
         })
+        .when('/Estudiante/:student_id/Citas/Agregar', {
+          templateUrl: 'views/student/appointments/appointment.create.html',
+          controller: 'StudentAppCreateController',
+          controllerAs: 'AppointmentCreate'
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })

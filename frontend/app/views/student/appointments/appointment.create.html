@@ -1,0 +1,104 @@
+<div>
+  <h2>Agregar Cita</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li><a ng-href="#Estudiante/{{ AppointmentCreate.student_id }}/Citas">Citas</a></li>
+    <li class="active">Agregar</li>
+  </ol>
+  <form name="createAppForm">
+  <div class="row">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">* Fechas Disponiles</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
+            <ui-select id="date" name="date" ng-model="AppointmentCreate.selected_date" on-select="AppointmentCreate.setAvailableHours()" required>
+              <ui-select-match placeholder="{{$select.selected.day}}">
+                {{$select.selected.day}}
+              </ui-select-match>
+              <ui-select-choices repeat="date in AppointmentCreate.available_dates | filter: $select.search">
+                <span ng-bind-html="date.day | date : 'fullDate' | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+            <p class="help-block" ng-show="createAppForm.date.$error.required">Fecha requerida.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">* Horas Disponibles</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
+            <ui-select id="hour" name="hour" ng-model="AppointmentCreate.selected_hour" on-select="AppointmentCreate.changeLaboratory()" required>
+              <ui-select-match placeholder="{{$select.selected.hour}}">
+                {{$select.selected.hour}}
+              </ui-select-match>
+              <ui-select-choices repeat="hour in AppointmentCreate.available_hours | filter: $select.search">
+                <span ng-bind-html="hour.full_date | date : 'mediumTime' | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+            <p class="help-block" ng-show="createAppForm.hour.$error.required">Hora requerida.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="course">* Grupo</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
+            <ui-select id="group" name="group" ng-model="AppointmentCreate.group" required>
+              <ui-select-match placeholder="{{$select.selected.course.name}}">
+                {{$select.selected.course.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="group in AppointmentCreate.groups | filter: $select.search">
+                <span ng-bind-html="group.course.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+            <p class="help-block" ng-show="createAppForm.group.$error.required">Grupo requerido.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="software">* Software</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list-alt"></i></span>
+            <ui-select id="software" name="software" ng-model="AppointmentCreate.selected_software" required>
+              <ui-select-match placeholder="{{$select.selected.code}}">
+                {{$select.selected.code}}
+              </ui-select-match>
+              <ui-select-choices repeat="sf in AppointmentCreate.software_list | filter: $select.search">
+                <span ng-bind-html="sf.code | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+            <p class="help-block" ng-show="createAppForm.software.$error.required">Software requerido.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="lab">* Laboratorio</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-home"></i></span>
+            <input type="text" class="form-control" id="lab" name="lab" ng-model="AppointmentCreate.selected_laboratory.name" ng-trim readonly required>
+            <p class="help-block" ng-show="createAppForm.date.$error.required">Laboratorio requerido.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+        <button type="submit" class="btn btn-lg btn-success" ng-click="AppointmentCreate.create()" ng-disabled="createAppForm.$invalid">
+          <i class="glyphicon glyphicon-plus"></i> Agregar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
