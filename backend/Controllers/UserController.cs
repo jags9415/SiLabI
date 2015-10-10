@@ -68,17 +68,34 @@ namespace SiLabI.Controllers
 
         public User Create(BaseRequest request, Dictionary<string, object> payload)
         {
-            throw new InvalidOperationException("An user cannot be created.");
+            throw new InvalidOperationException("An user cannot be created. Create a student or professor instead.");
         }
 
         public User Update(int id, BaseRequest request, Dictionary<string, object> payload)
         {
-            throw new InvalidOperationException("An user cannot be updated.");
+            UserRequest userRequest = (request as UserRequest);
+            if (userRequest == null || !userRequest.IsValid())
+            {
+                throw new InvalidRequestBodyException();
+            }
+
+            if (!userRequest.User.IsValidForUpdate())
+            {
+                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de usuario inválidos.");
+            }
+
+            DataRow row = _UserDA.Update(payload["id"], id, userRequest.User);
+            return User.Parse(row);
         }
 
         public void Delete(int id, BaseRequest request, Dictionary<string, object> payload)
         {
-            throw new InvalidOperationException("An user cannot be deleted.");
+            if (request == null || !request.IsValid())
+            {
+                throw new InvalidRequestBodyException();
+            }
+
+            _UserDA.Delete(payload["id"], id);
         }
     }
 }

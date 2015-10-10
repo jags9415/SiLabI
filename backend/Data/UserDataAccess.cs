@@ -126,12 +126,33 @@ namespace SiLabI.Data
 
         public DataRow Update(object requesterId, int id, object obj)
         {
-            throw new InvalidOperationException("Cannot perform UPDATE operation on Users table.");
+            User user = (obj as User);
+            SqlParameter[] parameters = new SqlParameter[11];
+
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[1] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
+            parameters[2] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, user.Name);
+            parameters[3] = SqlUtilities.CreateParameter("@last_name_1", SqlDbType.VarChar, user.LastName1);
+            parameters[4] = SqlUtilities.CreateParameter("@last_name_2", SqlDbType.VarChar, user.LastName2);
+            parameters[5] = SqlUtilities.CreateParameter("@gender", SqlDbType.VarChar, user.Gender);
+            parameters[6] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, user.Username);
+            parameters[7] = SqlUtilities.CreateParameter("@password", SqlDbType.VarChar, user.Password);
+            parameters[8] = SqlUtilities.CreateParameter("@email", SqlDbType.VarChar, user.Email);
+            parameters[9] = SqlUtilities.CreateParameter("@phone", SqlDbType.VarChar, user.Phone);
+            parameters[10] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, user.State);
+
+            DataTable table = _Connection.executeQuery("sp_UpdateUser", parameters);
+            return table.Rows[0];
         }
 
         public void Delete(object requesterId, int id)
         {
-            throw new InvalidOperationException("Cannot perform DELETE operation on Users table.");
+            SqlParameter[] parameters = new SqlParameter[2];
+
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[1] = SqlUtilities.CreateParameter("@user_id", SqlDbType.Int, id);
+
+            _Connection.executeNonQuery("sp_DeleteUser", parameters);
         }
     }
 }

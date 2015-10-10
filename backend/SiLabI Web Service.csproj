@@ -105,6 +105,7 @@
     <Compile Include="Endpoints\LaboratoryEndpoints.cs" />
     <Compile Include="Endpoints\OperatorEndpoints.cs" />
     <Compile Include="Endpoints\ProfessorEndpoints.cs" />
+    <Compile Include="Endpoints\ProfileEndpoints.cs" />
     <Compile Include="Endpoints\ReservationEndpoints.cs" />
     <Compile Include="Endpoints\SoftwareEndpoints.cs" />
     <Compile Include="Exceptions\InvalidParameterException.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Model\Request\OperatorRequest.cs" />
     <Compile Include="Model\Period.cs" />
     <Compile Include="Model\Request\ProfessorRequest.cs" />
+    <Compile Include="Model\Request\UserRequest.cs" />
     <Compile Include="Model\Reservation.cs" />
     <Compile Include="Model\Request\ReservationRequest.cs" />
     <Compile Include="Model\Software.cs" />

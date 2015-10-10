@@ -32,6 +32,26 @@ namespace SiLabI
         AuthenticationResponse Authenticate(AuthenticationRequest request);
 
         /*
+         * PROFILE ENDPOINTS.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/me/?access_token={token}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve an user profile.")]
+        User GetProfile(string token, string fields);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "/me/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json),
+        Description("Update an user profile.")]
+        User UpdateProfile(UserRequest request);
+
+        /*
          * USER ENDPOINTS.
          */
 
