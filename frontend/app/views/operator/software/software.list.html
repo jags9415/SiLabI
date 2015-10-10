@@ -67,16 +67,16 @@
     <table class="table table-striped" ng-show="true">
       <thead>
         <tr>
-          <th>Nombre</th>
           <th>Código</th>
+          <th>Nombre</th>
           <th>Estado</th>
           <th style="text-align: center">Acción</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="sf in SoftwareList.software_list">
-          <td>{{ sf.name }}</td>
           <td>{{ sf.code }}</td>
+          <td>{{ sf.name }}</td>
           <td>
             <span class="label"
               ng-class="{ 'label-success': sf.state === 'Activo',

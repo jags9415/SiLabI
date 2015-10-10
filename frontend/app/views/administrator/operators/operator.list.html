@@ -85,8 +85,8 @@
     <table class="table table-striped" ng-show="OperatorList.isLoaded() && !OperatorList.isEmpty()">
       <thead>
         <tr>
-          <th>Nombre</th>
           <th>Usuario</th>
+          <th>Nombre</th>
           <th>Correo</th>
           <th>Teléfono</th>
           <th>Periodo</th>
@@ -96,8 +96,8 @@
       </thead>
       <tbody>
         <tr ng-repeat="operator in OperatorList.operators">
-          <td>{{ operator.full_name }}</td>
           <td>{{ operator.username }}</td>
+          <td>{{ operator.full_name }}</td>
           <td>{{ operator.email }}</td>
           <td>{{ operator.phone }}</td>
           <td>{{ operator.period.value + ' ' + operator.period.type + ' ' + operator.period.year }}</td>

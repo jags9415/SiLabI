@@ -12,7 +12,7 @@
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
-            <input type="text" class="form-control" id="username" placeholder="Usuario" ng-model="Operator.username">
+            <input type="text" class="form-control" id="username" placeholder="Carné" ng-model="Operator.username">
           </div>
         </div>
       </div>
@@ -29,19 +29,13 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="name">Nombre</label>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
-            <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="Operator.user.full_name" readonly>
-          </div>
+          <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="Operator.user.full_name" readonly>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="email">Correo</label>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
-            <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="Operator.user.email" readonly>
-          </div>
+          <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="Operator.user.email" readonly>
         </div>
       </div>
     </div>
@@ -49,19 +43,13 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="gender">Género</label>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
-            <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="Operator.user.gender" readonly>
-          </div>
+          <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="Operator.user.gender" readonly>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="phone">Teléfono</label>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-earphone"></i></span>
-            <input type="text" class="form-control" id="username" ui-mask="(+506) 9999-99-99" ng-model="Operator.user.phone" readonly>
-          </div>
+          <input type="text" class="form-control" id="username" ui-mask="(+506) 9999-99-99" ng-model="Operator.user.phone" readonly>
         </div>
       </div>
     </div>

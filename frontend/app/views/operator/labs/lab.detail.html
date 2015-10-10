@@ -17,9 +17,10 @@
       </div>
       <div class="col-md-6">
         <div class="form-group" show-errors>
-          <label for="name" class="control-label">Asientos</label>
-          <input type="number" class="form-control" id="name" min="0" name="name" placeholder="Asientos" ng-model="LabDetail.lab.seats" ng-trim required>
-          <p class="help-block" ng-if="updateLabForm.name.$error.required">Cantidad de asientos requerida.</p>
+          <label for="seats" class="control-label">Asientos</label>
+          <input type="number" class="form-control" id="seats" min="0" name="seats" placeholder="Asientos" ng-model="LabDetail.lab.seats" ng-trim required>
+          <p class="help-block" ng-if="updateLabForm.seats.$error.required">Cantidad de asientos requerida.</p>
+          <p class="help-block" ng-if="updateLabForm.seats.$error.number  || updateLabForm.seats.$error.min">Ingrese un número positivo.</p>
         </div>
       </div>
     </div>

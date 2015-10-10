@@ -31,24 +31,19 @@
         .catch(handleError);
       }
 
-      function fieldsReady ()
-      {
-        return vm.group.number != "";
-      }
-
       function updateGroup() {
         if (vm.id) {
           var stds = getStudentsId();
-          if(stds.length > 0)
-          {
+
+          if (stds.length > 0) {
             vm.group.students = stds;
           }
 
-          var request =
-          {
+          var request = {
               "students": vm.group.students,
               "number": vm.group.number
           };
+
           GroupService.Update(vm.group.id, request)
           .then(showUpdate)
           .catch(handleError);
@@ -78,8 +73,7 @@
       }
 
       function setStudent(user) {
-        if(!contains(user))
-        {
+        if (!contains(user)) {
           vm.students.push(user);
         }
       }
@@ -96,8 +90,7 @@
       }
 
       function deleteStudent (id) {
-        var i;
-        for (i = 0; i < vm.students.length; i++) {
+        for (var i = 0; i < vm.students.length; i++) {
           if(vm.students[i].id == id) {
             vm.students.splice(i, 1);
             sliceStudents();
@@ -107,10 +100,8 @@
       }
 
       function contains (element) {
-        for (var i = 0; i < vm.students.length; i++)
-        {
-          if(vm.students[i].id == element.id)
-          {
+        for (var i = 0; i < vm.students.length; i++) {
+          if (vm.students[i].id == element.id) {
             return true;
           }
         }
@@ -128,8 +119,7 @@
 
       function getStudentsId () {
         var stds = [];
-        for (var i = 0; i < vm.students.length; i++)
-        {
+        for (var i = 0; i < vm.students.length; i++) {
           stds.push(vm.students[i].username);
         }
         return stds;

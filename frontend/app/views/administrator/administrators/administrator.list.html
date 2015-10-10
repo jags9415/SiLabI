@@ -72,8 +72,8 @@
     <table class="table table-striped" ng-show="AdminList.isLoaded() && !AdminList.isEmpty()">
       <thead>
         <tr>
-          <th>Nombre</th>
           <th>Usuario</th>
+          <th>Nombre</th>
           <th>Correo</th>
           <th>Teléfono</th>
           <th>Estado</th>
@@ -82,8 +82,8 @@
       </thead>
       <tbody>
         <tr ng-repeat="admin in AdminList.administrators">
-          <td>{{ admin.full_name }}</td>
           <td>{{ admin.username }}</td>
+          <td>{{ admin.full_name }}</td>
           <td>{{ admin.email }}</td>
           <td>{{ admin.phone }}</td>
           <td>

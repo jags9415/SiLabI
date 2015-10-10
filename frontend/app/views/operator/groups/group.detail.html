@@ -6,12 +6,12 @@
     <li><a href="#Operador/Grupos">Grupos</a></li>
     <li class="active">Detalle</li>
   </ol>
-  <form>
+  <form name="updateGroupForm">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
         <label for="name">Curso</label>
-          <input type="text" class="form-control" id="courseName" ng-value="GroupDetail.group.course.code + ' ' + GroupDetail.group.course.name"  readonly>
+          <input type="text" class="form-control" id="courseName" ng-value="GroupDetail.group.course.code + ' ' + GroupDetail.group.course.name" readonly>
         </div>
       </div>
       <div class="col-md-6">
@@ -23,9 +23,11 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group">
-        <label for="coursenumber">* Número</label>
-          <input type="text" class="form-control" id="coursenumber" placeholder="Número" ng-model="GroupDetail.group.number">
+        <div class="form-group" show-errors>
+        <label for="number">* Número</label>
+          <input type="number" class="form-control" min="0" id="number" name="number" placeholder="Número" ng-model="GroupDetail.group.number" required>
+          <p class="help-block" ng-if="updateGroupForm.number.$error.required">Cantidad de asientos requerida.</p>
+          <p class="help-block" ng-if="updateGroupForm.number.$error.number  || updateGroupForm.number.$error.min">Ingrese un número positivo.</p>
         </div>
       </div>
       <div class="col-md-6">
@@ -99,7 +101,7 @@
   </div>
   <div class="row" style="margin-top: 3%;">
       <div class="col-md-6 text-center">
-        <button type="submit" class="btn btn-lg btn-info" ng-click="GroupDetail.update()" ng-disabled="fieldsReady()">
+        <button type="submit" class="btn btn-lg btn-info" ng-click="GroupDetail.update()" ng-disabled="updateGroupForm.$invalid">
           <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
         </button>
       </div>
