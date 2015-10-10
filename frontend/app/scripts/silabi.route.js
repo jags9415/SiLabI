@@ -17,10 +17,10 @@
           templateUrl: 'views/public/about.html'
         })
         .when('/Administrador', {
-          templateUrl: 'views/administrator/home.html'
+          redirectTo: '/Operador/Asistencia'
         })
         .when('/Operador', {
-          templateUrl: 'views/operator/home.html'
+          redirectTo: '/Operador/Asistencia'
         })
         .when('/Estudiante', {
           templateUrl: 'views/student/home.html'
@@ -196,21 +196,30 @@
         .otherwise('/404');
     }
 
-    handleHomeRedirect.$inject = ['$location', 'AuthenticationService'];
+    function redirectToLogin($location, $localStorage) {
+      delete $localStorage['access_token'];
+      delete $localStorage['username'];
+      delete $localStorage['user_id'];
+      delete $localStorage['user_name'];
+      delete $localStorage['user_type'];
+      $location.path('/Login');
+    }
 
-    function handleHomeRedirect($location, AuthenticationService) {
+    handleHomeRedirect.$inject = ['$location', '$localStorage', 'AuthenticationService'];
+
+    function handleHomeRedirect($location, $localStorage, AuthenticationService) {
         if (AuthenticationService.isAuthenticated()) {
           var data = AuthenticationService.getUserData();
           $location.path('/' + data.type);
         }
         else {
-          $location.path('/Login');
+          redirectToLogin($location, $localStorage);
         }
       }
 
-    routeChangeListener.$inject = ['$rootScope', '$location', 'AuthenticationService'];
+    routeChangeListener.$inject = ['$rootScope', '$location', '$localStorage', 'AuthenticationService'];
 
-    function routeChangeListener($rootScope, $location, AuthenticationService) {
+    function routeChangeListener($rootScope, $location, $localStorage, AuthenticationService) {
       $rootScope.$on("$routeChangeStart", function (event, next, current) {
         var url = next.templateUrl;
         if (!url) return;
@@ -230,7 +239,7 @@
         }
         // User is not authenticated. Only have access to public views.
         else if (!url.startsWith("views/public")) {
-          $location.path('/Login');
+          redirectToLogin($location, $localStorage);
         }
       });
     }
