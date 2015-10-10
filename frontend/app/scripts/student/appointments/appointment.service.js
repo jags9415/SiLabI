@@ -9,6 +9,8 @@
 
   function AppointmentService(RequestService, $localStorage) {
     this.GetAll = GetAll;
+    this.GetOne = GetOne;
+    this.Update = Update;
     this.Create = Create;
     this.Delete = Delete;
 
@@ -16,6 +18,19 @@
       if (!request) request = {};
       request.access_token = $localStorage['access_token'];
       return RequestService.get('students/' + StudentID + '/appointments', request);
+    }
+
+    function GetOne(StudentID, AppointmentID) {
+      var request = {};
+      request.access_token = $localStorage['access_token'];
+      return RequestService.get('students/' + StudentID + '/appointments/' + AppointmentID, request);
+    }
+
+    function Update(StudentID, AppointmentID, NewAppointmentInfo) {
+      var requestBody = {};
+      requestBody.appointment = NewAppointmentInfo;
+      requestBody.access_token = $localStorage['access_token'];
+      return RequestService.put('students/' + StudentID + '/appointments/' + AppointmentID, requestBody);
     }
 
     function Create(Appointment, StudentID) {

@@ -61,7 +61,7 @@
     }
 
     function openAppointment(id) {
-      $location.url('/Estudiante/' + vm.student_id + '/Cita/' + id);
+      $location.url('/Estudiante/' + vm.student_id + '/Citas/' + id);
     }
 
     function searchAppointment() {

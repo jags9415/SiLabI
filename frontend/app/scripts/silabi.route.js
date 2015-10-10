@@ -200,6 +200,11 @@
           controller: 'StudentAppCreateController',
           controllerAs: 'AppointmentCreate'
         })
+        .when('/Estudiante/:student_id/Citas/:app_id', {
+          templateUrl: 'views/student/appointments/appointment.detail.html',
+          controller: 'StudentAppDetailController',
+          controllerAs: 'AppointmentDetail'
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })
