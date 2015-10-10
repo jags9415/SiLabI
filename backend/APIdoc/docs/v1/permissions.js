@@ -21,3 +21,9 @@
  * @apiDefine professor Professor access rights needed.
  * Only administrators, operators and professors have access to this content.
  */
+
+ /**
+ * @apiVersion 1.0.0
+ * @apiDefine any No access rights needed.
+ * Any authenticated users have access to this content.
+ */

@@ -3,7 +3,7 @@
  * @apiVersion 1.0.0
  * @apiName GetCourses
  * @apiGroup Courses
- * @apiPermission operator
+ * @apiPermission any
  * @apiUse BaseError
  *
  * @apiDescription Retrieve a list of courses.

@@ -3,7 +3,7 @@
  * @apiVersion 1.0.0
  * @apiName GetSoftware
  * @apiGroup Software
- * @apiPermission operator
+ * @apiPermission any
  * @apiUse BaseError
  *
  * @apiDescription Retrieve a software.

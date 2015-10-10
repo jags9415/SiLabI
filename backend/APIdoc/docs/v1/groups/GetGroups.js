@@ -3,7 +3,7 @@
  * @apiVersion 1.0.0
  * @apiName GetGroups
  * @apiGroup Groups
- * @apiPermission operator
+ * @apiPermission any
  * @apiUse BaseError
  *
  * @apiDescription Retrieve a list of groups.

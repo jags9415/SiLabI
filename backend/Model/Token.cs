@@ -13,7 +13,7 @@ namespace SiLabI.Model
     /// <summary>
     /// The types of users.
     /// </summary>
-    public enum UserType { Student, Professor, Operator, Administrator }
+    public enum UserType { Any, Student, Professor, Operator, Administrator }
 
     /// <summary>
     /// Encode and Decode JWT tokens.
@@ -75,20 +75,24 @@ namespace SiLabI.Model
         public static void CheckPayload(Dictionary<string, object> payload, UserType type)
         {
             bool valid;
+            string user = payload["type"].ToString();
 
-            switch (payload["type"].ToString())
+            switch (type)
             {
-                case "Administrador":
-                    valid = true;
+                case UserType.Any:
+                    valid = (user == "Administrador") || (user == "Operador") || (user == "Docente") || (user == "Estudiante");
                     break;
-                case "Operador":
-                    valid = (type != UserType.Administrator);
+                case UserType.Administrator:
+                    valid = (user == "Administrador");
                     break;
-                case "Docente":
-                    valid = (type == UserType.Professor);
+                case UserType.Operator:
+                    valid = (user == "Administrador") || (user == "Operador");
                     break;
-                case "Estudiante":
-                    valid = (type == UserType.Student);
+                case UserType.Professor:
+                    valid = (user != "Estudiante");
+                    break;
+                case UserType.Student:
+                    valid = (user != "Docente");
                     break;
                 default:
                     valid = false;

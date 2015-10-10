@@ -3,7 +3,7 @@
  * @apiVersion 1.0.0
  * @apiName GetLaboratory
  * @apiGroup Laboratory
- * @apiPermission operator
+ * @apiPermission any
  * @apiUse BaseError
  *
  * @apiDescription Retrieve a laboratory.
