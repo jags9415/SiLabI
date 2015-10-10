@@ -10,7 +10,10 @@
     <div class="row">
       <div class="col-md-10 col-xs-10">
         <div class="form-group">
-          <input type="text" class="form-control" id="username" placeholder="Usuario" ng-model="Operator.username">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
+            <input type="text" class="form-control" id="username" placeholder="Usuario" ng-model="Operator.username">
+          </div>
         </div>
       </div>
       <div class="col-md-2 col-xs-2">
@@ -26,13 +29,19 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="name">Nombre</label>
-          <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="Operator.user.full_name" readonly>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+            <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="Operator.user.full_name" readonly>
+          </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="email">Correo</label>
-          <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="Operator.user.email" readonly>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+            <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="Operator.user.email" readonly>
+          </div>
         </div>
       </div>
     </div>
@@ -40,13 +49,19 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="gender">Género</label>
-          <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="Operator.user.gender" readonly>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+            <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="Operator.user.gender" readonly>
+          </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="phone">Teléfono</label>
-          <input type="text" class="form-control" id="username" ui-mask="(+506) 9999-99-99" ng-model="Operator.user.phone" readonly>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-earphone"></i></span>
+            <input type="text" class="form-control" id="username" ui-mask="(+506) 9999-99-99" ng-model="Operator.user.phone" readonly>
+          </div>
         </div>
       </div>
     </div>
@@ -54,28 +69,34 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="period">Periodo</label>
-          <ui-select id="period" ng-model="Operator.period">
-            <ui-select-match placeholder="{{$select.selected.value + ' ' + $select.selected.type}}">
-              {{$select.selected.value + ' ' + $select.selected.type}}
-            </ui-select-match>
-            <ui-select-choices repeat="period in Operator.periods | filter: $select.search" group-by="'type'">
-              <span ng-bind-html="period.value | highlight: $select.search"></span>
-              <span ng-bind-html="period.type | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
+            <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
+            <ui-select id="period" ng-model="Operator.period">
+              <ui-select-match placeholder="{{$select.selected.value + ' ' + $select.selected.type}}">
+                {{$select.selected.value + ' ' + $select.selected.type}}
+              </ui-select-match>
+              <ui-select-choices repeat="period in Operator.periods | filter: $select.search" group-by="'type'">
+                <span ng-bind-html="period.value | highlight: $select.search"></span>
+                <span ng-bind-html="period.type | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="year">Año</label>
-          <ui-select id="year" ng-model="Operator.year">
-            <ui-select-match placeholder="{{Operator.year}}">
-              {{$select.selected}}
-            </ui-select-match>
-            <ui-select-choices repeat="year in [{{Operator.currentYear-1}}, {{Operator.currentYear}}, {{Operator.currentYear+1}}] | filter: $select.search">
-              <span ng-bind-html="year | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
+            <ui-select id="year" ng-model="Operator.year">
+              <ui-select-match placeholder="{{Operator.year}}">
+                {{$select.selected}}
+              </ui-select-match>
+              <ui-select-choices repeat="year in [{{Operator.currentYear-1}}, {{Operator.currentYear}}, {{Operator.currentYear+1}}] | filter: $select.search">
+                <span ng-bind-html="year | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
         </div>
       </div>
     </div>
