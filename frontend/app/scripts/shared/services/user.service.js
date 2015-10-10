@@ -17,8 +17,10 @@
           return RequestService.get('/users', request);
         }
 
-        function GetOne(Username) {
-          return RequestService.get('/users/' + Username);
+        function GetOne(username) {
+          var request = {};
+          request.access_token = $localStorage['access_token'];
+          return RequestService.get('/users/' + username, request);
         }
     }
 })();
