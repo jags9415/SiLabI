@@ -1,13 +1,13 @@
 <div class="navbar-inverse sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse" collapse="Nav.collapsed" ng-click="Nav.collapsed = true">
         <ul class="nav" id="side-menu">
-            <li>
+            <li ng-class="{'active' : SideBar.isActive('/Operador/Asistencia')}">
               <a href="#Operador/Asistencia"><i class="glyphicon glyphicon-ok-circle"></i> Asistencia</a>
             </li>
-            <li>
+            <li ng-class="{'active' : SideBar.isActive('/Operador/Citas')}">
               <a href="#Operador/Citas"><i class="glyphicon glyphicon-calendar"></i> Citas</a>
             </li>
-            <li>
+            <li ng-class="{'active' : SideBar.isActive('/Operador/Reservaciones')}">
               <a href=""><i class="glyphicon glyphicon-calendar"></i> Reservaciones</a>
             </li>
             <li ng-class="{'active' : SideBar.isActive('/Operador/Estudiantes')}">
