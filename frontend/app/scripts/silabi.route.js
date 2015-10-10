@@ -33,6 +33,11 @@
           controller: 'LoginController',
           controllerAs: 'Auth'
         })
+        .when('/Profile', {
+          templateUrl: 'views/shared/profile/profile.html',
+          controller: 'ProfileController',
+          controllerAs: 'Profile'
+        })
         .when('/Administrador/Administradores', {
           templateUrl: 'views/administrator/administrators/administrator.list.html',
           controller: 'AdminListController',
@@ -252,6 +257,9 @@
     function hasAccesssToView(view, type) {
       if (view.startsWith("views/public")) {
         return true;
+      }
+      else if (view.startsWith("views/shared")) {
+        return type === "Administrador" || type === "Operador" || type === "Docente" || type === "Estudiante";
       }
       else if (view.startsWith("views/administrator")) {
         return type === "Administrador";
