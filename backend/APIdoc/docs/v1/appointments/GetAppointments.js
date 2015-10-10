@@ -38,6 +38,7 @@
  * @apiSuccess {Object[]} 												      	    results 				      The list of appointments.
  * @apiSuccess {Number}														            results.id 		        The appointment identification.
  * @apiSuccess {Date}															      	    results.date 		      The appointment number.
+ * @apiSuccess {Boolean}                                      results.attendance    The student attendance.
  * @apiSuccess {Date}																      	  results.created_at    The creation date.
  * @apiSuccess {Date}									      								  results.updated_at    The last update date.
  * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	results.state			    The appointment state.
@@ -56,6 +57,7 @@
  *           "id": 87,
  *           "state": "Por iniciar",
  *           "date": "2015-08-27T13:00:00.000Z",
+ *           "attendance": false,
  *           "created_at": "2015-08-27T22:14:20.646Z",
  *           "updated_at": "2015-08-27T22:14:20.646Z",
  *           "student": {

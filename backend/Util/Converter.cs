@@ -64,5 +64,20 @@ namespace SiLabI.Util
 
             return Convert.ToString(obj);
         }
+
+        /// <summary>
+        /// Cast an object to a boolean.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>The boolean.</returns>
+        public static bool? ToNullableBoolean(object obj)
+        {
+            if (obj == null || Convert.IsDBNull(obj))
+            {
+                return null;
+            }
+
+            return Convert.ToBoolean(obj);
+        }
     }
 }

@@ -16,6 +16,7 @@
  *
  * @apiSuccess {Number}									                      id 		        The appointment identification.
  * @apiSuccess {Date}									                        date 		      The appointment number.
+ * @apiSuccess {Boolean}                                      attendance    The student attendance.
  * @apiSuccess {Date}									                        created_at    The creation date.
  * @apiSuccess {Date}									                        updated_at    The last update date.
  * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	state			    The appointment state.
@@ -30,6 +31,7 @@
  *       "id": 87,
  *       "state": "Por iniciar",
  *       "date": "2015-08-27T13:00:00.000Z",
+ *       "attendance": false,
  *       "created_at": "2015-08-27T22:14:20.646Z",
  *       "updated_at": "2015-08-27T22:14:20.646Z",
  *       "student": {

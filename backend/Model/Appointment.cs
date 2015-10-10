@@ -19,6 +19,7 @@ namespace SiLabI.Model
         protected Software _software;
         protected Group _group;
         protected DateTime? _date;
+        protected Boolean? _attendance;
 
         /// <summary>
         /// The student data.
@@ -58,6 +59,16 @@ namespace SiLabI.Model
         {
             set { _group = value; }
             get { return _group; }
+        }
+
+        /// <summary>
+        /// The student attendance.
+        /// </summary>
+        [DataMember(Name = "attendance")]
+        public virtual Boolean? Attendance
+        {
+            set { _attendance = value; }
+            get { return _attendance; }
         }
 
         /// <summary>
@@ -101,6 +112,7 @@ namespace SiLabI.Model
             appointment.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
             appointment.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
             appointment.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
+            appointment.Attendance = row.Table.Columns.Contains(prefix + "attendance") ? Converter.ToNullableBoolean(row[prefix + "attendance"]) : null;
             appointment.Student = Student.Parse(row, prefix + "student");
             appointment.Laboratory = Laboratory.Parse(row, prefix + "laboratory");
             appointment.Software = Software.Parse(row, prefix + "software");

@@ -19,6 +19,7 @@ namespace SiLabI.Model.Request
         protected string _software;
         protected int? _group;
         protected string _state;
+        protected bool? _attendance;
         protected DateTime? _date;
 
         /// <summary>
@@ -59,6 +60,16 @@ namespace SiLabI.Model.Request
         {
             set { _group = value; }
             get { return _group; }
+        }
+
+        /// <summary>
+        /// The student attendance.
+        /// </summary>
+        [DataMember(Name = "attendance")]
+        public virtual bool? Attendance
+        {
+            set { _attendance = value; }
+            get { return _attendance; }
         }
 
         /// <summary>

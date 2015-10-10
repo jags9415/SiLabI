@@ -91,6 +91,10 @@ namespace SiLabI.Controllers
             {
                 throw new UnathorizedOperationException("No se permite cambiar el estado de la cita");
             }
+            if (appointmentRequest.Appointment.Attendance != null)
+            {
+                throw new UnathorizedOperationException("No se permite cambiar la asistencia de la cita");
+            }
 
             return _appointmentController.Update(id, request, payload);
         }

@@ -122,7 +122,7 @@ namespace SiLabI.Data
         public DataRow Update(object requesterId, int id, object obj)
         {
             InnerAppointmentRequest appointment = (obj as InnerAppointmentRequest);
-            SqlParameter[] parameters = new SqlParameter[8];
+            SqlParameter[] parameters = new SqlParameter[9];
 
             parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
             parameters[1] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
@@ -130,8 +130,9 @@ namespace SiLabI.Data
             parameters[3] = SqlUtilities.CreateParameter("@laboratory", SqlDbType.VarChar, appointment.Laboratory);
             parameters[4] = SqlUtilities.CreateParameter("@software", SqlDbType.VarChar, appointment.Software);
             parameters[5] = SqlUtilities.CreateParameter("@date", SqlDbType.DateTime, appointment.Date);
-            parameters[6] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, appointment.State);
-            parameters[7] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, appointment.Group);
+            parameters[6] = SqlUtilities.CreateParameter("@attendance", SqlDbType.Bit, appointment.Attendance);
+            parameters[7] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, appointment.State);
+            parameters[8] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, appointment.Group);
 
             DataTable table = _Connection.executeQuery("sp_UpdateAppointment", parameters);
             return table.Rows[0];

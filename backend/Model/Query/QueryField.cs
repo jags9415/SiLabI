@@ -38,6 +38,9 @@ namespace SiLabI.Model.Query
             {
                 case SqlDbType.VarChar:
                     return true;
+                case SqlDbType.Bit:
+                    bool boolean;
+                    return Boolean.TryParse(Value, out boolean);
                 case SqlDbType.Int:
                     int integer;
                     return Int32.TryParse(Value, out integer);
