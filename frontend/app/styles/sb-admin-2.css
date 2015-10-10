@@ -7,10 +7,11 @@
 #wrapper {
     width: 100%;
     background-color: #ebebeb;
+    height: 100%;
 }
 
 #page-wrapper {
-    min-height: 568px;
+    min-height: 91%;
     background-color: #fff;
     border-left: 1px solid white;
 }
