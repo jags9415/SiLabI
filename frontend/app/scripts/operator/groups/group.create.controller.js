@@ -15,9 +15,13 @@
       vm.course = {};
       vm.periods = [];
       vm.students = [];
+      vm.slicedStudents = [];
+      vm.page = 1;
+      vm.limit = 15;
       vm.currentYear = new Date().getFullYear();
       vm.year = vm.currentYear;
 
+      vm.sliceStudents = sliceStudents;
       vm.getProfessors = getProfessors;
       vm.getCourses = getCourses;
       vm.setProfessor = setProfessor;
@@ -27,16 +31,11 @@
       vm.searchStudent = searchStudent;
       vm.create = create;
       vm.deleteStudent = deleteStudent;
-      vm.fieldsReady = fieldsReady;
 
       activate();
 
       function activate() {
         getPeriods();
-      }
-
-      function fieldsReady () {
-        return vm.professor && vm.period && vm.year && vm.course && vm.group.number;
       }
 
       function getPeriods() {
@@ -103,7 +102,6 @@
       }
 
       function create() {
-        console.log(vm.professor);
         if (vm.professor && vm.period && vm.year && vm.course && vm.group.number) {
           vm.period.year = vm.year;
           vm.group.period = vm.period;
@@ -127,33 +125,33 @@
       }
 
       function setProfessor(user) {
-        console.log(user);
         vm.professor = user;
       }
 
       function setStudent(user) {
-        if(!contains(user)) {
-          vm.students.push(user);
+        if (!contains(user)) {
+          vm.students.unshift(user);
+          vm.student_username = "";
+          sliceStudents();
+        }
+        else {
+          MessageService.info("El estudiante seleccionado ya se encuentra en la lista.")
         }
       }
 
       function deleteStudent (id) {
-        var i;
-        for (i = 0; i < vm.students.length; i++)
-        {
-          if(vm.students[i].id == id)
-          {
+        for (var i = 0; i < vm.students.length; i++) {
+          if (vm.students[i].id == id) {
             vm.students.splice(i, 1);
+            sliceStudents();
             break;
           }
         }
       }
 
       function contains(element) {
-        for (var i = 0; i < vm.students.length; i++)
-        {
-          if(vm.students[i].id == element.id)
-          {
+        for (var i = 0; i < vm.students.length; i++) {
+          if (vm.students[i].id == element.id) {
             return true;
           }
         }
@@ -162,8 +160,7 @@
 
       function getStudents () {
         var stds = [];
-        for (var i = 0; i < vm.students.length; i++)
-        {
+        for (var i = 0; i < vm.students.length; i++) {
           stds.push(vm.students[i].username);
         }
         return stds;
@@ -177,6 +174,10 @@
 
       function handleError(data) {
         MessageService.error(data.description);
+      }
+
+      function sliceStudents() {
+        vm.slicedStudents = vm.students.slice((vm.page - 1) * vm.limit, vm.page * vm.limit);
       }
     }
 })();

@@ -15,7 +15,7 @@
       vm.software = [];
       vm.slicedSoftware = [];
       vm.page = 1;
-      vm.limit = 20;
+      vm.limit = 15;
 
       vm.update = updateLab;
       vm.delete = deleteLab;

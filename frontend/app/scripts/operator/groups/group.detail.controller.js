@@ -11,12 +11,17 @@
       var vm = this;
       vm.group = {};
       vm.students = [];
+      vm.slicedStudents = [];
       vm.student = {};
       vm.id = $routeParams.id;
+      vm.page = 1;
+      vm.limit = 15;
+
       vm.update = updateGroup;
       vm.delete = deleteGroup;
       vm.deleteStudent = deleteStudent;
       vm.searchStudent = searchStudent;
+      vm.sliceStudents = sliceStudents;
 
       activate();
 
@@ -26,9 +31,9 @@
         .catch(handleError);
       }
 
-      function fieldsReady () 
+      function fieldsReady ()
       {
-        return vm.group.number != ""; 
+        return vm.group.number != "";
       }
 
       function updateGroup() {
@@ -39,7 +44,7 @@
             vm.group.students = stds;
           }
 
-          var request = 
+          var request =
           {
               "students": vm.group.students,
               "number": vm.group.number
@@ -79,32 +84,30 @@
         }
       }
 
-      function getStudents()
-      {
+      function getStudents() {
         GroupService.GetStudents(vm.group.id)
         .then(setStudents)
         .catch(handleError);
       }
 
-      function setStudents(students)
-      {
+      function setStudents(students) {
         vm.students = students;
+        sliceStudents();
       }
 
       function deleteStudent (id) {
         var i;
-        for (i = 0; i < vm.students.length; i++) 
-        {
-          if(vm.students[i].id == id)
-          {
+        for (i = 0; i < vm.students.length; i++) {
+          if(vm.students[i].id == id) {
             vm.students.splice(i, 1);
+            sliceStudents();
             break;
           }
         }
       }
 
       function contains (element) {
-        for (var i = 0; i < vm.students.length; i++) 
+        for (var i = 0; i < vm.students.length; i++)
         {
           if(vm.students[i].id == element.id)
           {
@@ -125,7 +128,7 @@
 
       function getStudentsId () {
         var stds = [];
-        for (var i = 0; i < vm.students.length; i++) 
+        for (var i = 0; i < vm.students.length; i++)
         {
           stds.push(vm.students[i].username);
         }
@@ -134,6 +137,10 @@
 
       function redirectTogroups(result) {
         $location.path('/Operador/Grupos');
+      }
+
+      function sliceStudents() {
+        vm.slicedStudents = vm.students.slice((vm.page - 1) * vm.limit, vm.page * vm.limit);
       }
 
       function handleError(data) {

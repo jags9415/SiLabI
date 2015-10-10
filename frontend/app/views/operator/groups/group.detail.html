@@ -73,7 +73,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="student in GroupDetail.students">
+        <tr ng-repeat="student in GroupDetail.slicedStudents">
           <td>{{ student.username }}</td>
           <td>{{ student.full_name }}</td>
           <td style="text-align: center">
@@ -87,6 +87,15 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="row" ng-show="GroupDetail.students.length > GroupDetail.limit">
+    <div class="col-md-12 pagination">
+      <pagination
+        ng-model="GroupDetail.page" items-per-page="GroupDetail.limit" total-items="GroupDetail.students.length"
+        ng-change="GroupDetail.sliceStudents()" max-size="5" boundary-links="true" rotate="true"
+        previous-text="<" next-text=">" first-text="<<" last-text=">>">
+      </pagination>
+    </div>
   </div>
   <div class="row" style="margin-top: 3%;">
       <div class="col-md-6 text-center">
