@@ -255,7 +255,9 @@ td
   width: 95%;
 }
 
-
+.font-bold {
+  font-weight: bold;
+}
 
 .form-group label {
   font-size: medium;

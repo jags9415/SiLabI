@@ -1,0 +1,86 @@
+<div>
+  <h2>Asistencia</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li class="active">Asistencia</li>
+  </ol>
+  <div class="table-search" style="margin-bottom: 3%;">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-10 col-xs-10">
+          <div class="row">
+            <div class="col-md-4 col-xs-4">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
+                <ui-select id="laboratory" ng-model="AppointmentCurrent.selected_laboratory">
+                  <ui-select-match placeholder="Laboratorio">
+                    {{$select.selected}}
+                  </ui-select-match>
+                  <ui-select-choices repeat="laboratory in AppointmentCurrent.laboratories">
+                    <span ng-bind-html="laboratory"></span>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-4">
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="AppointmentCurrent.openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+                <input datepicker-popup class="form-control" ng-model="AppointmentCurrent.selected_date" date-disabled="AppointmentCurrent.isDisabledDate(date, mode)" is-open="AppointmentCurrent.opened" close-text="Cerrar" clear-text="Limpiar" current-text="Hoy" readonly/>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-4">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
+                <ui-select id="hour" ng-model="AppointmentCurrent.selected_hour">
+                  <ui-select-match placeholder="Hora">
+                    {{$select.selected | date: 'hh:mm a'}}
+                  </ui-select-match>
+                  <ui-select-choices repeat="hour in AppointmentCurrent.hours">
+                    <span ng-bind-html="hour | date: 'hh:mm a'"></span>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 col-xs-2">
+          <button type="submit" class="btn btn-info btn-block" ng-click="AppointmentCurrent.loadAppointments()">
+            <i class="glyphicon glyphicon-search"></i> Buscar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped" ng-show="true">
+      <thead>
+        <tr>
+          <th>Carné</th>
+          <th>Estudiante</th>
+          <th>Software</th>
+          <th style="text-align: center">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="app in AppointmentCurrent.appointments">
+          <td>{{ app.student.username }}</td>
+          <td>{{ app.student.full_name }}</td>
+          <td>{{ app.software.name }}</td>
+          <td style="text-align: center">
+            <a class='btn btn-success' ng-class="{'active font-bold': app.attendance}" ng-click="AppointmentCurrent.mark(app.id, true)">
+              <span class="glyphicon glyphicon-ok"></span> Presente
+            </a>
+            <a class="btn btn-danger" ng-class="{'active font-bold': !app.attendance}" ng-click="AppointmentCurrent.mark(app.id, false)">
+              <span class="glyphicon glyphicon-remove"></span> Ausente
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-show="AppointmentCurrent.isLoaded() && AppointmentCurrent.isEmpty()">No se encontraron resultados.</p>
+  <br>
+</div>

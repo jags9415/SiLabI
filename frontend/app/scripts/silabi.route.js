@@ -179,6 +179,11 @@
           controllerAs: 'AppointmentDetail',
           reloadOnSearch: false
         })
+        .when('/Operador/Asistencia', {
+          templateUrl: 'views/operator/appointments/appointment.current.html',
+          controller: 'AppointmentCurrentController',
+          controllerAs: 'AppointmentCurrent'
+        })
         .when('/Estudiante/:student_id/Citas', {
           templateUrl: 'views/student/appointments/appointment.list.html',
           controller: 'StudentAppListController',
