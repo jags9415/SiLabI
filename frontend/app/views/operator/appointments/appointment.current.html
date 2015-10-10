@@ -5,54 +5,56 @@
     <li><a href="#/">Inicio</a></li>
     <li class="active">Asistencia</li>
   </ol>
-  <div class="table-search" style="margin-bottom: 3%;">
-    <form class="form-horizontal">
-      <div class="row">
-        <div class="col-md-10 col-xs-10">
-          <div class="row">
-            <div class="col-md-4 col-xs-4">
-              <div class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-                <ui-select id="laboratory" ng-model="AppointmentCurrent.selected_laboratory">
-                  <ui-select-match placeholder="Laboratorio">
-                    {{$select.selected}}
-                  </ui-select-match>
-                  <ui-select-choices repeat="laboratory in AppointmentCurrent.laboratories">
-                    <span ng-bind-html="laboratory"></span>
-                  </ui-select-choices>
-                </ui-select>
+  <div class="row" style="margin-bottom: 2%;">
+    <div class="col-md-12">
+      <form class="form-horizontal">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="input-group" style="padding-bottom: 2%;">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
+                  <ui-select id="laboratory" ng-model="AppointmentCurrent.selected_laboratory">
+                    <ui-select-match placeholder="Laboratorio">
+                      {{$select.selected}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="laboratory in AppointmentCurrent.laboratories">
+                      <span ng-bind-html="laboratory"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
               </div>
-            </div>
-            <div class="col-md-4 col-xs-4">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="AppointmentCurrent.openDatePicker($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-                <input datepicker-popup class="form-control" ng-model="AppointmentCurrent.selected_date" date-disabled="AppointmentCurrent.isDisabledDate(date, mode)" is-open="AppointmentCurrent.opened" close-text="Cerrar" clear-text="Limpiar" current-text="Hoy" readonly/>
+              <div class="col-md-4">
+                <a href="">
+                  <div class="input-group" style="padding-bottom: 2%;">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
+                    <datepicker-popup class="form-control" ng-model="AppointmentCurrent.selected_date" max-date="AppointmentCurrent.today" ng-change="AppointmentCurrent.loadHours()" show-weeks="false" ng-click="AppointmentCurrent.openDatePicker()" date-disabled="AppointmentCurrent.isDisabledDate(date, mode)" is-open="AppointmentCurrent.opened" close-text="Cerrar" clear-text="Limpiar" current-text="Hoy" readonly>{{ AppointmentCurrent.selected_date | date: 'fullDate' }}</datepicker-popup>
+                  </div>
+                </a>
               </div>
-            </div>
-            <div class="col-md-4 col-xs-4">
-              <div class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-                <ui-select id="hour" ng-model="AppointmentCurrent.selected_hour">
-                  <ui-select-match placeholder="Hora">
-                    {{$select.selected | date: 'hh:mm a'}}
-                  </ui-select-match>
-                  <ui-select-choices repeat="hour in AppointmentCurrent.hours">
-                    <span ng-bind-html="hour | date: 'hh:mm a'"></span>
-                  </ui-select-choices>
-                </ui-select>
+              <div class="col-md-4">
+                <div class="input-group" style="padding-bottom: 2%;">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
+                  <ui-select id="hour" ng-model="AppointmentCurrent.selected_hour">
+                    <ui-select-match placeholder="Hora">
+                      {{$select.selected | date: 'hh:mm a'}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="hour in AppointmentCurrent.hours">
+                      <span ng-bind-html="hour | date: 'hh:mm a'"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
               </div>
             </div>
           </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-info btn-block" ng-click="AppointmentCurrent.loadAppointments()">
+              <i class="glyphicon glyphicon-search"></i> Buscar
+            </button>
+          </div>
         </div>
-        <div class="col-md-2 col-xs-2">
-          <button type="submit" class="btn btn-info btn-block" ng-click="AppointmentCurrent.loadAppointments()">
-            <i class="glyphicon glyphicon-search"></i> Buscar
-          </button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
   <div class="table-responsive">
     <table class="table table-striped" ng-show="true">

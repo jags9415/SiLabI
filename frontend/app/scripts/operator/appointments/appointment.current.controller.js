@@ -5,23 +5,25 @@
         .module('silabi')
         .controller('AppointmentCurrentController', AppointmentCurrentController);
 
-    AppointmentCurrentController.$inject = ['$scope', 'AppointmentService', 'MessageService'];
+    AppointmentCurrentController.$inject = ['$scope', 'moment', 'AppointmentService', 'MessageService'];
 
-  function AppointmentCurrentController($scope, AppointmentService, MessageService) {
+  function AppointmentCurrentController($scope, moment, AppointmentService, MessageService) {
     var vm = this;
     vm.opened = false;
     vm.loaded = false;
+    vm.today = new Date();
     vm.appointments = [];
     vm.hours = [];
     vm.laboratories = ["Laboratorio A", "Laboratorio B"];
     vm.selected_laboratory = vm.laboratories[1];
-    vm.selected_date = new Date();
+    vm.selected_date = vm.today;
     vm.mark = mark;
     vm.isLoaded = isLoaded;
     vm.isEmpty = isEmpty;
     vm.isDisabledDate = isDisabledDate;
     vm.openDatePicker = openDatePicker;
     vm.loadAppointments = loadAppointments;
+    vm.loadHours = loadHours;
 
     vm.request = {
       fields : "id,attendance,student.username,student.full_name,software.name",
@@ -39,14 +41,19 @@
     }
 
     function loadHours() {
-      var date;
+      vm.hours = [];
 
-      for (var i = 8; i <= 17; i++) {
+      var date = new Date();
+      var minHour = 8;
+      var maxHour = 17;
+
+      if (moment(vm.selected_date).isSame(vm.today, 'day') && date.getHours() < maxHour) {
+        var maxHour = date.getHours();
+      }
+
+      for (var i = minHour; i <= maxHour; i++) {
         date = new Date();
-        date.setHours(i);
-        date.setMinutes(0);
-        date.setSeconds(0);
-        date.setMilliseconds(0);
+        date.setHours(i, 0, 0, 0);
         vm.hours.push(date);
 
         if (i == (new Date().getHours())) {
@@ -60,6 +67,8 @@
     }
 
     function loadAppointments() {
+      console.log(getSelectedDateTime().toISOString());
+
       vm.request.query["state"] = {
         operation: 'ne',
         value: 'Cancelada'
