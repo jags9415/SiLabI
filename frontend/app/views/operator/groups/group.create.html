@@ -70,13 +70,14 @@
         </div>
       </div>
       <div class="col-md-2 col-xs-2">
-        <button type="submit" class="btn btn-success btn-block" ng-click="GroupCreate.searchStudent()">
+        <button type="button" class="btn btn-success btn-block" ng-click="GroupCreate.searchStudent()">
           <i class="glyphicon glyphicon-plus"></i>
           <span class="hidden-xs">Agregar</span>
         </button>
       </div>
     </div>
     <div class="table-responsive">
+<<<<<<< HEAD
     <table class="table table-striped" ng-show="GroupCreate.students.length > 0">
       <thead>
         <tr>
@@ -110,9 +111,44 @@
       ></pagination>
     </div>
   </div>
+=======
+      <table class="table table-striped" ng-show="GroupCreate.students.length > 0">
+        <thead>
+          <tr>
+            <th>Carné</th>
+            <th>Nombre</th>
+            <th style="text-align: center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="student in GroupCreate.slicedStudents">
+            <td>{{ student.username }}</td>
+            <td>{{ student.full_name }}</td>
+            <td style="text-align: center">
+              <a class='btn btn-info btn-sm' href="{{'#Operador/Estudiantes/' + student.username}}">
+                <span class="glyphicon glyphicon-eye-open"></span>
+              </a>
+              <a href="" class="btn btn-danger btn-sm" ng-click="GroupCreate.deleteStudent(student.id)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row" ng-show="GroupCreate.students.length > GroupCreate.limit">
+      <div class="col-md-12 pagination">
+        <pagination
+          ng-model="GroupCreate.page" items-per-page="GroupCreate.limit" total-items="GroupCreate.students.length"
+          ng-change="GroupCreate.sliceStudents()" max-size="5" boundary-links="true" rotate="true"
+          previous-text="<" next-text=">" first-text="<<" last-text=">>">
+        </pagination>
+      </div>
+    </div>
+>>>>>>> a0a143747d134abb687b233ab2cbece3e99ef4f6
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
-        <button type="submit" class="btn btn-lg btn-success" ng-click="GroupCreate.create()" ng-disabled="!GroupCreate.fieldsReady()">
+        <button type="submit" class="btn btn-lg btn-success" ng-click="GroupCreate.create()" ng-disabled="createGroupForm.$invalid">
           <i class="glyphicon glyphicon-plus"></i> Agregar
         </button>
       </div>

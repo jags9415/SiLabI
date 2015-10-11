@@ -1,0 +1,134 @@
+<div>
+  <h2>Mi Perfil</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li class="active">Perfil</li>
+  </ol>
+  <form name="updateProfileForm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name" class="control-label">Nombre</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+            <input type="text" class="form-control" id="name" name="name" ng-model="Profile.profile.name" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="last_name_1" class="control-label">Primer Apellido</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+            <input type="text" class="form-control" id="last_name_1" name="last_name_1" ng-model="Profile.profile.last_name_1" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="last_name_2" class="control-label">Segundo Apellido</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+            <input type="text" class="form-control" id="last_name_2" name="last_name_2" placeholder="-" ng-model="Profile.profile.last_name_2" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="username" class="control-label">Usuario</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input type="text" class="form-control" id="username" name="username" ng-pattern="'[A-Za-z0-9]+'" ng-model="Profile.profile.username" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="username" class="control-label">Tipo de Usuario</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input type="text" class="form-control" id="type" name="type" ng-model="Profile.profile.type" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="gender" class="control-label">Género</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+            <ui-select id="gender" ng-model="Profile.profile.gender">
+              <ui-select-match placeholder="{{Profile.profile.gender}}">
+                {{ $select.selected }}
+              </ui-select-match>
+              <ui-select-choices repeat="gender in Profile.genders">
+                <span ng-bind-html="gender"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="email" class="control-label">Correo</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Correo" ng-model="Profile.profile.email" ng-trim>
+          </div>
+          <p class="help-block" ng-if="updateProfileForm.email.$error.email">Email inválido.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="phone" class="control-label">Teléfono</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+            <input type="text" class="form-control" id="phone" name="phone" ng-model="Profile.profile.phone" ui-mask="(+506) 9999-99-99" ng-trim>
+          </div>
+          <p class="help-block" ng-if="updateProfileForm.phone.$error.pattern">Formato incorrecto. Ingrese mínimo 8 caracteres numéricos.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="password" class="control-label">Contraseña</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" ng-model="Profile.password" ng-minlength="6">
+          </div>
+          <p class="help-block" ng-if="updateProfileForm.password.$error.minlength">La contraseña debe contener mínimo 6 caracteres.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="password_confirmation" class="control-label">Confirmar Contraseña</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmar Contraseña" ng-model="Profile.password_confirm" ng-pattern="{{Profile.password}}" ng-required="Profile.password">
+          </div>
+          <p class="help-block" ng-if="updateProfileForm.password_confirmation.$error.pattern">Las contraseñas no coinciden.</p>
+          <p class="help-block" ng-if="updateProfileForm.password_confirmation.$error.required">Confirmación de contraseña requerida.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div ng-password-strength="Profile.password" strength="Profile.strength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+        <button type="submit" class="btn btn-lg btn-info" ng-click="Profile.update()" ng-disabled="updateProfileForm.$invalid">
+          <i class="glyphicon glyphicon-floppy-disk"></i> Actualizar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

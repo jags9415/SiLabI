@@ -21,36 +21,36 @@
           return RequestService.get('/students', request);
         }
 
-        function GetOne(Username) {
+        function GetOne(username, request) {
+          if (!request) request = {};
+          request.access_token = $localStorage['access_token'];
+          return RequestService.get('/students/' + username, request);
+        }
+
+        function Update(id, student) {
+          var request = {};
+          request.student = student;
+          request.access_token = $localStorage['access_token'];
+          return RequestService.put('/students/' + id, request);
+        }
+
+        function Create(student) {
+          var request = {};
+          request.student = student;
+          request.access_token = $localStorage['access_token'];
+          return RequestService.post('/students', request);
+        }
+
+        function Delete(id) {
           var request = {};
           request.access_token = $localStorage['access_token'];
-          return RequestService.get('/students/' + Username, request);
+          return RequestService.delete('/students/' + id, request);
         }
 
-        function Update(StudentID, NewStudentInfo) {
-          var requestBody = {};
-          requestBody.student = NewStudentInfo;
-          requestBody.access_token = $localStorage['access_token'];
-          return RequestService.put('/students/' + StudentID, requestBody);
-        }
-
-        function Create(Student) {
-          var requestBody = {};
-          requestBody.student = Student;
-          requestBody.access_token = $localStorage['access_token'];
-          return RequestService.post('/students', requestBody);
-        }
-
-        function Delete(StudentID) {
-          var requestBody = {};
-          requestBody.access_token = $localStorage['access_token'];
-          return RequestService.delete('/students/' + StudentID, requestBody);
-        }
-
-        function GetGroups (Username, request) {
+        function GetGroups(username, request) {
+          if (!request) request = {};
           request.access_token = $localStorage['access_token'];
-          return RequestService.get('/students/' + Username +'/groups', request);
+          return RequestService.get('/students/' + username +'/groups', request);
         }
-
     }
 })();

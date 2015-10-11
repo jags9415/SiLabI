@@ -61,7 +61,7 @@
     }
 
     function openAppointment(id) {
-      $location.url('/Estudiante/' + vm.student_id + '/Cita/' + id);
+      $location.url('/Estudiante/' + vm.student_id + '/Citas/' + id);
     }
 
     function searchAppointment() {
@@ -119,11 +119,10 @@
     vm.states = states;
   }
 
-    function deleteAppointment(id) {
-      console.log(id);
+    function deleteAppointment(appID) {
       MessageService.confirm("¿Desea realmente eliminar esta cita?")
       .then(function() {
-        StudentAppService.Delete(id)
+        StudentAppService.Delete(vm.student_id, appID)
         .then(loadPage)
         .catch(handleError);
       });

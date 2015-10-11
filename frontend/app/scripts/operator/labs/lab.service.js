@@ -21,41 +21,36 @@
       return RequestService.get('/laboratories', request);
     }
 
-
-    function GetOne(LabID) {
+    function GetOne(id) {
       var request = {};
       request.access_token = $localStorage['access_token'];
-      return RequestService.get('/laboratories/' + LabID, request);
+      return RequestService.get('/laboratories/' + id, request);
     }
 
-    function Update(LabID, NewLabInfo, SoftwareCodes) {
-      var requestBody = {};
-      var softwareRequest = {};
-      requestBody.laboratory = NewLabInfo;
-      softwareRequest.software = SoftwareCodes;
-      requestBody.access_token = $localStorage['access_token'];
-      softwareRequest.access_token = $localStorage['access_token'];
-      RequestService.put('/laboratories/' + LabID + '/software', softwareRequest);
-      return RequestService.put('/laboratories/' + LabID, requestBody);
+    function Update(id, laboratory) {
+      var request = {};
+      request.laboratory = laboratory;
+      request.access_token = $localStorage['access_token'];
+      return RequestService.put('/laboratories/' + id, request);
     }
 
-    function Create(Lab) {
-      var requestBody = {};
-      requestBody.laboratory = Lab;
-      requestBody.access_token = $localStorage['access_token'];
-      return RequestService.post('/laboratories', requestBody);
+    function Create(laboratory) {
+      var request = {};
+      request.laboratory = laboratory;
+      request.access_token = $localStorage['access_token'];
+      return RequestService.post('/laboratories', request);
     }
 
-    function Delete(LabID) {
-      var requestBody = {};
-      requestBody.access_token = $localStorage['access_token'];
-      return RequestService.delete('/laboratories/' + LabID, requestBody);
-    }
-
-    function GetSoftware(LabID) {
+    function Delete(id) {
       var request = {};
       request.access_token = $localStorage['access_token'];
-      return RequestService.get('/laboratories/' + LabID + '/software', request);
+      return RequestService.delete('/laboratories/' + id, request);
+    }
+
+    function GetSoftware(id, request) {
+      if (!request) request = {};
+      request.access_token = $localStorage['access_token'];
+      return RequestService.get('/laboratories/' + id + '/software', request);
     }
   }
 })();

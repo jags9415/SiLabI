@@ -6,36 +6,47 @@
       .module('silabi')
       .controller('LabDetailController', LabDetail);
 
-    LabDetail.$inject = ['$routeParams', '$location', 'LabService', 'SoftwareService', 'MessageService'];
+    LabDetail.$inject = ['$scope', '$routeParams', '$location', 'LabService', 'SoftwareService', 'MessageService'];
 
-    function LabDetail($routeParams, $location, LabService, SoftwareService, MessageService) {
+    function LabDetail($scope, $routeParams, $location, LabService, SoftwareService, MessageService) {
       var vm = this;
       vm.lab = {};
       vm.id = $routeParams.id;
       vm.software = [];
+      vm.slicedSoftware = [];
+      vm.isSoftwareModified = false;
+      vm.page = 1;
+      vm.limit = 15;
 
       vm.update = updateLab;
       vm.delete = deleteLab;
-
       vm.searchSoftware = searchSoftware;
       vm.deleteSoftware = deleteSoftware;
+      vm.sliceSoftware = sliceSoftware;
+
+      vm.softwareRequest = {
+        fields: "id,code,name"
+      }
 
       activate();
 
       function activate() {
         LabService.GetOne(vm.id)
-        .then(setLab)
+        .then(setLaboratory)
         .catch(handleError);
-        LabService.GetSoftware(vm.id)
-        .then(initSoftware)
+
+        LabService.GetSoftware(vm.id, vm.softwareRequest)
+        .then(setSoftware)
         .catch(handleError);
       }
 
       function updateLab() {
-        if (vm.id) {
-          var software_codes = getAddedSoftware();
-          LabService.Update(vm.lab.id, vm.lab, software_codes)
-          .then(setLab)
+        if (vm.lab) {
+          if (vm.isSoftwareModified) {
+            vm.lab.software = getSoftwareCodes();
+          }
+          LabService.Update(vm.lab.id, vm.lab)
+          .then(updateLaboratory)
           .catch(handleError);
         }
       }
@@ -52,12 +63,19 @@
         }
       }
 
-      function setLab(lab) {
+      function setLaboratory(lab) {
         vm.lab = lab;
       }
 
-      function initSoftware(software) {
-        vm.software = software;
+      function updateLaboratory(lab) {
+        setLaboratory(lab);
+        $scope.$broadcast('show-errors-reset');
+        vm.isSoftwareModified = false;
+        MessageService.success("Laboratorio actualizado.");
+      }
+
+      function contains(software) {
+        return _.any(vm.software, _.matches(software));
       }
 
       function redirectToLabs(result) {
@@ -70,45 +88,46 @@
 
       function searchSoftware() {
         if (vm.software_code) {
-          SoftwareService.GetOne(vm.software_code)
-          .then(setSoftware)
+          SoftwareService.GetOne(vm.software_code, vm.softwareRequest)
+          .then(addSoftware)
           .catch(handleError);
         }
-        vm.software_code = "";
-      }
-
-      function contains(software) {
-        for (var i = 0; i < vm.software.length; i++){
-          if(vm.software[i].code == software.code)
-            return true;
-        }
-        return false;
       }
 
       function setSoftware(software) {
+        vm.software = software;
+        sliceSoftware();
+      }
+
+      function addSoftware(software) {
         if (!contains(software)) {
-          vm.software.push(software);
+          vm.software.unshift(software);
+          vm.software_code = "";
+          vm.isSoftwareModified = true;
+          sliceSoftware();
         }
         else {
           MessageService.info("El software seleccionado ya se encuentra en la lista.")
         }
       }
 
-      function getAddedSoftware() {
-        var software_codes = [];
-        for (var i = 0; i < vm.software.length; i++){
-          software_codes.push(vm.software[i].code);
-        }
-        return software_codes;
-      }
-
       function deleteSoftware(code) {
         for (var i = 0; i < vm.software.length; i++){
           if(vm.software[i].code === code){
             vm.software.splice(i, 1);
+            vm.isSoftwareModified = true;
+            sliceSoftware();
             break;
           }
         }
+      }
+
+      function getSoftwareCodes() {
+        return _.map(vm.software, 'code');
+      }
+
+      function sliceSoftware() {
+        vm.slicedSoftware = vm.software.slice((vm.page - 1) * vm.limit, vm.page * vm.limit);
       }
     }
 })();

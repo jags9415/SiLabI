@@ -17,9 +17,10 @@
       </div>
       <div class="col-md-6">
         <div class="form-group" show-errors>
-          <label for="name" class="control-label">Asientos</label>
-          <input type="number" class="form-control" id="name" min="0" name="name" placeholder="Asientos" ng-model="LabDetail.lab.seats" ng-trim required>
-          <p class="help-block" ng-if="updateLabForm.name.$error.required">Cantidad de asientos requerida.</p>
+          <label for="seats" class="control-label">Asientos</label>
+          <input type="number" class="form-control" id="seats" min="0" name="seats" placeholder="Asientos" ng-model="LabDetail.lab.seats" ng-trim required>
+          <p class="help-block" ng-if="updateLabForm.seats.$error.required">Cantidad de asientos requerida.</p>
+          <p class="help-block" ng-if="updateLabForm.seats.$error.number  || updateLabForm.seats.$error.min">Ingrese un número positivo.</p>
         </div>
       </div>
     </div>
@@ -52,30 +53,39 @@
       </div>
     </div>
     <div class="table-responsive">
-    <table class="table table-striped" ng-show="LabDetail.software.length > 0">
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Nombre</th>
-          <th style="text-align: center">Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="software in LabDetail.software">
-          <td>{{ software.code }}</td>
-          <td>{{ software.name }}</td>
-          <td style="text-align: center">
-            <a class='btn btn-info btn-sm' href="{{'#Operador/Software/' + software.code}}">
-              <span class="glyphicon glyphicon-eye-open"></span>
-            </a>
-            <a href="" class="btn btn-danger btn-sm" ng-click="LabDetail.deleteSoftware(software.code)">
-              <span class="glyphicon glyphicon-remove"></span>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <table class="table table-striped" ng-show="LabDetail.software.length > 0">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th style="text-align: center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="software in LabDetail.slicedSoftware">
+            <td>{{ software.code }}</td>
+            <td>{{ software.name }}</td>
+            <td style="text-align: center">
+              <a class='btn btn-info btn-sm' href="{{'#Operador/Software/' + software.code}}">
+                <span class="glyphicon glyphicon-eye-open"></span>
+              </a>
+              <a href="" class="btn btn-danger btn-sm" ng-click="LabDetail.deleteSoftware(software.code)">
+                <span class="glyphicon glyphicon-remove"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row" ng-show="LabDetail.software.length > LabDetail.limit">
+      <div class="col-md-12 pagination">
+        <pagination
+          ng-model="LabDetail.page" items-per-page="LabDetail.limit" total-items="LabDetail.software.length"
+          ng-change="LabDetail.sliceSoftware()" max-size="5" boundary-links="true" rotate="true"
+          previous-text="<" next-text=">" first-text="<<" last-text=">>">
+        </pagination>
+      </div>
+    </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-6 text-center">
         <button type="submit" class="btn btn-lg btn-info" ng-click="LabDetail.update()" ng-disabled="updateLabForm.$invalid">

@@ -64,13 +64,18 @@
           addAmpersand = true;
         }
 
-        if (request.sort && request.sort.field) {
+        if (request.sort && request.sort.length > 0) {
           if (addAmpersand) query += "&";
           query += "sort=";
-          if (request.sort.type === "DESC") {
-            query += "-";
+
+          for (var i = 0; i < request.sort.length; i++) {
+            if (request.sort[i].type === "DESC") {
+              query += "-";
+            }
+            query += request.sort[i].field;
+            if (i < request.sort.length - 1) query += ","
           }
-          query += request.sort.field;
+
           addAmpersand = true;
         }
 

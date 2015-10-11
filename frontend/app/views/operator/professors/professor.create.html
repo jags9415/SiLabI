@@ -12,10 +12,10 @@
           <div class="form-group" show-errors>
             <label for="name" class="control-label"><small>*</small> Nombre</label>
             <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
               <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="ProfessorCreate.professor.name" ng-blur="ProfessorCreate.generateUserName()" ng-trim required>
-              <p class="help-block" ng-if="createProfessorForm.name.$error.required">Nombre requerido.</p>
             </div>
+            <p class="help-block" ng-if="createProfessorForm.name.$error.required">Nombre requerido.</p>
           </div>
         </div>
       </div>
@@ -24,17 +24,17 @@
           <div class="form-group" show-errors>
             <label for="last_name_1" class="control-label"><small>*</small> Primer Apellido</label>
             <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
               <input type="text" class="form-control" id="last_name_1" name="last_name_1" placeholder="Primer Apellido" ng-model="ProfessorCreate.professor.last_name_1" ng-blur="ProfessorCreate.generateUserName()" ng-trim required>
-              <p class="help-block" ng-if="createProfessorForm.last_name_1.$error.required">Apellido requerido.</p>
             </div>
+            <p class="help-block" ng-if="createProfessorForm.last_name_1.$error.required">Apellido requerido.</p>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group" show-errors>
             <label for="last_name_2" class="control-label">Segundo Apellido</label>
             <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
               <input type="text" class="form-control" id="last_name_2" name="last_name_2" placeholder="Segundo Apellido" ng-model="ProfessorCreate.professor.last_name_2" ng-trim>
             </div>
           </div>
@@ -45,18 +45,18 @@
           <div class="form-group" show-errors>
             <label for="username" class="control-label"><small>*</small> Usuario</label>
             <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
               <input type="text" class="form-control" id="username" name="username" placeholder="Usuario" ng-pattern="'[A-Za-z0-9]+'" ng-model="ProfessorCreate.professor.username" ng-pattern="'[A-Za-z0-9]+'" ng-trim required>
-              <p class="help-block" ng-if="createProfessorForm.username.$error.required">Usuario requerido.</p>
-              <p class="help-block" ng-if="createProfessorForm.username.$error.pattern">Formato incorrecto. Ingrese mínimo únicamente alfanuméricos.</p>
             </div>
+            <p class="help-block" ng-if="createProfessorForm.username.$error.required">Usuario requerido.</p>
+            <p class="help-block" ng-if="createProfessorForm.username.$error.pattern">Formato incorrecto. Ingrese únicamente alfanuméricos.</p>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group" show-errors>
             <label for="gender" class="control-label"><small>*</small> Género</label>
             <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
               <ui-select id="gender" ng-model="ProfessorCreate.professor.gender">
                 <ui-select-match placeholder="{{ProfessorCreate.professor.gender}}">
                   {{ $select.selected }}
@@ -74,20 +74,20 @@
           <div class="form-group" show-errors>
             <label for="email" class="control-label">Correo</label>
             <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
               <input type="email" class="form-control" id="email" name="email" placeholder="Correo" ng-model="ProfessorCreate.professor.email" ng-trim>
-              <p class="help-block" ng-if="createProfessorForm.email.$error.email">Email inválido.</p>
             </div>
+            <p class="help-block" ng-if="createProfessorForm.email.$error.email">Email inválido.</p>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group" show-errors>
             <label for="phone" class="control-label">Teléfono</label>
             <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-earphone"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
               <input type="text" class="form-control" id="phone" name="phone" ng-model="ProfessorCreate.professor.phone" ui-mask="(+506) 9999-99-99" ng-trim>
-              <p class="help-block" ng-if="createProfessorForm.phone.$error.pattern">Formato incorrecto. Ingrese mínimo 8 caracteres numéricos.</p>
             </div>
+            <p class="help-block" ng-if="createProfessorForm.phone.$error.pattern">Formato incorrecto. Ingrese mínimo 8 caracteres numéricos.</p>
           </div>
         </div>
       </div>
@@ -96,22 +96,22 @@
           <div class="form-group" show-errors>
             <label for="password" class="control-label"><small>*</small> Contraseña</label>
             <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
               <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" ng-model="ProfessorCreate.password" ng-minlength="6" required>
-              <p class="help-block" ng-if="createProfessorForm.password.$error.minlength">La contraseña debe contener mínimo 6 caracteres.</p>
-              <p class="help-block" ng-if="createProfessorForm.password.$error.required">Contraseña requerida.</p>
             </div>
+            <p class="help-block" ng-if="createProfessorForm.password.$error.minlength">La contraseña debe contener mínimo 6 caracteres.</p>
+            <p class="help-block" ng-if="createProfessorForm.password.$error.required">Contraseña requerida.</p>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group" show-errors>
             <label for="password_confirmation" class="control-label"><small>*</small> Confirmar Contraseña</label>
             <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
               <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmar Contraseña" ng-model="ProfessorCreate.password_confirm" ng-pattern="{{ProfessorCreate.password}}" required>
-              <p class="help-block" ng-if="createProfessorForm.password_confirmation.$error.pattern">Las contraseñas no coinciden.</p>
-              <p class="help-block" ng-if="createProfessorForm.password_confirmation.$error.required">Confirmación de contraseña requerida.</p>
             </div>
+            <p class="help-block" ng-if="createProfessorForm.password_confirmation.$error.pattern">Las contraseñas no coinciden.</p>
+            <p class="help-block" ng-if="createProfessorForm.password_confirmation.$error.required">Confirmación de contraseña requerida.</p>
           </div>
         </div>
       </div>

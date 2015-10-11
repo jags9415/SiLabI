@@ -9,17 +9,26 @@
 
     function MainController($rootScope, $localStorage) {
       var vm = this;
+      vm.$storage = $localStorage;
+      vm.AccessToken = GetAccessToken;
+      vm.UserId = GetUserId;
+      vm.UserName = GetUserName;
       vm.UserType = GetUserType;
 
-      vm.$storage = $localStorage;
-      vm.user = {};
-      vm.access_token = vm.$storage['access_token'];
-      vm.user.id = vm.$storage['user_id'];
-      vm.user.name = vm.$storage['user_name'];
-      vm.user.type = vm.$storage['user_type'];
+      function GetAccessToken() {
+        return vm.$storage['access_token'];
+      }
+
+      function GetUserId() {
+        return vm.$storage['user_id'];
+      }
+
+      function GetUserName() {
+        return vm.$storage['user_name'];
+      }
 
       function GetUserType() {
-        return $localStorage['user_type'];
+        return vm.$storage['user_type'];
       }
     }
 })();

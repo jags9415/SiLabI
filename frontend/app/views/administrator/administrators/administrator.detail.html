@@ -11,13 +11,19 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="name">Nombre</label>
-          <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="AdministratorDetail.user.full_name" readonly>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
+            <input type="text" class="form-control" id="name" placeholder="Nombre" ng-model="AdministratorDetail.user.full_name" readonly>
+          </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="email">Correo</label>
-          <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="AdministratorDetail.user.email" readonly>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-envelope"></i></span>
+            <input type="email" class="form-control" id="email" placeholder="Correo" ng-model="AdministratorDetail.user.email" readonly>
+          </div>
         </div>
       </div>
     </div>
@@ -25,13 +31,19 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="gender">Género</label>
-          <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="AdministratorDetail.user.gender" readonly>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list"></i></span>
+            <input type="text" class="form-control" id="gender" placeholder="Género" ng-model="AdministratorDetail.user.gender" readonly>
+          </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="phone">Teléfono</label>
-          <input type="text" class="form-control" id="phone" ng-model="AdministratorDetail.user.phone" ui-mask="(+506) 9999-99-99" readonly>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-earphone"></i></span>
+            <input type="text" class="form-control" id="phone" ng-model="AdministratorDetail.user.phone" ui-mask="(+506) 9999-99-99" readonly>
+          </div>
         </div>
       </div>
     </div>

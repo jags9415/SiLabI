@@ -5,6 +5,10 @@
   padding: 0.2em 0;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   padding: 0;
   height: 100%;
@@ -16,10 +20,6 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 20pt;
   color: white;
-}
-
-.form-control[readonly] {
-    background-color: white;
 }
 
 hr {
