@@ -24,7 +24,7 @@
         }
 
         function search() {
-          vm.user = {};
+          delete vm.user;
           if (vm.username) {
             StudentService.GetOne(vm.username)
             .then(setUser)
@@ -52,8 +52,8 @@
         }
 
         function handleCreateSuccess() {
-          MessageService.success("Operador creado con éxito.");
-          vm.user = {};
+          MessageService.success("Operador creado.");
+          delete vm.user;
           delete vm.username;
         }
 

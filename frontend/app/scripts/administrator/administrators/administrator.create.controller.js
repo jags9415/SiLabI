@@ -13,13 +13,11 @@
         vm.create = create;
 
         function search() {
+          delete vm.user;
           if (vm.username) {
             UserService.GetOne(vm.username)
             .then(handleSearchSuccess)
             .catch(handleError);
-          }
-          else {
-            vm.user = null;
           }
         }
 
@@ -34,7 +32,9 @@
         }
 
         function handleCreateSuccess() {
-          MessageService.success("Administrador creado con éxito.");
+          MessageService.success("Administrador creado.");
+          delete vm.user;
+          delete vm.username;
         }
 
         function handleError(data) {
