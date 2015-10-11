@@ -144,7 +144,6 @@
   }
 
     function deleteAppointment(id) {
-      console.log(id);
       MessageService.confirm("¿Desea realmente eliminar esta cita?")
       .then(function() {
         AppointmentService.Delete(id)
