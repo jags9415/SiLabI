@@ -13,7 +13,7 @@
         vm.create = create;
 
         function create() {
-          if (vm.course) {
+          if (!_.isEmpty(vm.course)) {
             CourseService.Create(vm.course)
             .then(handleCreateSuccess)
             .catch(handleError);

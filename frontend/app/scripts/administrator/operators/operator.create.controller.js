@@ -24,7 +24,7 @@
         }
 
         function search() {
-          delete vm.user;
+          vm.user = {};
           if (vm.username) {
             StudentService.GetOne(vm.username)
             .then(setUser)
@@ -33,7 +33,7 @@
         }
 
         function create() {
-          if (vm.user && vm.period && vm.year) {
+          if (!_.isEmpty(vm.user) && !_.isEmpty(vm.period) && vm.year) {
             vm.period.year = vm.year;
 
             OperatorService.Create(vm.user.id, vm.period)
@@ -53,7 +53,7 @@
 
         function handleCreateSuccess() {
           MessageService.success("Operador creado.");
-          delete vm.user;
+          vm.user = {};
           delete vm.username;
         }
 

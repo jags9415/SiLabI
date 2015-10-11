@@ -41,7 +41,7 @@
       }
 
       function updateLab() {
-        if (vm.lab) {
+        if (!_.isEmpty(vm.lab)) {
           if (vm.isSoftwareModified) {
             vm.lab.software = getSoftwareCodes();
           }
@@ -52,7 +52,7 @@
       }
 
       function deleteLab() {
-        if (vm.lab) {
+        if (!_.isEmpty(vm.lab)) {
           MessageService.confirm("¿Desea realmente eliminar esta Sala de Laboratorio?")
           .then(function () {
             LabService.Delete(vm.lab.id)

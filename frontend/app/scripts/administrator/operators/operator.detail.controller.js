@@ -22,7 +22,7 @@
         }
 
         function deleteOperator() {
-          if (vm.user) {
+          if (!_.isEmpty(vm.user)) {
             MessageService.confirm("¿Desea realmente eliminar este operador?")
             .then(function() {
               OperatorService.Delete(vm.id)

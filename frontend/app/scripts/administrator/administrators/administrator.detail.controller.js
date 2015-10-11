@@ -15,16 +15,14 @@
 
         activate();
 
-        function activate() 
-        {
+        function activate() {
           AdminService.GetOne(vm.id)
           .then(handleGetSuccess)
           .catch(handleError);
         }
 
         function deleteAdministrator() {
-          if (vm.user) 
-          {
+          if (!_.isEmpty(vm.user)) {
             MessageService.confirm("¿Desea realmente eliminar este administrador?")
             .then(function() {
               AdminService.Delete(vm.id)
@@ -34,18 +32,15 @@
           }
         }
 
-        function handleGetSuccess(data) 
-        {
+        function handleGetSuccess(data) {
           vm.user = data;
         }
 
-        function handleDeleteSuccess() 
-        {
+        function handleDeleteSuccess() {
           $location.path('/Administrador/Administradores')
         }
 
-        function handleError(data) 
-        {
+        function handleError(data) {
           MessageService.error(data.description);
         }
     }

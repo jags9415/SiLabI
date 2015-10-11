@@ -22,7 +22,7 @@
     }
 
     function updateSoftware() {
-      if (vm.software) {
+      if (!_.isEmpty(vm.software)) {
         SoftwareService.Update(vm.software.id, vm.software)
         .then(handleUpdateSuccess)
         .catch(handleError);
@@ -30,7 +30,7 @@
     }
 
     function deleteSoftware() {
-      if (vm.software) {
+      if (!_.isEmpty(vm.software)) {
         MessageService.confirm("¿Desea realmente eliminar este software?")
         .then(function() {
           SoftwareService.Delete(vm.software.id)

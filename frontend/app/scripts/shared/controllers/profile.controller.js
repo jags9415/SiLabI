@@ -26,7 +26,7 @@
         }
 
         function update() {
-          if (vm.profile) {
+          if (!_.isEmpty(vm.profile)) {
             if (vm.password) {
               var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
               vm.profile.password = hash;

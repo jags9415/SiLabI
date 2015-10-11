@@ -27,7 +27,7 @@
       }
 
       function updateStudent() {
-        if (vm.student) {
+        if (!_.isEmpty(vm.student)) {
           if (vm.password) {
             var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
             vm.student.password = hash;
@@ -39,7 +39,7 @@
       }
 
       function deleteStudent() {
-        if (vm.student) {
+        if (!_.isEmpty(vm.student)) {
           MessageService.confirm("¿Desea realmente eliminar este estudiante?")
           .then(function () {
             StudentService.Delete(vm.student.id)

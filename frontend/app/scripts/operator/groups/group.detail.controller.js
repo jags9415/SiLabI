@@ -55,7 +55,7 @@
       }
 
       function updateGroup() {
-        if (vm.group) {
+        if (!_.isEmpty(vm.group)) {
           vm.group.period.year = vm.year;
 
           var request = {
@@ -76,7 +76,7 @@
       }
 
       function deleteGroup() {
-        if (vm.group) {
+        if (!_.isEmpty(vm.group)) {
           MessageService.confirm("¿Desea realmente eliminar este grupo?")
           .then(function () {
             GroupService.Delete(vm.group.id)

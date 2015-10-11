@@ -28,7 +28,7 @@
       }
 
     	function createProfessor() {
-    		if (vm.professor) {
+    		if (!_.isEmpty(vm.professor)) {
           var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
           vm.professor.password = hash;
     			ProfessorService.Create(vm.professor)

@@ -22,7 +22,7 @@
         vm.sliceSoftware = sliceSoftware;
 
         function create() {
-          if (vm.lab) {
+          if (!_.isEmpty(vm.lab)) {
             vm.lab.software = getSoftwareCodes();
             LabService.Create(vm.lab)
             .then(handleCreateSuccess)

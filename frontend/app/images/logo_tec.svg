@@ -41,10 +41,8 @@
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
-     inkscape:current-layer="Capa_1" /><defs
-     id="defs3"><style
-       type="text/css"
-       id="style5">@import url(http://fonts.googleapis.com/css?family=Tinos);</style></defs><rect
+     inkscape:current-layer="Capa_1" />
+    <rect
      x="43.348"
      y="17.721"
      fill="none"
@@ -55,7 +53,7 @@
      id="text9"
      x="43.667877"
      y="71.366188"
-     style="font-size:71.50584412px;fill:#ffffff;font-family:'Tinos, Serif'"
+     style="font-size:71.50584412px;fill:#ffffff;font-family:'Times New Roman',serif"
      transform="scale(1.0008956,0.99910516)">TEC</text>
 <line
      stroke-miterlimit="10"
@@ -75,7 +73,7 @@
      id="text15"
      x="217.10123"
      y="39.817249"
-     style="font-size:24.20701218px;fill:#ffffff;font-family:'Tinos, Serif'"
+     style="font-size:24.20701218px;fill:#ffffff;font-family:Georgia,serif"
      transform="scale(1.0009247,0.99907616)">Escuela de Ciencias del Lenguaje</text>
 <rect
      x="217.06"
@@ -88,6 +86,6 @@
      id="text19"
      x="217.98422"
      y="69.572578"
-     style="font-size:24.07093811px;fill:#ffffff;font-family:'Tinos, Serif'"
+     style="font-size:24.07093811px;fill:#ffffff;font-family:Georgia,serif"
      transform="scale(0.99690098,1.0031087)">Laboratorio de Inglés</text>
 </svg>

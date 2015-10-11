@@ -23,7 +23,7 @@
       }
 
       function updateCourse() {
-        if (vm.id) {
+        if (!_.isEmpty(vm.course)) {
           CourseService.Update(vm.course.id, vm.course)
           .then(handleUpdate)
           .catch(handleError);
@@ -31,7 +31,7 @@
       }
 
       function deleteCourse() {
-        if (vm.course) {
+        if (!_.isEmpty(vm.course)) {
           MessageService.confirm("¿Desea realmente eliminar este curso?")
           .then(function () {
             CourseService.Delete(vm.course.id)

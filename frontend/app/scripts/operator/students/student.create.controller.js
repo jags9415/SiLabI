@@ -26,7 +26,7 @@
         }
 
         function create() {
-          if (vm.student) {
+          if (!_.isEmpty(vm.student)) {
             var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
             vm.student.password = hash;
             StudentService.Create(vm.student)

@@ -13,7 +13,7 @@
         vm.create = create;
 
         function create() {
-          if (vm.software) {
+          if (!_.isEmpty(vm.software)) {
             SoftwareService.Create(vm.software)
             .then(handleCreateSuccess)
             .catch(handleError);

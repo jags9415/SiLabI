@@ -26,7 +26,7 @@
       	}
 
         function updateProfessor() {
-          if (vm.professor) {
+          if (!_.isEmpty(vm.professor)) {
             if (vm.password) {
               var hash = CryptoJS.SHA256(vm.password).toString(CryptoJS.enc.Hex);
               vm.professor.password = hash;
@@ -38,7 +38,7 @@
         }
 
         function deleteProfessor() {
-          if (vm.professor) {
+          if (!_.isEmpty(vm.professor)) {
             MessageService.confirm("¿Desea realmente eliminar este docente?")
             .then(function() {
               ProfessorService.Delete(vm.professor.id)

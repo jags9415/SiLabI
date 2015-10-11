@@ -13,7 +13,7 @@
         vm.create = create;
 
         function search() {
-          delete vm.user;
+          vm.user = {};
           if (vm.username) {
             UserService.GetOne(vm.username)
             .then(handleSearchSuccess)
@@ -22,9 +22,11 @@
         }
 
         function create() {
-          AdminService.Create(vm.user.id)
-          .then(handleCreateSuccess)
-          .catch(handleError);
+          if (!_.isEmpty(vm.user)) {
+            AdminService.Create(vm.user.id)
+            .then(handleCreateSuccess)
+            .catch(handleError);
+          }
         }
 
         function handleSearchSuccess(user) {
@@ -33,7 +35,7 @@
 
         function handleCreateSuccess() {
           MessageService.success("Administrador creado.");
-          delete vm.user;
+          vm.user = {};
           delete vm.username;
         }
 

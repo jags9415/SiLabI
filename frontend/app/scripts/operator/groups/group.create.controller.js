@@ -106,7 +106,7 @@
       }
 
       function create() {
-        if (vm.professor && vm.period && vm.year && vm.course && vm.group.number) {
+        if (!_.isEmpty(vm.professor) && !_.isEmpty(vm.period) && !_.isEmpty(vm.course) && vm.year &&  vm.group.number) {
           vm.period.year = vm.year;
           vm.group.period = vm.period;
           vm.group.course = vm.course.code;
