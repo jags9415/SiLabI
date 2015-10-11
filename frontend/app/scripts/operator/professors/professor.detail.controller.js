@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('ProfessorsDetailController', ProfessorsDetailController);
 
-    ProfessorsDetailController.$inject = ['$routeParams', '$location', 'ProfessorService', 'GenderService', 'MessageService'];
+    ProfessorsDetailController.$inject = ['$scope', '$routeParams', '$location', 'ProfessorService', 'GenderService', 'MessageService'];
 
-    function ProfessorsDetailController($routeParams, $location, ProfessorService, GenderService, MessageService) {
+    function ProfessorsDetailController($scope, $routeParams, $location, ProfessorService, GenderService, MessageService) {
         var vm = this;
         vm.username = $routeParams.username;
         vm.update = updateProfessor;
@@ -32,7 +32,7 @@
               vm.professor.password = hash;
             }
             ProfessorService.Update(vm.professor.id, vm.professor)
-            .then(setProfessor)
+            .then(handleUpdate)
             .catch(handleError);
           }
         }
@@ -58,6 +58,12 @@
 
         function redirectToProfessors() {
           $location.path("/Operador/Docentes");
+        }
+
+        function handleUpdate(professor) {
+          setProfessor(professor);
+          MessageService.success("Docente actualizado.");
+          $scope.$broadcast('show-errors-reset');
         }
 
         function handleError(data) {

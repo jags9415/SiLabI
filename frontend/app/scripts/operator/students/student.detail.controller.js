@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('StudentsDetailController', StudentsDetail);
 
-    StudentsDetail.$inject = ['$routeParams', '$location', 'StudentService', 'GenderService', 'MessageService', 'CryptoJS'];
+    StudentsDetail.$inject = ['$scope', '$routeParams', '$location', 'StudentService', 'GenderService', 'MessageService', 'CryptoJS'];
 
-    function StudentsDetail($routeParams, $location, StudentService, GenderService, MessageService, CryptoJS) {
+    function StudentsDetail($scope, $routeParams, $location, StudentService, GenderService, MessageService, CryptoJS) {
       var vm = this;
       vm.student = {};
       vm.username = $routeParams.username;
@@ -33,7 +33,7 @@
             vm.student.password = hash;
           }
           StudentService.Update(vm.student.id, vm.student)
-          .then(setStudent)
+          .then(handleUpdate)
           .catch(handleError);
         }
       }
@@ -61,6 +61,12 @@
 
       function redirectToStudents(result) {
         $location.path('/Operador/Estudiantes');
+      }
+
+      function handleUpdate(student) {
+        setStudent(student);
+        MessageService.success("Estudiante actualizado.");
+        $scope.$broadcast('show-errors-reset');
       }
 
       function handleError(data) {

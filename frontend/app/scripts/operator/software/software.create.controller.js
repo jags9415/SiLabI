@@ -21,7 +21,7 @@
         }
 
         function handleCreateSuccess(result) {
-          MessageService.success("Software creado con éxito.");
+          MessageService.success("Software creado.");
           vm.software = {};
           $scope.$broadcast('show-errors-reset');
         }

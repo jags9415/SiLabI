@@ -9,20 +9,19 @@
 
   function SoftwareDetailController($routeParams, $location, $scope, SoftwareService, MessageService) {
     var vm = this;
-    vm.software = {};
     vm.code = $routeParams.code;
-    vm.update = update;
+    vm.update = updateSoftware;
     vm.delete = deleteSoftware;
+
     activate();
 
-    function activate()
-    {
+    function activate() {
       SoftwareService.GetOne(vm.code)
       .then(setSoftware)
-    .catch(handleError);
+      .catch(handleError);
     }
 
-    function update() {
+    function updateSoftware() {
       if (vm.software) {
         SoftwareService.Update(vm.software.id, vm.software)
         .then(handleUpdateSuccess)
@@ -31,29 +30,29 @@
     }
 
     function deleteSoftware() {
-    if (vm.software) {
-      MessageService.confirm("¿Desea realmente eliminar este software?")
-      .then(function () {
-        SoftwareService.Delete(vm.software.id)
-        .then(redirectToSoftware)
-        .catch(handleError);
-        }
-      );
-    }
-  }
-
-    function setSoftware (data) {
-      vm.software = data;
+      if (vm.software) {
+        MessageService.confirm("¿Desea realmente eliminar este software?")
+        .then(function() {
+          SoftwareService.Delete(vm.software.id)
+          .then(redirectToSoftware)
+          .catch(handleError);
+          }
+        );
+      }
     }
 
-    function redirectToSoftware(result) {
-    $location.path('/Operador/Software');
-  }
+    function setSoftware(software) {
+      vm.software = software;
+    }
 
-    function handleUpdateSuccess(result) {
-      $location.url('/Operador/Software/' + result.code);
-      MessageService.success("Software actualizado con éxito.");
-      vm.software = {};
+    function redirectToSoftware() {
+      $location.path('/Operador/Software');
+    }
+
+    function handleUpdateSuccess(software) {
+      setSoftware(software);
+      MessageService.success("Software actualizado.");
+      $scope.$broadcast('show-errors-reset');
     }
 
     function handleError(error) {

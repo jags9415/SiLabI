@@ -38,7 +38,7 @@
     	}
 
       function handleCreateSuccess(data) {
-        MessageService.success("Docente creado con éxito.");
+        MessageService.success("Docente creado.");
 
         // Reset form data.
         vm.professor = {};

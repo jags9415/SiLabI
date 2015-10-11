@@ -51,7 +51,7 @@
         <div class="form-group">
           <label for="username" class="control-label">Tipo de Usuario</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
             <input type="text" class="form-control" id="type" name="type" ng-model="Profile.profile.type" readonly>
           </div>
         </div>
@@ -125,7 +125,7 @@
     </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-lg btn-info" ng-click="Profile.update()" ng-disabled="updateProfileForm.$invalid">
+        <button type="submit" class="btn btn-lg btn-primary" ng-click="Profile.update()" ng-disabled="updateProfileForm.$invalid">
           <i class="glyphicon glyphicon-floppy-disk"></i> Actualizar
         </button>
       </div>

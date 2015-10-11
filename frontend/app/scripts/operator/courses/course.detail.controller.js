@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('CourseDetailController', CourseDetail);
 
-    CourseDetail.$inject = ['$routeParams', '$location', 'CourseService', 'MessageService'];
+    CourseDetail.$inject = ['$scope', '$routeParams', '$location', 'CourseService', 'MessageService'];
 
-    function CourseDetail($routeParams, $location, CourseService, MessageService) {
+    function CourseDetail($scope, $routeParams, $location, CourseService, MessageService) {
       var vm = this;
       vm.course = {};
       vm.id = $routeParams.id;
@@ -25,7 +25,7 @@
       function updateCourse() {
         if (vm.id) {
           CourseService.Update(vm.course.id, vm.course)
-          .then(setCourse)
+          .then(handleUpdate)
           .catch(handleError);
         }
       }
@@ -48,6 +48,12 @@
 
       function redirectToCourses(result) {
         $location.path('/Operador/Cursos');
+      }
+
+      function handleUpdate(course) {
+        setCourse(course);
+        MessageService.success("Curso actualizado.");
+        $scope.$broadcast('show-errors-reset');
       }
 
       function handleError(data) {

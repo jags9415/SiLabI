@@ -21,7 +21,7 @@
         }
 
         function handleCreateSuccess(result) {
-          MessageService.success("Curso creado con éxito.");
+          MessageService.success("Curso creado.");
 
           // Reset form data.
           vm.course = {};

@@ -36,7 +36,7 @@
         }
 
         function handleCreateSuccess(result) {
-          MessageService.success("Estudiante creado con éxito.");
+          MessageService.success("Estudiante creado.");
 
           // Reset form data.
           vm.student = {};
