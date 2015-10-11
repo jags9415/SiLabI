@@ -155,6 +155,11 @@ function handleSuccess (data) {
   delete vm.available_dates;
   delete vm.available_hours;
   delete vm.software_list;
+  delete vm.selected_date;
+  delete vm.selected_software;
+  delete vm.selected_hour;
+  delete vm.selected_laboratory;
+  delete vm.group;
 }
 
 function handleError(data) {
