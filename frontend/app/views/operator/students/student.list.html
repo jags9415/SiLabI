@@ -70,7 +70,7 @@
     </div>
   </div>
   <div class="table-responsive">
-    <table class="table table-striped" ng-show="StudentList.isLoaded() && !StudentList.isEmpty()">
+    <table class="table table-striped">
       <thead>
         <tr>
           <th>Carné</th>
@@ -110,7 +110,7 @@
   </div>
   <p ng-show="StudentList.isLoaded() && StudentList.isEmpty()">No se encontraron resultados.</p>
   <br>
-  <div class="row">
+  <div class="row" ng-show="StudentList.totalPages > 1">
     <div class="col-xs-12 col-md-12 pagination">
       <pagination
         ng-change="StudentList.loadPage()" ng-model="StudentList.page" items-per-page="StudentList.limit"

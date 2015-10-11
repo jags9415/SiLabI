@@ -65,7 +65,7 @@
     </div>
   </div>
   <div class="table-responsive">
-    <table class="table table-striped" ng-show="true">
+    <table class="table table-striped">
       <thead>
         <tr>
           <th>Nombre</th>
@@ -99,7 +99,7 @@
   </div>
   <p ng-show="LabList.isLoaded() && LabList.isEmpty()">No se encontraron resultados.</p>
   <br>
-  <div class="row">
+  <div class="row" ng-show="LabList.totalPages > 1">
     <div class="col-xs-12 col-md-12 pagination">
       <pagination
         ng-change="LabList.loadPage()" ng-model="LabList.page" items-per-page="LabList.limit"

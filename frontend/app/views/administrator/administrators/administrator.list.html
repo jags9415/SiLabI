@@ -69,7 +69,7 @@
     </div>
   </div>
   <div class="table-responsive">
-    <table class="table table-striped" ng-show="AdminList.isLoaded() && !AdminList.isEmpty()">
+    <table class="table table-striped">
       <thead>
         <tr>
           <th>Usuario</th>
@@ -107,7 +107,7 @@
   </div>
   <p ng-show="AdminList.isLoaded() && AdminList.isEmpty()">No se encontraron resultados.</p>
   <br>
-  <div class="row">
+  <div class="row" ng-show="AdminList.totalPages > 1">
     <div class="col-xs-12 col-md-12 pagination">
       <pagination
         ng-change="AdminList.loadPage()" ng-model="AdminList.page" items-per-page="AdminList.limit"
