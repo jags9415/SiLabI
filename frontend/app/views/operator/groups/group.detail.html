@@ -25,17 +25,36 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="form-group" show-errors>
-        <label for="number">* Número</label>
-          <input type="number" class="form-control" min="0" id="number" name="number" placeholder="Número" ng-model="GroupDetail.group.number" required>
-          <p class="help-block" ng-if="updateGroupForm.number.$error.required">Cantidad de asientos requerida.</p>
-          <p class="help-block" ng-if="updateGroupForm.number.$error.number  || updateGroupForm.number.$error.min">Ingrese un número positivo.</p>
+        <div class="form-group">
+          <label for="period">* Periodo</label>
+          <ui-select id="period" ng-model="GroupDetail.group.period">
+            <ui-select-match placeholder="{{$select.selected.value + ' ' + $select.selected.type}}">
+              {{$select.selected.value + ' ' + $select.selected.type}}
+            </ui-select-match>
+            <ui-select-choices repeat="period in GroupDetail.periods | filter: $select.search" group-by="'type'">
+              <span ng-bind-html="period.value | highlight: $select.search"></span>
+              <span ng-bind-html="period.type | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
-          <label for="period">Periodo</label>
-          <input type="text" class="form-control" id="period" ng-value="GroupDetail.group.period.value + ' ' + GroupDetail.group.period.type + ' ' + GroupDetail.group.period.year" readonly>
+        <div class="form-group" show-errors>
+          <label for="year">* Año</label>
+          <input type="number" min="2000" class="form-control" id="year" name="year" ng-model="GroupDetail.year" required>
+          <p class="help-block" ng-if="updateGroupForm.year.$error.required">Año requerido.</p>
+          <p class="help-block" ng-if="updateGroupForm.year.$error.number">Ingrese un número.</p>
+          <p class="help-block" ng-if="updateGroupForm.year.$error.min">Ingrese un año posterior a 2000.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group" show-errors>
+        <label for="number">* Número</label>
+          <input type="number" class="form-control" min="0" id="number" name="number" placeholder="Número" ng-model="GroupDetail.group.number" required>
+          <p class="help-block" ng-if="updateGroupForm.number.$error.required">Número de grupo requerido.</p>
+          <p class="help-block" ng-if="updateGroupForm.number.$error.number  || updateGroupForm.number.$error.min">Ingrese un número positivo.</p>
         </div>
       </div>
     </div>

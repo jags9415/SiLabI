@@ -5,11 +5,12 @@
       .module('silabi')
       .controller('GroupDetailController', GroupDetailController);
 
-    GroupDetailController.$inject = ['$scope', '$routeParams', '$location', 'GroupService', 'ProfessorService', 'CourseService', 'StudentService', 'MessageService'];
+    GroupDetailController.$inject = ['$scope', '$routeParams', '$location', 'GroupService', 'ProfessorService', 'CourseService', 'StudentService', 'MessageService', 'PeriodService'];
 
-    function GroupDetailController($scope, $routeParams, $location, GroupService, ProfessorService, CourseService, StudentService, MessageService) {
+    function GroupDetailController($scope, $routeParams, $location, GroupService, ProfessorService, CourseService, StudentService, MessageService, PeriodService) {
       var vm = this;
       vm.group = {};
+      vm.periods = [];
       vm.students = [];
       vm.slicedStudents = [];
       vm.student = {};
@@ -43,6 +44,10 @@
       activate();
 
       function activate() {
+        PeriodService.GetAll()
+        .then(setPeriods)
+        .catch(handleError);
+
         GroupService.GetOne(vm.id, vm.groupRequest)
         .then(setGroup)
         .then(setStudents)
@@ -51,10 +56,13 @@
 
       function updateGroup() {
         if (vm.group) {
+          vm.group.period.year = vm.year;
+
           var request = {
               "number": vm.group.number,
               "professor": vm.group.professor.username,
-              "course": vm.group.course.code
+              "course": vm.group.course.code,
+              "period": vm.group.period
           };
 
           if (vm.isStudentsModified) {
@@ -143,12 +151,17 @@
         vm.group = group;
         vm.professor_name = group.professor.full_name;
         vm.course_name = group.course.name;
+        vm.year = group.period.year;
         return GroupService.GetStudents(vm.group.id, vm.studentRequest);
       }
 
       function setStudents(students) {
         vm.students = students;
         sliceStudents();
+      }
+
+      function setPeriods(periods) {
+        vm.periods = periods;
       }
 
       function showUpdate(group) {
