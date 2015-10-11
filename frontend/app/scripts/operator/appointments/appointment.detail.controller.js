@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('AppointmentDetailController', AppointmentDetailController);
 
-  AppointmentDetailController.$inject = ['$scope', 'AppointmentService', 'MessageService', 'StudentService', 'SoftwareService', 'LabService', '$location', '$routeParams'];
+  AppointmentDetailController.$inject = ['$scope', 'AppointmentService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', 'PeriodService', 'LabService', 'StateService', '$location', '$routeParams'];
 
-function AppointmentDetailController($scope, AppointmentService, MessageService, StudentService, SoftwareService, LabService, $location, $routeParams) {
+function AppointmentDetailController($scope, AppointmentService, AppointmentDateService, MessageService, StudentService, SoftwareService, PeriodService, LabService, StateService, $location, $routeParams) {
   var vm = this;
   vm.student = {};
   vm.software = {};
@@ -16,17 +16,26 @@ function AppointmentDetailController($scope, AppointmentService, MessageService,
   vm.courses = [];  
   vm.laboratories = [];
   vm.states = [];  
+  vm.groups = [];
+  vm.available_dates = [];
+  vm.available_hours = [];
+  vm.groups_request = {fields : "id,course"};
+  vm.software_request = {};
+  vm.selected_state = {};
 
-  vm.searchStudent = searchStudent;
+  vm.setAvailableHours = setAvailableHours;
+  vm.changeLaboratory = changeLaboratory;
+  vm.searchSoftware = searchSoftware;
+  vm.setSoftware = setSoftware;
   vm.fieldsReady = fieldsReady;
   vm.update = updateAppointment;
+  vm.delete = deleteAppointment;
 
   activate();
 
   function activate() {
     vm.id = $routeParams.id;
     getAppointment();
-    getSoftware();
     getLaboratories();
   }
 
@@ -41,22 +50,40 @@ function AppointmentDetailController($scope, AppointmentService, MessageService,
     return vm.laboratory  && vm.software && vm.date && vm.hour;
   }
 
-  function searchStudent()
-  {
-    if(vm.student_username)
-    {
-      StudentService.GetOne(vm.student_username)
-    .then(setStudent)
-    .catch(handleError);
-    }
+
+  function searchSoftware (input) {
+  vm.software_request.query = {};
+  vm.software_request.query.code = {
+    operation: "like",
+    value: '*' + input + '*'
   }
+  return SoftwareService.GetAll(vm.software_request)
+    .then(function(data) {
+      return data.results;
+    });
+}
 
-function getSoftware () {
 
-  SoftwareService.GetAll()
-  .then(setSoftware)
+function getGroups () {
+  var period = PeriodService.GetCurrentPeriod('Semestre');
+  vm.groups_request.query = {};
+  vm.groups_request.query["period.type"] = {
+    operation: "eq",
+    value: "Semestre"
+  };
+  vm.groups_request.query["period.value"] = {
+    operation: "eq",
+    value: period.value
+  };
+  vm.groups_request.query["period.year"] = {
+    operation: "eq",
+    value: period.year
+  };
+  StudentService.GetGroups(vm.student.username, vm.groups_request)
+  .then(setGroups)
   .catch(handleError);
 }
+
 
 function getStates () {
 StateService.GetAppointmentStates()
@@ -78,35 +105,77 @@ function getLaboratories () {
 function setAppointment (data) {
   vm.appointment = data;
   vm.student = data.student;
+  console.log(vm.student.username);
   vm.date = data.date;
   vm.laboratory = data.laboratory;
   vm.software = data.software;
-  var i = data.date.indexOf("T");
-  var date_day = data.date.substring(0, i);
-  var date_hour = data.date.substring(i+1, data.date.length - 7);
-  vm.hour = date_hour;  
+  getGroups();
+  getAvailableDates();
+  getStates();
 }
 
 function setLaboratories (data) {
   vm.laboratories = data.results;
 }
 
-function setSoftware(data) {
-vm.software_list = data.results;
+function setSoftware (data) {
+  vm.selected_software = data;
+}
+
+function setGroups (groups) {
+  vm.groups = groups;
+}
+
+function getAvailableDates()
+{
+  if(vm.student.username)
+  {
+    AppointmentService.GetAvailable(vm.request, vm.student.username)
+    .then(setAvailableDates)
+  .catch(handleError);
+  }
+}
+
+function setAvailableDates (dates) {
+  vm.available_dates = AppointmentDateService.ParseAvailableDates(dates);
+}
+
+
+function setAvailableHours() {
+  if(vm.selected_date)
+  {
+    vm.available_hours = vm.selected_date.hoursByLab;
+  }
+}
+
+function changeLaboratory () {
+  if(vm.selected_hour)
+  {
+    vm.selected_laboratory = vm.selected_hour.laboratory;
+  }
 }
 
 function updateAppointment () {
-  var date = new Date(vm.date.getFullYear(), vm.date.getMonth(), vm.date.getUTCDate(), vm.hour.slice(0, 2));
-  console.log(date.toJSON());
   var app =
   {
-    "laboratory": vm.laboratory.name,
+    "laboratory": vm.selected_laboratory.name,
     "software": vm.software.code,
-    "date": date.toJSON()
+    "date": vm.selected_date.day+"T"+vm.selected_hour.hour+":00.000",
+    "group": vm.group.id,
+    "state": vm.selected_state.name
   }
   AppointmentService.Update(vm.id, app)
   .then(handleSuccess)
   .catch(handleError);
+}
+
+function deleteAppointment() {
+  MessageService.confirm("¿Desea realmente eliminar esta cita?")
+  .then(function() {
+    AppointmentService.Delete(vm.id)
+    .then(loadPage)
+    .catch(handleError);
+  });
 }
 
 function handleSuccess (data) {

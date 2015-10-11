@@ -1,73 +1,115 @@
 <div>
-  <h2>Ver Cita</h2>
+  <h2>Agregar Cita</h2>
   <hr>
   <ol class="breadcrumb">
     <li><a href="#/">Inicio</a></li>
     <li><a href="#Operador/Citas">Citas</a></li>
-    <li class="active">Detalle</li>
+    <li class="active">Ver Cita</li>
   </ol>
   <form>
-  <div class="row">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="form-group">
           <label for="name">Estudiante</label>
-          <input class="form-control" type="text" ng-model="AppointmentDetail.student.full_name" readonly>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="lab" class="control-label">* Laboratorio</label>
-          <ui-select id="lab" ng-model="AppointmentDetail.laboratory.name">
-            <ui-select-match placeholder="{{AppointmentDetail.laboratory.name}}">
-              {{ $select.selected}}
-            </ui-select-match>
-            <ui-select-choices repeat="lab in AppointmentDetail.laboratories">
-              <span ng-bind-html="lab.name"></span>
-            </ui-select-choices>
-          </ui-select>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
+            <input class="form-control" type="text" ng-model="AppointmentDetail.student.full_name" readonly>
+          </div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">* Fecha</label>
-          <input ui-date class="form-control" id="date" placeholder="Seleccionar" name="date" ng-model="AppointmentDetail.date">
+          <label for="name">Fechas Disponiles</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
+            <ui-select id="course" ng-model="AppointmentDetail.selected_date" on-select="AppointmentDetail.setAvailableHours()">
+              <ui-select-match placeholder="{{$select.selected.day}}">
+                {{$select.selected.day}}
+              </ui-select-match>
+              <ui-select-choices repeat="date in AppointmentDetail.available_dates | filter: $select.search">
+                <span ng-bind-html="date.day | date : 'fullDate' | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">* Hora</label>
-          <input type="text" class="form-control" id="hour" name="hour" ng-model="AppointmentDetail.hour" ui-mask="99:99">
+          <label for="name">Horas Disponibles</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
+            <ui-select id="course" ng-model="AppointmentDetail.selected_hour" on-select="AppointmentDetail.changeLaboratory()">
+              <ui-select-match placeholder="{{$select.selected.hour}}">
+                {{$select.selected.full_date | date: 'mediumTime'}}
+              </ui-select-match>
+              <ui-select-choices repeat="hour in AppointmentDetail.available_hours | filter: $select.search">
+                <span ng-bind-html="hour.full_date | date : 'mediumTime' | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="course">* Estado</label>
-          <ui-select id="course" ng-model="AppointmentDetail.appointment.state">
-            <ui-select-match placeholder="{{$select.selected}}">
-              {{$select.selected}}
-            </ui-select-match>
-            <ui-select-choices repeat="state in AppointmentDetail.states ">
-              <span ng-bind-html="state.name "></span>
-            </ui-select-choices>
-          </ui-select>
+          <label for="course">Grupo</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
+            <ui-select id="course" ng-model="AppointmentDetail.group">
+              <ui-select-match placeholder="{{$select.selected.course.name}}">
+                {{$select.selected.course.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="group in AppointmentDetail.groups | filter: $select.search">
+                <span ng-bind-html="group.course.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="software">* Software</label>
-          <ui-select id="software" ng-model="AppointmentDetail.software.code">
-            <ui-select-match placeholder="{{AppointmentDetail.software.code}}">
-              {{$select.selected}}
-            </ui-select-match>
-            <ui-select-choices repeat="sf in AppointmentDetail.software_list | filter: $select.search">
-              <span ng-bind-html="sf.code | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
+          <label for="software">Software</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list-alt"></i></span>
+            <input class="form-control" placeholder="Buscar Software" name="searchInput" type="text" typeahead="software.code for software in AppointmentDetail.searchSoftware($viewValue)" typeahead-on-select="AppointmentDetail.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentDetail.selected_software">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="lab">Laboratorio</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-home"></i></span>
+            <ui-select id="lab" ng-model="AppointmentDetail.selected_laboratory">
+              <ui-select-match placeholder="{{$select.selected.name}}">
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="lab in AppointmentDetail.laboratories | filter: $select.search">
+                <span ng-bind-html="lab.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="lab">Estado</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-home"></i></span>
+            <ui-select id="lab" ng-model="AppointmentDetail.selected_state">
+              <ui-select-match placeholder="{{$select.selected.name}}">
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="state in AppointmentDetail.states | filter: $select.search">
+                <span ng-bind-html="state.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
         </div>
       </div>
     </div>
