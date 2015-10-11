@@ -5,15 +5,9 @@
         .module('silabi')
         .controller('GroupCreateController', GroupCreateController);
 
-<<<<<<< HEAD
-    GroupCreateController.$inject = ['GroupService', 'CourseService', 'StudentService', 'ProfessorService', 'PeriodService', 'MessageService', '$location', '$localStorage'];
-
-    function GroupCreateController(GroupService, CourseService, StudentService, ProfessorService, PeriodService, MessageService, $location, $localStorage) {
-=======
     GroupCreateController.$inject = ['$scope', 'GroupService', 'CourseService', 'StudentService', 'ProfessorService', 'PeriodService', 'MessageService'];
 
     function GroupCreateController($scope, GroupService, CourseService, StudentService, ProfessorService, PeriodService, MessageService) {
->>>>>>> a0a143747d134abb687b233ab2cbece3e99ef4f6
       var vm = this;
 
       vm.group = {};
@@ -21,18 +15,11 @@
       vm.course = {};
       vm.periods = [];
       vm.students = [];
-<<<<<<< HEAD
-      vm.current_page = [];
-=======
       vm.slicedStudents = [];
       vm.page = 1;
       vm.limit = 15;
->>>>>>> a0a143747d134abb687b233ab2cbece3e99ef4f6
       vm.currentYear = new Date().getFullYear();
       vm.year = vm.currentYear;
-      vm.totalItems = 10;
-      vm.limit = 10;
-      vm.page = 1;
 
       vm.studentRequest = {
         fields: "id,username,full_name"
@@ -48,17 +35,11 @@
       vm.searchStudent = searchStudent;
       vm.create = create;
       vm.deleteStudent = deleteStudent;
-<<<<<<< HEAD
-      vm.fieldsReady = fieldsReady;
-      vm.loadPage = loadPage;
-=======
->>>>>>> a0a143747d134abb687b233ab2cbece3e99ef4f6
 
       activate();
 
       function activate() {
         getPeriods();
-        updateStudentsList();
       }
 
       function getPeriods() {
@@ -151,27 +132,6 @@
         vm.professor = user;
       }
 
-<<<<<<< HEAD
-      function setStudent(user) {
-        if(!contains(user)) {
-          vm.students.push(user);
-          updateStudentsList();
-          $localStorage['current_array'] = vm.students;
-        }
-      }
-
-      function loadPage() {
-        $location.search('page', vm.page);
-      }
-
-      function updateStudentsList() {
-        var start = (vm.page - 1) * 10; 
-        var end = vm.page * 10;
-        vm.current_page = vm.students.slice(start, end);
-        if(vm.totalItems < vm.students.length)
-        {
-          vm.totalItems += 10;
-=======
       function addStudent(user) {
         if (!contains(user)) {
           vm.students.unshift(user);
@@ -180,7 +140,6 @@
         }
         else {
           MessageService.info("El estudiante seleccionado ya se encuentra en la lista.")
->>>>>>> a0a143747d134abb687b233ab2cbece3e99ef4f6
         }
       }
 
