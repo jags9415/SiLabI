@@ -33,7 +33,7 @@
           controller: 'LoginController',
           controllerAs: 'Auth'
         })
-        .when('/Profile', {
+        .when('/Perfil', {
           templateUrl: 'views/shared/profile/profile.html',
           controller: 'ProfileController',
           controllerAs: 'Profile'
