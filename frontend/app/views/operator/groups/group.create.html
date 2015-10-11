@@ -102,7 +102,7 @@
       </table>
     </div>
     <div class="row" ng-show="GroupCreate.students.length > GroupCreate.limit">
-      <div class="col-md-12 pagination">
+      <div class="col-xs-12 col-md-12 pagination">
         <pagination
           ng-model="GroupCreate.page" items-per-page="GroupCreate.limit" total-items="GroupCreate.students.length"
           ng-change="GroupCreate.sliceStudents()" max-size="5" boundary-links="true" rotate="true"
@@ -111,7 +111,7 @@
       </div>
     </div>
     <div class="row" style="margin-top: 3%;">
-      <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
+      <div class="col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-lg btn-success" ng-click="GroupCreate.create()" ng-disabled="createGroupForm.$invalid">
           <i class="glyphicon glyphicon-plus"></i> Agregar
         </button>

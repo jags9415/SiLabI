@@ -7,7 +7,7 @@
   </ol>
   <div class="table-search" style="margin-bottom: 3%;">
     <div class="row">
-      <div class="col-md-10 col-xs-10">
+      <div class="col-md-10 col-xs-9">
         <form class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
@@ -100,7 +100,7 @@
   <p ng-show="LabList.isLoaded() && LabList.isEmpty()">No se encontraron resultados.</p>
   <br>
   <div class="row">
-    <div class="col-md-12 pagination">
+    <div class="col-xs-12 col-md-12 pagination">
       <pagination
         ng-change="LabList.loadPage()" ng-model="LabList.page" items-per-page="LabList.limit"
         total-items="LabList.totalItems" max-size="5" boundary-links="true" rotate="true"

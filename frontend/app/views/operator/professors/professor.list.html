@@ -104,7 +104,7 @@
     <p ng-show="ProfessorList.isLoaded() && ProfessorList.isEmpty()">No se encontraron resultados.</p>
     <br><br>
     <div class="row">
-    <div class="col-md-12 pagination">
+    <div class="col-xs-12 col-md-12 pagination">
       <pagination
         ng-change="ProfessorList.loadPage()" ng-model="ProfessorList.page" items-per-page="ProfessorList.limit"
         total-items="ProfessorList.totalItems" max-size="5" boundary-links="true" rotate="true"

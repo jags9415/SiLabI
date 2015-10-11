@@ -112,7 +112,7 @@
     </table>
   </div>
   <div class="row" ng-show="GroupDetail.students.length > GroupDetail.limit">
-    <div class="col-md-12 pagination">
+    <div class="col-xs-12 col-md-12 pagination">
       <pagination
         ng-model="GroupDetail.page" items-per-page="GroupDetail.limit" total-items="GroupDetail.students.length"
         ng-change="GroupDetail.sliceStudents()" max-size="5" boundary-links="true" rotate="true"
@@ -121,12 +121,12 @@
     </div>
   </div>
   <div class="row" style="margin-top: 3%;">
-      <div class="col-md-6 text-center">
+      <div class="col-xs-6 col-md-6 text-center">
         <button type="submit" class="btn btn-lg btn-info" ng-click="GroupDetail.update()" ng-disabled="updateGroupForm.$invalid">
           <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
         </button>
       </div>
-      <div class="col-md-6 text-center">
+      <div class="col-xs-6 col-md-6 text-center">
         <button type="submit" class="btn btn-lg btn-danger" ng-click="GroupDetail.delete()">
           <i class="glyphicon glyphicon-trash"></i> Eliminar
         </button>

@@ -78,7 +78,7 @@
       </table>
     </div>
     <div class="row" ng-show="LabDetail.software.length > LabDetail.limit">
-      <div class="col-md-12 pagination">
+      <div class="col-xs-12 col-md-12 pagination">
         <pagination
           ng-model="LabDetail.page" items-per-page="LabDetail.limit" total-items="LabDetail.software.length"
           ng-change="LabDetail.sliceSoftware()" max-size="5" boundary-links="true" rotate="true"
@@ -87,12 +87,12 @@
       </div>
     </div>
     <div class="row" style="margin-top: 3%;">
-      <div class="col-md-6 text-center">
+      <div class="col-xs-6 col-md-6 text-center">
         <button type="submit" class="btn btn-lg btn-info" ng-click="LabDetail.update()" ng-disabled="updateLabForm.$invalid">
           <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
         </button>
       </div>
-      <div class="col-md-6 text-center">
+      <div class="col-xs-6 col-md-6 text-center">
         <button type="submit" class="btn btn-lg btn-danger" ng-click="LabDetail.delete()">
           <i class="glyphicon glyphicon-trash"></i> Eliminar
         </button>
