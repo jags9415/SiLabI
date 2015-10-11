@@ -10,8 +10,7 @@
 function AppointmentDetailController($scope, AppointmentService, AppointmentDateService, MessageService, StudentService, SoftwareService, PeriodService, LabService, StateService, $location, $routeParams) {
   var vm = this;
   vm.student = {};
-  vm.software = {};
-  vm.laboratory = {};
+  vm.selected_software = {};
   vm.software_list = [];
   vm.courses = [];  
   vm.laboratories = [];
@@ -22,6 +21,7 @@ function AppointmentDetailController($scope, AppointmentService, AppointmentDate
   vm.groups_request = {fields : "id,course"};
   vm.software_request = {};
   vm.selected_state = {};
+  vm.selected_laboratory = {};
 
   vm.setAvailableHours = setAvailableHours;
   vm.changeLaboratory = changeLaboratory;
@@ -93,6 +93,7 @@ StateService.GetAppointmentStates()
 
 function setStates(states) {
   vm.states = states;
+  getSelectedState();
 }
 
 function getLaboratories () {
@@ -102,16 +103,29 @@ function getLaboratories () {
   .catch(handleError);
 }
 
+function getSelectedState()
+{
+  for (var i = 0; i < vm.states.length; i++) 
+  {
+    if(vm.states[i].name === vm.appointment.state)
+    {
+      vm.selected_state = vm.states[i];
+      return;
+    } 
+  }
+}
+
 function setAppointment (data) {
   vm.appointment = data;
   vm.student = data.student;
-  console.log(vm.student.username);
   vm.date = data.date;
-  vm.laboratory = data.laboratory;
-  vm.software = data.software;
+  vm.selected_laboratory = data.laboratory;
+  vm.selected_software = data.software;
+  vm.group = data.group;
   getGroups();
   getAvailableDates();
   getStates();
+  vm.selected_date = vm.appointment.date.substring(0, vm.appointment.date.indexOf("T"));
 }
 
 function setLaboratories (data) {
@@ -124,6 +138,7 @@ function setSoftware (data) {
 
 function setGroups (groups) {
   vm.groups = groups;
+  console.log(vm.groups);
 }
 
 function getAvailableDates()
@@ -156,11 +171,15 @@ function changeLaboratory () {
 }
 
 function updateAppointment () {
+  if(vm.selected_date && vm.selected_hour)
+  {
+    vm.date = vm.selected_date.day+"T"+vm.selected_hour.hour+":00.000";
+  }
   var app =
   {
     "laboratory": vm.selected_laboratory.name,
-    "software": vm.software.code,
-    "date": vm.selected_date.day+"T"+vm.selected_hour.hour+":00.000",
+    "software": vm.selected_software.code,
+    "date": vm.date,
     "group": vm.group.id,
     "state": vm.selected_state.name
   }
@@ -173,9 +192,13 @@ function deleteAppointment() {
   MessageService.confirm("¿Desea realmente eliminar esta cita?")
   .then(function() {
     AppointmentService.Delete(vm.id)
-    .then(loadPage)
+    .then(redirectPage)
     .catch(handleError);
   });
+}
+
+function redirectPage () {
+  $location.path("/Operador/Citas");
 }
 
 function handleSuccess (data) {
