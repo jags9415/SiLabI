@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('GroupCreateController', GroupCreateController);
 
-    GroupCreateController.$inject = ['GroupService', 'CourseService', 'StudentService', 'ProfessorService', 'PeriodService', 'MessageService'];
+    GroupCreateController.$inject = ['GroupService', 'CourseService', 'StudentService', 'ProfessorService', 'PeriodService', 'MessageService', '$location', '$localStorage'];
 
-    function GroupCreateController(GroupService, CourseService, StudentService, ProfessorService, PeriodService, MessageService) {
+    function GroupCreateController(GroupService, CourseService, StudentService, ProfessorService, PeriodService, MessageService, $location, $localStorage) {
       var vm = this;
 
       vm.group = {};
@@ -15,8 +15,12 @@
       vm.course = {};
       vm.periods = [];
       vm.students = [];
+      vm.current_page = [];
       vm.currentYear = new Date().getFullYear();
       vm.year = vm.currentYear;
+      vm.totalItems = 10;
+      vm.limit = 10;
+      vm.page = 1;
 
       vm.getProfessors = getProfessors;
       vm.getCourses = getCourses;
@@ -28,11 +32,13 @@
       vm.create = create;
       vm.deleteStudent = deleteStudent;
       vm.fieldsReady = fieldsReady;
+      vm.loadPage = loadPage;
 
       activate();
 
       function activate() {
         getPeriods();
+        updateStudentsList();
       }
 
       function fieldsReady () {
@@ -134,6 +140,22 @@
       function setStudent(user) {
         if(!contains(user)) {
           vm.students.push(user);
+          updateStudentsList();
+          $localStorage['current_array'] = vm.students;
+        }
+      }
+
+      function loadPage() {
+        $location.search('page', vm.page);
+      }
+
+      function updateStudentsList() {
+        var start = (vm.page - 1) * 10; 
+        var end = vm.page * 10;
+        vm.current_page = vm.students.slice(start, end);
+        if(vm.totalItems < vm.students.length)
+        {
+          vm.totalItems += 10;
         }
       }
 

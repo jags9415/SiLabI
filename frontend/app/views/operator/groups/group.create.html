@@ -86,7 +86,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="student in GroupCreate.students">
+        <tr ng-repeat="student in GroupCreate.current_page">
           <td>{{ student.username }}</td>
           <td>{{ student.full_name }}</td>
           <td style="text-align: center">
@@ -100,6 +100,15 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="row">
+    <div class="col-md-12 pagination" ng-show="GroupCreate.students.length > 0">
+      <pagination
+        ng-change="GroupCreate.loadPage()" ng-model="GroupCreate.page" items-per-page="GroupCreate.limit"
+        total-items="GroupCreate.totalItems" max-size="5" boundary-links="true" rotate="true"
+        previous-text="<" next-text=">" first-text="<<" last-text=">>"
+      ></pagination>
+    </div>
   </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
