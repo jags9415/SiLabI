@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('AppointmentCreateController', AppointmentCreateController);
 
-  AppointmentCreateController.$inject = ['$scope', 'AppointmentService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', 'LabService', '$location'];
+  AppointmentCreateController.$inject = ['$scope', 'AppointmentService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', 'PeriodService', 'LabService', '$location'];
 
-function AppointmentCreateController($scope, AppointmentService, AppointmentDateService, MessageService, StudentService, SoftwareService, LabService, $location) {
+function AppointmentCreateController($scope, AppointmentService, AppointmentDateService, MessageService, StudentService, SoftwareService, PeriodService, LabService, $location) {
   var vm = this;
   vm.student = {};
   vm.software_list = [];
@@ -55,6 +55,20 @@ function getLaboratories () {
 }
 
 function getGroups () {
+  var period = PeriodService.GetCurrentPeriod('Semestre');
+  vm.groups_request.query = {};
+  vm.groups_request.query["period.type"] = {
+    operation: "eq",
+    value: "Semestre"
+  };
+  vm.groups_request.query["period.value"] = {
+    operation: "eq",
+    value: period.value
+  };
+  vm.groups_request.query["period.year"] = {
+    operation: "eq",
+    value: period.year
+  };
   StudentService.GetGroups(vm.student_username, vm.groups_request)
   .then(setGroups)
   .catch(handleError);
