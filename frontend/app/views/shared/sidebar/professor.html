@@ -1,21 +1,9 @@
 <div class="navbar-inverse sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse" collapse="Nav.collapsed" ng-click="Nav.collapsed = true">
         <ul class="nav" id="side-menu">
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-            <li><a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
+          <li ng-class="{'active' : SideBar.isActive('/Docente/Reservaciones')}">
+            <a href=""><i class="glyphicon glyphicon-calendar"></i> Reservaciones</a>
+          </li>
         </ul>
     </div>
-    <!-- /.sidebar-collapse -->
 </div>
-<!-- /.navbar-static-side -->

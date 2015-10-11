@@ -13,7 +13,7 @@
         .when('/', {
           resolve: { load: handleHomeRedirect }
         })
-        .when('/About', {
+        .when('/Acerca', {
           templateUrl: 'views/public/about.html'
         })
         .when('/Administrador', {
