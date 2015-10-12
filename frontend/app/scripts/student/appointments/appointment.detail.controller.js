@@ -5,22 +5,23 @@
       .module('silabi')
       .controller('StudentAppDetailController', AppointmentDetailController);
 
-  AppointmentDetailController.$inject = ['StudentAppService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', '$routeParams'];
+  AppointmentDetailController.$inject = ['StudentAppService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', '$routeParams', '$localStorage'];
 
-function AppointmentDetailController(StudentAppService, AppointmentDateService, MessageService, StudentService, SoftwareService, $routeParams) {
+function AppointmentDetailController(StudentAppService, AppointmentDateService, MessageService, StudentService, SoftwareService, $routeParams, $localStorage) {
 
   var vm = this;
   vm.software = {};
   vm.software_list = [];
   vm.courses = [];
   vm.states = [];
+  vm.$storage = $localStorage;
 
   vm.update = updateAppointment;
 
   activate();
 
   function activate() {
-    vm.student_id = $routeParams.student_id;
+    vm.student_id = vm.$storage['username'];
     vm.app_id = $routeParams.app_id;
     getAppointment();
     getSoftware();

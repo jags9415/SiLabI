@@ -189,18 +189,18 @@
           controller: 'AppointmentCurrentController',
           controllerAs: 'AppointmentCurrent'
         })
-        .when('/Estudiante/:student_id/Citas', {
+        .when('/Estudiante/Citas', {
           templateUrl: 'views/student/appointments/appointment.list.html',
           controller: 'StudentAppListController',
           controllerAs: 'AppointmentList',
           reloadOnSearch: false
         })
-        .when('/Estudiante/:student_id/Citas/Agregar', {
+        .when('/Estudiante/Citas/Agregar', {
           templateUrl: 'views/student/appointments/appointment.create.html',
           controller: 'StudentAppCreateController',
           controllerAs: 'AppointmentCreate'
         })
-        .when('/Estudiante/:student_id/Citas/:app_id', {
+        .when('/Estudiante/Citas/:app_id', {
           templateUrl: 'views/student/appointments/appointment.detail.html',
           controller: 'StudentAppDetailController',
           controllerAs: 'AppointmentDetail'

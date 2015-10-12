@@ -20,11 +20,5 @@
 
     function studentsSidebarController($location, $localStorage) {
       var vm = this;
-      vm.goToAppointments = goToAppointments;
-
-      function goToAppointments() {
-        var student_id = $localStorage['username'];
-        $location.path('Estudiante/' + student_id + '/Citas');
-      }
     }
 })();

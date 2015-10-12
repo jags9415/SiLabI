@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('StudentAppCreateController', AppointmentCreateController);
 
-  AppointmentCreateController.$inject = ['StudentAppService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', '$routeParams'];
+  AppointmentCreateController.$inject = ['StudentAppService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', '$localStorage'];
 
-  function AppointmentCreateController(StudentAppService, AppointmentDateService, MessageService, StudentService, SoftwareService, $routeParams) {
+  function AppointmentCreateController(StudentAppService, AppointmentDateService, MessageService, StudentService, SoftwareService, $localStorage) {
     var vm = this;
     vm.software_list = [];
     vm.groups = [];
@@ -20,6 +20,7 @@
     vm.groups_request = {
       fields : "id,course"
     };
+    vm.$storage = $localStorage;
 
     vm.fieldsReady = fieldsReady;
     vm.create = createAppointment;
@@ -29,7 +30,7 @@
     activate();
 
     function activate() {
-      vm.student_id = $routeParams.student_id;
+      vm.student_id = vm.$storage['username'];
       getAvailableDates();
       getGroups();
       getSoftware();

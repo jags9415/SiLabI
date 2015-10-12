@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('StudentAppListController', AppointmentListController);
 
-    AppointmentListController.$inject = ['$routeParams','StudentAppService', '$localStorage','MessageService', 'StateService', '$location'];
+    AppointmentListController.$inject = ['StudentAppService', '$localStorage','MessageService', 'StateService', '$location'];
 
-  function AppointmentListController($routeParams, StudentAppService, $localStorage, MessageService, StateService, $location) {
+  function AppointmentListController(StudentAppService, $localStorage, MessageService, StateService, $location) {
     var vm = this;
     vm.advanceSearch = false;
     vm.loaded = false;
@@ -21,7 +21,8 @@
       fields : "id,laboratory,state,software,date"
     };
     vm.states = [];
-    vm.student_id = $routeParams.student_id;
+    vm.$storage = $localStorage;
+    vm.student_id = vm.$storage['username'];
 
     vm.open = openAppointment;
     vm.delete = deleteAppointment;
@@ -61,7 +62,7 @@
     }
 
     function openAppointment(id) {
-      $location.url('/Estudiante/' + vm.student_id + '/Citas/' + id);
+      $location.url('/Estudiante/Citas/' + id);
     }
 
     function searchAppointment() {
