@@ -208,7 +208,7 @@
         .when('/Docente/Reservaciones', {
           templateUrl: 'views/professor/reservations/reservation.list.html',
           controller: 'ProfessorReservationListController',
-          controllerAs: 'ProfessorReservationList'
+          controllerAs: 'ProfessorReservationList',
           reloadOnSearch: false
         })
         .when('/404', {
