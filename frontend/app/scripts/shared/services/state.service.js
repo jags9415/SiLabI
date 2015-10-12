@@ -15,6 +15,7 @@
       this.GetGroupStates = GetGroupStates;
       this.GetLabStates = GetLabStates;
       this.GetAppointmentStates = GetAppointmentStates;
+      this.GetReservationStates = GetReservationStates;
 
       function GetStudentStates() {
         var defer = $q.defer();
