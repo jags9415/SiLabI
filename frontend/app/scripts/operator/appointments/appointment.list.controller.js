@@ -96,7 +96,7 @@
     if (vm.searched.software) {
       vm.request.query['software.code'] = {
         operation: "like",
-        value: vm.searched.software.replace(' ', '*') + '*'
+        value: '*' + vm.searched.software.replace(' ', '*') + '*'
       }
     }
 
