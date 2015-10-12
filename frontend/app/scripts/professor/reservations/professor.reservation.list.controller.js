@@ -151,7 +151,7 @@
     function deleteReservation(id) {
       MessageService.confirm("¿Desea realmente eliminar esta reservación?")
       .then(function() {
-        ProfessorReservationService.Delete(id)
+        ProfessorReservationService.Delete(vm.username, id)
         .then(loadPage)
         .catch(handleError);
       });
