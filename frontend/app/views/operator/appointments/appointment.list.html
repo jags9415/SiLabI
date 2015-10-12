@@ -105,8 +105,8 @@
           <td>{{ app.laboratory.name }}</td>
           <td>
               <span class="label"
-              ng-class="{ 'label-primary': app.state === 'Por iniciar',
-                          'label-success': app.state === 'Finalizada',
+              ng-class="{ 'label-success': app.state === 'Por iniciar',
+                          'label-warning': app.state === 'Finalizada',
                           'label-danger': app.state === 'Cancelada'}" >
               {{ app.state }}
             </span>

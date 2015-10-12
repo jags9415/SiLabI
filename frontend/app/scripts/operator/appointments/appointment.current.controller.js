@@ -26,7 +26,7 @@
     vm.loadHours = loadHours;
 
     vm.request = {
-      fields : "id,attendance,student.username,student.full_name,software.name",
+      fields : "id,state,attendance,student.username,student.full_name,software.name",
       sort: [{field: "student.name"}],
       query: {}
     };
@@ -65,6 +65,8 @@
     }
 
     function loadAppointments() {
+      vm.request.query = {};
+
       vm.request.query["state"] = {
         operation: 'ne',
         value: 'Cancelada'

@@ -28,7 +28,7 @@
                 <a href="">
                   <div class="input-group" style="padding-bottom: 2%;">
                     <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-                    <datepicker-popup class="form-control" ng-model="AppointmentCurrent.selected_date" max-date="AppointmentCurrent.today" ng-change="AppointmentCurrent.loadHours()" show-weeks="false" ng-click="AppointmentCurrent.openDatePicker()" date-disabled="AppointmentCurrent.isDisabledDate(date, mode)" is-open="AppointmentCurrent.opened" close-text="Cerrar" clear-text="Limpiar" current-text="Hoy" style="background-color: white;" readonly>{{ AppointmentCurrent.selected_date | date: 'fullDate' }}</datepicker-popup>
+                    <datepicker-popup class="form-control" ng-model="AppointmentCurrent.selected_date"  ng-change="AppointmentCurrent.loadHours()" show-weeks="false" ng-click="AppointmentCurrent.openDatePicker()" date-disabled="AppointmentCurrent.isDisabledDate(date, mode)" is-open="AppointmentCurrent.opened" close-text="Cerrar" clear-text="Limpiar" current-text="Hoy" style="background-color: white;" readonly>{{ AppointmentCurrent.selected_date | date: 'fullDate' }}</datepicker-popup>
                   </div>
                 </a>
               </div>
@@ -72,10 +72,10 @@
           <td>{{ app.student.full_name }}</td>
           <td>{{ app.software.name }}</td>
           <td style="text-align: center">
-            <a class='btn btn-success' ng-class="{'active font-bold': app.attendance}" ng-click="AppointmentCurrent.mark(app.id, true)">
+            <a class='btn btn-success' ng-class="{'active font-bold': app.attendance && app.state == 'Finalizada'}" ng-click="AppointmentCurrent.mark(app.id, true)">
               <span class="glyphicon glyphicon-ok"></span> Presente
             </a>
-            <a class="btn btn-danger" ng-class="{'active font-bold': !app.attendance}" ng-click="AppointmentCurrent.mark(app.id, false)">
+            <a class="btn btn-danger" ng-class="{'active font-bold': !app.attendance && app.state == 'Finalizada'}" ng-click="AppointmentCurrent.mark(app.id, false)">
               <span class="glyphicon glyphicon-remove"></span> Ausente
             </a>
           </td>

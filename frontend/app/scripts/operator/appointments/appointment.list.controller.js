@@ -21,7 +21,7 @@
     vm.request = {
       fields : "id,date,state,student.username,laboratory.name,software.code",
       sort: [
-        {field: "date", type: "DESC"},
+        {field: "date", type: "ASC"},
         {field: "laboratory.name", type: "ASC"},
         {field: "software.code", type: "ASC"},
       ]

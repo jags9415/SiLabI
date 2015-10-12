@@ -136,7 +136,7 @@
 
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-6 text-center">
-        <button type="submit" class="btn btn-lg btn-primary" ng-click="AppointmentDetail.update()">
+        <button type="submit" class="btn btn-lg btn-primary" ng-click="AppointmentDetail.update()" ng-disabled="!AppointmentDetail.fieldsReady()">
           <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
         </button>
       </div>

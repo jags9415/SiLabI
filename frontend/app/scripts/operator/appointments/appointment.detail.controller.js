@@ -66,7 +66,7 @@
     }
 
     function fieldsReady () {
-      return vm.laboratory  && vm.software && vm.date && vm.hour;
+      return !_.isEmpty(vm.appointment) && !_.isEmpty(vm.appointment.software);
     }
 
     function searchSoftware (input) {
@@ -147,25 +147,46 @@
 
     function setAvailableDates (dates) {
       vm.available_dates = AppointmentDateService.ParseAvailableDates(dates);
+      vm.selected_date = null;
 
       for (var i = 0; i < vm.available_dates.length; i++) {
         if (moment(vm.available_dates[i].day).isSame(vm.appointment.date, 'day')) {
           vm.selected_date = vm.available_dates[i];
           setAvailableHours();
-          return;
+          break;
         }
+      }
+
+      if (!vm.selected_date) {
+        var current = {
+          day: moment(vm.appointment.date).format("YYYY-MM-DD"),
+          hoursByLab: [{
+            full_date: vm.appointment.date,
+            hour: moment(vm.appointment.date).format("HH:mm"),
+            laboratory: vm.appointment.laboratory
+          }]
+        };
+
+        vm.available_dates.unshift(current);
+        vm.selected_date = vm.available_dates[0];
+        setAvailableHours();
       }
     }
 
     function setAvailableHours() {
       if (vm.selected_date) {
         vm.available_hours = vm.selected_date.hoursByLab;
+        vm.selected_hour = null;
 
         for (var i = 0; i < vm.available_hours.length; i++) {
           if (moment(vm.available_hours[i].full_date).isSame(vm.appointment.date, 'hour')) {
             vm.selected_hour = vm.available_hours[i];
-            return;
+            break;
           }
+        }
+
+        if (!vm.selected_hour) {
+          vm.selected_hour = vm.available_hours[0];
         }
       }
     }
@@ -177,30 +198,34 @@
     }
 
     function updateAppointment () {
-      if (vm.selected_date && vm.selected_hour) {
-        vm.date = vm.selected_date.day + "T" + vm.selected_hour.hour + ":00.000";
-      }
+      if (!_.isEmpty(vm.appointment)) {
+        if (vm.selected_date && vm.selected_hour) {
+          vm.date = vm.selected_date.day + "T" + vm.selected_hour.hour + ":00.000";
+        }
 
-      var app = {
-        "date": vm.date,
-        "laboratory": vm.appointment.laboratory.name,
-        "software": vm.appointment.software.code,
-        "group": vm.appointment.group.id,
-        "state": vm.appointment.state
-      }
+        var app = {
+          "date": vm.date,
+          "laboratory": vm.appointment.laboratory.name,
+          "software": vm.appointment.software.code,
+          "group": vm.appointment.group.id,
+          "state": vm.appointment.state
+        }
 
-      AppointmentService.Update(vm.id, app)
-      .then(handleSuccess)
-      .catch(handleError);
+        AppointmentService.Update(vm.id, app)
+        .then(handleSuccess)
+        .catch(handleError);
+      }
     }
 
     function deleteAppointment() {
-      MessageService.confirm("¿Desea realmente eliminar esta cita?")
-      .then(function() {
-        AppointmentService.Delete(vm.id)
-        .then(redirectPage)
-        .catch(handleError);
-      });
+      if (!_.isEmpty(vm.appointment)) {
+        MessageService.confirm("¿Desea realmente eliminar esta cita?")
+        .then(function() {
+          AppointmentService.Delete(vm.id)
+          .then(redirectPage)
+          .catch(handleError);
+        });
+      }
     }
 
     function redirectPage () {
