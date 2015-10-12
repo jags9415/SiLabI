@@ -11,6 +11,7 @@
     var vm = this;
     vm.advanceSearch = false;
     vm.loaded = false;
+    vm.laboratories = ["Laboratorio A", "Laboratorio B"];
     vm.appointments = [];
     vm.searched = {
       laboratory : {},
@@ -18,9 +19,14 @@
     };
     vm.limit = 20;
     vm.request = {
-      fields : "id,student,laboratory,state,software,date"
+      fields : "id,date,state,student.username,laboratory.name,software.code",
+      sort: [
+        {field: "date", type: "DESC"},
+        {field: "laboratory.name", type: "ASC"},
+        {field: "software.code", type: "ASC"},
+      ]
     };
-    vm.states = [];  
+    vm.states = [];
 
     vm.open = openAppointment;
     vm.delete = deleteAppointment;
@@ -44,8 +50,8 @@
       loadPage();
 
       StateService.GetAppointmentStates()
-    .then(setStates)
-    .catch(handleError);
+      .then(setStates)
+      .catch(handleError);
     }
 
     function loadPage() {
@@ -95,16 +101,14 @@
     }
 
     if (vm.searched.date) {
-      if(vm.searched.hour)
-        {
+      if (vm.searched.hour) {
           var date = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), vm.searched.hour.slice(0, 2));
           vm.request.query.date = {
             operation: "eq",
             value: date.toJSON()
           }
         }
-        else
-        {
+        else {
           var date = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), "18");
           vm.request.query.date = {
           operation: "le",
@@ -116,12 +120,11 @@
     }
 
     function toggleAdvanceSearch() {
-    vm.advanceSearch = !vm.advanceSearch;
-    delete vm.searched.code;
-    delete vm.searched.name;
-    delete vm.searched.state;
-  }
-
+      vm.advanceSearch = !vm.advanceSearch;
+      delete vm.searched.code;
+      delete vm.searched.name;
+      delete vm.searched.state;
+    }
 
     function isEmpty() {
       return vm.appointments.length == 0;
@@ -140,8 +143,8 @@
     }
 
     function setStates(states) {
-    vm.states = states;
-  }
+      vm.states = states;
+    }
 
     function deleteAppointment(id) {
       MessageService.confirm("¿Desea realmente eliminar esta cita?")

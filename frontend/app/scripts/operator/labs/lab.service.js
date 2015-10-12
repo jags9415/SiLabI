@@ -21,8 +21,8 @@
       return RequestService.get('/laboratories', request);
     }
 
-    function GetOne(id) {
-      var request = {};
+    function GetOne(id, request) {
+      if (!request) request = {};
       request.access_token = $localStorage['access_token'];
       return RequestService.get('/laboratories/' + id, request);
     }

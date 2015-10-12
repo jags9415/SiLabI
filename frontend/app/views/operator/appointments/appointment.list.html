@@ -34,25 +34,32 @@
               <div class="row">
                 <div class="col-md-2">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="lab" name="lab" placeholder="Laboratorio" ng-model="AppointmentList.searched.laboratory.name">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="software" name="software" placeholder="Software" ng-model="AppointmentList.searched.software">
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
                     <input ui-date class="form-control" id="date" placeholder="Fecha" name="date" ng-model="AppointmentList.searched.date">
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="hour" name="hour" ng-model="AppointmentList.searched.hour" ui-mask="99:99">
+                    <input type="text" class="form-control" id="hour" name="hour" ng-model="AppointmentList.searched.hour" ui-mask="Hora 99:99">
                   </div>
                 </div>
                 <div class="col-md-3">
+                  <div class="form-group">
+                    <ui-select id="lab" ng-model="AppointmentList.searched.laboratory.name">
+                      <ui-select-match placeholder="Laboratorio" allow-clear="true">
+                        {{$select.selected}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="laboratory in AppointmentList.laboratories">
+                        <span ng-bind-html="laboratory"></span>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="software" name="software" placeholder="Software" ng-model="AppointmentList.searched.software">
+                  </div>
+                </div>
+                <div class="col-md-2">
                   <div class="form-group">
                     <ui-select id="state" ng-model="AppointmentList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
@@ -79,7 +86,7 @@
     </div>
     </div>
   <div class="table-responsive">
-    <table class="table table-striped" ng-show="true">
+    <table class="table table-striped">
       <thead>
         <tr>
           <th>Carné</th>
@@ -119,9 +126,9 @@
   <p ng-show="AppointmentList.isLoaded() && AppointmentList.isEmpty()">No se encontraron resultados.</p>
   <br>
   <div class="row">
-    <div class="col-md-12 pagination">
+    <div class="col-md-12 pagination" ng-show="AppointmentList.totalPages > 1">
       <pagination
-        ng-change="AppointmentList.updateStudentsList()" ng-model="AppointmentList.page" items-per-page="AppointmentList.limit"
+        ng-change="AppointmentList.loadPage()" ng-model="AppointmentList.page" items-per-page="AppointmentList.limit"
         total-items="AppointmentList.totalItems" max-size="5" boundary-links="true" rotate="true"
         previous-text="<" next-text=">" first-text="<<" last-text=">>"
       ></pagination>

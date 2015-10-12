@@ -13,7 +13,7 @@
           <label for="name">Estudiante</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
-            <input class="form-control" type="text" ng-model="AppointmentDetail.student.full_name" readonly>
+            <input class="form-control" type="text" ng-model="AppointmentDetail.appointment.student.full_name" readonly>
           </div>
         </div>
       </div>
@@ -25,8 +25,8 @@
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
             <ui-select id="course" ng-model="AppointmentDetail.selected_date" on-select="AppointmentDetail.setAvailableHours()">
-              <ui-select-match placeholder="{{AppointmentDetail.selected_date}}">
-                {{$select.selected.day}}
+              <ui-select-match placeholder="Fecha">
+                {{$select.selected.day | date : 'fullDate'}}
               </ui-select-match>
               <ui-select-choices repeat="date in AppointmentDetail.available_dates | filter: $select.search">
                 <span ng-bind-html="date.day | date : 'fullDate' | highlight: $select.search"></span>
@@ -41,11 +41,11 @@
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
             <ui-select id="course" ng-model="AppointmentDetail.selected_hour" on-select="AppointmentDetail.changeLaboratory()">
-              <ui-select-match placeholder="{{AppointmentDetail.selected_hour.hour}}">
-                {{$select.selected.full_date | date: 'mediumTime'}}
+              <ui-select-match placeholder="Hora">
+                {{$select.selected.full_date | date: 'hh:mm a'}}
               </ui-select-match>
               <ui-select-choices repeat="hour in AppointmentDetail.available_hours | filter: $select.search">
-                <span ng-bind-html="hour.full_date | date : 'mediumTime' | highlight: $select.search"></span>
+                <span ng-bind-html="hour.full_date | date : 'hh:mm a' | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -57,13 +57,13 @@
         <div class="form-group">
           <label for="course">Grupo</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-            <ui-select id="course" ng-model="AppointmentDetail.group">
-              <ui-select-match placeholder="{{AppointmentDetail.group.course.name}}">
-                {{$select.selected.course.name}}
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-book"></i></span>
+            <ui-select id="course" ng-model="AppointmentDetail.appointment.group">
+              <ui-select-match placeholder="Grupo">
+                {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
               </ui-select-match>
               <ui-select-choices repeat="group in AppointmentDetail.groups | filter: $select.search">
-                <span ng-bind-html="group.course.name | highlight: $select.search"></span>
+                <span ng-bind-html="'[#' + group.number + '] ' + group.course.name | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -73,8 +73,8 @@
         <div class="form-group">
           <label for="software">Software</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list-alt"></i></span>
-            <input class="form-control" placeholder="{{AppointmentDetail.selected_software.code}}" name="searchInput" type="text" typeahead="software.code for software in AppointmentDetail.searchSoftware($viewValue)" typeahead-on-select="AppointmentDetail.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentDetail.selected_software">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-cd"></i></span>
+            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)" typeahead-on-select="AppointmentDetail.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentDetail.appointment.software" ng-value="{{ '[' + AppointmentDetail.appointment.software.code + '] ' + AppointmentDetail.appointment.software.name }}">
           </div>
         </div>
       </div>
@@ -84,9 +84,9 @@
         <div class="form-group">
           <label for="lab">Laboratorio</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-home"></i></span>
-            <ui-select id="lab" ng-model="AppointmentDetail.selected_laboratory">
-              <ui-select-match placeholder="{{AppointmentDetail.selected_laboratory.name}}">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
+            <ui-select id="lab" ng-model="AppointmentDetail.appointment.laboratory">
+              <ui-select-match placeholder="Laboratorio">
                 {{$select.selected.name}}
               </ui-select-match>
               <ui-select-choices repeat="lab in AppointmentDetail.laboratories | filter: $select.search">
@@ -98,15 +98,15 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="lab">Estado</label>
+          <label for="state">Estado</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-home"></i></span>
-            <ui-select id="lab" ng-model="AppointmentDetail.selected_state">
-              <ui-select-match placeholder="{{AppointmentDetail.selected_state.name}}">
-                {{$select.selected.name}}
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-tag"></i></span>
+            <ui-select id="state" ng-model="AppointmentDetail.appointment.state">
+              <ui-select-match placeholder="Estado">
+                {{$select.selected}}
               </ui-select-match>
               <ui-select-choices repeat="state in AppointmentDetail.states | filter: $select.search">
-                <span ng-bind-html="state.name | highlight: $select.search"></span>
+                <span ng-bind-html="state | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -133,15 +133,15 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-6 text-center">
-        <button type="submit" class="btn btn-lg btn-info" ng-click="AppointmentDetail.update()">
+        <button type="submit" class="btn btn-lg btn-primary" ng-click="AppointmentDetail.update()">
           <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
         </button>
       </div>
       <div class="col-md-6 text-center">
-        <button type="submit" class="btn btn-lg btn-danger" ng-click="AppointmentDetail.delete()">
+        <button type="button" class="btn btn-lg btn-danger" ng-click="AppointmentDetail.delete()">
           <i class="glyphicon glyphicon-trash"></i> Eliminar
         </button>
       </div>
