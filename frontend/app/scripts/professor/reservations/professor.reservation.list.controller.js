@@ -5,26 +5,26 @@
         .module('silabi')
         .controller('ProfessorReservationListController', ProfessorReservationListController);
 
-   ProfessorReservationListController.$inject = ['$scope', 'ReservationService', 'MessageService', 'StateService', '$location'];
+   ProfessorReservationListController.$inject = ['$scope', 'ProfessorReservationService', 'MessageService', 'StateService', '$location', '$localStorage'];
 
-  function ProfessorReservationListController($scope, AppointmentService, MessageService, StateService, $location) {
+  function ProfessorReservationListController($scope, ProfessorReservationService, MessageService, StateService, $location, $localStorage) {
     var vm = this;
     vm.advanceSearch = false;
     vm.loaded = false;
-    vm.appointments = [];
+    vm.reservations = [];
     vm.searched = {
-      laboratory : {},
-      student : {}
+      laboratory: {},
+      group: { course: {} }
     };
     vm.limit = 20;
     vm.request = {
-      fields : "id,student,laboratory,state,software,date"
+      fields : "id,laboratory,state,software,group,start_time,end_time"
     };
     vm.states = [];  
-
-    vm.open = openAppointment;
-    vm.delete = deleteAppointment;
-    vm.search = searchAppointment;
+    vm.$storage = $localStorage;
+    vm.open = openReservation;
+    vm.delete = deleteReservation;
+    vm.search = searchReservation;
     vm.isEmpty = isEmpty;
     vm.isLoaded = isLoaded;
     vm.loadPage = loadPage;
@@ -53,23 +53,27 @@
 
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
+      if(vm.$storage['username'])
+      {
+        vm.username = vm.$storage['username'];
+      }
 
-      AppointmentService.GetAll(vm.request)
-      .then(setAppointments)
+      ProfessorReservationService.GetAll(vm.username, vm.request)
+      .then(setReservations)
       .catch(handleError);
     }
 
-    function openAppointment(id) {
-      $location.url('/Operador/Citas/' + id);
+    function openReservation(id) {
+      $location.url('/Docente/Reservaciones/' + id);
     }
 
-    function searchAppointment() {
+    function searchReservation() {
       vm.request.query = {};
 
-      if (vm.searched.student.username) {
-        vm.request.query['student.username'] = {
+      if (vm.searched.group.course.name) {
+        vm.request.query['group.course.name'] = {
           operation: "like",
-          value: '*' + vm.searched.student.username.replace(' ', '*') + '*'
+          value: '*' + vm.searched.group.course.name.replace(' ', '*') + '*'
         }
       }
 
@@ -90,23 +94,24 @@
     if (vm.searched.software) {
       vm.request.query['software.code'] = {
         operation: "like",
-        value: vm.searched.software.replace(' ', '*') + '*'
+        value: '*' + vm.searched.software.replace(' ', '*') + '*'
       }
     }
 
-    if (vm.searched.date) {
+    if (vm.searched.start_time) {
       if(vm.searched.hour)
         {
-          var date = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), vm.searched.hour.slice(0, 2));
-          vm.request.query.date = {
+          var date = new Date(vm.searched.start_time.getFullYear(), vm.searched.start_time.getMonth(), vm.searched.start_time.getUTCDate(), vm.searched.hour.slice(0, 2));
+          console.log(vm.searched.hour.slice(0, 2));
+          vm.request.query.start_time = {
             operation: "eq",
             value: date.toJSON()
           }
         }
         else
         {
-          var date = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), "18");
-          vm.request.query.date = {
+          var date = new Date(vm.searched.start_time.getFullYear(), vm.searched.start_time.getMonth(), vm.searched.start_time.getUTCDate(), "18");
+          vm.request.query.start_time = {
           operation: "le",
           value: date.toJSON()
           }
@@ -124,15 +129,15 @@
 
 
     function isEmpty() {
-      return vm.appointments.length == 0;
+      return vm.reservations.length == 0;
     }
 
     function isLoaded() {
       return vm.loaded;
     }
 
-    function setAppointments(data) {
-      vm.appointments = data.results;
+    function setReservations(data) {
+      vm.reservations = data.results;
       vm.page = data.current_page;
       vm.totalPages = data.total_pages;
       vm.totalItems = vm.limit * vm.totalPages;
@@ -143,10 +148,10 @@
     vm.states = states;
   }
 
-    function deleteAppointment(id) {
-      MessageService.confirm("¿Desea realmente eliminar esta cita?")
+    function deleteReservation(id) {
+      MessageService.confirm("¿Desea realmente eliminar esta reservación?")
       .then(function() {
-        AppointmentService.Delete(id)
+        ProfessorReservationService.Delete(id)
         .then(loadPage)
         .catch(handleError);
       });

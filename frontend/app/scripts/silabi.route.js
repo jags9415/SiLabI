@@ -205,6 +205,11 @@
           controller: 'StudentAppDetailController',
           controllerAs: 'AppointmentDetail'
         })
+        .when('/Docente/Reservaciones', {
+          templateUrl: 'views/professor/reservations/reservation.list.html',
+          controller: 'ProfessorReservationListController',
+          controllerAs: 'ProfessorReservationList'
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })

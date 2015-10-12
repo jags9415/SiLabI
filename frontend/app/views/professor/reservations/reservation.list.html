@@ -1,0 +1,130 @@
+<div>
+  <h2>Reservaciones</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li class="active">Reservaciones</li>
+  </ol>
+  <div class="table-search" style="margin-bottom: 3%;">
+    <div class="row">
+      <div class="col-md-10 col-xs-10">
+        <form class="form-horizontal">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input class="form-control" placeholder="Buscar por curso" name="searchInput" type="text" ng-change="ProfessorReservationList.search()" ng-model="ProfessorReservationList.searched.group.course.name">
+          </div>
+          <div class="input-group">
+            <a href="" ng-click="ProfessorReservationList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
+          </div>
+          <button type="submit" name="button" hidden></button>
+        </form>
+      </div>
+      <div class="col-md-2 col-xs-3">
+        <a href="#Docente/Reservaciones/Agregar" class="btn btn-block btn-success">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span class="hidden-xs">Crear</span>
+        </a>
+      </div>
+    </div>
+    <div class="row" collapse="!ProfessorReservationList.advanceSearch">
+      <div class="col-md-12">
+        <form class="form-inline advanced-search">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="lab" name="lab" placeholder="Laboratorio" ng-model="ProfessorReservationList.searched.laboratory.name">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="software" name="software" placeholder="Software" ng-model="ProfessorReservationList.searched.software">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <input ui-date class="form-control" id="date" placeholder="Fecha Inicio" name="date" ng-model="ProfessorReservationList.searched.start_time">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="hour" name="hour" ng-model="ProfessorReservationList.searched.hour" ui-mask="99:99">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <ui-select id="state" ng-model="ProfessorReservationList.searched.state">
+                      <ui-select-match placeholder="Estado" allow-clear="true">
+                        {{$select.selected.name}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="state in ProfessorReservationList.states">
+                        <span ng-bind-html="state.name"></span>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <button type="submit" class="btn btn-default" ng-click="ProfessorReservationList.search()">
+                  <i class="glyphicon glyphicon-search"></i> Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+  <div class="table-responsive">
+    <table class="table table-striped" ng-show="true">
+      <thead>
+        <tr>
+          <th>Curso</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Finalización</th>
+          <th>Software</th>
+          <th>Laboratorio</th>
+          <th>Estado</th>
+          <th style="text-align: center">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="res in ProfessorReservationList.reservations">
+          <td>{{ res.group.course.name }}</td>
+          <td>{{ res.start_time | date : 'medium' }}</td>
+          <td>{{ res.end_time | date : 'medium' }}</td>
+          <td>{{ res.software.code }}</td>
+          <td>{{ res.laboratory.name }}</td>
+          <td>
+              <span class="label"
+              ng-class="{ 'label-primary': res.state === 'Por iniciar',
+                          'label-success': res.state === 'Finalizada',
+                          'label-danger': res.state === 'Cancelada'}" >
+              {{ res.state }}
+            </span>
+          </td>
+          <td style="text-align: center">
+            <a class='btn btn-info btn-sm' ng-click="ProfessorReservationList.open(res.id)">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+            <a href="" class="btn btn-danger btn-sm" ng-click="ProfessorReservationList.delete(res.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-show="ProfessorReservationList.isLoaded() && ProfessorReservationList.isEmpty()">No se encontraron resultados.</p>
+  <br>
+  <div class="row">
+    <div class="col-md-12 pagination">
+      <pagination
+        ng-change="ProfessorReservationList.loadPage()" ng-model="ProfessorReservationList.page" items-per-page="ProfessorReservationList.limit" total-items="ProfessorReservationList.totalItems" max-size="5" boundary-links="true" rotate="true" previous-text="<" next-text=">" first-text="<<" last-text=">>"
+      ></pagination>
+    </div>
+  </div>
+</div>
