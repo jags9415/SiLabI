@@ -7,7 +7,7 @@
       .config(['toastr', configToaster]);
 
     function configShowErrors(showErrorsConfigProvider) {
-      showErrorsConfigProvider.showSuccess(true);
+      showErrorsConfigProvider.showSuccess(false);
     }
 
     function configToaster(toastr) {
@@ -37,8 +37,8 @@
     }
 
     if (typeof String.prototype.startsWith != 'function') {
-      String.prototype.startsWith = function (str){
-        return this.indexOf(str) === 0;
+      String.prototype.startsWith = function (prefix) {
+        return this.indexOf(prefix) === 0;
       };
     }
 

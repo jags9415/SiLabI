@@ -25,7 +25,7 @@
     }
 
     vm.groups_request = {
-      fields: "id,course.name"
+      fields: "id,number,course.name"
     };
 
     vm.software_request = {
