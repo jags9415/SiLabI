@@ -209,6 +209,7 @@
           templateUrl: 'views/professor/reservations/reservation.list.html',
           controller: 'ProfessorReservationListController',
           controllerAs: 'ProfessorReservationList'
+          reloadOnSearch: false
         })
         .when('/404', {
           templateUrl: 'views/public/404.html'
