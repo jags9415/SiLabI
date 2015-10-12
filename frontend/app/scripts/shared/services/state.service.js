@@ -104,6 +104,30 @@
         return defer.promise;
       }
 
+      function GetReservationStates() {
+        var defer = $q.defer();
+        var states = [
+          {
+            name: 'Cualquiera',
+            value: '*'
+          },
+          {
+            name: 'Por iniciar',
+            value: 'Por iniciar'
+          },
+          {
+            name: 'Cancelada',
+            value: 'Cancelada'
+          },
+          {
+            name: 'Finalizada',
+            value: 'Finalizada'
+          }
+        ];
+        defer.resolve(states);
+        return defer.promise;
+      }
+
       function GetLabStates() {
         var defer = $q.defer();
         var states = [
