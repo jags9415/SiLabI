@@ -23,7 +23,7 @@
           redirectTo: '/Operador/Asistencia'
         })
         .when('/Estudiante', {
-          templateUrl: 'views/student/home.html'
+          redirectTo: '/Estudiante/Citas'
         })
         .when('/Docente', {
           templateUrl: 'views/professor/home.html'

@@ -96,6 +96,14 @@
         return query;
       }
 
+      function serviceUnavailableResponse() {
+        return {
+          code: 503 ,
+          error: "ServiceUnavailable",
+          description: "El servidor no se encuentra disponible. Inténtelo luego."
+        }
+      }
+
       /**
       * Perform a GET request to the SiLabI web service.
       * @param endpoint The endpoint.
@@ -113,7 +121,17 @@
         }
 
         $http.get(url)
-        .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
+        .then(
+          function(response) {
+            defer.resolve(response.data)
+          },
+          function(response) {
+            if (response.status == 0) {
+              response.data = serviceUnavailableResponse();
+            }
+            defer.reject(response.data)
+          }
+        );
 
         return defer.promise;
       }
@@ -130,7 +148,17 @@
         var defer = $q.defer();
 
         $http.post(url, data)
-        .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
+        .then(
+          function(response) {
+            defer.resolve(response.data)
+          },
+          function(response) {
+            if (response.status == 0) {
+              response.data = serviceUnavailableResponse();
+            }
+            defer.reject(response.data)
+          }
+        );
 
         return defer.promise;
       }
@@ -147,7 +175,17 @@
         var defer = $q.defer();
 
         $http.put(url, data)
-        .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
+        .then(
+          function(response) {
+            defer.resolve(response.data)
+          },
+          function(response) {
+            if (response.status == 0) {
+              response.data = serviceUnavailableResponse();
+            }
+            defer.reject(response.data)
+          }
+        );
 
         return defer.promise;
       }
@@ -169,8 +207,18 @@
         }
 
         $http(config)
-        .then(function(response) { defer.resolve(response.data) }, function(response) { defer.reject(response.data) });
-
+        .then(
+          function(response) {
+            defer.resolve(response.data)
+          },
+          function(response) {
+            if (response.status == 0) {
+              response.data = serviceUnavailableResponse();
+            }
+            defer.reject(response.data)
+          }
+        );
+        
         return defer.promise;
       }
     }
