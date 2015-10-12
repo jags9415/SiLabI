@@ -17,9 +17,16 @@ function GroupListController($scope, GroupService, MessageService, $location, St
     };
     vm.limit = 20;
     vm.request = {
-      fields : "id,number,course,professor,period,state"
+      fields : "id,number,course.name,professor.full_name,period,state",
+      sort: [
+        {field: "period.year", type: "DESC"},
+        {field: "period.type", type: "DESC"},
+        {field: "period.value", type: "DESC"},
+        {field: "number", type: "ASC"},
+        {field: "course.name", type: "ASC"}
+      ]
     };
-    vm.states = []; 
+    vm.states = [];
     vm.periods = [];
     vm.open = openGroup;
     vm.delete = deleteGroup;

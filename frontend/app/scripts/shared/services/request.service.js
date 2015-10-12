@@ -79,7 +79,7 @@
           addAmpersand = true;
         }
 
-        if (request.query && !jQuery.isEmptyObject(request.query)) {
+        if (request.query && !_.isEmpty(request.query)) {
           var addComma = false;
           if (addAmpersand) query += "&";
           query += "q=";

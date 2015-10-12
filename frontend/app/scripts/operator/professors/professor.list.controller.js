@@ -13,8 +13,11 @@
       vm.advanceSearch = false;
       vm.limit = 20;
       vm.searched = {};
-      vm.request = {};
-      vm.request.fields = "id,full_name,username,email,phone,state";
+
+      vm.request = {
+        fields: "id,full_name,username,email,phone,state",
+        sort: [{field: "full_name", type: "ASC"}]
+      };
 
     	vm.loadPage = loadPage;
     	vm.seeProfessorDetail = seeProfessorDetail;

@@ -16,7 +16,8 @@
     vm.searched = {};
     vm.limit = 20;
     vm.request = {
-      fields : "id,name,seats,state"
+      fields : "id,name,seats,state",
+      sort: [{field: "name", type: "ASC"}]
     };
 
     vm.open = openLab;

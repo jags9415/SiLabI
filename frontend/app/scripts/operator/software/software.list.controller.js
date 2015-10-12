@@ -15,9 +15,10 @@
       vm.searched = {};
       vm.limit = 20;
       vm.request = {
-        fields : "id,code,name,state"
+        fields : "id,code,name,state",
+        sort: [{field: "code", type: "ASC"}]
       };
-      vm.states = [];  
+      vm.states = [];
 
       vm.open = openSoftware;
       vm.delete = deleteSoftware;

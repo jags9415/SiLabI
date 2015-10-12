@@ -16,7 +16,8 @@
         vm.searched = {};
         vm.limit = 20;
         vm.request = {
-          fields : "id,code,name,state"
+          fields : "id,code,name,state",
+          sort: [{field: "code", type: "ASC"}]
         };
 
         vm.open = openCourse;

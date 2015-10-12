@@ -15,7 +15,8 @@
       vm.limit = 20;
       vm.advanceSearch = false;
       vm.request = {
-        fields : "id,full_name,email,phone,username,state"
+        fields: "id,full_name,email,phone,username,state",
+        sort: [{field: "created_at", type: "DESC"}]
       };
 
   	  vm.loadPage = loadPage;

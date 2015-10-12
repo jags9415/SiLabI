@@ -15,7 +15,8 @@
         vm.searched = {};
         vm.limit = 20;
         vm.request = {
-          fields : "id,full_name,email,phone,username,state"
+          fields : "id,full_name,email,phone,username,state",
+          sort: [{field: "full_name", type: "ASC"}]
         };
 
         vm.createStudent = createStudent;
