@@ -29,7 +29,8 @@
     };
 
     vm.software_request = {
-      fields: "id,code,name"
+      fields: "id,code,name",
+      limit: 10
     };
 
     vm.searchStudent = searchStudent;

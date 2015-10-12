@@ -37,7 +37,7 @@
           <label for="name">* Fechas Disponiles</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-            <ui-select id="date" ng-model="AppointmentCreate.selected_date" on-select="AppointmentCreate.setAvailableHours()">
+            <ui-select id="date" ng-model="AppointmentCreate.selected_date" on-select="AppointmentCreate.setAvailableHours()" ng-disabled="!AppointmentCreate.student.username">
               <ui-select-match placeholder="{{$select.selected.day}}">
                 {{$select.selected.day | date : 'fullDate'}}
               </ui-select-match>
@@ -53,7 +53,7 @@
           <label for="name">* Horas Disponibles</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="hour" ng-model="AppointmentCreate.selected_hour" on-select="AppointmentCreate.changeLaboratory()">
+            <ui-select id="hour" ng-model="AppointmentCreate.selected_hour" on-select="AppointmentCreate.changeLaboratory()" ng-disabled="!AppointmentCreate.student.username">
               <ui-select-match placeholder="{{$select.selected.hour}}">
                 {{$select.selected.full_date | date: 'hh:mm a'}}
               </ui-select-match>
@@ -71,7 +71,7 @@
           <label for="course">* Grupo</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-            <ui-select id="group" ng-model="AppointmentCreate.group">
+            <ui-select id="group" ng-model="AppointmentCreate.group" ng-disabled="!AppointmentCreate.student.username">
               <ui-select-match placeholder="{{$select.selected.course.name}}">
                 {{$select.selected.course.name}}
               </ui-select-match>
@@ -87,7 +87,7 @@
           <label for="lab">* Laboratorio</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-home"></i></span>
-            <ui-select id="lab" ng-model="AppointmentCreate.selected_laboratory">
+            <ui-select id="lab" ng-model="AppointmentCreate.selected_laboratory" ng-disabled="!AppointmentCreate.student.username">
               <ui-select-match placeholder="{{$select.selected.name}}">
                 {{$select.selected.name}}
               </ui-select-match>

@@ -28,7 +28,7 @@
                 <a href="">
                   <div class="input-group" style="padding-bottom: 2%;">
                     <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-                    <datepicker-popup class="form-control" ng-model="AppointmentCurrent.selected_date" max-date="AppointmentCurrent.today" ng-change="AppointmentCurrent.loadHours()" show-weeks="false" ng-click="AppointmentCurrent.openDatePicker()" date-disabled="AppointmentCurrent.isDisabledDate(date, mode)" is-open="AppointmentCurrent.opened" close-text="Cerrar" clear-text="Limpiar" current-text="Hoy" style="background-color: white;" readonly>{{ AppointmentCurrent.selected_date | date: 'fullDate' }}</datepicker-popup>
+                    <datepicker-popup class="form-control" ng-model="AppointmentCurrent.selected_date" max-date="AppointmentCurrent.today" ng-change="AppointmentCurrent.loadHours()" show-weeks="false" ng-click="AppointmentCurrent.openDatePicker()" date-disabled="AppointmentCurrent.isDisabledDate(date, mode)" is-open="AppointmentCurrent.opened" close-text="Cerrar" clear-text="Limpiar" current-text="Hoy" style="background-color: white;" readonly>{{ AppointmentCurrent.selected_date | date: 'mediumDate' }}</datepicker-popup>
                   </div>
                 </a>
               </div>

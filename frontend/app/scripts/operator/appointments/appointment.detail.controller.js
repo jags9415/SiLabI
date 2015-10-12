@@ -37,7 +37,8 @@
     };
 
     vm.software_request = {
-      fields: "code,name"
+      fields: "code,name",
+      limit: 10
     };
 
     vm.setAvailableHours = setAvailableHours;
