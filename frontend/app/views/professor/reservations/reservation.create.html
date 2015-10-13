@@ -107,7 +107,7 @@
     </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-12 col-xs-12 text-center">
-        <button type="submit" class="btn btn-lg btn-success" ng-click="ProfessorReservationCreate.create()" >
+        <button type="submit" class="btn btn-lg btn-success" ng-click="ProfessorReservationCreate.create()" ng-disabled="!ProfessorReservationCreate.fieldsReady()">
           <i class="glyphicon glyphicon-plus"></i> Crear
         </button>
       </div>

@@ -46,6 +46,7 @@
       {
         vm.username = vm.$storage['username'];
       }
+      getGroups ();
     }
 
     function openDatePicker($event){
@@ -58,10 +59,10 @@
     }
 
     function fieldsReady () {
-      return !_.isEmpty(vm.selected_laboratory) &&
-             !_.isEmpty(vm.selected_date) &&
-             !_.isEmpty(vm.selected_start_time) &&
-             !_.isEmpty(vm.selected_end_time);
+      return vm.selected_laboratory &&
+             vm.selected_date &&
+             vm.selected_start_time &&
+             vm.selected_end_time;
     }
 
     function getLaboratories () {
