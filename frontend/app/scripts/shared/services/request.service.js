@@ -67,8 +67,8 @@
           if (query.hasOwnProperty(property)) {
             current = query[property];
             if (_.isArray(current)) {
-              for (var element in current) {
-                result += property + '+' + element.operation + '+' + element.value + ',';
+              for (var i = 0; i < current.length; i++) {
+                result += property + '+' + current[i].operation + '+' + current[i].value + ',';
               }
             }
             else {
@@ -77,7 +77,7 @@
           }
         }
 
-        return result.slice(0, result.length - 1);
+        return result.substring(0, result.length - 1);
       }
 
       /**
