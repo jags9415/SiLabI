@@ -10,6 +10,7 @@
     function LabAddController($scope, LabService, SoftwareService, MessageService) {
         var vm = this;
         vm.lab = {};
+        vm.priorities = [];
         vm.software = [];
         vm.slicedSoftware = [];
         vm.isSoftwareModified = false;
@@ -21,9 +22,18 @@
         vm.deleteSoftware = deleteSoftware;
         vm.sliceSoftware = sliceSoftware;
 
+        activate();
+
+        function activate() {
+          vm.priorities = LabService.GetPriorities();
+        }
+
         function create() {
-          if (!_.isEmpty(vm.lab)) {
+          if (!_.isEmpty(vm.lab) && !_.isEmpty(vm.appointment_priority) && !_.isEmpty(vm.reservation_priority)) {
             vm.lab.software = getSoftwareCodes();
+            vm.lab.appointment_priority = vm.appointment_priority.value;
+            vm.lab.reservation_priority = vm.reservation_priority.value;
+
             LabService.Create(vm.lab)
             .then(handleCreateSuccess)
             .catch(handleError);
@@ -36,6 +46,8 @@
           // Reset form data.
           vm.lab = {};
           vm.software = [];
+          delete vm.appointment_priority;
+          delete vm.reservation_priority;
           vm.isSoftwareModified = false;
 
           // Reset form validations.

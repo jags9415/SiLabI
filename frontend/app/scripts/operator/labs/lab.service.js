@@ -14,6 +14,7 @@
     this.Create = Create;
     this.Delete = Delete;
     this.GetSoftware = GetSoftware;
+    this.GetPriorities = GetPriorities;
 
     function GetAll(request) {
       if (!request) request = {};
@@ -51,6 +52,23 @@
       if (!request) request = {};
       request.access_token = $localStorage['access_token'];
       return RequestService.get('/laboratories/' + id + '/software', request);
+    }
+
+    function  GetPriorities() {
+      return [
+        {
+          value: 1,
+          name: "Alta"
+        },
+        {
+          value: 2,
+          name: "Media"
+        },
+        {
+          value: 3,
+          name: "Baja"
+        }
+      ];
     }
   }
 })();

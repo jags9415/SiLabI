@@ -31,6 +31,8 @@
       activate();
 
       function activate() {
+        vm.priorities = LabService.GetPriorities();
+
         LabService.GetOne(vm.id)
         .then(setLaboratory)
         .catch(handleError);
@@ -45,6 +47,10 @@
           if (vm.isSoftwareModified) {
             vm.lab.software = getSoftwareCodes();
           }
+
+          vm.lab.appointment_priority = vm.appointment_priority.value;
+          vm.lab.reservation_priority = vm.reservation_priority.value;
+
           LabService.Update(vm.lab.id, vm.lab)
           .then(updateLaboratory)
           .catch(handleError);
@@ -65,6 +71,8 @@
 
       function setLaboratory(lab) {
         vm.lab = lab;
+        vm.appointment_priority = _.find(vm.priorities, function(p) { return p.value == lab.appointment_priority });
+        vm.reservation_priority = _.find(vm.priorities, function(p) { return p.value == lab.reservation_priority });
       }
 
       function updateLaboratory(lab) {

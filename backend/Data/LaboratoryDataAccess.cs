@@ -89,18 +89,20 @@ namespace SiLabI.Data
 
             if (laboratory.Software == null)
             {
-                parameters = new SqlParameter[3];
+                parameters = new SqlParameter[5];
             }
             else
             {
-                parameters = new SqlParameter[4];
+                parameters = new SqlParameter[6];
                 DataTable software = createSoftwareTable(laboratory.Software);
-                parameters[3] = SqlUtilities.CreateParameter("@software", SqlDbType.Structured, software);
+                parameters[5] = SqlUtilities.CreateParameter("@software", SqlDbType.Structured, software);
             }
 
             parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
             parameters[1] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, laboratory.Name);
             parameters[2] = SqlUtilities.CreateParameter("@seats", SqlDbType.Int, laboratory.Seats);
+            parameters[3] = SqlUtilities.CreateParameter("@appointment_priority", SqlDbType.Int, laboratory.AppointmentPriority);
+            parameters[4] = SqlUtilities.CreateParameter("@reservation_priority", SqlDbType.Int, laboratory.ReservationPriority);
 
             DataTable table = _Connection.executeQuery("sp_CreateLaboratory", parameters);
             return table.Rows[0];
@@ -113,13 +115,13 @@ namespace SiLabI.Data
 
             if (laboratory.Software == null)
             {
-                parameters = new SqlParameter[5];
+                parameters = new SqlParameter[7];
             }
             else
             {
-                parameters = new SqlParameter[6];
+                parameters = new SqlParameter[8];
                 DataTable software = createSoftwareTable(laboratory.Software);
-                parameters[5] = SqlUtilities.CreateParameter("@software", SqlDbType.Structured, software);
+                parameters[7] = SqlUtilities.CreateParameter("@software", SqlDbType.Structured, software);
             }
 
             parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
@@ -127,6 +129,8 @@ namespace SiLabI.Data
             parameters[2] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, laboratory.Name);
             parameters[3] = SqlUtilities.CreateParameter("@seats", SqlDbType.Int, laboratory.Seats);
             parameters[4] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, laboratory.State);
+            parameters[5] = SqlUtilities.CreateParameter("@appointment_priority", SqlDbType.Int, laboratory.AppointmentPriority);
+            parameters[6] = SqlUtilities.CreateParameter("@reservation_priority", SqlDbType.Int, laboratory.ReservationPriority);
 
             DataTable table = _Connection.executeQuery("sp_UpdateLaboratory", parameters);
             return table.Rows[0];

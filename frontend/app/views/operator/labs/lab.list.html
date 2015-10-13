@@ -70,6 +70,8 @@
         <tr>
           <th>Nombre</th>
           <th>Asientos</th>
+          <th>Prioridad Citas</th>
+          <th>Prioridad Reservaciones</th>
           <th>Estado</th>
           <th style="text-align: center">Acción</th>
         </tr>
@@ -78,6 +80,8 @@
         <tr ng-repeat="lab in LabList.labs">
           <td>{{ lab.name }}</td>
           <td>{{ lab.seats }}</td>
+          <td>{{ lab.appointment_priority.name }}</td>
+          <td>{{ lab.reservation_priority.name }}</td>
           <td>
             <span class="label"
               ng-class="{ 'label-success': lab.state === 'Activo',
