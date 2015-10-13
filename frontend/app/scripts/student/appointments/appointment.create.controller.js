@@ -9,7 +9,6 @@
 
   function AppointmentCreateController(StudentAppService, AppointmentDateService, MessageService, StudentService, SoftwareService, $localStorage) {
     var vm = this;
-    vm.software_list = [];
     vm.groups = [];
     vm.available_dates = [];
     vm.available_hours = [];
@@ -20,9 +19,16 @@
     vm.groups_request = {
       fields : "id,course"
     };
+
+    vm.software_request = {
+      fields: "code,name",
+      limit: 10
+    };
+
     vm.$storage = $localStorage;
 
-    vm.fieldsReady = fieldsReady;
+    vm.searchSoftware = searchSoftware;
+    vm.setSoftware = setSoftware;
     vm.create = createAppointment;
     vm.setAvailableHours = setAvailableHours;
     vm.changeLaboratory = changeLaboratory;
@@ -33,28 +39,30 @@
       vm.student_id = vm.$storage['username'];
       getAvailableDates();
       getGroups();
-      getSoftware();
     }
 
-    function fieldsReady () {
-      return vm.laboratory  && vm.software && vm.selected_date && vm.selected_date && vm.group;
+    function searchSoftware (input) {
+      vm.software_request.query = {};
+
+      vm.software_request.query.code = {
+        operation: "like",
+        value: '*' + input + '*'
+      }
+
+      return SoftwareService.GetAll(vm.software_request)
+        .then(function(data) {
+          return data.results;
+        });
     }
 
-
-    function getSoftware () {
-      SoftwareService.GetAll()
-      .then(setSoftware)
-      .catch(handleError);
+    function setSoftware (data) {
+      vm.selected_software = data;
     }
 
     function getGroups () {
       StudentService.GetGroups(vm.student_id, vm.groups_request)
       .then(setGroups)
       .catch(handleError);
-    }
-
-    function setSoftware(data) {
-    vm.software_list = data.results;
     }
 
     function setGroups (groups) {
@@ -99,6 +107,7 @@
 
     function handleSuccess (data) {
       MessageService.success("Cita creada con éxito.");
+      delete vm.appointment;
       delete vm.selected_software;
       delete vm.selected_hour;
       delete vm.group;

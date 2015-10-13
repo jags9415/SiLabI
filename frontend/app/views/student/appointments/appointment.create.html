@@ -64,18 +64,10 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="software">* Software</label>
+          <label for="software">Software</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list-alt"></i></span>
-            <ui-select id="software" name="software" ng-model="AppointmentCreate.selected_software" required>
-              <ui-select-match placeholder="{{$select.selected.code}}">
-                {{$select.selected.code}}
-              </ui-select-match>
-              <ui-select-choices repeat="sf in AppointmentCreate.software_list | filter: $select.search">
-                <span ng-bind-html="sf.code | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
-            <p class="help-block" ng-show="createAppForm.software.$error.required">Software requerido.</p>
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-cd"></i></span>
+            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentCreate.searchSoftware($viewValue)" typeahead-on-select="AppointmentCreate.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentCreate.appointment.software" ng-value="{{ '[' + AppointmentCreate.appointment.software.code + '] ' + AppointmentCreate.appointment.software.name }}">
           </div>
         </div>
       </div>
