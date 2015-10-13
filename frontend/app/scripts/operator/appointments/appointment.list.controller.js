@@ -109,11 +109,18 @@
           }
         }
         else {
-          var date = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), "18");
-          vm.request.query.date = {
-          operation: "le",
-          value: date.toJSON()
+          var date1 = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), "08");
+          var date2 = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), "18");
+          vm.request.query["date"] =[ 
+          {
+          	operation: "ge",
+          	value: date1.toJSON()
+          },
+          {
+          	operation: "lt",
+          	value: date2.toJSON()
           }
+          ];
         }
       }
       loadPage();
