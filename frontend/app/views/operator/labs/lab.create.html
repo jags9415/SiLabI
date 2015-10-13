@@ -8,21 +8,47 @@
   </ol>
   <form autocomplete="off" name="createLabForm">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="form-group" show-errors>
           <label for="name" class="control-label">Nombre</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="LabAdd.lab.name" ng-trim required>
           <p class="help-block" ng-if="createLabForm.name.$error.required">Nombre requerido.</p>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="form-group" show-errors>
           <label for="seats" class="control-label">Asientos</label>
           <input type="number" class="form-control" id="seats" min="0" name="seats" placeholder="Asientos" ng-model="LabAdd.lab.seats" ng-trim required>
           <p class="help-block" ng-if="createLabForm.seats.$error.required">Cantidad de asientos requerida.</p>
           <p class="help-block" ng-if="createLabForm.seats.$error.number  || createLabForm.seats.$error.min">Ingrese un número positivo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="appointment_priority">Prioridad para Citas</label>
+          <ui-select id="appointment_priority" ng-model="LabAdd.appointment_priority" required>
+            <ui-select-match placeholder="Prioridad para Citas">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="priority in LabAdd.priorities | filter: $select.search">
+              <span ng-bind-html="priority.name | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="reservation_priority">Prioridad para Reservaciones</label>
+          <ui-select id="reservation_priority" ng-model="LabAdd.reservation_priority" required>
+            <ui-select-match placeholder="Prioridad para Reservaciones">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="priority in LabAdd.priorities | filter: $select.search">
+              <span ng-bind-html="priority.name | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
     </div>

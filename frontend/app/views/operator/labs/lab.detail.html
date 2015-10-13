@@ -27,6 +27,34 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" show-errors>
+          <label for="appointment_priority">Prioridad para Citas</label>
+          <ui-select id="appointment_priority" ng-model="LabDetail.appointment_priority" required>
+            <ui-select-match placeholder="Prioridad para Citas">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="priority in LabDetail.priorities | filter: $select.search">
+              <span ng-bind-html="priority.name | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="reservation_priority">Prioridad para Reservaciones</label>
+          <ui-select id="reservation_priority" ng-model="LabDetail.reservation_priority" required>
+            <ui-select-match placeholder="Prioridad para Reservaciones">
+              {{$select.selected.name}}
+            </ui-select-match>
+            <ui-select-choices repeat="priority in LabDetail.priorities | filter: $select.search">
+              <span ng-bind-html="priority.name | highlight: $select.search"></span>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
           <label for="created_at" class="control-label">Fecha Creación</label>
           <input type="text" class="form-control" id="created_at" name="created_at" placeholder="Fecha Creación" ng-value="LabDetail.lab.created_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly></input>
         </div>

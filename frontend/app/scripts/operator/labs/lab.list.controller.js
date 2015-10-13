@@ -16,8 +16,8 @@
     vm.searched = {};
     vm.limit = 20;
     vm.request = {
-      fields : "id,name,seats,state",
-      sort: [{field: "name", type: "ASC"}]
+      fields : "id,name,seats,state,appointment_priority,reservation_priority",
+      sort: {field: "name", type: "ASC"}
     };
 
     vm.open = openLab;
@@ -37,6 +37,7 @@
       page = 1;
       }
 
+      vm.priorities = LabService.GetPriorities();
       vm.totalPages = page;
       vm.page = page;
       loadPage();
@@ -65,17 +66,17 @@
       vm.request.query = {}
 
       if (vm.searched.name) {
-      vm.request.query.name = {
-        operation: "like",
-        value: '*' + vm.searched.name.replace(' ', '*') + '*'
-      }
+        vm.request.query.name = {
+          operation: "like",
+          value: '*' + vm.searched.name.replace(' ', '*') + '*'
+        }
       }
 
       if (vm.searched.seats) {
-      vm.request.query.seats = {
-        operation: "like",
-        value: vm.searched.seats
-      }
+        vm.request.query.seats = {
+          operation: "eq",
+          value: vm.searched.seats
+        }
       }
 
       if (vm.searched.state) {
@@ -109,6 +110,11 @@
       vm.totalPages = data.total_pages;
       vm.totalItems = vm.limit * vm.totalPages;
       vm.loaded = true;
+
+      _.each(vm.labs, function(lab) {
+        lab.appointment_priority = _.find(vm.priorities, function(p) { return p.value == lab.appointment_priority });
+        lab.reservation_priority = _.find(vm.priorities, function(p) { return p.value == lab.reservation_priority });
+      });
     }
 
     function deleteLab(id) {

@@ -40,7 +40,7 @@ namespace SiLabI.Controllers
         /// <summary>
         /// Creates a new AuthenticationController.
         /// </summary>
-        public AuthenticationController() : this(3, 1) { }
+        public AuthenticationController() : this(5, 1) { }
 
         /// <summary>
         /// Authenticate a user.
@@ -65,7 +65,7 @@ namespace SiLabI.Controllers
 
             if (table.Rows.Count == 0)
             {
-                // Increment the client attempts.   
+                // Increment the client attempts.
                 if (_clientAttempts.ContainsKey(ip))
                 {
                     _clientAttempts[ip].Count = _clientAttempts[ip].Count + 1;
@@ -88,7 +88,7 @@ namespace SiLabI.Controllers
 
             _clientAttempts.Remove(ip);
             User user = User.Parse(table.Rows[0]);
-                
+
             var payload = new Dictionary<string, object>()
             {
                 { "id", user.Id },
