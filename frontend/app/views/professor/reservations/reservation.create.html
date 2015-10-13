@@ -15,7 +15,8 @@
               <input type="text" class="form-control" 
                      datepicker-popup="mediumDate" 
                      is-open="ProfessorReservationCreate.datepicker_open"
-                     ng-model="ProfessorReservationCreate.selected_date" />
+                     ng-model="ProfessorReservationCreate.selected_date" 
+                     ng-click="ProfessorReservationCreate.openDatePicker($event)"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" 
                         ng-click="ProfessorReservationCreate.openDatePicker($event)">
