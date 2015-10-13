@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('StudentAppCreateController', AppointmentCreateController);
 
-  AppointmentCreateController.$inject = ['StudentAppService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', '$localStorage'];
+  AppointmentCreateController.$inject = ['StudentAppService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', 'PeriodService', '$localStorage'];
 
-  function AppointmentCreateController(StudentAppService, AppointmentDateService, MessageService, StudentService, SoftwareService, $localStorage) {
+  function AppointmentCreateController(StudentAppService, AppointmentDateService, MessageService, StudentService, SoftwareService, PeriodService, $localStorage) {
     var vm = this;
     vm.groups = [];
     vm.available_dates = [];
@@ -60,6 +60,24 @@
     }
 
     function getGroups () {
+      var period = PeriodService.GetCurrentPeriod('Semestre');
+      vm.groups_request.query = {};
+
+      vm.groups_request.query["period.type"] = {
+        operation: "eq",
+        value: "Semestre"
+      };
+
+      vm.groups_request.query["period.value"] = {
+        operation: "eq",
+        value: period.value
+      };
+
+      vm.groups_request.query["period.year"] = {
+        operation: "eq",
+        value: period.year
+      };
+
       StudentService.GetGroups(vm.student_id, vm.groups_request)
       .then(setGroups)
       .catch(handleError);
