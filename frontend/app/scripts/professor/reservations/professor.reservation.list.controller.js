@@ -41,7 +41,12 @@
 
       vm.totalPages = page;
       vm.page = page;
+      if(vm.$storage['username'])
+      {
+        vm.username = vm.$storage['username'];
+      }
       loadPage();
+
 
       StateService.GetReservationStates()
     .then(setStates)
@@ -53,10 +58,6 @@
 
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
-      if(vm.$storage['username'])
-      {
-        vm.username = vm.$storage['username'];
-      }
 
       ProfessorReservationService.GetAll(vm.username, vm.request)
       .then(setReservations)

@@ -211,6 +211,12 @@
           controllerAs: 'ProfessorReservationList',
           reloadOnSearch: false
         })
+        .when('/Docente/Reservaciones/Agregar', {
+          templateUrl: 'views/professor/reservations/reservation.create.html',
+          controller: 'ProfessorReservationCreateController',
+          controllerAs: 'ProfessorReservationCreate',
+          reloadOnSearch: false
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })

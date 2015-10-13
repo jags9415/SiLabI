@@ -12,7 +12,6 @@
     this.GetReservationEndHours = GetReservationEndHours;
 
     function GetReservationStartHours () {
-      var defer = $q.defer();
       var hours = [
       {
         hour: "8:00am",
@@ -55,12 +54,10 @@
         value: "17:00:00.000"
       }
       ];
-      defer.resolve(hours);
-      return defer.promise;
+      return hours;
     }
 
     function GetReservationEndHours () {
-      var defer = $q.defer();
       var hours = [
       {
         hour: "9:00am",
@@ -103,8 +100,7 @@
         value: "18:00:00.000"
       }
       ];
-      defer.resolve(hours);
-      return defer.promise;
+      return hours;
     }
   }
 })();
