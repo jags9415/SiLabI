@@ -16,7 +16,6 @@
     vm.end_hours = [];
     vm.selected_software = null;
     vm.selected_group = null;
-    vm.selected_date = new Date();
  
     vm.groups_request = {
       fields: "id,number,course.name"
@@ -32,10 +31,14 @@
     vm.create = createReservation;
     vm.searchSoftware = searchSoftware;
     vm.setSoftware = setSoftware;
+    vm.valuationDate = new Date();
+    vm.datepicker_open = false;
+    vm.openDatePicker = openDatePicker;
 
     activate();
-    vm.minDate =  new Date();
 
+
+  
     function activate() {
       getLaboratories();
       getHours();
@@ -43,6 +46,15 @@
       {
         vm.username = vm.$storage['username'];
       }
+    }
+
+    function openDatePicker($event){
+      if ($event) 
+      {
+        $event.preventDefault();
+        $event.stopPropagation(); 
+      }
+      vm.datepicker_open = true;
     }
 
     function fieldsReady () {
@@ -129,11 +141,13 @@
       {
         software_code = vm.selected_software.code;
       }
+      var start_time = vm.selected_date.getFullYear()+"-"+ (vm.selected_date.getMonth() + 1)+ "-" + vm.selected_date.getUTCDate() + "T" + vm.selected_start_time.value;
+      var end_time = vm.selected_date.getFullYear()+"-"+ (vm.selected_date.getMonth() + 1)+ "-" + vm.selected_date.getUTCDate() + "T" + vm.selected_end_time.value;
       var res = {
         "laboratory": vm.selected_laboratory.name,
         "software": software_code,
-        "start_time": vm.selected_date + "T" + vm.selected_start_time.value,
-        "end_time": vm.selected_date + "T" + vm.selected_end_time.value,
+        "start_time": start_time,
+        "end_time": end_time,
         "group": group_id
       };
 

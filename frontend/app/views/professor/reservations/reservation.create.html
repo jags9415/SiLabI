@@ -12,8 +12,16 @@
         <div class="form-group">
           <label for="name">* Fecha Inicial</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-            <ui-datepicker ng-model="ProfessorReservationCreate.selected_date" min-date="ProfessorReservationCreate.minDate" show-weeks="true" class="well well-sm"></ui-datepicker>
+              <input type="text" class="form-control" 
+                     datepicker-popup="mediumDate" 
+                     is-open="ProfessorReservationCreate.datepicker_open"
+                     ng-model="ProfessorReservationCreate.selected_date" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" 
+                        ng-click="ProfessorReservationCreate.openDatePicker($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
           </div>
         </div>
       </div>
@@ -23,7 +31,7 @@
         <div class="form-group">
           <label for="name">* Hora Inicio</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
             <ui-select id="date" ng-model="ProfessorReservationCreate.selected_start_time" ng-disabled="!ProfessorReservationCreate.selected_date">
               <ui-select-match placeholder="{{$select.selected.hour}}">
                 {{$select.selected.hour}}
@@ -99,7 +107,7 @@
     </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-12 col-xs-12 text-center">
-        <button type="submit" class="btn btn-lg btn-success" ng-click="ProfessorReservationCreate.create()" ng-disabled="!ProfessorReservationCreate.fieldsReady()">
+        <button type="submit" class="btn btn-lg btn-success" ng-click="ProfessorReservationCreate.create()" >
           <i class="glyphicon glyphicon-plus"></i> Crear
         </button>
       </div>
