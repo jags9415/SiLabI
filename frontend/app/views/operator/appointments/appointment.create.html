@@ -6,7 +6,7 @@
     <li><a href="#Operador/Citas">Citas</a></li>
     <li class="active">Agregar</li>
   </ol>
-  <form>
+  <form autocomplete="off">
   <div class="row">
       <div class="col-md-10 col-xs-10">
         <div class="form-group">
@@ -73,10 +73,10 @@
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
             <ui-select id="group" ng-model="AppointmentCreate.group" ng-disabled="!AppointmentCreate.student.username">
               <ui-select-match placeholder="{{$select.selected.course.name}}">
-                {{$select.selected.course.name}}
+                {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
               </ui-select-match>
               <ui-select-choices repeat="group in AppointmentCreate.groups | filter: $select.search">
-                <span ng-bind-html="group.course.name | highlight: $select.search"></span>
+                <span ng-bind-html="'[#' + group.number + '] ' + group.course.name | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
           </div>
@@ -105,7 +105,7 @@
           <label for="software">* Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list-alt"></i></span>
-            <input class="form-control" placeholder="Buscar Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentCreate.searchSoftware($viewValue)" typeahead-on-select="AppointmentCreate.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentCreate.selected_software" ng-value="{{ '[' + AppointmentCreate.selected_software.code + '] ' + AppointmentCreate.selected_software.name }}">
+            <input class="form-control" placeholder="Buscar Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentCreate.searchSoftware($viewValue)" typeahead-on-select="AppointmentCreate.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentCreate.selected_software">
           </div>
         </div>
       </div>

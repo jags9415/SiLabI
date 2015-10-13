@@ -8,7 +8,7 @@
   <div class="table-search" style="margin-bottom: 3%;">
     <div class="row">
       <div class="col-md-10 col-xs-10">
-        <form class="form-horizontal">
+        <form autocomplete="off" class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
             <input class="form-control" placeholder="Buscar por código de software" name="searchInput" type="text" ng-change="AppointmentList.search()" ng-model="AppointmentList.searched.softwareCode">
@@ -28,7 +28,7 @@
     </div>
     <div class="row" ng-show="AppointmentList.advanceSearch">
       <div class="col-md-12">
-        <form class="form-inline advanced-search">
+        <form autocomplete="off" class="form-inline advanced-search">
           <div class="row">
             <div class="col-md-10">
               <div class="row">

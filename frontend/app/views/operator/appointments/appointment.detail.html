@@ -6,7 +6,7 @@
     <li><a href="#Operador/Citas">Citas</a></li>
     <li class="active">Detalle</li>
   </ol>
-  <form>
+  <form autocomplete="off">
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
@@ -74,7 +74,7 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-cd"></i></span>
-            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)" typeahead-on-select="AppointmentDetail.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentDetail.appointment.software" ng-value="{{ '[' + AppointmentDetail.appointment.software.code + '] ' + AppointmentDetail.appointment.software.name }}">
+            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)" typeahead-on-select="AppointmentDetail.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentDetail.appointment.software">
           </div>
         </div>
       </div>

@@ -31,6 +31,55 @@
         return baseUrl + endpoint;
       }
 
+      function parseSortField(obj) {
+        var result = "";
+        if (obj.type === "DESC") {
+          result += "-";
+        }
+        result += obj.field;
+        return result;
+      }
+
+      function parseSort(sort) {
+        var result = "";
+
+        if (_.isArray(sort)) {
+          for (var i = 0; i < sort.length; i++) {
+            result += parseSortField(sort[i]);
+            if (i < sort.length - 1) result += ","
+          }
+        }
+        else if (_.isString(sort)) {
+          result = sort;
+        }
+        else if (_.isObject(sort)) {
+          result = parseSortField(sort);
+        }
+
+        return result;
+      }
+
+      function parseQuery(query) {
+        var result = "";
+        var current;
+
+        for (var property in query) {
+          if (query.hasOwnProperty(property)) {
+            current = query[property];
+            if (_.isArray(current)) {
+              for (var element in current) {
+                result += property + '+' + element.operation + '+' + element.value + ',';
+              }
+            }
+            else {
+              result += property + '+' + current.operation + '+' + current.value + ',';
+            }
+          }
+        }
+
+        return result.slice(0, result.length - 1);
+      }
+
       /**
       * Create a query string based on a request object.
       * @param request The request.
@@ -64,32 +113,15 @@
           addAmpersand = true;
         }
 
-        if (request.sort && request.sort.length > 0) {
+        if (request.sort && !_.isEmpty(request.sort)) {
           if (addAmpersand) query += "&";
-          query += "sort=";
-
-          for (var i = 0; i < request.sort.length; i++) {
-            if (request.sort[i].type === "DESC") {
-              query += "-";
-            }
-            query += request.sort[i].field;
-            if (i < request.sort.length - 1) query += ","
-          }
-
+          query += "sort=" + parseSort(request.sort);
           addAmpersand = true;
         }
 
         if (request.query && !_.isEmpty(request.query)) {
-          var addComma = false;
           if (addAmpersand) query += "&";
-          query += "q=";
-          for (var property in request.query) {
-            if (request.query.hasOwnProperty(property)) {
-              if (addComma) query += ',';
-              query += property + '+' + request.query[property].operation + '+' + request.query[property].value;
-              addComma = true;
-            }
-          }
+          query += "q=" + parseQuery(request.query);
           addAmpersand = true;
         }
 
@@ -218,7 +250,7 @@
             defer.reject(response.data)
           }
         );
-        
+
         return defer.promise;
       }
     }
