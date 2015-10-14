@@ -5,15 +5,27 @@
         .module('silabi')
         .controller('MainController', MainController);
 
-    MainController.$inject = ['$rootScope', '$localStorage'];
+    MainController.$inject = ['$scope', '$location', '$route', '$localStorage'];
 
-    function MainController($rootScope, $localStorage) {
+    function MainController($scope, $location, $route, $localStorage) {
       var vm = this;
+
+      $scope.$storage = $localStorage;
       vm.$storage = $localStorage;
+
       vm.AccessToken = GetAccessToken;
       vm.UserId = GetUserId;
       vm.UserName = GetUserName;
       vm.UserType = GetUserType;
+
+      $scope.$watch('$storage.access_token', function(newValue, oldValue) {
+        if (_.isEmpty(newValue)) {
+          $location.path('/Login');
+        }
+        else {
+          $location.path('/' + GetUserType());
+        }
+      });
 
       function GetAccessToken() {
         return vm.$storage['access_token'];
