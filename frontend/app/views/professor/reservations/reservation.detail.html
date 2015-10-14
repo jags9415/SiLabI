@@ -16,7 +16,8 @@
                      datepicker-popup="mediumDate" 
                      is-open="ProfessorReservationDetail.datepicker_open"
                      ng-model="ProfessorReservationDetail.selected_date"
-                     min-date="ProfessorReservationDetail.min_date" 
+                     min-date="ProfessorReservationDetail.min_date"
+                     ng-disabled="ProfessorReservationDetail.reservation.state != 'Por iniciar'" 
                      ng-click="ProfessorReservationDetail.openDatePicker($event)"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" 
@@ -34,7 +35,7 @@
           <label for="name">* Hora Inicio</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select name="startHour" ng-model="ProfessorReservationDetail.selected_start_time" ng-disabled="!ProfessorReservationDetail.selected_date" required>
+            <ui-select name="startHour" ng-model="ProfessorReservationDetail.selected_start_time" ng-disabled="!ProfessorReservationDetail.selected_date || ProfessorReservationDetail.reservation.state != 'Por iniciar'" required>
               <ui-select-match placeholder="{{$select.selected.hour}}">
                 {{$select.selected.hour}}
               </ui-select-match>
@@ -50,7 +51,7 @@
           <label for="name">* Hora Final</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select name="endHour" ng-model="ProfessorReservationDetail.selected_end_time" on-select="ProfessorReservationDetail.changeLaboratory()" ng-disabled="!ProfessorReservationDetail.selected_start_time" required>
+            <ui-select name="endHour" ng-model="ProfessorReservationDetail.selected_end_time" on-select="ProfessorReservationDetail.changeLaboratory()" ng-disabled="!ProfessorReservationDetail.selected_start_time|| ProfessorReservationDetail.reservation.state != 'Por iniciar'"  required>
               <ui-select-match placeholder="{{$select.selected.hour}}">
                 {{$select.selected.hour}}
               </ui-select-match>
@@ -68,7 +69,7 @@
           <label for="course">Grupo</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-            <ui-select id="group" ng-model="ProfessorReservationDetail.reservation.group" >
+            <ui-select id="group" ng-model="ProfessorReservationDetail.reservation.group" ng-disabled="ProfessorReservationDetail.reservation.state != 'Por iniciar'">
               <ui-select-match placeholder="{{$select.selected.course.name}}">
                 {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}  
               </ui-select-match>
@@ -84,7 +85,7 @@
           <label for="lab">* Laboratorio</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-home"></i></span>
-            <ui-select name="lab" ng-model="ProfessorReservationDetail.reservation.laboratory" required>
+            <ui-select name="lab" ng-model="ProfessorReservationDetail.reservation.laboratory" ng-disabled="ProfessorReservationDetail.reservation.state != 'Por iniciar'" required>
               <ui-select-match placeholder="{{$select.selected.name}}">
                 {{$select.selected.name}}
               </ui-select-match>
@@ -102,7 +103,7 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list-alt"></i></span>
-            <input class="form-control" placeholder="Buscar Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in ProfessorReservationDetail.searchSoftware($viewValue)" typeahead-on-select="ProfessorReservationDetail.setSoftware($item)" typeahead-editable="false" ng-model="ProfessorReservationDetail.reservation.software.code">
+            <input class="form-control" placeholder="Buscar Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in ProfessorReservationDetail.searchSoftware($viewValue)" typeahead-on-select="ProfessorReservationDetail.setSoftware($item)" typeahead-editable="false" ng-model="ProfessorReservationDetail.reservation.software.code" ng-disabled="ProfessorReservationDetail.reservation.state != 'Por iniciar'">
           </div>
         </div>
       </div>

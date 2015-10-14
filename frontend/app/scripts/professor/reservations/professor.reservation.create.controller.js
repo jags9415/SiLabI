@@ -14,6 +14,7 @@
     vm.laboratories = [];
     vm.start_hours = [];
     vm.end_hours = [];
+    vm.end_hours_sliced = [];
     vm.selected_software = null;
     vm.selected_group = null;
  
@@ -34,6 +35,7 @@
     vm.min_date = new Date();
     vm.datepicker_open = false;
     vm.openDatePicker = openDatePicker;
+    vm.loadEndHours = loadEndHours;
 
     activate();
 
@@ -49,6 +51,27 @@
       getGroups ();
     }
 
+    function loadEndHours () {
+      var index = -1;
+
+      for (var i = 0; i < vm.end_hours.length; i++) 
+      {
+        if(vm.selected_start_time.value == vm.end_hours[i].value)
+        {
+          index = i;
+        }  
+      }
+      if(index >= 0)
+      {
+        vm.end_hours_sliced = vm.end_hours.slice(index+1, vm.end_hours.length);
+      }
+      else
+      {
+        vm.end_hours_sliced = vm.end_hours;
+      }
+    }
+
+    
     function openDatePicker($event){
       if ($event) 
       {
@@ -160,8 +183,8 @@
     function clearFields() {
       $scope.$broadcast('show-errors-reset');
       delete vm.groups;
-      delete vm.aselected_start_time;
-      delete vm.aselected_end_time;
+      delete vm.selected_start_time;
+      delete vm.selected_end_time;
       delete vm.software_list;
       delete vm.selected_date;
       delete vm.selected_software;
