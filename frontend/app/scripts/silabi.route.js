@@ -217,6 +217,11 @@
           controllerAs: 'ProfessorReservationCreate',
           reloadOnSearch: false
         })
+        .when('/Docente/Reservaciones/:id', {
+          templateUrl: 'views/professor/reservations/reservation.detail.html',
+          controller: 'ProfessorReservationDetailController',
+          controllerAs: 'ProfessorReservationDetail',
+        })
         .when('/Operador/Reservaciones', {
           templateUrl: 'views/operator/reservations/reservation.list.html',
           controller: 'ReservationListController',
