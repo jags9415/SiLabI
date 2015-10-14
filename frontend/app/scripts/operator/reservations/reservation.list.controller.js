@@ -62,6 +62,42 @@
 
     function searchReservation() {
       vm.request.query = {};
+
+      if (vm.searched.professor && vm.searched.professor.full_name) {
+        vm.request.query['professor.full_name'] = {
+          operation: "like",
+          value: '*' + vm.searched.professor.full_name.replace(' ', '*') + '*'
+        }
+      }
+
+      if (vm.searched.group && vm.searched.group.course.name) {
+        vm.request.query['group.course.name'] = {
+          operation: "like",
+          value: '*' + vm.searched.group.course.name.replace(' ', '*') + '*'
+        }
+      }
+
+      if (vm.searched.laboratory && vm.searched.laboratory.name) {
+        vm.request.query['laboratory.name'] = {
+          operation: "like",
+          value: '*' + vm.searched.laboratory.name.replace(' ', '*') + '*'
+        }
+      }
+
+      if (vm.searched.software && vm.searched.software.code) {
+        vm.request.query['software.code'] = {
+          operation: "like",
+          value: '*' + vm.searched.software.code.replace(' ', '*') + '*'
+        }
+      }
+
+      if (vm.searched.state) {
+        vm.request.query.state = {
+          operation: "eq",
+          value: vm.searched.state.value
+        }
+      }
+
       loadPage();
     }
 
