@@ -46,7 +46,7 @@
       var maxHour = 17;
 
       if (moment(vm.selected_date).isSame(vm.today, 'day') && date.getHours() < maxHour) {
-        var maxHour = date.getHours();
+        var maxHour = Math.max(minHour, date.getHours());
       }
 
       for (var i = minHour; i <= maxHour; i++) {
