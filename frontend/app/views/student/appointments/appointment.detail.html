@@ -8,99 +8,97 @@
   </ol>
   <form autocomplete="off" name="updateAppForm">
     <div class="row">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="date">Fecha</label>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-              <ui-select id="date" name="date" ng-model="AppointmentDetail.selected_date" on-select="AppointmentDetail.setAvailableHours()">
-                <ui-select-match placeholder="Fecha">
-                  {{$select.selected.day | date : 'fullDate'}}
-                </ui-select-match>
-                <ui-select-choices repeat="date in AppointmentDetail.available_dates | filter: $select.search">
-                  <span ng-bind-html="date.day | date : 'fullDate' | highlight: $select.search"></span>
-                </ui-select-choices>
-              </ui-select>
-              <p class="help-block" ng-show="updateAppForm.date.$error.required">Fecha requerida.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="hour">Hora</label>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-              <ui-select id="hour" name="hour" ng-model="AppointmentDetail.selected_hour" on-select="AppointmentDetail.changeLaboratory()">
-                <ui-select-match placeholder="Hora">
-                  {{$select.selected.full_date | date: 'hh:mm a'}}
-                </ui-select-match>
-                <ui-select-choices repeat="hour in AppointmentDetail.available_hours | filter: $select.search">
-                  <span ng-bind-html="hour.full_date | date : 'hh:mm a' | highlight: $select.search"></span>
-                </ui-select-choices>
-              </ui-select>
-              <p class="help-block" ng-show="updateAppForm.hour.$error.required">Fecha requerida.</p>
-            </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="date">Fecha</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
+            <ui-select id="date" name="date" ng-model="AppointmentDetail.selected_date" on-select="AppointmentDetail.setAvailableHours()">
+              <ui-select-match placeholder="Fecha">
+                {{$select.selected.day | date : 'fullDate'}}
+              </ui-select-match>
+              <ui-select-choices repeat="date in AppointmentDetail.available_dates | filter: $select.search">
+                <span ng-bind-html="date.day | date : 'fullDate' | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+            <p class="help-block" ng-show="updateAppForm.date.$error.required">Fecha requerida.</p>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="software">Software</label>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-cd"></i></span>
-              <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)" typeahead-on-select="AppointmentDetail.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentDetail.appointment.software" ng-value="{{ '[' + AppointmentDetail.appointment.software.code + '] ' + AppointmentDetail.appointment.software.name }}">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="lab">Laboratorio</label>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-              <input id="lab" class="form-control" placeholder="Laboratorio" ng-model="AppointmentDetail.appointment.laboratory.name" readonly>
-            </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="hour">Hora</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
+            <ui-select id="hour" name="hour" ng-model="AppointmentDetail.selected_hour" on-select="AppointmentDetail.changeLaboratory()">
+              <ui-select-match placeholder="Hora">
+                {{$select.selected.full_date | date: 'hh:mm a'}}
+              </ui-select-match>
+              <ui-select-choices repeat="hour in AppointmentDetail.available_hours | filter: $select.search">
+                <span ng-bind-html="hour.full_date | date : 'hh:mm a' | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+            <p class="help-block" ng-show="updateAppForm.hour.$error.required">Fecha requerida.</p>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label for="group">Curso</label>
-            <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-              <input id="group" class="form-control" ng-model="AppointmentDetail.appointment.group.course.name" readonly>
-            </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="software">Software</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-cd"></i></span>
+            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)" typeahead-on-select="AppointmentDetail.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentDetail.appointment.software" ng-value="{{ '[' + AppointmentDetail.appointment.software.code + '] ' + AppointmentDetail.appointment.software.name }}">
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group" show-errors>
-            <label for="created_at" class="control-label">Fecha Creación</label>
-            <input type="text" class="form-control" id="created_at" name="created_at" placeholder="Fecha Creación" ng-value="AppointmentDetail.appointment.created_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly></input>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group" show-errors>
-            <label for="updated_at" class="control-label">Fecha Actualización</label>
-            <input type="text" class="form-control" id="updated_at" name="updated_at" placeholder="Fecha Actualización" ng-value="AppointmentDetail.appointment.updated_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="lab">Laboratorio</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
+            <input id="lab" class="form-control" placeholder="Laboratorio" ng-model="AppointmentDetail.appointment.laboratory.name" readonly>
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="group">Curso</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
+            <input id="group" class="form-control" ng-model="AppointmentDetail.appointment.group.course.name" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="created_at" class="control-label">Fecha Creación</label>
+          <input type="text" class="form-control" id="created_at" name="created_at" placeholder="Fecha Creación" ng-value="AppointmentDetail.appointment.created_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly></input>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="updated_at" class="control-label">Fecha Actualización</label>
+          <input type="text" class="form-control" id="updated_at" name="updated_at" placeholder="Fecha Actualización" ng-value="AppointmentDetail.appointment.updated_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly>
+        </div>
+      </div>
+    </div>
 
-      <div class="row" style="margin-top: 3%;">
-        <div class="col-md-6 text-center">
-          <button type="submit" class="btn btn-lg btn-info" ng-click="AppointmentDetail.update()" ng-disabled="updateAppForm.$invalid">
-            <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
-          </button>
-        </div>
-        <div class="col-md-6 text-center">
-          <button type="submit" class="btn btn-lg btn-danger" ng-click="AppointmentDetail.delete()">
-            <i class="glyphicon glyphicon-trash"></i> Eliminar
-          </button>
-        </div>
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-md-6 text-center">
+        <button type="submit" class="btn btn-lg btn-info" ng-click="AppointmentDetail.update()" ng-disabled="updateAppForm.$invalid">
+          <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
+        </button>
+      </div>
+      <div class="col-md-6 text-center">
+        <button type="submit" class="btn btn-lg btn-danger" ng-click="AppointmentDetail.delete()">
+          <i class="glyphicon glyphicon-trash"></i> Eliminar
+        </button>
       </div>
     </div>
   </form>
