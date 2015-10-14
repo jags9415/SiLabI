@@ -5,7 +5,7 @@ angular
   .module('silabi')
   .service('ReservationService', ReservationService);
 
-AppointmentService.$inject = ['RequestService', '$localStorage'];
+ReservationService.$inject = ['RequestService', '$localStorage'];
 
 function ReservationService(RequestService, $localStorage) {
   this.GetAll = GetAll;
@@ -13,8 +13,6 @@ function ReservationService(RequestService, $localStorage) {
   this.Update = Update;
   this.Create = Create;
   this.Delete = Delete;
-  this.GetAvailable = GetAvailable;
-  this.ParseAvailableDates = ParseAvailableDates;
 
   function GetAll(request) {
     if (!request) request = {};
