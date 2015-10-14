@@ -22,7 +22,7 @@
         if (_.isEmpty(newValue)) {
           $location.path('/Login');
         }
-        else {
+        else if ($location.path() == '/Login') {
           $location.path('/' + GetUserType());
         }
       });
