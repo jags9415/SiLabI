@@ -14,6 +14,7 @@
     vm.laboratories = [];
     vm.start_hours = [];
     vm.end_hours = [];
+    vm.end_hours_sliced = [];
     vm.selected_software = null;
     vm.selected_group = null;
     vm.min_date = new Date();
@@ -34,6 +35,7 @@
     vm.searchSoftware = searchSoftware;
     vm.setSoftware = setSoftware;
     vm.openDatePicker = openDatePicker;
+    vm.loadEndHours = loadEndHours;
 
     activate();
 
@@ -59,6 +61,25 @@
       vm.datepicker_open = true;
     }
 
+    function loadEndHours () {
+      var index = -1;
+
+      for (var i = 0; i < vm.end_hours.length; i++) 
+      {
+        if(vm.selected_start_time.value == vm.end_hours[i].value)
+        {
+          index = i;
+        }  
+      }
+      if(index >= 0)
+      {
+        vm.end_hours_sliced = vm.end_hours.slice(index+1, vm.end_hours.length);
+      }
+      else
+      {
+        vm.end_hours_sliced = vm.end_hours;
+      }
+    }
 
     function getReservation() {
       ProfessorReservationService.GetOne(vm.username, vm.reservation_id)
@@ -126,7 +147,6 @@
       vm.selected_date = new Date(data.start_time);
       setStartHour();
       setEndHour(); 
-      console.log(vm.selected_date);
     }
 
     function setLaboratories (data) {
