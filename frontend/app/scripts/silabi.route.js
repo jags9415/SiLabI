@@ -26,7 +26,7 @@
           redirectTo: '/Estudiante/Citas'
         })
         .when('/Docente', {
-          templateUrl: 'views/professor/home.html'
+          redirectTo: '/Docente/Reservaciones'
         })
         .when('/Login', {
           templateUrl: 'views/public/login.html',
@@ -235,25 +235,21 @@
     }
 
     function redirectToLogin($location, $localStorage) {
-      delete $localStorage['access_token'];
-      delete $localStorage['username'];
-      delete $localStorage['user_id'];
-      delete $localStorage['user_name'];
-      delete $localStorage['user_type'];
+      $localStorage.$reset();
       $location.path('/Login');
     }
 
     handleHomeRedirect.$inject = ['$location', '$localStorage', 'AuthenticationService'];
 
     function handleHomeRedirect($location, $localStorage, AuthenticationService) {
-        if (AuthenticationService.isAuthenticated()) {
-          var data = AuthenticationService.getUserData();
-          $location.path('/' + data.type);
-        }
-        else {
-          redirectToLogin($location, $localStorage);
-        }
+      if (AuthenticationService.isAuthenticated()) {
+        var data = AuthenticationService.getUserData();
+        $location.path('/' + data.type);
       }
+      else {
+        redirectToLogin($location, $localStorage);
+      }
+    }
 
     routeChangeListener.$inject = ['$rootScope', '$location', '$localStorage', 'AuthenticationService'];
 

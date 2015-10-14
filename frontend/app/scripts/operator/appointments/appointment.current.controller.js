@@ -62,6 +62,8 @@
       if (!vm.selected_hour) {
         vm.selected_hour = vm.hours[vm.hours.length - 1];
       }
+
+      loadAppointments();
     }
 
     function loadAppointments() {
