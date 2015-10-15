@@ -68,48 +68,49 @@
       </div>
     </div>
   </div>
-    <div class="table-responsive">
-      <table class="table table-striped" id="professorsTable">
-        <thead>
-          <tr>
-            <th>Usuario</th>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Teléfono</th>
-            <th>Estado</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="professor in ProfessorList.professors" id="{{professor.id}}">
-            <td>{{professor.username}}</td>
-            <td>{{professor.full_name}}</td>
-            <td>{{professor.email}}</td>
-            <td>{{professor.phone}}</td>
-            <td>
-              <span class="label"
-                ng-class="{ 'label-success': professor.state === 'Activo',
-                            'label-danger': professor.state === 'Inactivo'}" >
-                {{ professor.state }}
-              </span>
-            </td>
-            <td class="text-center">
-                <a href="{{ '#Operador/Docentes/' + professor.username }}" class='btn btn-info btn-sm' ng-click="ProfessorList.seeProfessorDetail(professor.username)"><span class="glyphicon glyphicon-eye-open" ></span></a>
-                <a href="" class="btn btn-danger btn-sm" ng-click="ProfessorList.deleteProfessor(professor.id)"><span class="glyphicon glyphicon-trash" ></span></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p ng-show="ProfessorList.isLoaded() && ProfessorList.isEmpty()">No se encontraron resultados.</p>
-    <br><br>
-    <div class="row" ng-show="ProfessorList.totalPages > 1">
+  <div cg-busy="ProfessorList.promise"></div>
+  <div class="table-responsive">
+    <table class="table table-striped" id="professorsTable">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="professor in ProfessorList.professors" id="{{professor.id}}">
+          <td>{{professor.username}}</td>
+          <td>{{professor.full_name}}</td>
+          <td>{{professor.email}}</td>
+          <td>{{professor.phone}}</td>
+          <td>
+            <span class="label"
+              ng-class="{ 'label-success': professor.state === 'Activo',
+                          'label-danger': professor.state === 'Inactivo'}" >
+              {{ professor.state }}
+            </span>
+          </td>
+          <td class="text-center">
+              <a href="{{ '#Operador/Docentes/' + professor.username }}" class='btn btn-info btn-sm' ng-click="ProfessorList.seeProfessorDetail(professor.username)"><span class="glyphicon glyphicon-eye-open" ></span></a>
+              <a href="" class="btn btn-danger btn-sm" ng-click="ProfessorList.deleteProfessor(professor.id)"><span class="glyphicon glyphicon-trash" ></span></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p ng-show="ProfessorList.isLoaded() && ProfessorList.isEmpty()">No se encontraron resultados.</p>
+  <br><br>
+  <div class="row" ng-show="ProfessorList.totalPages > 1">
     <div class="col-xs-12 col-md-12 pagination">
       <pagination
         ng-change="ProfessorList.loadPage()" ng-model="ProfessorList.page" items-per-page="ProfessorList.limit"
         total-items="ProfessorList.totalItems" max-size="5" boundary-links="true" rotate="true"
-        previous-text="<" next-text=">" first-text="<<" last-text=">>"
-      ></pagination>
+        previous-text="<" next-text=">" first-text="<<" last-text=">>">
+      </pagination>
     </div>
   </div>
 </div>

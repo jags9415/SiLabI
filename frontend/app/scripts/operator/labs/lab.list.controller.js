@@ -53,7 +53,7 @@
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      LabService.GetAll(vm.request)
+      vm.promise = LabService.GetAll(vm.request)
       .then(setLabs)
       .catch(handleError);
     }

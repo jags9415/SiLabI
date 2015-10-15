@@ -56,7 +56,7 @@
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      StudentAppService.GetAll(vm.student_id, vm.request)
+      vm.promise = StudentAppService.GetAll(vm.student_id, vm.request)
       .then(setAppointments)
       .catch(handleError);
     }

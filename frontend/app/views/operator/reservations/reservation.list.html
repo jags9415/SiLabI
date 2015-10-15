@@ -72,9 +72,10 @@
         </form>
       </div>
     </div>
-    </div>
-  <div class="table-responsive" ng-hide="ReservationList.isLoaded() && ReservationList.isEmpty()">
-    <table class="table table-striped" ng-show="true">
+  </div>
+  <div cg-busy="ReservationList.promise"></div>
+  <div class="table-responsive">
+    <table class="table table-striped">
       <thead>
         <tr>
           <th style="width: 20%">Docente</th>

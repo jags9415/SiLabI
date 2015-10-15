@@ -84,7 +84,7 @@
         value: getSelectedDateTime().toISOString()
       }
 
-      AppointmentService.GetAll(vm.request)
+      vm.promise = AppointmentService.GetAll(vm.request)
       .then(setAppointments)
       .catch(handleError);
     }

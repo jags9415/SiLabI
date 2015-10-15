@@ -42,8 +42,8 @@
         loadPage();
 
         StateService.GetLabStates()
-      .then(setStates)
-      .catch(handleError);
+        .then(setStates)
+        .catch(handleError);
       }
 
       function loadPage() {
@@ -52,7 +52,7 @@
         vm.request.page = vm.page;
         vm.request.limit = vm.limit;
 
-        SoftwareService.GetAll(vm.request)
+        vm.promise = SoftwareService.GetAll(vm.request)
         .then(setSoftware)
         .catch(handleError);
       }

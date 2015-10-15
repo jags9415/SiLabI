@@ -52,7 +52,7 @@
           vm.request.page = vm.page;
           vm.request.limit = vm.limit;
 
-          CourseService.GetAll(vm.request)
+          vm.promise = CourseService.GetAll(vm.request)
           .then(setCourses)
           .catch(handleError);
         }
