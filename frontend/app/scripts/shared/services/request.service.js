@@ -22,10 +22,10 @@
       * @example join("http://localhost/api/v1/", "/students/201242273") => "http://localhost/api/v1/students/201242273"
       */
       function join(baseUrl, endpoint) {
-        if (baseUrl.endsWith("/")) {
+        if (_.endsWith(baseUrl, "/")) {
           baseUrl = baseUrl.substring(0, baseUrl.length - 1);
         }
-        if (!endpoint.startsWith("/")) {
+        if (!_.startsWith(endpoint, "/")) {
           endpoint = "/" + endpoint;
         }
         return baseUrl + endpoint;

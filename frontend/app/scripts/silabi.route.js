@@ -275,29 +275,29 @@
           }
         }
         // User is not authenticated. Only have access to public views.
-        else if (!url.startsWith("views/public")) {
+        else if (!_.startsWith(url, "views/public")) {
           redirectToLogin($location, $localStorage);
         }
       });
     }
 
     function hasAccesssToView(view, type) {
-      if (view.startsWith("views/public")) {
+      if (_.startsWith(view, "views/public")) {
         return true;
       }
-      else if (view.startsWith("views/shared")) {
+      else if (_.startsWith(view, "views/shared")) {
         return type === "Administrador" || type === "Operador" || type === "Docente" || type === "Estudiante";
       }
-      else if (view.startsWith("views/administrator")) {
+      else if (_.startsWith(view, "views/administrator")) {
         return type === "Administrador";
       }
-      else if (view.startsWith("views/operator")) {
+      else if (_.startsWith(view, "views/operator")) {
         return type === "Operador" || type === "Administrador";
       }
-      else if (view.startsWith("views/professor")) {
+      else if (_.startsWith(view, "views/professor")) {
         return type === "Docente";
       }
-      else if (view.startsWith("views/student")) {
+      else if (_.startsWith(view, "views/student")) {
         return type === "Estudiante";
       }
       else {
