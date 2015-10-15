@@ -17,34 +17,34 @@ namespace SiLabI.Data
     /// </summary>
     public class LaboratoryDataAccess : IDataAccess
     {
-        private Connection _Connection;
+        private ConnectionGroup _connectionGroup;
 
         /// <summary>
         /// Create a new LaboratoryDataAccess.
         /// </summary>
         public LaboratoryDataAccess()
         {
-            _Connection = new Connection();
+            _connectionGroup = ConnectionGroup.Instance;
         }
 
-        public int GetCount(object requesterId, QueryString request)
+        public int GetCount(Dictionary<string, object> payload, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[2];
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
 
             parameters[1] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
             parameters[1].Value = SqlUtilities.FormatWhereFields(request.Query);
 
-            object count = _Connection.executeScalar("sp_GetLaboratoriesCount", parameters);
+            object count = _connectionGroup.Get(payload["type"] as string).executeScalar("sp_GetLaboratoriesCount", parameters);
             return Converter.ToInt32(count);
         }
 
-        public DataTable GetAll(object requesterId, QueryString request)
+        public DataTable GetAll(Dictionary<string, object> payload, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[6];
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
 
             parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
             parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
@@ -58,20 +58,20 @@ namespace SiLabI.Data
             parameters[4] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
             parameters[5] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
 
-            return _Connection.executeQuery("sp_GetLaboratories", parameters);
+            return _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetLaboratories", parameters);
         }
 
-        public DataRow GetOne(object requesterId, int id, QueryString request)
+        public DataRow GetOne(Dictionary<string, object> payload, int id, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[3];
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@id", SqlDbType.VarChar, id);
             
             parameters[2] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
             parameters[2].Value = SqlUtilities.FormatSelectFields(request.Fields);
             
-            DataTable table = _Connection.executeQuery("sp_GetLaboratory", parameters);
+            DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetLaboratory", parameters);
             if (table.Rows.Count == 0)
             {
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Laboratorio no encontrado.");
@@ -82,7 +82,7 @@ namespace SiLabI.Data
             }
         }
 
-        public DataRow Create(object requesterId, object obj)
+        public DataRow Create(Dictionary<string, object> payload, object obj)
         {
             Laboratory laboratory = (obj as Laboratory);
             SqlParameter[] parameters;
@@ -98,17 +98,17 @@ namespace SiLabI.Data
                 parameters[5] = SqlUtilities.CreateParameter("@software", SqlDbType.Structured, software);
             }
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, laboratory.Name);
             parameters[2] = SqlUtilities.CreateParameter("@seats", SqlDbType.Int, laboratory.Seats);
             parameters[3] = SqlUtilities.CreateParameter("@appointment_priority", SqlDbType.Int, laboratory.AppointmentPriority);
             parameters[4] = SqlUtilities.CreateParameter("@reservation_priority", SqlDbType.Int, laboratory.ReservationPriority);
 
-            DataTable table = _Connection.executeQuery("sp_CreateLaboratory", parameters);
+            DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_CreateLaboratory", parameters);
             return table.Rows[0];
         }
 
-        public DataRow Update(object requesterId, int id, object obj)
+        public DataRow Update(Dictionary<string, object> payload, int id, object obj)
         {
             Laboratory laboratory = (obj as Laboratory);
             SqlParameter[] parameters;
@@ -124,7 +124,7 @@ namespace SiLabI.Data
                 parameters[7] = SqlUtilities.CreateParameter("@software", SqlDbType.Structured, software);
             }
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
             parameters[2] = SqlUtilities.CreateParameter("@name", SqlDbType.VarChar, laboratory.Name);
             parameters[3] = SqlUtilities.CreateParameter("@seats", SqlDbType.Int, laboratory.Seats);
@@ -132,18 +132,18 @@ namespace SiLabI.Data
             parameters[5] = SqlUtilities.CreateParameter("@appointment_priority", SqlDbType.Int, laboratory.AppointmentPriority);
             parameters[6] = SqlUtilities.CreateParameter("@reservation_priority", SqlDbType.Int, laboratory.ReservationPriority);
 
-            DataTable table = _Connection.executeQuery("sp_UpdateLaboratory", parameters);
+            DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_UpdateLaboratory", parameters);
             return table.Rows[0];
         }
 
-        public void Delete(object requesterId, int id)
+        public void Delete(Dictionary<string, object> payload, int id)
         {
             SqlParameter[] parameters = new SqlParameter[2];
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
 
-            _Connection.executeNonQuery("sp_DeleteLaboratory", parameters);
+            _connectionGroup.Get(payload["type"] as string).executeNonQuery("sp_DeleteLaboratory", parameters);
         }
 
         private DataTable createSoftwareTable(List<string> codes)

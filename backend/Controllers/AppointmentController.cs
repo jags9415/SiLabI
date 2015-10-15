@@ -44,8 +44,8 @@ namespace SiLabI.Controllers
             }
   
             PaginatedResponse<Appointment> response = new PaginatedResponse<Appointment>();
-            DataTable table = _AppointmentDA.GetAll(payload["id"], request);
-            int count = _AppointmentDA.GetCount(payload["id"], request);
+            DataTable table = _AppointmentDA.GetAll(payload, request);
+            int count = _AppointmentDA.GetCount(payload, request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -73,7 +73,7 @@ namespace SiLabI.Controllers
             }
 
             List<AvailableAppointment> response = new List<AvailableAppointment>();
-            DataTable table = _AppointmentDA.GetAvailable(payload["id"], student, request);
+            DataTable table = _AppointmentDA.GetAvailable(payload, student, request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -92,7 +92,7 @@ namespace SiLabI.Controllers
         /// <returns>The appointment.</returns>
         public Appointment GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _AppointmentDA.GetOne(payload["id"], id, request);
+            DataRow row = _AppointmentDA.GetOne(payload, id, request);
             return Appointment.Parse(row);
         }
 
@@ -115,7 +115,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de cita incompletos.");
             }
 
-            DataRow row = _AppointmentDA.Create(payload["id"], appointmentRequest.Appointment);
+            DataRow row = _AppointmentDA.Create(payload, appointmentRequest.Appointment);
             return Appointment.Parse(row);
         }
 
@@ -139,7 +139,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de cita inválidos.");
             }
 
-            DataRow row = _AppointmentDA.Update(payload["id"], id, appointmentRequest.Appointment);
+            DataRow row = _AppointmentDA.Update(payload, id, appointmentRequest.Appointment);
             return Appointment.Parse(row);
         }
 
@@ -156,7 +156,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _AppointmentDA.Delete(payload["id"], id);
+            _AppointmentDA.Delete(payload, id);
         }
     }
 }

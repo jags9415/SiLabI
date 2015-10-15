@@ -20,7 +20,7 @@ namespace SiLabI.Controllers
     /// </summary>
     public class AuthenticationController
     {
-        private UserDataAccess _UserDA;
+        private AuthenticationDataAccess _AuthenticationDA;
         private Dictionary<IPAddress, Attempt> _clientAttempts;
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace SiLabI.Controllers
         /// </summary>
         public AuthenticationController(int maxAttempts, int hoursBlocked)
         {
-            _UserDA = new UserDataAccess();
+            _AuthenticationDA = new AuthenticationDataAccess();
             _clientAttempts = new Dictionary<IPAddress, Attempt>();
 
             MaxAttempts = maxAttempts;
@@ -61,7 +61,7 @@ namespace SiLabI.Controllers
                 throw new UnathorizedOperationException(String.Format("Ha excedido el número de intentos posibles. Intente de nuevo dentro de {0} hora (s)", HoursBlocked));
             }
 
-            var table = _UserDA.Authenticate(request.Username, request.Password);
+            var table = _AuthenticationDA.Authenticate(request.Username, request.Password);
 
             if (table.Rows.Count == 0)
             {

@@ -14,21 +14,21 @@ namespace SiLabI.Data
     /// </summary>
     public class SoftwareByLaboratoryDataAccess : IDataAccessIntermediate
     {
-        private Connection _Connection;
+        private ConnectionGroup _connectionGroup;
 
         /// <summary>
         /// Creates a new SoftwareByLaboratoryDataAccess.
         /// </summary>
         public SoftwareByLaboratoryDataAccess()
         {
-            _Connection = new Connection();
+            _connectionGroup = ConnectionGroup.Instance;
         }
 
-        public DataTable GetAll(object requesterId, int id, QueryString request)
+        public DataTable GetAll(Dictionary<string, object> payload, int id, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[5];
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@laboratory", SqlDbType.Int, id);
 
             parameters[2] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
@@ -40,10 +40,10 @@ namespace SiLabI.Data
             parameters[4] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
             parameters[4].Value = SqlUtilities.FormatWhereFields(request.Query);
 
-            return _Connection.executeQuery("sp_GetSoftwareByLaboratory", parameters);
+            return _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetSoftwareByLaboratory", parameters);
         }
 
-        public void Create(object requesterId, int id, object obj)
+        public void Create(Dictionary<string, object> payload, int id, object obj)
         {
             List<string> students = (obj as List<string>);
             SqlParameter[] parameters = new SqlParameter[3];
@@ -52,14 +52,14 @@ namespace SiLabI.Data
             table.Columns.Add("Username");
             students.ForEach(x => table.Rows.Add(x));
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@laboratory", SqlDbType.Int, id);
             parameters[2] = SqlUtilities.CreateParameter("@softwares", SqlDbType.Structured, table);
 
-            _Connection.executeNonQuery("sp_AddSoftwareToLaboratory", parameters);
+            _connectionGroup.Get(payload["type"] as string).executeNonQuery("sp_AddSoftwareToLaboratory", parameters);
         }
 
-        public void Update(object requesterId, int id, object obj)
+        public void Update(Dictionary<string, object> payload, int id, object obj)
         {
             List<string> students = (obj as List<string>);
             SqlParameter[] parameters = new SqlParameter[3];
@@ -68,14 +68,14 @@ namespace SiLabI.Data
             table.Columns.Add("Username");
             students.ForEach(x => table.Rows.Add(x));
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@laboratory", SqlDbType.Int, id);
             parameters[2] = SqlUtilities.CreateParameter("@softwares", SqlDbType.Structured, table);
 
-            _Connection.executeNonQuery("sp_UpdateLaboratorySoftware", parameters);
+            _connectionGroup.Get(payload["type"] as string).executeNonQuery("sp_UpdateLaboratorySoftware", parameters);
         }
 
-        public void Delete(object requesterId, int id, object obj)
+        public void Delete(Dictionary<string, object> payload, int id, object obj)
         {
             List<string> students = (obj as List<string>);
             SqlParameter[] parameters = new SqlParameter[3];
@@ -84,11 +84,11 @@ namespace SiLabI.Data
             table.Columns.Add("Username");
             students.ForEach(x => table.Rows.Add(x));
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@laboratory", SqlDbType.Int, id);
             parameters[2] = SqlUtilities.CreateParameter("@softwares", SqlDbType.Structured, table);
 
-            _Connection.executeNonQuery("sp_RemoveSoftwareFromLaboratory", parameters);
+            _connectionGroup.Get(payload["type"] as string).executeNonQuery("sp_RemoveSoftwareFromLaboratory", parameters);
         }
     }
 }

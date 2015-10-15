@@ -41,8 +41,8 @@ namespace SiLabI.Controllers
             }
 
             PaginatedResponse<Student> response = new PaginatedResponse<Student>();
-            DataTable table = _StudentDA.GetAll(payload["id"], request);
-            int count = _StudentDA.GetCount(payload["id"], request);
+            DataTable table = _StudentDA.GetAll(payload, request);
+            int count = _StudentDA.GetCount(payload, request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -57,13 +57,13 @@ namespace SiLabI.Controllers
 
         public Student GetOne(string username, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _StudentDA.GetOne(payload["id"], username, request);
+            DataRow row = _StudentDA.GetOne(payload, username, request);
             return Student.Parse(row);
         }
 
         public Student GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _StudentDA.GetOne(payload["id"], id, request);
+            DataRow row = _StudentDA.GetOne(payload, id, request);
             return Student.Parse(row);
         }
 
@@ -80,7 +80,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de estudiante incompletos.");
             }
 
-            DataRow row = _StudentDA.Create(payload["id"], studentRequest.Student);
+            DataRow row = _StudentDA.Create(payload, studentRequest.Student);
             return Student.Parse(row);
         }
 
@@ -97,7 +97,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de estudiante inválidos.");
             }
 
-            DataRow row = _StudentDA.Update(payload["id"], id, studentRequest.Student);
+            DataRow row = _StudentDA.Update(payload, id, studentRequest.Student);
            return Student.Parse(row);
         }
 
@@ -108,7 +108,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _StudentDA.Delete(payload["id"], id);
+            _StudentDA.Delete(payload, id);
         }
     }
 }

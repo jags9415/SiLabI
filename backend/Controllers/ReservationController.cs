@@ -37,8 +37,8 @@ namespace SiLabI.Controllers
             }
 
             PaginatedResponse<Reservation> response = new PaginatedResponse<Reservation>();
-            DataTable table = _ReservationDA.GetAll(payload["id"], request);
-            int count = _ReservationDA.GetCount(payload["id"], request);
+            DataTable table = _ReservationDA.GetAll(payload, request);
+            int count = _ReservationDA.GetCount(payload, request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -53,7 +53,7 @@ namespace SiLabI.Controllers
 
         public Reservation GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _ReservationDA.GetOne(payload["id"], id, request);
+            DataRow row = _ReservationDA.GetOne(payload, id, request);
             return Reservation.Parse(row);
         }
 
@@ -70,7 +70,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de reservación incompletos.");
             }
 
-            DataRow row = _ReservationDA.Create(payload["id"], reservationRequest.Reservation);
+            DataRow row = _ReservationDA.Create(payload, reservationRequest.Reservation);
             return Reservation.Parse(row);
         }
 
@@ -87,7 +87,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de reservación inválidos.");
             }
 
-            DataRow row = _ReservationDA.Update(payload["id"], id, reservationRequest.Reservation);
+            DataRow row = _ReservationDA.Update(payload, id, reservationRequest.Reservation);
             return Reservation.Parse(row);
         }
 
@@ -98,7 +98,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _ReservationDA.Delete(payload["id"], id);
+            _ReservationDA.Delete(payload, id);
         }
     }
 }

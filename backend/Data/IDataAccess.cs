@@ -15,50 +15,50 @@ namespace SiLabI.Data
         /// <summary>
         /// Get the amount of rows that satifies a query.
         /// </summary>
-        /// <param name="requesterId">The identification number of the user who is making the request.</param>
+        /// <param name="payload">The token payload of the user who is making the request.</param>
         /// <param name="request">The query.</param>
         /// <returns>The amount of rows that satifies the query.</returns>
-        int GetCount(object requesterId, QueryString request);
+        int GetCount(Dictionary<string, object> payload, QueryString request);
 
         /// <summary>
         /// Get all the rows that satisfies a query.
         /// </summary>
-        /// <param name="requesterId">The identification number of the user who is making the request.</param>
+        /// <param name="payload">The token payload of the user who is making the request.</param>
         /// <param name="request">The query.</param>
         /// <returns>A DataTable that contains all the rows that satisfies the query.</returns>
-        DataTable GetAll(object requesterId, QueryString request);
+        DataTable GetAll(Dictionary<string, object> payload, QueryString request);
 
         /// <summary>
         /// Get a specific row.
         /// </summary>
-        /// <param name="requesterId">The identification number of the user who is making the request.</param>
+        /// <param name="payload">The token payload of the user who is making the request.</param>
         /// <param name="id">The row identity.</param>
         /// <param name="request">The query.</param>
         /// <returns>The row.</returns>
-        DataRow GetOne(object requesterId, int id, QueryString request);
+        DataRow GetOne(Dictionary<string, object> payload, int id, QueryString request);
 
         /// <summary>
         /// Insert a row.
         /// </summary>
-        /// <param name="requesterId">The identification number of the user who is making the request.</param>
+        /// <param name="payload">The token payload of the user who is making the request.</param>
         /// <param name="obj">The row data.</param>
         /// <returns>The inserted row.</returns>
-        DataRow Create(object requesterId, object obj);
+        DataRow Create(Dictionary<string, object> payload, object obj);
 
         /// <summary>
         /// Updates a row.
         /// </summary>
-        /// <param name="requesterId">The identification number of the user who is making the request.</param>
+        /// <param name="payload">The token payload of the user who is making the request.</param>
         /// <param name="id">The row identity.</param>
         /// <param name="obj">The row data.</param>
         /// <returns>The updated row.</returns>
-        DataRow Update(object requesterId, int id, object obj);
+        DataRow Update(Dictionary<string, object> payload, int id, object obj);
 
         /// <summary>
         /// Delete a row.
         /// </summary>
-        /// <param name="requesterId">The identification number of the user who is making the request.</param>
+        /// <param name="payload">The token payload of the user who is making the request.</param>
         /// <param name="id">The row identity.</param>
-        void Delete(object requesterId, int id);
+        void Delete(Dictionary<string, object> payload, int id);
     }
 }

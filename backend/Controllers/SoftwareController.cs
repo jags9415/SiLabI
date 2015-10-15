@@ -37,8 +37,8 @@ namespace SiLabI.Controllers
             }
 
             PaginatedResponse<Software> response = new PaginatedResponse<Software>();
-            DataTable table = _SoftwareDA.GetAll(payload["id"], request);
-            int count = _SoftwareDA.GetCount(payload["id"], request);
+            DataTable table = _SoftwareDA.GetAll(payload, request);
+            int count = _SoftwareDA.GetCount(payload, request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -53,13 +53,13 @@ namespace SiLabI.Controllers
 
         public Software GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _SoftwareDA.GetOne(payload["id"], id, request);
+            DataRow row = _SoftwareDA.GetOne(payload, id, request);
             return Software.Parse(row);
         }
 
         public Software GetOne(string code, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _SoftwareDA.GetOne(payload["id"], code, request);
+            DataRow row = _SoftwareDA.GetOne(payload, code, request);
             return Software.Parse(row);
         }
 
@@ -76,7 +76,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de software incompletos.");
             }
 
-            DataRow row = _SoftwareDA.Create(payload["id"], softwareRequest.Software);
+            DataRow row = _SoftwareDA.Create(payload, softwareRequest.Software);
             return Software.Parse(row);
         }
 
@@ -93,7 +93,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de software inválidos.");
             }
 
-            DataRow row = _SoftwareDA.Update(payload["id"], id, softwareRequest.Software);
+            DataRow row = _SoftwareDA.Update(payload, id, softwareRequest.Software);
             return Software.Parse(row);
         }
 
@@ -104,7 +104,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _SoftwareDA.Delete(payload["id"], id);
+            _SoftwareDA.Delete(payload, id);
         }
     }
 }
