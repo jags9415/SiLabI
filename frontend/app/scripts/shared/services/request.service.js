@@ -152,7 +152,7 @@
           url += queryString;
         }
 
-        $http.get(url)
+        $http.get(url, { cache: true })
         .then(
           function(response) {
             defer.resolve(response.data)
