@@ -76,9 +76,13 @@ namespace SiLabI.Model.Request
         {
             set
             {
-                if (value.HasValue && !Validator.IsValidReservationDate(value.Value))
+                string error;
+                if (value.HasValue)
                 {
-                    throw new InvalidParameterException("start_time", "Ingrese una dia posterior a hoy, hora entre 8:00 - 17:00");
+                    if (!Validator.IsValidReservationDate(value.Value, out error))
+                        throw new InvalidParameterException("start_time", error);
+                    if (EndTime.HasValue && !Validator.IsValidReservationTimeRange(value.Value, EndTime.Value, out error))
+                        throw new InvalidParameterException("start_time", error);
                 }
                 _startTime = value;
             }
@@ -92,9 +96,13 @@ namespace SiLabI.Model.Request
         {
             set
             {
-                if (value.HasValue && !Validator.IsValidReservationDate(value.Value))
+                string error;
+                if (value.HasValue)
                 {
-                    throw new InvalidParameterException("end_time", "Ingrese una dia posterior a hoy, hora entre 8:00 - 18:00");
+                    if (!Validator.IsValidReservationDate(value.Value, out error))
+                        throw new InvalidParameterException("end_time", error);
+                    if (StartTime.HasValue && !Validator.IsValidReservationTimeRange(StartTime.Value, value.Value, out error))
+                        throw new InvalidParameterException("end_time", error);
                 }
                 _endTime = value;
             }

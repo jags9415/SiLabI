@@ -124,34 +124,41 @@ namespace SiLabI.Util
         ///     5. Only Year, Month, Day and Hour should be provided.
         /// </summary>
         /// <param name="date">The date.</param>
+        /// <param name="message">The output error message.</param>
         /// <returns>True if the input is valid.</returns>
-        public static bool IsValidAppointmentDate(DateTime date)
+        public static bool IsValidAppointmentDate(DateTime date, out string message)
         {
             // Check if date is later than today.
             if (DateTime.Now.CompareTo(date) > 0)
             {
+                message = "Ingrese un día posterior a la fecha actual.";
                 return false;
             }
             // Check that date is in the next 2 weeks.
             if (DateTime.Now.AddDays(14).Date.CompareTo(date.Date) < 0)
             {
+                message = "Ingrese un día anterior a dos semanas.";
                 return false;
             }
             // Checks that day is not weekend.
             if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
             {
+                message = "No se permiten reservaciones durante fines de semana.";
                 return false;
             }
             // Check that hour is between 8:00 am and 5:00 pm.
             if (date.Hour < 8 || date.Hour > 17)
             {
+                message = "Ingrese una hora entre 8:00 am y 5:00 pm.";
                 return false;
             }
             // Check that no minute, seconds or milliseconds are provided.
             if (date.Minute != 0 || date.Second != 0 || date.Millisecond != 0)
             {
+                message = "Ingrese unicamente horas exactas.";
                 return false;
             }
+            message = string.Empty;
             return true;
         }
 
@@ -163,24 +170,61 @@ namespace SiLabI.Util
         ///     4. The hour is between 8:00 am and 6:00 pm.
         /// </summary>
         /// <param name="date">The date.</param>
+        /// <param name="message">The output error message.</param>
         /// <returns>True if the input is valid.</returns>
-        public static bool IsValidReservationDate(DateTime date)
+        public static bool IsValidReservationDate(DateTime date, out string message)
         {
             // Check if date is later than today.
             if (DateTime.Now.CompareTo(date) > 0)
             {
+                message = "Ingrese un día posterior a la fecha actual.";
                 return false;
             }
             // Checks that day is not weekend.
             if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
             {
+                message = "No se permiten reservaciones durante fines de semana.";
                 return false;
             }
             // Check that hour is between 8:00 am and 6:00 pm.
             if (date.Hour < 8 || date.Hour > 18)
             {
+                message = "Ingrese una hora entre 8:00 am y 6:00 pm.";
                 return false;
             }
+            // Check that no minute, seconds or milliseconds are provided.
+            if (date.Minute != 0 || date.Second != 0 || date.Millisecond != 0)
+            {
+                message = "Ingrese unicamente horas exactas.";
+                return false;
+            }
+            message = string.Empty;
+            return true;
+        }
+
+        /// <summary>
+        /// Validate a reservation start and end times.
+        /// A valid range must meet the following:
+        ///     1. The end time must be after the start time.
+        ///     2. The start time and the end time must be in the same day.
+        /// </summary>
+        /// <param name="startTime">The reservation start time.</param>
+        /// <param name="endTime">The reservation end time.</param>
+        /// <param name="message">The output error message.</param>
+        /// <returns></returns>
+        public static bool IsValidReservationTimeRange(DateTime startTime, DateTime endTime, out string message)
+        {
+            if (startTime.CompareTo(endTime) >= 0)
+            {
+                message = "La hora final debe ser posterior a la hora de inicio.";
+                return false;
+            }
+            if (startTime.DayOfYear != endTime.DayOfYear)
+            {
+                message = "El dia de inicio debe ser igual al dia final.";
+                return false;
+            }
+            message = string.Empty;
             return true;
         }
     }
