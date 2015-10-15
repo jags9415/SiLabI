@@ -103,10 +103,10 @@
     </table>
   </div>
   <p ng-show="ProfessorList.isLoaded() && ProfessorList.isEmpty()">No se encontraron resultados.</p>
-  <br><br>
+  <br>
   <div class="row" ng-show="ProfessorList.totalPages > 1">
     <div class="col-xs-12 col-md-12 pagination">
-      <pagination
+      <pagination ng-if="ProfessorList.totalItems"
         ng-change="ProfessorList.loadPage()" ng-model="ProfessorList.page" items-per-page="ProfessorList.limit"
         total-items="ProfessorList.totalItems" max-size="5" boundary-links="true" rotate="true"
         previous-text="<" next-text=">" first-text="<<" last-text=">>">

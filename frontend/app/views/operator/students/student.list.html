@@ -113,7 +113,7 @@
   <br>
   <div class="row" ng-show="StudentList.totalPages > 1">
     <div class="col-xs-12 col-md-12 pagination">
-      <pagination
+      <pagination ng-if="StudentList.totalItems"
         ng-change="StudentList.loadPage()" ng-model="StudentList.page" items-per-page="StudentList.limit"
         total-items="StudentList.totalItems" max-size="5" boundary-links="true" rotate="true"
         previous-text="<" next-text=">" first-text="<<" last-text=">>"

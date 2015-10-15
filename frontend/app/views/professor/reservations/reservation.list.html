@@ -78,7 +78,7 @@
       </div>
     </div>
   </div>
-  <div cg-busy="ProfessorReservationList.promise"></div>  
+  <div cg-busy="ProfessorReservationList.promise"></div>
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -121,11 +121,11 @@
   </div>
   <p ng-show="ProfessorReservationList.isLoaded() && ProfessorReservationList.isEmpty()">No se encontraron resultados.</p>
   <br>
-  <div class="row">
-    <div class="col-md-12 pagination">
-      <pagination
-        ng-change="ProfessorReservationList.loadPage()" ng-model="ProfessorReservationList.page" items-per-page="ProfessorReservationList.limit" total-items="ProfessorReservationList.totalItems" max-size="5" boundary-links="true" rotate="true" previous-text="<" next-text=">" first-text="<<" last-text=">>"
-      ></pagination>
+  <div class="row" ng-show="ProfessorReservationList.totalPages > 1">
+    <div class="col-xs-12 col-md-12 pagination">
+      <pagination ng-if="ProfessorReservationList.totalItems"
+        ng-change="ProfessorReservationList.loadPage()" ng-model="ProfessorReservationList.page"items-per-page="ProfessorReservationList.limit" total-items="ProfessorReservationList.totalItems" max-size="5" boundary-links="true" rotate="true" previous-text="<" next-text=">" first-text="<<" last-text=">>">
+      </pagination>
     </div>
   </div>
 </div>

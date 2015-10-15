@@ -110,7 +110,7 @@
   <br>
   <div class="row" ng-show="AdminList.totalPages > 1">
     <div class="col-xs-12 col-md-12 pagination">
-      <pagination
+      <pagination ng-if="AdminList.totalItems"
         ng-change="AdminList.loadPage()" ng-model="AdminList.page" items-per-page="AdminList.limit"
         total-items="AdminList.totalItems" max-size="5" boundary-links="true" rotate="true"
         previous-text="<" next-text=">" first-text="<<" last-text=">>"

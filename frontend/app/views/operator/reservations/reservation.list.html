@@ -116,9 +116,9 @@
   </div>
   <p ng-show="ReservationList.isLoaded() && ReservationList.isEmpty()">No se encontraron resultados.</p>
   <br>
-  <div class="row">
-    <div class="col-md-12 pagination" ng-hide="ReservationList.isLoaded() && ReservationList.isEmpty()">
-      <pagination
+  <div class="row" ng-show="ReservationList.totalPages > 1">
+    <div class="col-md-12 pagination">
+      <pagination ng-if="ReservationList.totalItems"
         ng-change="ReservationList.loadPage()" ng-model="ReservationList.page" items-per-page="ReservationList.limit"
         total-items="ReservationList.totalItems" max-size="5" boundary-links="true" rotate="true"
         previous-text="<" next-text=">" first-text="<<" last-text=">>"
