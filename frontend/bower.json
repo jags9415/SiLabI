@@ -11,7 +11,6 @@
     "angular-route": "^1.3.0",
     "angular-sanitize": "~1.4.5",
     "angular-touch": "^1.3.0",
-    "angular-ui-date": "~0.0.8",
     "angular-ui-mask": "~1.4.4",
     "angular-ui-select": "~0.12.1",
     "bootbox": "~4.4.0",
@@ -21,7 +20,9 @@
     "ngstorage": "~0.3.9",
     "toastr": "^2.1.0",
     "moment": "~2.10.6",
-    "font-awesome": "~4.4.0"
+    "font-awesome": "~4.4.0",
+    "angular-busy": "~4.1.3",
+    "lodash": "~3.10.1"
   },
   "devDependencies": {
     "angular-mocks": "^1.3.0"
@@ -29,12 +30,6 @@
   "appPath": "app",
   "moduleName": "silabi-frontend",
   "overrides": {
-    "jquery-ui": {
-      "main": [
-        "jquery-ui.js",
-        "themes/smoothness/jquery-ui.css"
-      ]
-    },
     "font-awesome": {
       "main": [
         "css/font-awesome.css"

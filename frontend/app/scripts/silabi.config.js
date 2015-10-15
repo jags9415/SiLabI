@@ -4,7 +4,13 @@
     angular
       .module('silabi')
       .config(['showErrorsConfigProvider', configShowErrors])
-      .config(['toastr', configToaster]);
+      .config(['toastr', configToaster])
+      .value('cgBusyDefaults', {
+        message: 'Cargando...',
+        backdrop: true,
+        delay: 50,
+        minDuration: 0
+      });
 
     function configShowErrors(showErrorsConfigProvider) {
       showErrorsConfigProvider.showSuccess(false);

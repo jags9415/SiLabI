@@ -1,32 +1,30 @@
-<div class="container" style="padding-top: 5%; padding-bottom: 5%;">
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="panel panel-default" id="login-panel">
-        <div class="panel-heading">
-          <h3 class="panel-title">Iniciar Sesión</h3>
-        </div>
-        <div class="panel-body">
-          <form autocomplete="off" accept-charset="UTF-8" role="form">
-            <fieldset>
-              <div class="input-group" style="margin-bottom: 25px">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                <input class="form-control" placeholder="Identificación" name="username" type="text" ng-model="Auth.username" required>
+<div class="row" style="padding-top: 5%; padding-bottom: 5%;">
+  <div class="col-md-6 col-sm-10 col-xs-10 col-xs-offset-1 col-sm-offset-1 col-md-offset-3">
+    <div class="panel panel-default" id="login-panel">
+      <div class="panel-heading">
+        <h3 class="panel-title">Iniciar Sesión</h3>
+      </div>
+      <div class="panel-body">
+        <form autocomplete="off" accept-charset="UTF-8" role="form">
+          <fieldset>
+            <div class="input-group" style="margin-bottom: 25px">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+              <input class="form-control" placeholder="Identificación" name="username" type="text" ng-model="Auth.username" required>
+            </div>
+            <div class="input-group" style="margin-bottom: 25px">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+              <input class="form-control" placeholder="Contraseña" name="password" type="password" ng-model="Auth.password" required>
+            </div>
+            <button class="btn btn-lg btn-primary center-block" type="submit" ng-click="Auth.logIn()">
+            <div ng-if="Auth.loading">
+              	<span class="fa fa-spin fa-spinner"></span> Ingresar
+            </div>
+            	<div ng-if="!Auth.loading">
+              	<span class="fa fa-sign-in"></span>  Ingresar
               </div>
-              <div class="input-group" style="margin-bottom: 25px">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-                <input class="form-control" placeholder="Contraseña" name="password" type="password" ng-model="Auth.password" required>
-              </div>
-              <button class="btn btn-lg btn-primary center-block" type="submit" ng-click="Auth.logIn()">
-	            <div ng-if="Auth.loading">
-	              	<span class="fa fa-spin fa-spinner"></span> Ingresar
-	            </div>
-              	<div ng-if="!Auth.loading">
-                	<span class="fa fa-sign-in"></span>  Ingresar
-                </div>
-              </button>
-            </fieldset>
-          </form>
-        </div>
+            </button>
+          </fieldset>
+        </form>
       </div>
     </div>
   </div>

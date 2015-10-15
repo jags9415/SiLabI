@@ -16,6 +16,9 @@
         .when('/Acerca', {
           templateUrl: 'views/public/about.html'
         })
+        .when('/Contacto', {
+          templateUrl: 'views/public/contact.html'
+        })
         .when('/Administrador', {
           redirectTo: '/Operador/Asistencia'
         })

@@ -52,7 +52,7 @@
           vm.request.page = vm.page;
           vm.request.limit = vm.limit;
 
-          StudentService.GetAll(vm.request)
+          vm.promise = StudentService.GetAll(vm.request)
           .then(setStudents)
           .catch(handleError);
         }
