@@ -81,6 +81,7 @@
       </div>
     </div>
   </div>
+  <div cg-busy="OperatorList.promise"></div>
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -124,7 +125,7 @@
   <br>
   <div class="row" ng-show="OperatorList.totalPages > 1">
     <div class="col-xs-12 col-md-12 pagination">
-      <pagination
+      <pagination ng-if="OperatorList.totalItems"
         ng-change="OperatorList.loadPage()" ng-model="OperatorList.page" items-per-page="OperatorList.limit"
         total-items="OperatorList.totalItems" max-size="5" boundary-links="true" rotate="true"
         previous-text="<" next-text=">" first-text="<<" last-text=">>"

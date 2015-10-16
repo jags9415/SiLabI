@@ -39,8 +39,8 @@ namespace SiLabI.Controllers
             }
 
             PaginatedResponse<Laboratory> response = new PaginatedResponse<Laboratory>();
-            DataTable table = _LaboratoryDA.GetAll(payload["id"], request);
-            int count = _LaboratoryDA.GetCount(payload["id"], request);
+            DataTable table = _LaboratoryDA.GetAll(payload, request);
+            int count = _LaboratoryDA.GetCount(payload, request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -55,7 +55,7 @@ namespace SiLabI.Controllers
 
         public Laboratory GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _LaboratoryDA.GetOne(payload["id"], id, request);
+            DataRow row = _LaboratoryDA.GetOne(payload, id, request);
             return Laboratory.Parse(row);
         }
 
@@ -72,7 +72,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de laboratorio incompletos.");
             }
 
-            DataRow row = _LaboratoryDA.Create(payload["id"], laboratoryRequest.Laboratory);
+            DataRow row = _LaboratoryDA.Create(payload, laboratoryRequest.Laboratory);
             return Laboratory.Parse(row);
         }
 
@@ -89,7 +89,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de laboratorio inválidos.");
             }
 
-            DataRow row = _LaboratoryDA.Update(payload["id"], id, laboratoryRequest.Laboratory);
+            DataRow row = _LaboratoryDA.Update(payload, id, laboratoryRequest.Laboratory);
             return Laboratory.Parse(row);
         }
 
@@ -100,7 +100,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _LaboratoryDA.Delete(payload["id"], id);
+            _LaboratoryDA.Delete(payload, id);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace SiLabI.Controllers
         /// <param name="request">The query.</param>
         public List<Software> GetLaboratorySoftware(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataTable table = _SoftwareByLaboratoryDA.GetAll(payload["id"], id, request);
+            DataTable table = _SoftwareByLaboratoryDA.GetAll(payload, id, request);
             List<Software> software = new List<Software>();
 
             foreach (DataRow row in table.Rows)
@@ -133,7 +133,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _SoftwareByLaboratoryDA.Create(payload["id"], id, request.Software);
+            _SoftwareByLaboratoryDA.Create(payload, id, request.Software);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _SoftwareByLaboratoryDA.Update(payload["id"], id, request.Software);
+            _SoftwareByLaboratoryDA.Update(payload, id, request.Software);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _SoftwareByLaboratoryDA.Delete(payload["id"], id, request.Software);
+            _SoftwareByLaboratoryDA.Delete(payload, id, request.Software);
         }
     }
 }

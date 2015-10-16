@@ -4,7 +4,13 @@
     angular
       .module('silabi')
       .config(['showErrorsConfigProvider', configShowErrors])
-      .config(['toastr', configToaster]);
+      .config(['toastr', configToaster])
+      .value('cgBusyDefaults', {
+        message: 'Cargando...',
+        backdrop: true,
+        delay: 50,
+        minDuration: 0
+      });
 
     function configShowErrors(showErrorsConfigProvider) {
       showErrorsConfigProvider.showSuccess(false);
@@ -29,17 +35,4 @@
         "hideMethod": "fadeOut"
       }
     }
-
-    if (typeof String.prototype.endsWith !== 'function') {
-        String.prototype.endsWith = function(suffix) {
-            return this.indexOf(suffix, this.length - suffix.length) !== -1;
-        };
-    }
-
-    if (typeof String.prototype.startsWith != 'function') {
-      String.prototype.startsWith = function (prefix) {
-        return this.indexOf(prefix) === 0;
-      };
-    }
-
 })();

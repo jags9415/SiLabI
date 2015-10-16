@@ -64,7 +64,7 @@
         vm.request.page = vm.page;
         vm.request.limit = vm.limit;
 
-        AdminService.GetAll(vm.request)
+        vm.promise = AdminService.GetAll(vm.request)
         .then(handleGetSuccess)
         .catch(handleError);
     	};

@@ -34,7 +34,7 @@
           <label for="name">* Hora Inicio</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="date" ng-model="ProfessorReservationCreate.selected_start_time" ng-disabled="!ProfessorReservationCreate.selected_date">
+            <ui-select id="date" ng-model="ProfessorReservationCreate.selected_start_time" ng-disabled="!ProfessorReservationCreate.selected_date" on-select="ProfessorReservationCreate.loadEndHours()">
               <ui-select-match placeholder="{{$select.selected.hour}}">
                 {{$select.selected.hour}}
               </ui-select-match>
@@ -54,7 +54,7 @@
               <ui-select-match placeholder="{{$select.selected.hour}}">
                 {{$select.selected.hour}}
               </ui-select-match>
-              <ui-select-choices repeat="hour in ProfessorReservationCreate.end_hours | filter: $select.search">
+              <ui-select-choices repeat="hour in ProfessorReservationCreate.end_hours_sliced | filter: $select.search">
                 <span ng-bind-html="hour.hour | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>

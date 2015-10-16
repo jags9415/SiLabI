@@ -14,6 +14,7 @@
     vm.laboratories = [];
     vm.start_hours = [];
     vm.end_hours = [];
+    vm.end_hours_sliced = [];
     vm.selected_software = null;
     vm.selected_group = null;
     vm.min_date = new Date();
@@ -29,12 +30,12 @@
       limit: 10
     };
     
-    vm.fieldsReady = fieldsReady;
     vm.delete = deleteReservation;
     vm.update = updateReservation;
     vm.searchSoftware = searchSoftware;
     vm.setSoftware = setSoftware;
     vm.openDatePicker = openDatePicker;
+    vm.loadEndHours = loadEndHours;
 
     activate();
 
@@ -60,11 +61,24 @@
       vm.datepicker_open = true;
     }
 
-    function fieldsReady () {
-      return !_.isEmpty(vm.reservation) &&
-             !_.isEmpty(vm.selected_date) &&
-             !_.isEmpty(vm.selected_start_time) &&
-             !_.isEmpty(vm.selected_end_time);
+    function loadEndHours () {
+      var index = -1;
+
+      for (var i = 0; i < vm.end_hours.length; i++) 
+      {
+        if(vm.selected_start_time.value == vm.end_hours[i].value)
+        {
+          index = i;
+        }  
+      }
+      if(index >= 0)
+      {
+        vm.end_hours_sliced = vm.end_hours.slice(index+1, vm.end_hours.length);
+      }
+      else
+      {
+        vm.end_hours_sliced = vm.end_hours;
+      }
     }
 
     function getReservation() {
@@ -130,7 +144,7 @@
 
     function setReservation (data) {
       vm.reservation = data; 
-      vm.selected_date = data.start_time;
+      vm.selected_date = new Date(data.start_time);
       setStartHour();
       setEndHour(); 
     }
@@ -174,7 +188,6 @@
     }
 
     function updateReservation () {
-      console.log(vm.reservation.software.code);
       vm.selected_date = new Date(vm.selected_date);
       var start_time = vm.selected_date.getFullYear()+"-"+ (vm.selected_date.getMonth() + 1)+ "-" + vm.selected_date.getUTCDate() + "T" + vm.selected_start_time.value;
       var end_time = vm.selected_date.getFullYear()+"-"+ (vm.selected_date.getMonth() + 1)+ "-" + vm.selected_date.getUTCDate() + "T" + vm.selected_end_time.value;
@@ -185,8 +198,8 @@
         "laboratory": vm.reservation.laboratory.name,
         "start_time": start_time,
         "end_time": end_time,
-        "group": vm.reservation.group.id,
-        "sofware":vm.reservation.software.code
+        "group": !_.isEmpty(vm.reservation.group) ? vm.reservation.group.id : null,
+        "sofware": !_.isEmpty(vm.reservation.software) ? vm.reservation.software.code : null
       };
 
       ProfessorReservationService.Update(vm.username, vm.reservation_id, res)
@@ -203,21 +216,9 @@
       });
     }
 
-    function clearFields() {
-      $scope.$broadcast('show-errors-reset');
-      delete vm.groups;
-      delete vm.aselected_start_time;
-      delete vm.aselected_end_time;
-      delete vm.software_list;
-      delete vm.selected_date;
-      delete vm.selected_software;
-      delete vm.selected_laboratory;
-      delete vm.selected_group;
-    }
 
     function handleSuccess (data) {
-      MessageService.success("Reservación creada.");
-      clearFields();
+      MessageService.success("Reservación actualizada.");
     }
 
     function handleError(data) {

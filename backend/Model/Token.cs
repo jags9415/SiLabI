@@ -60,9 +60,16 @@ namespace SiLabI.Model
             {
                 return JWT.JsonWebToken.DecodeToObject(token, Token.secret) as Dictionary<string, object>;
             }
-            catch (JWT.SignatureVerificationException)
+            catch (JWT.SignatureVerificationException e)
             {
-                throw new InvalidParameterException("access_token");
+                if (e.Message == "Token has expired.") 
+                    throw new InvalidParameterException("access_token", "El token de acceso ha expirado.");
+                else
+                    throw new InvalidParameterException("access_token", "El token de acceso es inválido.");
+            }
+            catch (Exception)
+            {
+                throw new InvalidParameterException("access_token", "El token de acceso es inválido.");
             }
         }
 
@@ -74,6 +81,11 @@ namespace SiLabI.Model
         /// <returns>The token validity.</returns>
         public static void CheckPayload(Dictionary<string, object> payload, UserType type)
         {
+            if (!payload.ContainsKey("id") || !payload.ContainsKey("username") || !payload.ContainsKey("type"))
+            {
+                throw new InvalidParameterException("access_token", "Los datos del token de acceso están incompletos.");
+            }
+
             bool valid;
             string user = payload["type"].ToString();
 
@@ -89,10 +101,10 @@ namespace SiLabI.Model
                     valid = (user == "Administrador") || (user == "Operador");
                     break;
                 case UserType.Professor:
-                    valid = (user != "Estudiante");
+                    valid = (user == "Administrador") || (user == "Operador") || (user == "Docente");
                     break;
                 case UserType.Student:
-                    valid = (user != "Docente");
+                    valid = (user == "Administrador") || (user == "Operador") || (user == "Estudiante");
                     break;
                 default:
                     valid = false;

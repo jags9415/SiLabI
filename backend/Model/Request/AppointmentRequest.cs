@@ -88,10 +88,11 @@ namespace SiLabI.Model.Request
         public virtual DateTime? Date
         {
             set
-            { 
-                if (value.HasValue && !Validator.IsValidAppointmentDate(value.Value))
+            {
+                string error;
+                if (value.HasValue && !Validator.IsValidAppointmentDate(value.Value, out error))
                 {
-                    throw new InvalidParameterException("date", "Fecha inválida.");
+                    throw new InvalidParameterException("date", error);
                 }
                 _date = value;
             }

@@ -20,7 +20,7 @@
     vm.request = {
       fields : "id,laboratory,state,software,group,start_time,end_time"
     };
-    vm.states = [];  
+    vm.states = [];
     vm.$storage = $localStorage;
     vm.open = openReservation;
     vm.delete = deleteReservation;
@@ -41,16 +41,16 @@
 
       vm.totalPages = page;
       vm.page = page;
-      if(vm.$storage['username'])
-      {
+
+      if (vm.$storage['username']) {
         vm.username = vm.$storage['username'];
       }
+
       loadPage();
 
-
       StateService.GetReservationStates()
-    .then(setStates)
-    .catch(handleError);
+      .then(setStates)
+      .catch(handleError);
     }
 
     function loadPage() {
@@ -59,7 +59,7 @@
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      ProfessorReservationService.GetAll(vm.username, vm.request)
+      vm.promise = ProfessorReservationService.GetAll(vm.username, vm.request)
       .then(setReservations)
       .catch(handleError);
     }

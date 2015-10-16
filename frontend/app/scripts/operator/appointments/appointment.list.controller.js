@@ -60,7 +60,7 @@
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      AppointmentService.GetAll(vm.request)
+      vm.promise = AppointmentService.GetAll(vm.request)
       .then(setAppointments)
       .catch(handleError);
     }
@@ -111,7 +111,7 @@
         else {
           var date1 = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), "08");
           var date2 = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), "18");
-          vm.request.query["date"] =[ 
+          vm.request.query["date"] =[
           {
           	operation: "ge",
           	value: date1.toJSON()

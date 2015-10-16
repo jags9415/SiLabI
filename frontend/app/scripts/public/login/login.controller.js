@@ -30,23 +30,15 @@
       }
 
       function logOut() {
-        delete vm.$storage['access_token'];
-        delete vm.$storage['username'];
-        delete vm.$storage['user_id'];
-        delete vm.$storage['user_name'];
-        delete vm.$storage['user_type'];
-        $location.path('/Login');
-        $route.reload();
+        vm.$storage.$reset();
       }
 
       function handleSuccess(result) {
-        vm.$storage['access_token'] = result.access_token;
         vm.$storage['username'] = result.user.username;
         vm.$storage['user_id'] = result.user.id.toString();
         vm.$storage['user_name'] = result.user.full_name;
         vm.$storage['user_type'] = result.user.type;
-        $location.path('/' + result.user.type);
-        $route.reload();
+        vm.$storage['access_token'] = result.access_token;
       }
 
       function handleError(error) {

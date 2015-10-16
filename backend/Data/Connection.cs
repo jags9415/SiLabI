@@ -17,11 +17,18 @@ namespace SiLabI.Data
 
         /// <summary>
         /// Creates a new DBConnection.
+        /// <param name="connectionString">The database connection string.</param>
         /// </summary>
-        public Connection()
+        public Connection(string connectionString)
         {
-            _ConnectionString = ConfigurationManager.ConnectionStrings["SiLabI"].ConnectionString;
+            _ConnectionString = connectionString;
         }
+
+        /// <summary>
+        /// Creates a new DBConnection.
+        /// <param name="connectionString">The database connection string.</param>
+        /// </summary>
+        public Connection(ConnectionStringSettings connectionString) : this(connectionString.ConnectionString) { }
 
         /// <summary>
         /// Opens a new connection.

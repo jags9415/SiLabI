@@ -46,8 +46,8 @@ namespace SiLabI.Controllers
             }
 
             PaginatedResponse<User> response = new PaginatedResponse<User>();
-            DataTable table = _AdminDA.GetAll(payload["id"], request);
-            int count = _AdminDA.GetCount(payload["id"], request);
+            DataTable table = _AdminDA.GetAll(payload, request);
+            int count = _AdminDA.GetCount(payload, request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -69,7 +69,7 @@ namespace SiLabI.Controllers
         /// <returns>The administrator.</returns>
         public User GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _AdminDA.GetOne(payload["id"], id, request);
+            DataRow row = _AdminDA.GetOne(payload, id, request);
             return User.Parse(row);
         }
 
@@ -87,7 +87,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            DataRow row = _AdminDA.Create(payload["id"], adminRequest.Id);
+            DataRow row = _AdminDA.Create(payload, adminRequest.Id);
             return User.Parse(row);
         }
 
@@ -116,7 +116,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _AdminDA.Delete(payload["id"], id);
+            _AdminDA.Delete(payload, id);
         }
     }
 }

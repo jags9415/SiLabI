@@ -64,7 +64,7 @@ function GroupListController($scope, GroupService, MessageService, $location, St
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      GroupService.GetAll(vm.request)
+      vm.promise = GroupService.GetAll(vm.request)
       .then(setGroups)
       .catch(handleError);
     }

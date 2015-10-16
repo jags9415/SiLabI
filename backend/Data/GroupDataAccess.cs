@@ -18,34 +18,34 @@ namespace SiLabI.Data
     /// </summary>
     public class GroupDataAccess
     {
-        private Connection _Connection;
+        private ConnectionGroup _connectionGroup;
 
         /// <summary>
         /// Creates a new GroupDataAccess.
         /// </summary>
         public GroupDataAccess()
         {
-            _Connection = new Connection();
+            _connectionGroup = ConnectionGroup.Instance;
         }
 
-        public int GetCount(object requesterId, QueryString request)
+        public int GetCount(Dictionary<string, object> payload, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[2];
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
 
             parameters[1] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
             parameters[1].Value = SqlUtilities.FormatWhereFields(request.Query);
 
-            object count = _Connection.executeScalar("sp_GetGroupsCount", parameters);
+            object count = _connectionGroup.Get(payload["type"] as string).executeScalar("sp_GetGroupsCount", parameters);
             return Converter.ToInt32(count);
         }
 
-        public DataTable GetAll(object requesterId, QueryString request)
+        public DataTable GetAll(Dictionary<string, object> payload, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[6];
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
 
             parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
             parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
@@ -59,14 +59,14 @@ namespace SiLabI.Data
             parameters[4] = SqlUtilities.CreateParameter("@page", SqlDbType.Int, request.Page);
             parameters[5] = SqlUtilities.CreateParameter("@limit", SqlDbType.Int, request.Limit);
 
-            return _Connection.executeQuery("sp_GetGroups", parameters);
+            return _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetGroups", parameters);
         }
 
-        public DataTable GetAllByStudent(object requesterId, string student, QueryString request)
+        public DataTable GetAllByStudent(Dictionary<string, object> payload, string student, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[5];
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@student", SqlDbType.VarChar, student);
 
             parameters[2] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
@@ -78,20 +78,20 @@ namespace SiLabI.Data
             parameters[4] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
             parameters[4].Value = SqlUtilities.FormatWhereFields(request.Query);
 
-            return _Connection.executeQuery("sp_GetGroupsByStudent", parameters);
+            return _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetGroupsByStudent", parameters);
         }
 
-        public DataRow GetOne(object requesterId, int id, QueryString request)
+        public DataRow GetOne(Dictionary<string, object> payload, int id, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[3];
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@id", SqlDbType.VarChar, id);
 
             parameters[2] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
             parameters[2].Value = SqlUtilities.FormatSelectFields(request.Fields);
 
-            DataTable table = _Connection.executeQuery("sp_GetGroup", parameters);
+            DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetGroup", parameters);
             if (table.Rows.Count == 0)
             {
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Grupo no encontrado.");
@@ -102,7 +102,7 @@ namespace SiLabI.Data
             }
         }
 
-        public DataRow Create(object requesterId, object obj)
+        public DataRow Create(Dictionary<string, object> payload, object obj)
         {
             InnerGroupRequest group = (obj as InnerGroupRequest);
             SqlParameter[] parameters;
@@ -118,7 +118,7 @@ namespace SiLabI.Data
                 parameters[7] = SqlUtilities.CreateParameter("@students", SqlDbType.Structured, students);
             }
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@course", SqlDbType.VarChar, group.Course);
             parameters[2] = SqlUtilities.CreateParameter("@number", SqlDbType.Int, group.Number);
             parameters[3] = SqlUtilities.CreateParameter("@professor", SqlDbType.VarChar, group.Professor);
@@ -126,11 +126,11 @@ namespace SiLabI.Data
             parameters[5] = SqlUtilities.CreateParameter("@period_type", SqlDbType.VarChar, group.Period.Type);
             parameters[6] = SqlUtilities.CreateParameter("@period_year", SqlDbType.Int, group.Period.Year);
 
-            DataTable table = _Connection.executeQuery("sp_CreateGroup", parameters);
+            DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_CreateGroup", parameters);
             return table.Rows[0];
         }
 
-        public DataRow Update(object requesterId, int id, object obj)
+        public DataRow Update(Dictionary<string, object> payload, int id, object obj)
         {
             InnerGroupRequest group = (obj as InnerGroupRequest);
             SqlParameter[] parameters;
@@ -159,25 +159,25 @@ namespace SiLabI.Data
                 parameters[8] = SqlUtilities.CreateParameter("@period_year", SqlDbType.Int, group.Period.Year);
             }
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
             parameters[2] = SqlUtilities.CreateParameter("@course", SqlDbType.VarChar, group.Course);
             parameters[3] = SqlUtilities.CreateParameter("@number", SqlDbType.Int, group.Number);
             parameters[4] = SqlUtilities.CreateParameter("@professor", SqlDbType.VarChar, group.Professor);
             parameters[5] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, group.State);
 
-            DataTable table = _Connection.executeQuery("sp_UpdateGroup", parameters);
+            DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_UpdateGroup", parameters);
             return table.Rows[0];
         }
 
-        public void Delete(object requesterId, int id)
+        public void Delete(Dictionary<string, object> payload, int id)
         {
             SqlParameter[] parameters = new SqlParameter[2];
 
-            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, requesterId);
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
 
-            _Connection.executeNonQuery("sp_DeleteGroup", parameters);
+            _connectionGroup.Get(payload["type"] as string).executeNonQuery("sp_DeleteGroup", parameters);
         }
 
         private DataTable createStudentTable(List<string> usernames)

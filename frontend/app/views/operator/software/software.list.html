@@ -62,7 +62,8 @@
         </form>
       </div>
     </div>
-    </div>
+  </div>
+  <div cg-busy="SoftwareList.promise"></div>
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -100,7 +101,7 @@
   <br>
   <div class="row" ng-show="SoftwareList.totalPages > 1">
     <div class="col-xs-12 col-md-12 pagination">
-      <pagination
+      <pagination ng-if="SoftwareList.totalItems"
         ng-change="SoftwareList.loadPage()" ng-model="SoftwareList.page" items-per-page="SoftwareList.limit"
         total-items="SoftwareList.totalItems" max-size="5" boundary-links="true" rotate="true"
         previous-text="<" next-text=">" first-text="<<" last-text=">>"

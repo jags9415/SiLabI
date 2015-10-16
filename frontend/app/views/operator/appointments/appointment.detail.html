@@ -24,7 +24,7 @@
           <label for="name">Fecha</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-            <ui-select id="course" ng-model="AppointmentDetail.selected_date" on-select="AppointmentDetail.setAvailableHours()">
+            <ui-select id="course" ng-model="AppointmentDetail.selected_date" on-select="AppointmentDetail.setAvailableHours()" ng-disabled="AppointmentDetail.appointment.state != 'Por iniciar'">
               <ui-select-match placeholder="Fecha">
                 {{$select.selected.day | date : 'fullDate'}}
               </ui-select-match>
@@ -40,7 +40,7 @@
           <label for="name">Hora</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="course" ng-model="AppointmentDetail.selected_hour" on-select="AppointmentDetail.changeLaboratory()">
+            <ui-select id="course" ng-model="AppointmentDetail.selected_hour" on-select="AppointmentDetail.changeLaboratory()" ng-disabled="AppointmentDetail.appointment.state != 'Por iniciar'">
               <ui-select-match placeholder="Hora">
                 {{$select.selected.full_date | date: 'hh:mm a'}}
               </ui-select-match>
@@ -58,7 +58,7 @@
           <label for="course">Grupo</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-book"></i></span>
-            <ui-select id="course" ng-model="AppointmentDetail.appointment.group">
+            <ui-select id="course" ng-model="AppointmentDetail.appointment.group" ng-disabled="AppointmentDetail.appointment.state != 'Por iniciar'">
               <ui-select-match placeholder="Grupo">
                 {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
               </ui-select-match>
@@ -74,7 +74,7 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-cd"></i></span>
-            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)" typeahead-on-select="AppointmentDetail.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentDetail.appointment.software">
+            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)" typeahead-on-select="AppointmentDetail.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentDetail.appointment.software" ng-disabled="AppointmentDetail.appointment.state != 'Por iniciar'">
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
           <label for="lab">Laboratorio</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-            <ui-select id="lab" ng-model="AppointmentDetail.appointment.laboratory">
+            <ui-select id="lab" ng-model="AppointmentDetail.appointment.laboratory" ng-disabled="AppointmentDetail.appointment.state != 'Por iniciar'">
               <ui-select-match placeholder="Laboratorio">
                 {{$select.selected.name}}
               </ui-select-match>
@@ -101,7 +101,7 @@
           <label for="state">Estado</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-tag"></i></span>
-            <ui-select id="state" ng-model="AppointmentDetail.appointment.state">
+            <ui-select id="state" ng-model="AppointmentDetail.appointment.state" ng-disabled="AppointmentDetail.appointment.state != 'Por iniciar'">
               <ui-select-match placeholder="Estado">
                 {{$select.selected}}
               </ui-select-match>

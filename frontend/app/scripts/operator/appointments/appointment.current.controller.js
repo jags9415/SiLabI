@@ -62,6 +62,8 @@
       if (!vm.selected_hour) {
         vm.selected_hour = vm.hours[vm.hours.length - 1];
       }
+
+      loadAppointments();
     }
 
     function loadAppointments() {
@@ -82,7 +84,7 @@
         value: getSelectedDateTime().toISOString()
       }
 
-      AppointmentService.GetAll(vm.request)
+      vm.promise = AppointmentService.GetAll(vm.request)
       .then(setAppointments)
       .catch(handleError);
     }

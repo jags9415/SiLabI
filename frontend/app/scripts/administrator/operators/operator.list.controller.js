@@ -61,7 +61,7 @@
           vm.request.page = vm.page;
           vm.request.limit = vm.limit;
 
-          OperatorService.GetAll(vm.request)
+          vm.promise = OperatorService.GetAll(vm.request)
           .then(setOperators)
           .catch(handleError);
         }

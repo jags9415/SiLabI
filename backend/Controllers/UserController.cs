@@ -40,8 +40,8 @@ namespace SiLabI.Controllers
             }
 
             PaginatedResponse<User> response = new PaginatedResponse<User>();
-            DataTable table = _UserDA.GetAll(payload["id"], request);
-            int count = _UserDA.GetCount(payload["id"], request);     
+            DataTable table = _UserDA.GetAll(payload, request);
+            int count = _UserDA.GetCount(payload, request);     
 
             foreach (DataRow row in table.Rows)
             {
@@ -56,13 +56,13 @@ namespace SiLabI.Controllers
 
         public User GetOne(string username, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _UserDA.GetOne(payload["id"], username, request);
+            DataRow row = _UserDA.GetOne(payload, username, request);
             return User.Parse(row);
         }
 
         public User GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _UserDA.GetOne(payload["id"], id, request);
+            DataRow row = _UserDA.GetOne(payload, id, request);
             return User.Parse(row);
         }
 
@@ -84,7 +84,7 @@ namespace SiLabI.Controllers
                 throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de usuario inválidos.");
             }
 
-            DataRow row = _UserDA.Update(payload["id"], id, userRequest.User);
+            DataRow row = _UserDA.Update(payload, id, userRequest.User);
             return User.Parse(row);
         }
 
@@ -95,7 +95,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _UserDA.Delete(payload["id"], id);
+            _UserDA.Delete(payload, id);
         }
     }
 }

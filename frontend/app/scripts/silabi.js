@@ -14,6 +14,6 @@
           'ui.bootstrap',
           'ui.bootstrap.showErrors',
           'ngPasswordStrength',
-          'ui.date'
+          'cgBusy'
         ]);
 })();

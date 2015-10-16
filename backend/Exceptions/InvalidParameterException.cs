@@ -29,7 +29,7 @@ namespace SiLabI.Exceptions
         /// <param name="parameter">The parameter name.</param>
         /// <param name="description">The description.</param>
         public InvalidParameterException(string parameter, string description)
-            : base(HttpStatusCode.BadRequest, "InvalidParameter", string.Format("Parámetro inválido '{0}'. {1}.", parameter, description))
+            : base(HttpStatusCode.BadRequest, "InvalidParameter", description)
         {
             this._parameter = parameter;
         }

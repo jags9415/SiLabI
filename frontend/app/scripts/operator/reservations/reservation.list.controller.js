@@ -51,7 +51,7 @@
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      ReservationService.GetAll(vm.request)
+      vm.promise = ReservationService.GetAll(vm.request)
       .then(setReservations)
       .catch(handleError);
     }

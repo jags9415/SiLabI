@@ -16,6 +16,9 @@
         .when('/Acerca', {
           templateUrl: 'views/public/about.html'
         })
+        .when('/Contacto', {
+          templateUrl: 'views/public/contact.html'
+        })
         .when('/Administrador', {
           redirectTo: '/Operador/Asistencia'
         })
@@ -26,7 +29,7 @@
           redirectTo: '/Estudiante/Citas'
         })
         .when('/Docente', {
-          templateUrl: 'views/professor/home.html'
+          redirectTo: '/Docente/Reservaciones'
         })
         .when('/Login', {
           templateUrl: 'views/public/login.html',
@@ -235,25 +238,21 @@
     }
 
     function redirectToLogin($location, $localStorage) {
-      delete $localStorage['access_token'];
-      delete $localStorage['username'];
-      delete $localStorage['user_id'];
-      delete $localStorage['user_name'];
-      delete $localStorage['user_type'];
+      $localStorage.$reset();
       $location.path('/Login');
     }
 
     handleHomeRedirect.$inject = ['$location', '$localStorage', 'AuthenticationService'];
 
     function handleHomeRedirect($location, $localStorage, AuthenticationService) {
-        if (AuthenticationService.isAuthenticated()) {
-          var data = AuthenticationService.getUserData();
-          $location.path('/' + data.type);
-        }
-        else {
-          redirectToLogin($location, $localStorage);
-        }
+      if (AuthenticationService.isAuthenticated()) {
+        var data = AuthenticationService.getUserData();
+        $location.path('/' + data.type);
       }
+      else {
+        redirectToLogin($location, $localStorage);
+      }
+    }
 
     routeChangeListener.$inject = ['$rootScope', '$location', '$localStorage', 'AuthenticationService'];
 
@@ -276,29 +275,29 @@
           }
         }
         // User is not authenticated. Only have access to public views.
-        else if (!url.startsWith("views/public")) {
+        else if (!_.startsWith(url, "views/public")) {
           redirectToLogin($location, $localStorage);
         }
       });
     }
 
     function hasAccesssToView(view, type) {
-      if (view.startsWith("views/public")) {
+      if (_.startsWith(view, "views/public")) {
         return true;
       }
-      else if (view.startsWith("views/shared")) {
+      else if (_.startsWith(view, "views/shared")) {
         return type === "Administrador" || type === "Operador" || type === "Docente" || type === "Estudiante";
       }
-      else if (view.startsWith("views/administrator")) {
+      else if (_.startsWith(view, "views/administrator")) {
         return type === "Administrador";
       }
-      else if (view.startsWith("views/operator")) {
+      else if (_.startsWith(view, "views/operator")) {
         return type === "Operador" || type === "Administrador";
       }
-      else if (view.startsWith("views/professor")) {
+      else if (_.startsWith(view, "views/professor")) {
         return type === "Docente";
       }
-      else if (view.startsWith("views/student")) {
+      else if (_.startsWith(view, "views/student")) {
         return type === "Estudiante";
       }
       else {

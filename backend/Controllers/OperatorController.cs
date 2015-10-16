@@ -37,8 +37,8 @@ namespace SiLabI.Controllers
             }
 
             PaginatedResponse<Operator> response = new PaginatedResponse<Operator>();
-            DataTable table = _OperatorDA.GetAll(payload["id"], request);
-            int count = _OperatorDA.GetCount(payload["id"], request);
+            DataTable table = _OperatorDA.GetAll(payload, request);
+            int count = _OperatorDA.GetCount(payload, request);
 
             foreach (DataRow row in table.Rows)
             {
@@ -53,7 +53,7 @@ namespace SiLabI.Controllers
 
         public Operator GetOne(int id, QueryString request, Dictionary<string, object> payload)
         {
-            DataRow row = _OperatorDA.GetOne(payload["id"], id, request);
+            DataRow row = _OperatorDA.GetOne(payload, id, request);
             return Operator.Parse(row);
         }
 
@@ -65,7 +65,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            DataRow row = _OperatorDA.Create(payload["id"], operatorRequest);
+            DataRow row = _OperatorDA.Create(payload, operatorRequest);
             return Operator.Parse(row);
         }
 
@@ -81,7 +81,7 @@ namespace SiLabI.Controllers
                 throw new InvalidRequestBodyException();
             }
 
-            _OperatorDA.Delete(payload["id"], id);
+            _OperatorDA.Delete(payload, id);
         }
     }
 }
