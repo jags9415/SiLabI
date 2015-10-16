@@ -10,7 +10,9 @@
   function AppointmentListController(StudentAppService, $localStorage, MessageService, StateService, $location) {
     var vm = this;
     vm.advanceSearch = false;
+    vm.datepicker_open = false;
     vm.loaded = false;
+    vm.laboratories = ["Laboratorio A", "Laboratorio B"];
     vm.appointments = [];
     vm.searched = {
       laboratory : {},
@@ -18,7 +20,12 @@
     };
     vm.limit = 20;
     vm.request = {
-      fields : "id,laboratory,state,software,date"
+      fields : "id,date,state,laboratory.name,software.code",
+      sort: [
+        {field: "date", type: "ASC"},
+        {field: "laboratory.name", type: "ASC"},
+        {field: "software.code", type: "ASC"},
+      ]
     };
     vm.states = [];
     vm.$storage = $localStorage;
@@ -31,6 +38,7 @@
     vm.isLoaded = isLoaded;
     vm.loadPage = loadPage;
     vm.toggleAdvanceSearch = toggleAdvanceSearch;
+    vm.openDatePicker = openDatePicker;
 
     activate();
 
@@ -68,10 +76,10 @@
     function searchAppointment() {
       vm.request.query = {};
 
-      if (vm.searched.softwareCode) {
+      if (vm.searched.software) {
         vm.request.query['software.code'] = {
           operation: "like",
-          value: '*' + vm.searched.softwareCode.replace(' ', '*') + '*'
+          value: '*' + vm.searched.software.replace(' ', '*') + '*'
         }
       }
 
@@ -83,22 +91,47 @@
       }
 
       if (vm.searched.state) {
-      vm.request.query.state = {
-        operation: "like",
-        value: vm.searched.state.value
+        vm.request.query.state = {
+          operation: "like",
+          value: vm.searched.state.value
+        }
       }
-    }
+
+      if (vm.searched.date) {
+        var date = moment(vm.searched.date).hours(0).minutes(0).seconds(0).milliseconds(0);
+        var start = moment(date);
+        var end = moment(date).add(1, 'days');
+
+        vm.request.query["date"] = [
+          {
+          	operation: "ge",
+          	value: start.format()
+          },
+          {
+          	operation: "lt",
+          	value: end.format()
+          }
+        ];
+      }
 
       loadPage();
     }
 
     function toggleAdvanceSearch() {
-    vm.advanceSearch = !vm.advanceSearch;
-    delete vm.searched.code;
-    delete vm.searched.name;
-    delete vm.searched.state;
-  }
+      vm.advanceSearch = !vm.advanceSearch;
+      delete vm.searched.software;
+      delete vm.searched.laboratory.name;
+      delete vm.searched.state;
+      delete vm.searched.date;
+    }
 
+    function openDatePicker($event) {
+      if ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+      }
+      vm.datepicker_open = true;
+    }
 
     function isEmpty() {
       return vm.appointments.length == 0;
@@ -117,8 +150,8 @@
     }
 
     function setStates(states) {
-    vm.states = states;
-  }
+      vm.states = states;
+    }
 
     function deleteAppointment(appID) {
       MessageService.confirm("¿Desea realmente eliminar esta cita?")

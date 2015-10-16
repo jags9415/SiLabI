@@ -18,7 +18,7 @@
     vm.$storage = $localStorage;
 
     vm.request = {
-      fields: "id,date,state,created_at,updated_at,group.number,group.course.name,software.code,software.name,laboratory.name"
+      fields: "id,date,state,group.number,group.course.name,software.code,software.name,laboratory.name"
     }
 
     vm.date_request = {

@@ -11,11 +11,11 @@
         this.Get = GetProfile;
         this.Update = UpdateProfile;
 
-        function GetProfile() {
+        function GetProfile(cached) {
           var request = {
             access_token: $localStorage['access_token']
           };
-          return RequestService.get('/me', request);
+          return RequestService.get('/me', request, cached);
         }
 
         function UpdateProfile(profile) {

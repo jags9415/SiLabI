@@ -122,6 +122,16 @@ input[type=number] {
   width: 100%;
 }
 
+.advanced-search .datepicker-popup button {
+  width: initial;
+}
+
 .form-control:disabled {
   background-color: white;
+}
+
+@media (min-width: 768px) {
+  .advanced-search .form-group {
+    margin-bottom: 15px;
+  }
 }

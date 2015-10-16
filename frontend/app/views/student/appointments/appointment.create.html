@@ -10,12 +10,12 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">* Fechas Disponiles</label>
+          <label for="name">Fechas Disponiles</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
             <ui-select id="date" name="date" ng-model="AppointmentCreate.selected_date" on-select="AppointmentCreate.setAvailableHours()" required>
-              <ui-select-match placeholder="{{$select.selected.day}}">
-                {{$select.selected.day}}
+              <ui-select-match placeholder="Fecha">
+                {{$select.selected.day | date : 'fullDate'}}
               </ui-select-match>
               <ui-select-choices repeat="date in AppointmentCreate.available_dates | filter: $select.search">
                 <span ng-bind-html="date.day | date : 'fullDate' | highlight: $select.search"></span>
@@ -27,15 +27,15 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">* Horas Disponibles</label>
+          <label for="name">Horas Disponibles</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
             <ui-select id="hour" name="hour" ng-model="AppointmentCreate.selected_hour" on-select="AppointmentCreate.changeLaboratory()" required>
-              <ui-select-match placeholder="{{$select.selected.hour}}">
-                {{$select.selected.hour}}
+              <ui-select-match placeholder="Hora">
+                {{$select.selected.full_date | date: 'hh:mm a'}}
               </ui-select-match>
               <ui-select-choices repeat="hour in AppointmentCreate.available_hours | filter: $select.search">
-                <span ng-bind-html="hour.full_date | date : 'mediumTime' | highlight: $select.search"></span>
+                <span ng-bind-html="hour.full_date | date : 'hh:mm a' | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
             <p class="help-block" ng-show="createAppForm.hour.$error.required">Hora requerida.</p>
@@ -46,11 +46,11 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="course">* Grupo</label>
+          <label for="course">Grupo</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
+            <span class="input-group-addon"><i class="fa fa-group"></i></span>
             <ui-select id="group" name="group" ng-model="AppointmentCreate.group" required>
-              <ui-select-match placeholder="{{$select.selected.course.name}}">
+              <ui-select-match placeholder="Grupo">
                 {{$select.selected.course.name}}
               </ui-select-match>
               <ui-select-choices repeat="group in AppointmentCreate.groups | filter: $select.search">
@@ -65,8 +65,8 @@
         <div class="form-group">
           <label for="software">Software</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-cd"></i></span>
-            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentCreate.searchSoftware($viewValue)" typeahead-on-select="AppointmentCreate.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentCreate.appointment.software" ng-value="{{ '[' + AppointmentCreate.appointment.software.code + '] ' + AppointmentCreate.appointment.software.name }}">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-floppy-disk"></i></span>
+            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentCreate.searchSoftware($viewValue)" typeahead-on-select="AppointmentCreate.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentCreate.appointment.software" ng-value="{{ '[' + AppointmentCreate.appointment.software.code + '] ' + AppointmentCreate.appointment.software.name }}" required>
           </div>
         </div>
       </div>
@@ -74,20 +74,19 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-          <label for="lab">* Laboratorio</label>
+          <label for="lab">Laboratorio</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-home"></i></span>
+            <span class="input-group-addon"><i class="fa fa-desktop"></i></span>
             <input type="text" class="form-control" id="lab" name="lab" ng-model="AppointmentCreate.selected_laboratory.name" ng-trim readonly required>
             <p class="help-block" ng-show="createAppForm.date.$error.required">Laboratorio requerido.</p>
           </div>
         </div>
       </div>
     </div>
-
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-2 col-md-offset-5 col-xs-2 col-xs-offset-5">
         <button type="submit" class="btn btn-lg btn-success" ng-click="AppointmentCreate.create()" ng-disabled="createAppForm.$invalid">
-          <i class="glyphicon glyphicon-plus"></i> Agregar
+          <i class="glyphicon glyphicon-plus"></i> Crear
         </button>
       </div>
     </div>

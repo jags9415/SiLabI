@@ -15,17 +15,17 @@
         this.Delete = Delete;
         this.GetStudents = GetStudents;
 
-        function GetAll(request) {
+        function GetAll(request, cached) {
           if (!request) request = {};
           request.access_token = $localStorage['access_token'];
-          return RequestService.get('/groups', request);
+          return RequestService.get('/groups', request, cached);
         }
 
 
-        function GetOne(id, request) {
+        function GetOne(id, request, cached) {
           if (!request) request = {};
           request.access_token = $localStorage['access_token'];
-          return RequestService.get('/groups/' + id, request);
+          return RequestService.get('/groups/' + id, request, cached);
         }
 
         function Update(id, group) {
@@ -48,10 +48,10 @@
           return RequestService.delete('/groups/' + id, request);
         }
 
-        function GetStudents(id, request) {
+        function GetStudents(id, request, cached) {
           if (!request) request = {};
           request.access_token = $localStorage['access_token'];
-          return RequestService.get('/groups/' + id +'/students', request);
+          return RequestService.get('/groups/' + id +'/students', request, cached);
         }
     }
 })();

@@ -7,11 +7,11 @@
   </ol>
   <div class="table-search" style="margin-bottom: 3%;">
     <div class="row">
-      <div class="col-md-10 col-xs-10">
+      <div class="col-md-10 col-xs-9">
         <form autocomplete="off" class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar por código de software" name="searchInput" type="text" ng-change="AppointmentList.search()" ng-model="AppointmentList.searched.softwareCode">
+            <input class="form-control" placeholder="Buscar (software)" name="searchInput" type="text" ng-change="AppointmentList.search()" ng-model="AppointmentList.searched.software">
           </div>
           <div class="input-group">
             <a href="" ng-click="AppointmentList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
@@ -26,18 +26,36 @@
         </a>
       </div>
     </div>
-    <div class="row" ng-show="AppointmentList.advanceSearch">
+    <div class="row" collapse="!AppointmentList.advanceSearch">
       <div class="col-md-12">
         <form autocomplete="off" class="form-inline advanced-search">
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-10 col-sm-12 col-xs-12">
               <div class="row">
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="lab" name="lab" placeholder="Laboratorio" ng-model="AppointmentList.searched.laboratory.name">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <div class="form-group datepicker-popup">
+                    <input class="form-control" placeholder="Fecha"
+                           datepicker-popup="mediumDate"
+                           show-weeks="false"
+                           is-open="AppointmentList.datepicker_open"
+                           ng-model="AppointmentList.searched.date"
+                           ng-click="AppointmentList.openDatePicker($event)"
+                           close-text="Cerrar" clear-text="Limpiar" current-text="Hoy"/>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <ui-select id="lab" ng-model="AppointmentList.searched.laboratory.name">
+                      <ui-select-match placeholder="Laboratorio" allow-clear="true">
+                        {{$select.selected}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="laboratory in AppointmentList.laboratories">
+                        <span ng-bind-html="laboratory"></span>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
                   <div class="form-group">
                     <ui-select id="state" ng-model="AppointmentList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
@@ -51,7 +69,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-12 col-xs-12">
               <div class="form-group">
                 <button type="submit" class="btn btn-default" ng-click="AppointmentList.search()">
                   <i class="glyphicon glyphicon-search"></i> Buscar
@@ -68,26 +86,26 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Estado</th>
           <th>Fecha</th>
           <th>Software</th>
           <th>Laboratorio</th>
+          <th>Estado</th>
           <th style="text-align: center">Acción</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="app in AppointmentList.appointments">
+          <td>{{ app.date | date : 'EEEE d MMM y hh:mm a' }}</td>
+          <td>{{ app.software.code }}</td>
+          <td>{{ app.laboratory.name }}</td>
           <td>
               <span class="label"
-              ng-class="{ 'label-primary': app.state === 'Por iniciar',
-                          'label-success': app.state === 'Finalizada',
+              ng-class="{ 'label-success': app.state === 'Por iniciar',
+                          'label-primary': app.state === 'Finalizada',
                           'label-danger': app.state === 'Cancelada'}" >
               {{ app.state }}
             </span>
           </td>
-          <td>{{ app.date | date : 'fullDate' }}</td>
-          <td>{{ app.software.code }}</td>
-          <td>{{ app.laboratory.name }}</td>
           <td style="text-align: center">
             <a class='btn btn-info btn-sm' ng-click="AppointmentList.open(app.id)">
               <span class="glyphicon glyphicon-eye-open"></span>

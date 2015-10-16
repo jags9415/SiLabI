@@ -11,7 +11,7 @@
         <form autocomplete="off" class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar por curso" name="searchInput" type="text" ng-change="GroupList.search()" ng-model="GroupList.searched.name">
+            <input class="form-control" placeholder="Buscar (curso)" name="searchInput" type="text" ng-change="GroupList.search()" ng-model="GroupList.searched.name">
           </div>
           <div class="input-group">
             <a href="" ng-click="GroupList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
@@ -32,17 +32,24 @@
           <div class="row">
             <div class="col-md-10">
               <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Número" ng-model="GroupList.searched.number">
-                  </div>
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="form-group">
                     <input type="text" class="form-control" placeholder="Profesor" ng-model="GroupList.searched.professor.name">
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <ui-select id="state" ng-model="GroupList.searched.state">
+                      <ui-select-match placeholder="Estado" allow-clear="true">
+                        {{$select.selected.name}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="state in GroupList.states">
+                        <span ng-bind-html="state.name"></span>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="form-group">
                     <ui-select id="period" ng-model="GroupList.searched.period">
                       <ui-select-match placeholder="Periodo" allow-clear="true">
@@ -54,16 +61,9 @@
                     </ui-select>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="form-group">
-                    <ui-select id="state" ng-model="GroupList.searched.state">
-                      <ui-select-match placeholder="Estado" allow-clear="true">
-                        {{$select.selected.name}}
-                      </ui-select-match>
-                      <ui-select-choices repeat="state in GroupList.states">
-                        <span ng-bind-html="state.name"></span>
-                      </ui-select-choices>
-                    </ui-select>
+                    <input type="text" class="form-control" placeholder="Año" ng-model="GroupList.searched.year">
                   </div>
                 </div>
               </div>

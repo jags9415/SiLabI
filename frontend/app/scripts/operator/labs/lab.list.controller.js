@@ -16,7 +16,7 @@
     vm.searched = {};
     vm.limit = 20;
     vm.request = {
-      fields : "id,name,seats,state,appointment_priority,reservation_priority",
+      fields : "id,name,seats,state",
       sort: {field: "name", type: "ASC"}
     };
 
@@ -34,10 +34,9 @@
       var page = parseInt($location.search()['page']);
 
       if (isNaN(page)) {
-      page = 1;
+        page = 1;
       }
 
-      vm.priorities = LabService.GetPriorities();
       vm.totalPages = page;
       vm.page = page;
       loadPage();
@@ -110,19 +109,14 @@
       vm.totalPages = data.total_pages;
       vm.totalItems = vm.limit * vm.totalPages;
       vm.loaded = true;
-
-      _.each(vm.labs, function(lab) {
-        lab.appointment_priority = _.find(vm.priorities, function(p) { return p.value == lab.appointment_priority });
-        lab.reservation_priority = _.find(vm.priorities, function(p) { return p.value == lab.reservation_priority });
-      });
     }
 
     function deleteLab(id) {
       MessageService.confirm("¿Desea realmente eliminar esta Sala de Laboratorio?")
       .then(function() {
-      LabService.Delete(id)
-      .then(loadPage)
-      .catch(handleError);
+        LabService.Delete(id)
+        .then(loadPage)
+        .catch(handleError);
       });
     }
 

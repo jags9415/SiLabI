@@ -11,7 +11,7 @@
         <form autocomplete="off" class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="OperatorList.search()" ng-model="OperatorList.searched.full_name">
+            <input class="form-control" placeholder="Buscar (nombre)" name="searchInput" type="text" ng-change="OperatorList.search()" ng-model="OperatorList.searched.full_name">
           </div>
           <div class="input-group">
             <a href="" ng-click="OperatorList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
@@ -32,12 +32,12 @@
           <div class="row">
             <div class="col-md-10">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="form-group">
                     <input type="text" class="form-control" placeholder="Usuario" ng-model="OperatorList.searched.username">
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="form-group">
                     <ui-select id="state" ng-model="OperatorList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
@@ -49,7 +49,7 @@
                     </ui-select>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="form-group">
                     <ui-select id="period" ng-model="OperatorList.searched.period">
                       <ui-select-match placeholder="Periodo" allow-clear="true">
@@ -62,7 +62,7 @@
                     </ui-select>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="form-group">
                     <input type="number" class="form-control" id="exampleInputEmail2" placeholder="Año" min="2000" ng-model="OperatorList.searched.year">
                   </div>

@@ -11,7 +11,7 @@
         <form autocomplete="off" class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="LabList.search()" ng-model="LabList.searched.name">
+            <input class="form-control" placeholder="Buscar (nombre)" name="searchInput" type="text" ng-change="LabList.search()" ng-model="LabList.searched.name">
           </div>
           <div class="input-group">
             <a href="" ng-click="LabList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
@@ -32,12 +32,12 @@
           <div class="row">
             <div class="col-md-10">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 col-sm-6 col-xs-12">
                   <div class="form-group">
                     <input type="number" class="form-control" id="seats" name="seats" placeholder="Asientos" ng-model="LabList.searched.seats">
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-sm-6 col-xs-12">
                   <div class="form-group">
                     <ui-select id="state" ng-model="LabList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
@@ -70,8 +70,6 @@
         <tr>
           <th>Nombre</th>
           <th>Asientos</th>
-          <th>Prioridad Citas</th>
-          <th>Prioridad Reservaciones</th>
           <th>Estado</th>
           <th style="text-align: center">Acción</th>
         </tr>
@@ -80,8 +78,6 @@
         <tr ng-repeat="lab in LabList.labs">
           <td>{{ lab.name }}</td>
           <td>{{ lab.seats }}</td>
-          <td>{{ lab.appointment_priority.name }}</td>
-          <td>{{ lab.reservation_priority.name }}</td>
           <td>
             <span class="label"
               ng-class="{ 'label-success': lab.state === 'Activo',

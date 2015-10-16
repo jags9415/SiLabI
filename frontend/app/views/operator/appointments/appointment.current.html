@@ -25,12 +25,23 @@
                 </div>
               </div>
               <div class="col-md-4">
-                <a href="">
+
+                <div class="form-group datepicker-popup">
                   <div class="input-group" style="padding-bottom: 2%;">
                     <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-                    <datepicker-popup class="form-control" ng-model="AppointmentCurrent.selected_date" max-date="AppointmentCurrent.today" ng-change="AppointmentCurrent.loadHours()" show-weeks="false" ng-click="AppointmentCurrent.openDatePicker()" date-disabled="AppointmentCurrent.isDisabledDate(date, mode)" is-open="AppointmentCurrent.opened" close-text="Cerrar" clear-text="Limpiar" current-text="Hoy" style="background-color: white;" readonly>{{ AppointmentCurrent.selected_date | date: 'mediumDate' }}</datepicker-popup>
+                    <input class="form-control" placeholder="Fecha"
+                           datepicker-popup="mediumDate"
+                           show-weeks="false"
+                           max-date="AppointmentCurrent.today"
+                           is-open="AppointmentCurrent.opened"
+                           ng-model="AppointmentCurrent.selected_date"
+                           ng-click="AppointmentCurrent.openDatePicker($event)"
+                           ng-change="AppointmentCurrent.loadHours()"
+                           date-disabled="AppointmentCurrent.isDisabledDate(date, mode)"
+                           close-text="Cerrar" clear-text="Limpiar" current-text="Hoy"/>
                   </div>
-                </a>
+                </div>
+
               </div>
               <div class="col-md-4">
                 <div class="input-group" style="padding-bottom: 2%;">

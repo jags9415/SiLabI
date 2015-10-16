@@ -1,5 +1,5 @@
 <div>
-  <h2>Ver Cita</h2>
+  <h2>Cita</h2>
   <hr>
   <ol class="breadcrumb">
     <li><a href="#/">Inicio</a></li>
@@ -74,29 +74,14 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group" show-errors>
-          <label for="created_at" class="control-label">Fecha Creación</label>
-          <input type="text" class="form-control" id="created_at" name="created_at" placeholder="Fecha Creación" ng-value="AppointmentDetail.appointment.created_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly></input>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group" show-errors>
-          <label for="updated_at" class="control-label">Fecha Actualización</label>
-          <input type="text" class="form-control" id="updated_at" name="updated_at" placeholder="Fecha Actualización" ng-value="AppointmentDetail.appointment.updated_at | date : 'EEEE d \'de\' MMMM \'del\' y. h:mm:ss a'" readonly>
-        </div>
-      </div>
-    </div>
-
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-6 text-center">
-        <button type="submit" class="btn btn-lg btn-info" ng-click="AppointmentDetail.update()" ng-disabled="updateAppForm.$invalid">
+        <button type="submit" class="btn btn-lg btn-primary" ng-click="AppointmentDetail.update()" ng-disabled="updateAppForm.$invalid">
           <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
         </button>
       </div>
       <div class="col-md-6 text-center">
-        <button type="submit" class="btn btn-lg btn-danger" ng-click="AppointmentDetail.delete()">
+        <button type="button" class="btn btn-lg btn-danger" ng-click="AppointmentDetail.delete()">
           <i class="glyphicon glyphicon-trash"></i> Eliminar
         </button>
       </div>

@@ -20,7 +20,7 @@
           .then(setGenders)
           .catch(handleError);
 
-          ProfileService.Get()
+          ProfileService.Get(false)
           .then(setProfile)
           .catch(handleError);
         }

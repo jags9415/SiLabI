@@ -14,17 +14,17 @@
     this.Create = Create;
     this.Delete = Delete;
 
-    function GetAll(request) {
+    function GetAll(request, cached) {
       if (!request) request = {};
       request.access_token = $localStorage['access_token'];
-      return RequestService.get('/software', request);
+      return RequestService.get('/software', request, cached);
     }
 
 
-    function GetOne(id, request) {
+    function GetOne(id, request, cached) {
       if (!request) request = {};
       request.access_token = $localStorage['access_token'];
-      return RequestService.get('/software/' + id, request);
+      return RequestService.get('/software/' + id, request, cached);
     }
 
     function Update(id, software) {

@@ -11,7 +11,7 @@
         <form autocomplete="off" class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar" name="searchInput" type="text" ng-change="StudentList.search()" ng-model="StudentList.searched.full_name">
+            <input class="form-control" placeholder="Buscar (nombre)" name="searchInput" type="text" ng-change="StudentList.search()" ng-model="StudentList.searched.full_name">
           </div>
           <div class="input-group">
             <a href="" ng-click="StudentList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
@@ -39,6 +39,11 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
+                    <input type="text" class="form-control" id="email" placeholder="Correo" ng-model="StudentList.searched.email">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
                     <ui-select id="state" ng-model="StudentList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
                         {{$select.selected.name}}
@@ -47,11 +52,6 @@
                         <span ng-bind-html="state.name"></span>
                       </ui-select-choices>
                     </ui-select>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="email" placeholder="Correo" ng-model="StudentList.searched.email">
                   </div>
                 </div>
               </div>

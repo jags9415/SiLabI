@@ -14,36 +14,36 @@
     this.Create = Create;
     this.Delete = Delete;
 
-    function GetAll(ProfessorUserName, request) {
+    function GetAll(username, request, cached) {
       if (!request) request = {};
       request.access_token = $localStorage['access_token'];
-      return RequestService.get('professors/' + ProfessorUserName + '/reservations', request);
+      return RequestService.get('/professors/' + username + '/reservations', request, cached);
     }
 
-    function GetOne(ProfessorUserName, ReservationID) {
+    function GetOne(username, id, cached) {
       var request = {};
       request.access_token = $localStorage['access_token'];
-      return RequestService.get('professors/' + ProfessorUserName + '/reservations/' + ReservationID, request);
+      return RequestService.get('/professors/' + username + '/reservations/' + id, request, cached);
     }
 
-    function Update(ProfessorUserName, ReservationID, NewReservationInfo) {
-      var requestBody = {};
-      requestBody.reservation = NewReservationInfo;
-      requestBody.access_token = $localStorage['access_token'];
-      return RequestService.put('professors/' + ProfessorUserName + '/reservations/' + ReservationID, requestBody);
+    function Update(username, id, reservation) {
+      var request = {};
+      request.reservation = reservation;
+      request.access_token = $localStorage['access_token'];
+      return RequestService.put('/professors/' + username + '/reservations/' + id, request);
     }
 
-    function Create(Reservation, ProfessorUserName) {
-      var requestBody = {};
-      requestBody.reservation = Reservation;
-      requestBody.access_token = $localStorage['access_token'];
-      return RequestService.post('professors/'+ ProfessorUserName +'/reservations', requestBody);
+    function Create(reservation, username) {
+      var request = {};
+      request.reservation = reservation;
+      request.access_token = $localStorage['access_token'];
+      return RequestService.post('/professors/' + username + '/reservations', request);
     }
 
-    function Delete(ProfessorUserName, ReservationID) {
-      var requestBody = {};
-      requestBody.access_token = $localStorage['access_token'];
-      return RequestService.delete('professors/' + ProfessorUserName + '/reservations/' + ReservationID, requestBody);
+    function Delete(username, id) {
+      var request = {};
+      request.access_token = $localStorage['access_token'];
+      return RequestService.delete('/professors/' + username + '/reservations/' + id, request);
     }
   }
 })();

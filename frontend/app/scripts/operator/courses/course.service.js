@@ -14,37 +14,37 @@
         this.Create = Create;
         this.Delete = Delete;
 
-        function GetAll(request) {
+        function GetAll(request, cached) {
           if (!request) request = {};
           request.access_token = $localStorage['access_token'];
-          return RequestService.get('/courses', request);
+          return RequestService.get('/courses', request, cached);
         }
 
 
-        function GetOne(CourseID) {
+        function GetOne(id, cached) {
           var request = {};
           request.access_token = $localStorage['access_token'];
-          return RequestService.get('/courses/' + CourseID, request);
+          return RequestService.get('/courses/' + id, request, cached);
         }
 
-        function Update(CourseID, NewCourseInfo) {
-          var requestBody = {};
-          requestBody.course = NewCourseInfo;
-          requestBody.access_token = $localStorage['access_token'];
-          return RequestService.put('/courses/' + CourseID, requestBody);
+        function Update(id, course) {
+          var request = {};
+          request.course = course;
+          request.access_token = $localStorage['access_token'];
+          return RequestService.put('/courses/' + id, request);
         }
 
-        function Create(Course) {
-          var requestBody = {};
-          requestBody.course = Course;
-          requestBody.access_token = $localStorage['access_token'];
-          return RequestService.post('/courses', requestBody);
+        function Create(course) {
+          var request = {};
+          request.course = course;
+          request.access_token = $localStorage['access_token'];
+          return RequestService.post('/courses', request);
         }
 
-        function Delete(CourseID) {
-          var requestBody = {};
-          requestBody.access_token = $localStorage['access_token'];
-          return RequestService.delete('/courses/' + CourseID, requestBody);
+        function Delete(id) {
+          var request = {};
+          request.access_token = $localStorage['access_token'];
+          return RequestService.delete('/courses/' + id, request);
         }
     }
 })();

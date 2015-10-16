@@ -14,36 +14,36 @@
     this.Create = Create;
     this.Delete = Delete;
 
-    function GetAll(StudentID, request) {
+    function GetAll(username, request, cached) {
       if (!request) request = {};
       request.access_token = $localStorage['access_token'];
-      return RequestService.get('students/' + StudentID + '/appointments', request);
+      return RequestService.get('/students/' + username + '/appointments', request, cached);
     }
 
-    function GetOne(StudentID, AppointmentID) {
+    function GetOne(username, id, request, cached) {
+      if (!request) request = {};
+      request.access_token = $localStorage['access_token'];
+      return RequestService.get('/students/' + username + '/appointments/' + id, request, cached);
+    }
+
+    function Update(username, id, appointment) {
+      var request = {};
+      request.appointment = appointment;
+      request.access_token = $localStorage['access_token'];
+      return RequestService.put('/students/' + username + '/appointments/' + id, request);
+    }
+
+    function Create(appointment, username) {
+      var request = {};
+      request.appointment = appointment;
+      request.access_token = $localStorage['access_token'];
+      return RequestService.post('/students/'+ username +'/appointments', request);
+    }
+
+    function Delete(username, id) {
       var request = {};
       request.access_token = $localStorage['access_token'];
-      return RequestService.get('students/' + StudentID + '/appointments/' + AppointmentID, request);
-    }
-
-    function Update(StudentID, AppointmentID, NewAppointmentInfo) {
-      var requestBody = {};
-      requestBody.appointment = NewAppointmentInfo;
-      requestBody.access_token = $localStorage['access_token'];
-      return RequestService.put('students/' + StudentID + '/appointments/' + AppointmentID, requestBody);
-    }
-
-    function Create(Appointment, StudentID) {
-      var requestBody = {};
-      requestBody.appointment = Appointment;
-      requestBody.access_token = $localStorage['access_token'];
-      return RequestService.post('students/'+ StudentID +'/appointments', requestBody);
-    }
-
-    function Delete(StudentID, AppointmentID) {
-      var requestBody = {};
-      requestBody.access_token = $localStorage['access_token'];
-      return RequestService.delete('students/' + StudentID + '/appointments/' + AppointmentID, requestBody);
+      return RequestService.delete('/students/' + username + '/appointments/' + id, request);
     }
   }
 })();

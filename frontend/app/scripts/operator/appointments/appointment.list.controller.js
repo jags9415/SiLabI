@@ -10,6 +10,7 @@
   function AppointmentListController($scope, AppointmentService, MessageService, StateService, $location) {
     var vm = this;
     vm.advanceSearch = false;
+    vm.datepicker_open = false;
     vm.loaded = false;
     vm.laboratories = ["Laboratorio A", "Laboratorio B"];
     vm.appointments = [];
@@ -35,6 +36,7 @@
     vm.isLoaded = isLoaded;
     vm.loadPage = loadPage;
     vm.toggleAdvanceSearch = toggleAdvanceSearch;
+    vm.openDatePicker = openDatePicker;
 
     activate();
 
@@ -87,42 +89,36 @@
       }
 
       if (vm.searched.state) {
-      vm.request.query.state = {
-        operation: "eq",
-        value: vm.searched.state.value
-      }
-    }
-
-    if (vm.searched.software) {
-      vm.request.query['software.code'] = {
-        operation: "like",
-        value: '*' + vm.searched.software.replace(' ', '*') + '*'
-      }
-    }
-
-    if (vm.searched.date) {
-      if (vm.searched.hour) {
-          var date = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), vm.searched.hour.slice(0, 2));
-          vm.request.query.date = {
-            operation: "eq",
-            value: date.toJSON()
-          }
+        vm.request.query['state'] = {
+          operation: "like",
+          value: vm.searched.state.value
         }
-        else {
-          var date1 = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), "08");
-          var date2 = new Date(vm.searched.date.getFullYear(), vm.searched.date.getMonth(), vm.searched.date.getUTCDate(), "18");
-          vm.request.query["date"] =[
+      }
+
+      if (vm.searched.software) {
+        vm.request.query['software.code'] = {
+          operation: "like",
+          value: '*' + vm.searched.software.replace(' ', '*') + '*'
+        }
+      }
+
+      if (vm.searched.date) {
+        var date = moment(vm.searched.date).hours(0).minutes(0).seconds(0).milliseconds(0);
+        var start = moment(date);
+        var end = moment(date).add(1, 'days');
+
+        vm.request.query["date"] = [
           {
           	operation: "ge",
-          	value: date1.toJSON()
+          	value: start.format()
           },
           {
           	operation: "lt",
-          	value: date2.toJSON()
+          	value: end.format()
           }
-          ];
-        }
+        ];
       }
+
       loadPage();
     }
 
@@ -131,6 +127,14 @@
       delete vm.searched.code;
       delete vm.searched.name;
       delete vm.searched.state;
+    }
+
+    function openDatePicker($event) {
+      if ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+      }
+      vm.datepicker_open = true;
     }
 
     function isEmpty() {

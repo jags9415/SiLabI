@@ -13,16 +13,16 @@
         this.Create = Create;
         this.Delete = Delete;
 
-        function GetAll(request) {
+        function GetAll(request, cached) {
           if (!request) request = {};
           request.access_token = $localStorage['access_token'];
-          return RequestService.get('/operators', request);
+          return RequestService.get('/operators', request, cached);
         }
 
-        function GetOne(id) {
+        function GetOne(id, cached) {
           var request = {};
           request.access_token = $localStorage['access_token'];
-          return RequestService.get('/operators/' + id, request);
+          return RequestService.get('/operators/' + id, request, cached);
         }
 
         function Create(id, period) {

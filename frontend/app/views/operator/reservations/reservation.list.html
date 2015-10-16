@@ -11,7 +11,7 @@
         <form autocomplete="off" class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar por nombre de docente" name="searchInput" type="text" ng-change="ReservationList.search()" ng-model="ReservationList.searched.professor.full_name">
+            <input class="form-control" placeholder="Buscar (docente)" name="searchInput" type="text" ng-change="ReservationList.search()" ng-model="ReservationList.searched.professor.full_name">
           </div>
           <div class="input-group">
             <a href="" ng-click="ReservationList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
@@ -96,8 +96,8 @@
           <td>{{ reservation.software.code }}</td>
           <td>
               <span class="label"
-              ng-class="{ 'label-primary': reservation.state === 'Por iniciar',
-                          'label-success': reservation.state === 'Finalizada',
+              ng-class="{ 'label-success': reservation.state === 'Por iniciar',
+                          'label-primary': reservation.state === 'Finalizada',
                           'label-danger': reservation.state === 'Cancelada'}" >
               {{ reservation.state }}
             </span>

@@ -84,7 +84,7 @@
         value: getSelectedDateTime().toISOString()
       }
 
-      vm.promise = AppointmentService.GetAll(vm.request)
+      vm.promise = AppointmentService.GetAll(vm.request, false)
       .then(setAppointments)
       .catch(handleError);
     }
@@ -119,6 +119,10 @@
     }
 
     function openDatePicker($event) {
+      if ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+      }
       vm.opened = true;
     };
 

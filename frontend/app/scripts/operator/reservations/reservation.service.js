@@ -7,45 +7,43 @@ angular
 
 ReservationService.$inject = ['RequestService', '$localStorage'];
 
-function ReservationService(RequestService, $localStorage) {
-  this.GetAll = GetAll;
-  this.GetOne = GetOne;
-  this.Update = Update;
-  this.Create = Create;
-  this.Delete = Delete;
+  function ReservationService(RequestService, $localStorage) {
+    this.GetAll = GetAll;
+    this.GetOne = GetOne;
+    this.Update = Update;
+    this.Create = Create;
+    this.Delete = Delete;
 
-  function GetAll(request) {
-    if (!request) request = {};
-    request.access_token = $localStorage['access_token'];
-    return RequestService.get('/reservations', request);
-  }
+    function GetAll(request, cached) {
+      if (!request) request = {};
+      request.access_token = $localStorage['access_token'];
+      return RequestService.get('/reservations', request, cached);
+    }
 
+    function GetOne(id, cached) {
+      var request = {};
+      request.access_token = $localStorage['access_token'];
+      return RequestService.get('/reservations/' + id, request, cached);
+    }
 
-  function GetOne(ReservationID) {
-    var request = {};
-    request.access_token = $localStorage['access_token'];
-    return RequestService.get('/reservations/' + ReservationID, request);
-  }
+    function Update(id, reservation) {
+      var request = {};
+      request.reservation = reservation;
+      request.access_token = $localStorage['access_token'];
+      return RequestService.put('/reservations/' + id, request);
+    }
 
-  function Update(ReservationID, NewReservationInfo) {
-    var requestBody = {};
-    requestBody.appointment = NewReservationInfo;
-    requestBody.access_token = $localStorage['access_token'];
-    return RequestService.put('/reservations/' + ReservationID, requestBody);
-  }
+    function Create(reservation) {
+      var request = {};
+      request.appointment = reservation;
+      request.access_token = $localStorage['access_token'];
+      return RequestService.post('/reservations', request);
+    }
 
-  function Create(Reservation) {
-    var requestBody = {};
-    requestBody.appointment = Reservation;
-    requestBody.access_token = $localStorage['access_token'];
-    return RequestService.post('/reservations', requestBody);
-  }
-
-  function Delete(ReservationID) {
-    var requestBody = {};
-    requestBody.access_token = $localStorage['access_token'];
-    return RequestService.delete('/reservations/' + ReservationID, requestBody);
-  }
-
+    function Delete(id) {
+      var request = {};
+      request.access_token = $localStorage['access_token'];
+      return RequestService.delete('/reservations/' + id, request);
+    }
   }
 })();

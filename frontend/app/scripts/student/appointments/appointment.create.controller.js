@@ -12,9 +12,10 @@
     vm.groups = [];
     vm.available_dates = [];
     vm.available_hours = [];
+
     vm.request = {
-        fields : "date,laboratory"
-      };
+      fields : "date,laboratory"
+    };
 
     vm.groups_request = {
       fields : "id,course"
@@ -26,7 +27,6 @@
     };
 
     vm.$storage = $localStorage;
-
     vm.searchSoftware = searchSoftware;
     vm.setSoftware = setSoftware;
     vm.create = createAppointment;
@@ -37,11 +37,14 @@
 
     function activate() {
       vm.student_id = vm.$storage['username'];
-      getAvailableDates();
-      getGroups();
+
+      getGroups()
+      .then(setGroups)
+      .then(setAvailableDates)
+      .catch(handleError);
     }
 
-    function searchSoftware (input) {
+    function searchSoftware(input) {
       vm.software_request.query = {};
 
       vm.software_request.query.code = {
@@ -55,11 +58,11 @@
         });
     }
 
-    function setSoftware (data) {
+    function setSoftware(data) {
       vm.selected_software = data;
     }
 
-    function getGroups () {
+    function getGroups() {
       var period = PeriodService.GetCurrentPeriod('Semestre');
       vm.groups_request.query = {};
 
@@ -78,36 +81,44 @@
         value: period.year
       };
 
-      StudentService.GetGroups(vm.student_id, vm.groups_request)
-      .then(setGroups)
-      .catch(handleError);
+      return StudentService.GetGroups(vm.student_id, vm.groups_request);
     }
 
-    function setGroups (groups) {
+    function setGroups(groups) {
       vm.groups = groups;
+
+      if (vm.groups.length > 0) {
+        vm.group = vm.groups[0];
+      }
+
+      return getAvailableDates();
     }
 
     function getAvailableDates() {
-      if(vm.student_id){
-        AppointmentDateService.GetAvailable(vm.request, vm.student_id)
-        .then(setAvailableDates)
-        .catch(handleError);
+        return AppointmentDateService.GetAvailable(vm.request, vm.student_id);
+    }
+
+    function setAvailableDates(dates) {
+      vm.available_dates = AppointmentDateService.ParseAvailableDates(dates);
+
+      if (vm.available_dates.length > 0) {
+        vm.selected_date = vm.available_dates[0];
+        setAvailableHours();
       }
     }
-
-    function setAvailableDates (dates) {
-      vm.available_dates = AppointmentDateService.ParseAvailableDates(dates);
-    }
-
 
     function setAvailableHours() {
-      if(vm.selected_date){
+      if (!_.isEmpty(vm.selected_date)) {
         vm.available_hours = vm.selected_date.hoursByLab;
+        if (vm.available_hours.length > 0) {
+          vm.selected_hour = vm.available_hours[0];
+          changeLaboratory();
+        }
       }
     }
 
-    function changeLaboratory () {
-      if(vm.selected_hour){
+    function changeLaboratory() {
+      if (vm.selected_hour) {
         vm.selected_laboratory = vm.selected_hour.laboratory;
       }
     }
@@ -117,14 +128,16 @@
         "software": vm.selected_software.code,
         "date": vm.selected_hour.full_date,
         "group": vm.group.id
-      }
+      };
+
       StudentAppService.Create(app, vm.student_id)
       .then(handleSuccess)
       .catch(handleError);
     }
 
     function handleSuccess (data) {
-      MessageService.success("Cita creada con éxito.");
+      MessageService.success("Cita creada.");
+
       delete vm.appointment;
       delete vm.selected_software;
       delete vm.selected_hour;

@@ -143,16 +143,20 @@
       * @return A promise.
       * @example getRequest("/students", object)
       */
-      function getRequest(endpoint, request) {
+      function getRequest(endpoint, request, cached = true) {
         var defer = $q.defer();
         var url = join(API_URL, endpoint);
+
+        if (_.isNull(cached) || _.isUndefined(cached)) {
+          cached = true;
+        }
 
         if (request) {
           var queryString = createQueryString(request);
           url += queryString;
         }
 
-        $http.get(url, { cache: true })
+        $http.get(url, { cache: cached })
         .then(
           function(response) {
             defer.resolve(response.data)

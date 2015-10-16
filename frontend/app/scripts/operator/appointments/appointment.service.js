@@ -16,16 +16,16 @@
     this.GetAvailable = GetAvailable;
     this.ParseAvailableDates = ParseAvailableDates;
 
-    function GetAll(request) {
+    function GetAll(request, cached) {
       if (!request) request = {};
       request.access_token = $localStorage['access_token'];
-      return RequestService.get('/appointments', request);
+      return RequestService.get('/appointments', request, cached);
     }
 
-    function GetOne(id, request) {
+    function GetOne(id, request, cached) {
       if (!request) request = {};
       request.access_token = $localStorage['access_token'];
-      return RequestService.get('/appointments/' + id, request);
+      return RequestService.get('/appointments/' + id, request, cached);
     }
 
     function Update(id, appointment) {

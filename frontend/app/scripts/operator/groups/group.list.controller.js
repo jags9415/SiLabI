@@ -74,23 +74,15 @@ function GroupListController($scope, GroupService, MessageService, $location, St
     }
 
     function setStates(states) {
-    vm.states = states;
+      vm.states = states;
     }
 
     function setPeriods(periods) {
-    vm.periods = periods;
+      vm.periods = periods;
     }
-
 
     function searchGroup() {
       vm.request.query = {};
-
-      if (vm.searched.number) {
-        vm.request.query.number = {
-          operation: "eq",
-          value: vm.searched.number
-        }
-      }
 
       if (vm.searched.professor.name) {
         vm.request.query['professor.full_name'] = {
@@ -118,6 +110,13 @@ function GroupListController($scope, GroupService, MessageService, $location, St
         }
       }
 
+      if (vm.searched.year) {
+        vm.request.query['period.year'] = {
+          operation: "eq",
+          value: vm.searched.year
+        }
+      }
+
       if (vm.searched.name) {
         vm.request.query['course.name'] = {
           operation: "like",
@@ -137,11 +136,11 @@ function GroupListController($scope, GroupService, MessageService, $location, St
     }
 
     function toggleAdvanceSearch() {
-    vm.advanceSearch = !vm.advanceSearch;
-    delete vm.searched.code;
-    delete vm.searched.name;
-    delete vm.searched.state;
-  }
+      vm.advanceSearch = !vm.advanceSearch;
+      delete vm.searched.code;
+      delete vm.searched.name;
+      delete vm.searched.state;
+    }
 
     function setGroups(data) {
       vm.groups = data.results;
