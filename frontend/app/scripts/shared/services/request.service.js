@@ -148,7 +148,7 @@
         var url = join(API_URL, endpoint);
 
         if (_.isNull(cached) || _.isUndefined(cached)) {
-          cached = true;
+          cached = false;
         }
 
         if (request) {

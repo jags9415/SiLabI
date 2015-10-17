@@ -40,20 +40,20 @@
 
 		    vm.totalPages = page;
         vm.page = page;
-        loadPage();
+        loadPage(true);
 
         StateService.GetProfessorStates()
         .then(setStates)
         .catch(handleError);
       }
 
-    	function loadPage() {
+    	function loadPage(cached) {
         $location.search('page', vm.page);
 
         vm.request.page = vm.page;
         vm.request.limit = vm.limit;
 
-    		vm.promise = ProfessorService.GetAll(vm.request)
+    		vm.promise = ProfessorService.GetAll(vm.request, cached)
     		.then(setProfessors)
         .catch(handleError);
     	}

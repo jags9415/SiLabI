@@ -56,16 +56,16 @@
           }
         ];
 
-        loadPage();
+        loadPage(true);
       }
 
-  	  function loadPage() {
+  	  function loadPage(cached) {
         $location.search('page', vm.page);
 
         vm.request.page = vm.page;
         vm.request.limit = vm.limit;
 
-        vm.promise = AdminService.GetAll(vm.request)
+        vm.promise = AdminService.GetAll(vm.request, cached)
         .then(handleGetSuccess)
         .catch(handleError);
     	}

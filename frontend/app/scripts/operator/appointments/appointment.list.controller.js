@@ -9,16 +9,20 @@
 
   function AppointmentListController($scope, $location, AppointmentService, MessageService, StateService, moment) {
     var vm = this;
+
     vm.advanceSearch = false;
     vm.datePickerOpen = false;
     vm.loaded = false;
     vm.laboratories = ['Laboratorio A', 'Laboratorio B'];
     vm.appointments = [];
+    vm.states = [];
+    vm.limit = 20;
+
     vm.searched = {
       laboratory : {},
       student : {}
     };
-    vm.limit = 20;
+
     vm.request = {
       fields : 'id,date,state,student.username,laboratory.name,software.code',
       sort: [
@@ -27,7 +31,6 @@
         {field: 'software.code', type: 'ASC'},
       ]
     };
-    vm.states = [];
 
     vm.open = openAppointment;
     vm.delete = deleteAppointment;
@@ -49,20 +52,20 @@
 
       vm.totalPages = page;
       vm.page = page;
-      loadPage();
+      loadPage(true);
 
       StateService.GetAppointmentStates()
       .then(setStates)
       .catch(handleError);
     }
 
-    function loadPage() {
+    function loadPage(cached) {
       $location.search('page', vm.page);
 
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      vm.promise = AppointmentService.GetAll(vm.request)
+      vm.promise = AppointmentService.GetAll(vm.request, cached)
       .then(setAppointments)
       .catch(handleError);
     }

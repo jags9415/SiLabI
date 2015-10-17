@@ -9,6 +9,7 @@
 
   function AppointmentCurrentController($scope, moment, AppointmentService, MessageService) {
     var vm = this;
+
     vm.opened = false;
     vm.loaded = false;
     vm.today = new Date();
@@ -17,6 +18,7 @@
     vm.laboratories = ['Laboratorio A', 'Laboratorio B'];
     vm.selectedLaboratory = vm.laboratories[1];
     vm.selectedDate = vm.today;
+
     vm.mark = mark;
     vm.isLoaded = isLoaded;
     vm.isEmpty = isEmpty;
@@ -84,7 +86,7 @@
         value: getSelectedDateTime().toISOString()
       };
 
-      vm.promise = AppointmentService.GetAll(vm.request, false)
+      vm.promise = AppointmentService.GetAll(vm.request)
       .then(setAppointments)
       .catch(handleError);
     }

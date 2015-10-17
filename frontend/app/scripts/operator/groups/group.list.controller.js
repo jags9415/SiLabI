@@ -12,10 +12,14 @@ function GroupListController($scope, GroupService, MessageService, $location, St
     vm.advanceSearch = false;
     vm.loaded = false;
     vm.groups = [];
+    vm.states = [];
+    vm.periods = [];
+    vm.limit = 20;
+
     vm.searched = {
       professor : {}
     };
-    vm.limit = 20;
+
     vm.request = {
       fields : 'id,number,course.name,professor.full_name,period,state',
       sort: [
@@ -26,8 +30,7 @@ function GroupListController($scope, GroupService, MessageService, $location, St
         {field: 'course.name', type: 'ASC'}
       ]
     };
-    vm.states = [];
-    vm.periods = [];
+
     vm.open = openGroup;
     vm.delete = deleteGroup;
     vm.search = searchGroup;
@@ -47,7 +50,7 @@ function GroupListController($scope, GroupService, MessageService, $location, St
 
       vm.totalPages = page;
       vm.page = page;
-      loadPage();
+      loadPage(true);
 
       StateService.GetLabStates()
       .then(setStates)
@@ -58,13 +61,13 @@ function GroupListController($scope, GroupService, MessageService, $location, St
       .catch(handleError);
     }
 
-    function loadPage() {
+    function loadPage(cached) {
       $location.search('page', vm.page);
 
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      vm.promise = GroupService.GetAll(vm.request)
+      vm.promise = GroupService.GetAll(vm.request, cached)
       .then(setGroups)
       .catch(handleError);
     }

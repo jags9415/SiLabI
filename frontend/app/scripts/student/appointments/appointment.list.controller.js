@@ -9,16 +9,22 @@
 
   function AppointmentListController($location, $localStorage, StudentAppService, MessageService, StateService, moment) {
     var vm = this;
+
     vm.advanceSearch = false;
     vm.datePickerOpen = false;
     vm.loaded = false;
     vm.laboratories = ['Laboratorio A', 'Laboratorio B'];
     vm.appointments = [];
+    vm.states = [];
+    vm.$storage = $localStorage;
+    vm.username = vm.$storage['username'];
+    vm.limit = 20;
+
     vm.searched = {
       laboratory : {},
       student : {}
     };
-    vm.limit = 20;
+
     vm.request = {
       fields : 'id,date,state,laboratory.name,software.code',
       sort: [
@@ -27,9 +33,6 @@
         {field: 'software.code', type: 'ASC'},
       ]
     };
-    vm.states = [];
-    vm.$storage = $localStorage;
-    vm.username = vm.$storage['username'];
 
     vm.open = openAppointment;
     vm.delete = deleteAppointment;
@@ -51,20 +54,20 @@
 
       vm.totalPages = page;
       vm.page = page;
-      loadPage();
+      loadPage(true);
 
       StateService.GetAppointmentStates()
       .then(setStates)
       .catch(handleError);
     }
 
-    function loadPage() {
+    function loadPage(cached) {
       $location.search('page', vm.page);
 
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      vm.promise = StudentAppService.GetAll(vm.username, vm.request)
+      vm.promise = StudentAppService.GetAll(vm.username, vm.request, cached)
       .then(setAppointments)
       .catch(handleError);
     }
