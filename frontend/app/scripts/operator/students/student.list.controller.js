@@ -18,7 +18,7 @@
 
         vm.request = {
           fields : 'id,full_name,email,phone,username,state',
-          sort: [{field: 'full_name', type: 'ASC'}]
+          sort: {field: 'full_name', type: 'ASC'}
         };
 
         vm.createStudent = createStudent;
@@ -41,20 +41,20 @@
 
           vm.totalPages = page;
           vm.page = page;
-          loadPage();
+          loadPage(true);
 
           StateService.GetStudentStates()
           .then(setStates)
           .catch(handleError);
         }
 
-        function loadPage() {
+        function loadPage(cached) {
           $location.search('page', vm.page);
 
           vm.request.page = vm.page;
           vm.request.limit = vm.limit;
 
-          vm.promise = StudentService.GetAll(vm.request)
+          vm.promise = StudentService.GetAll(vm.request, cached)
           .then(setStudents)
           .catch(handleError);
         }

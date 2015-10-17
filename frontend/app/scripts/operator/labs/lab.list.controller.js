@@ -15,6 +15,7 @@
     vm.labs = [];
     vm.searched = {};
     vm.limit = 20;
+
     vm.request = {
       fields : 'id,name,seats,state',
       sort: {field: 'name', type: 'ASC'}
@@ -39,20 +40,20 @@
 
       vm.totalPages = page;
       vm.page = page;
-      loadPage();
+      loadPage(true);
 
       StateService.GetLabStates()
       .then(setStates)
       .catch(handleError);
     }
 
-    function loadPage() {
+    function loadPage(cached) {
       $location.search('page', vm.page);
 
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      vm.promise = LabService.GetAll(vm.request)
+      vm.promise = LabService.GetAll(vm.request, cached)
       .then(setLabs)
       .catch(handleError);
     }

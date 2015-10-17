@@ -14,10 +14,12 @@
       vm.softwareList = [];
       vm.searched = {};
       vm.limit = 20;
+
       vm.request = {
         fields : 'id,code,name,state',
-        sort: [{field: 'code', type: 'ASC'}]
+        sort: {field: 'code', type: 'ASC'}
       };
+
       vm.states = [];
 
       vm.open = openSoftware;
@@ -39,20 +41,20 @@
 
         vm.totalPages = page;
         vm.page = page;
-        loadPage();
+        loadPage(true);
 
         StateService.GetLabStates()
         .then(setStates)
         .catch(handleError);
       }
 
-      function loadPage() {
+      function loadPage(cached) {
         $location.search('page', vm.page);
 
         vm.request.page = vm.page;
         vm.request.limit = vm.limit;
 
-        vm.promise = SoftwareService.GetAll(vm.request)
+        vm.promise = SoftwareService.GetAll(vm.request, cached)
         .then(setSoftware)
         .catch(handleError);
       }
