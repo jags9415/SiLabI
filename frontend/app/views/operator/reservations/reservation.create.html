@@ -87,6 +87,24 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="course">Grupo</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
+            <ui-select id="group" ng-model="ReservationCreate.selected_group" ng-disabled="!ReservationCreate.professor.username" required>
+              <ui-select-match placeholder="{{$select.selected.course.name}}">
+                {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="group in ReservationCreate.groups | filter: $select.search">
+                <span ng-bind-html="'[#' + group.number + '] ' + group.course.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-lg btn-success" ng-click="ReservationCreate.create()" ng-disabled="createReservForm.$invalid" required>

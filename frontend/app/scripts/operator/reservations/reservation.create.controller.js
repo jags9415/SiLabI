@@ -5,17 +5,23 @@
       .module('silabi')
       .controller('ReservationCreateController', AppointmentCreateController);
 
-  AppointmentCreateController.$inject = ['$scope', 'ReservationService', 'MessageService', 'DateService', 'ProfessorService', 'SoftwareService', 'PeriodService', 'LabService', '$location'];
+  AppointmentCreateController.$inject = ['$scope', 'ReservationService', 'MessageService', 'DateService', 'ProfessorService', 'SoftwareService', 'PeriodService', 'LabService', 'GroupService', '$location'];
 
-  function AppointmentCreateController($scope, ReservationService, MessageService, DateService, ProfessorService, SoftwareService, PeriodService, LabService, $location) {
+  function AppointmentCreateController($scope, ReservationService, MessageService, DateService, ProfessorService, SoftwareService, PeriodService, LabService, GroupService, $location) {
     var vm = this;
     vm.professor = {};
     vm.start_hours = [];
     vm.end_hours = [];
     vm.end_hours_sliced = [];
+    vm.groups = [];
+    vm.selected_group = null;
 
     vm.professor_request = {
       fields: "id,username,full_name"
+    };
+
+    vm.groups_request = {
+      fields: "id,number,course.name"
     };
 
     vm.selected_date;
@@ -48,6 +54,7 @@
 
     function setProfessor (professor) {
       vm.professor = professor;
+      getGroups();
     }
 
     function loadEndHours () {
@@ -73,6 +80,39 @@
     function getHours() {
       vm.start_hours = DateService.GetReservationStartHours();
       vm.end_hours = DateService.GetReservationEndHours();
+    }
+
+    function getGroups () {
+      var period = PeriodService.GetCurrentPeriod('Semestre');
+      vm.groups_request.query = {};
+
+      vm.groups_request.query["period.type"] = {
+        operation: "eq",
+        value: "Semestre"
+      };
+
+      vm.groups_request.query["period.value"] = {
+        operation: "eq",
+        value: period.value
+      };
+
+      vm.groups_request.query["period.year"] = {
+        operation: "eq",
+        value: period.year
+      };
+
+      vm.groups_request.query["professor.username"] = {
+        operation: "eq",
+        value: vm.professor.username
+      };
+
+      GroupService.GetAll(vm.groups_request)
+      .then(setGroups)
+      .catch(handleError);
+    }
+
+    function setGroups (data) {
+      vm.groups = data.results;
     }
 
     function openDatePicker($event){
