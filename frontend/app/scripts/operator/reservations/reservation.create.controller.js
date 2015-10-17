@@ -3,11 +3,11 @@
 
   angular
       .module('silabi')
-      .controller('ReservationCreateController', AppointmentCreateController);
+      .controller('ReservationCreateController', ReservationCreateController);
 
-  AppointmentCreateController.$inject = ['$scope', 'ReservationService', 'MessageService', 'DateService', 'ProfessorService', 'SoftwareService', 'PeriodService', 'LabService', 'GroupService', '$location'];
+  ReservationCreateController.$inject = ['$scope', 'ReservationService', 'MessageService', 'DateService', 'ProfessorService', 'SoftwareService', 'PeriodService', 'LabService', 'GroupService', '$location'];
 
-  function AppointmentCreateController($scope, ReservationService, MessageService, DateService, ProfessorService, SoftwareService, PeriodService, LabService, GroupService, $location) {
+  function ReservationCreateController($scope, ReservationService, MessageService, DateService, ProfessorService, SoftwareService, PeriodService, LabService, GroupService, $location) {
     var vm = this;
     vm.professor = {};
     vm.start_hours = [];

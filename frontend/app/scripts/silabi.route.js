@@ -236,6 +236,11 @@
           controller: 'ReservationCreateController',
           controllerAs: 'ReservationCreate'
         })
+        .when('/Operador/Reservaciones/:id', {
+          templateUrl: 'views/operator/reservations/reservation.detail.html',
+          controller: 'ReservationDetailController',
+          controllerAs: 'ReservationDetail'
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })
