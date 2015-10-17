@@ -135,3 +135,22 @@ input[type=number] {
     margin-bottom: 15px;
   }
 }
+
+.ui-select-placeholder, .ui-select-match-text {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 40px;
+  position: absolute;
+}
+
+.ui-select-allow-clear {
+  position: initial;
+}
+
+.ui-select-toggle > .btn.btn-link {
+  margin-right: 10px;
+  top: 6px;
+  position: absolute;
+  right: 10px;
+}
