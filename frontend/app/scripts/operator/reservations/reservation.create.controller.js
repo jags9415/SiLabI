@@ -51,10 +51,10 @@
     }
 
     function searchProfessor() {
-      clearFields();
       ProfessorService.GetOne(vm.professor_username, vm.professor_request)
       .then(setProfessor)
       .catch(handleError);
+      clearFields();
     }
 
     function getLaboratories () {
