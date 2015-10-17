@@ -179,8 +179,8 @@ GRANT EXECUTE ON [dbo].[sp_DeleteAdministrator] TO [private_data_writer]
 
 -- Create appointment_data_reader role.
 CREATE ROLE [appointment_data_reader] AUTHORIZATION [dbo]
-EXEC sp_addrolemember 'appointment_data_reader', 'Administrador'
-EXEC sp_addrolemember 'appointment_data_reader', 'Operador'
+EXEC sp_addrolemember 'appointment_data_reader', 'Administrator'
+EXEC sp_addrolemember 'appointment_data_reader', 'Operator'
 EXEC sp_addrolemember 'appointment_data_reader', 'Student'
 GRANT SELECT ON [dbo].[vw_Appointments] TO [appointment_data_reader]
 GRANT EXECUTE ON [dbo].[sp_GetAppointment] TO [appointment_data_reader]
@@ -189,8 +189,8 @@ GRANT EXECUTE ON [dbo].[sp_GetAppointmentsCount] TO [appointment_data_reader]
 
 -- Create appointment_data_writer role.
 CREATE ROLE [appointment_data_writer] AUTHORIZATION [dbo]
-EXEC sp_addrolemember 'appointment_data_writer', 'Administrador'
-EXEC sp_addrolemember 'appointment_data_writer', 'Operador'
+EXEC sp_addrolemember 'appointment_data_writer', 'Administrator'
+EXEC sp_addrolemember 'appointment_data_writer', 'Operator'
 EXEC sp_addrolemember 'appointment_data_writer', 'Student'
 GRANT INSERT, UPDATE ON [dbo].[Appointments] TO [appointment_data_writer]
 GRANT SELECT ON [dbo].[StudentsByGroup] TO [appointment_data_writer]
@@ -203,8 +203,8 @@ GRANT EXECUTE ON [dbo].[sp_DeleteAppointment] TO [appointment_data_writer]
 
 -- Create reservation_data_reader role.
 CREATE ROLE [reservation_data_reader] AUTHORIZATION [dbo]
-EXEC sp_addrolemember 'reservation_data_reader', 'Administrador'
-EXEC sp_addrolemember 'reservation_data_reader', 'Operador'
+EXEC sp_addrolemember 'reservation_data_reader', 'Administrator'
+EXEC sp_addrolemember 'reservation_data_reader', 'Operator'
 EXEC sp_addrolemember 'reservation_data_reader', 'Professor'
 GRANT SELECT ON [dbo].[vw_Reservations] TO [reservation_data_reader]
 GRANT EXECUTE ON [dbo].[sp_GetReservation] TO [reservation_data_reader]
@@ -213,8 +213,8 @@ GRANT EXECUTE ON [dbo].[sp_GetReservationsCount] TO [reservation_data_reader]
 
 -- Create reservation_data_writer role.
 CREATE ROLE [reservation_data_writer] AUTHORIZATION [dbo]
-EXEC sp_addrolemember 'reservation_data_writer', 'Administrador'
-EXEC sp_addrolemember 'reservation_data_writer', 'Operador'
+EXEC sp_addrolemember 'reservation_data_writer', 'Administrator'
+EXEC sp_addrolemember 'reservation_data_writer', 'Operator'
 EXEC sp_addrolemember 'reservation_data_writer', 'Professor'
 GRANT INSERT, UPDATE ON [dbo].[Reservations] TO [reservation_data_writer]
 GRANT EXECUTE ON [dbo].[sp_CreateReservation] TO [reservation_data_writer]
