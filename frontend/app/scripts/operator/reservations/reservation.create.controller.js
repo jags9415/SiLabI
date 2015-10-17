@@ -15,6 +15,9 @@
     vm.end_hours_sliced = [];
     vm.groups = [];
     vm.selected_group = null;
+    vm.laboratories = [];
+    vm.software_list = [];
+    vm.selected_software = null;
 
     vm.professor_request = {
       fields: "id,username,full_name"
@@ -24,6 +27,11 @@
       fields: "id,number,course.name"
     };
 
+    vm.software_request = {
+      fields: "id,code,name",
+      limit: 10
+    };
+
     vm.selected_date;
     vm.datepicker_open = false;
     vm.min_date = new Date();
@@ -31,11 +39,14 @@
     vm.openDatePicker = openDatePicker;
     vm.loadEndHours = loadEndHours;
     vm.searchProfessor = searchProfessor;
+    vm.searchSoftware = searchSoftware;
+    vm.setSoftware = setSoftware;
+    vm.create = createReservation;
 
     activate();
 
     function activate() {
-      //getLaboratories();
+      getLaboratories();
       getHours();
     }
 
@@ -111,8 +122,30 @@
       .catch(handleError);
     }
 
+    function searchSoftware (input) {
+      vm.software_request.query = {};
+
+      vm.software_request.query.code = {
+        operation: "like",
+        value: '*' + input + '*'
+      }
+
+      return SoftwareService.GetAll(vm.software_request)
+        .then(function(data) {
+          return data.results;
+        });
+    }
+
     function setGroups (data) {
       vm.groups = data.results;
+    }
+
+    function setLaboratories (data) {
+      vm.laboratories = data.results;
+    }
+
+    function setSoftware (data) {
+      vm.selected_software = data;
     }
 
     function openDatePicker($event){
@@ -124,16 +157,52 @@
       vm.datepicker_open = true;
     }
 
+    function createReservation () {
+      var group_id = null;
+      var software_code = null;
+      if(vm.selected_group)
+      {
+        group_id = vm.selected_group.id;
+      }
+      if(vm.selected_software)
+      {
+        software_code = vm.selected_software.code;
+      }
+      var start_time = vm.selected_date.getFullYear()+"-"+ (vm.selected_date.getMonth() + 1)+ "-" + vm.selected_date.getUTCDate() + "T" + vm.selected_start_time.value;
+      var end_time = vm.selected_date.getFullYear()+"-"+ (vm.selected_date.getMonth() + 1)+ "-" + vm.selected_date.getUTCDate() + "T" + vm.selected_end_time.value;
+      var res = {
+        "professor": vm.professor.username,
+        "laboratory": vm.selected_laboratory.name,
+        "software": software_code,
+        "start_time": start_time,
+        "end_time": end_time,
+        "group": group_id
+      };
+
+      ReservationService.Create(res)
+      .then(handleSuccess)
+      .catch(handleError);
+    }
+
 
     function clearFields() {
       $scope.$broadcast('show-errors-reset');
 
       delete vm.professor;
+      delete vm.professor_username;
       delete vm.selected_date;
+      delete vm.groups;
+      delete vm.selected_start_time;
+      delete vm.selected_end_time;
+      delete vm.software_list;
+      delete vm.selected_date;
+      delete vm.selected_software;
+      delete vm.selected_laboratory;
+      delete vm.selected_group;
     }
 
     function handleSuccess (data) {
-      MessageService.success("Cita creada.");
+      MessageService.success("Reservación creada.");
       clearFields();
       delete vm.student_username;
     }

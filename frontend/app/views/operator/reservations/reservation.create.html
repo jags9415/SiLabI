@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="col-md-2 col-xs-2">
-        <button type="submit" class="btn btn-default btn-block" ng-click="ReservationCreate.searchProfessor()">
+        <button type="button" class="btn btn-default btn-block" ng-click="ReservationCreate.searchProfessor()">
           <i class="glyphicon glyphicon-search"></i>
           <span class="hidden-xs">Buscar</span>
         </button>
@@ -104,10 +104,37 @@
           </div>
         </div>
       </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="lab">* Laboratorio</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-home"></i></span>
+            <ui-select id="lab" ng-model="ReservationCreate.selected_laboratory" ng-disabled="!ReservationCreate.professor.username" required>
+              <ui-select-match placeholder="{{$select.selected.name}}">
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="lab in ReservationCreate.laboratories | filter: $select.search">
+                <span ng-bind-html="lab.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="software">Software</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list-alt"></i></span>
+            <input class="form-control" placeholder="Buscar Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in ReservationCreate.searchSoftware($viewValue)" typeahead-on-select="ReservationCreate.setSoftware($item)" typeahead-editable="false" ng-model="ReservationCreate.selected_software" ng-disabled="!ReservationCreate.professor.username" required>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-lg btn-success" ng-click="ReservationCreate.create()" ng-disabled="createReservForm.$invalid" required>
+        <button type="submit" class="btn btn-lg btn-success" ng-click="ReservationCreate.create()" ng-disabled="createReservForm.$invalid">
           <i class="glyphicon glyphicon-plus"></i> Crear
         </button>
       </div>

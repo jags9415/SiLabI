@@ -35,7 +35,7 @@ ReservationService.$inject = ['RequestService', '$localStorage'];
 
     function Create(reservation) {
       var request = {};
-      request.appointment = reservation;
+      request.reservation = reservation;
       request.access_token = $localStorage['access_token'];
       return RequestService.post('/reservations', request);
     }
