@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('StudentsAddController', StudentsAddController);
 
-    StudentsAddController.$inject = ['$scope', 'StudentService', 'MessageService', 'GenderService', 'CryptoJS'];
+    StudentsAddController.$inject = ['$scope', 'StudentService', 'MessageService', 'GenderService', 'CryptoJS', 'lodash'];
 
-    function StudentsAddController($scope, StudentService, MessageService, GenderService, CryptoJS) {
+    function StudentsAddController($scope, StudentService, MessageService, GenderService, CryptoJS, _) {
         var vm = this;
         vm.student = {};
         vm.create = create;
@@ -36,13 +36,13 @@
         }
 
         function handleCreateSuccess(result) {
-          MessageService.success("Estudiante creado.");
+          MessageService.success('Estudiante creado.');
 
           // Reset form data.
           vm.student = {};
           vm.student.gender = vm.genders[0];
           delete vm.password;
-          delete vm.password_confirm;
+          delete vm.passwordConfirm;
 
           // Reset form validations.
           $scope.$broadcast('show-errors-reset');

@@ -203,7 +203,7 @@
           controller: 'StudentAppCreateController',
           controllerAs: 'AppointmentCreate'
         })
-        .when('/Estudiante/Citas/:app_id', {
+        .when('/Estudiante/Citas/:appointmentId', {
           templateUrl: 'views/student/appointments/appointment.detail.html',
           controller: 'StudentAppDetailController',
           controllerAs: 'AppointmentDetail'
@@ -259,18 +259,18 @@
       }
     }
 
-    routeChangeListener.$inject = ['$rootScope', '$location', '$localStorage', 'AuthenticationService'];
+    routeChangeListener.$inject = ['$rootScope', '$location', '$localStorage', 'AuthenticationService', 'lodash'];
 
-    function routeChangeListener($rootScope, $location, $localStorage, AuthenticationService) {
-      $rootScope.$on("$routeChangeStart", function (event, next, current) {
+    function routeChangeListener($rootScope, $location, $localStorage, AuthenticationService, _) {
+      $rootScope.$on('$routeChangeStart', function (event, next, current) {
         var url = next.templateUrl;
-        if (!url) return;
+        if (!url) { return; }
 
         // User is authenticated.
         if (AuthenticationService.isAuthenticated()) {
           var data = AuthenticationService.getUserData();
           // User is trying to access the login view or a restricted view.
-          if (url === "views/public/login.html" || !hasAccesssToView(url, data.type)) {
+          if (url === 'views/public/login.html' || !hasAccesssToView(_, url, data.type)) {
             if (current) {
               event.preventDefault();
             }
@@ -280,30 +280,30 @@
           }
         }
         // User is not authenticated. Only have access to public views.
-        else if (!_.startsWith(url, "views/public")) {
+        else if (!_.startsWith(url, 'views/public')) {
           redirectToLogin($location, $localStorage);
         }
       });
     }
 
-    function hasAccesssToView(view, type) {
-      if (_.startsWith(view, "views/public")) {
+    function hasAccesssToView(_, view, type) {
+      if (_.startsWith(view, 'views/public')) {
         return true;
       }
-      else if (_.startsWith(view, "views/shared")) {
-        return type === "Administrador" || type === "Operador" || type === "Docente" || type === "Estudiante";
+      else if (_.startsWith(view, 'views/shared')) {
+        return type === 'Administrador' || type === 'Operador' || type === 'Docente' || type === 'Estudiante';
       }
-      else if (_.startsWith(view, "views/administrator")) {
-        return type === "Administrador";
+      else if (_.startsWith(view, 'views/administrator')) {
+        return type === 'Administrador';
       }
-      else if (_.startsWith(view, "views/operator")) {
-        return type === "Operador" || type === "Administrador";
+      else if (_.startsWith(view, 'views/operator')) {
+        return type === 'Operador' || type === 'Administrador';
       }
-      else if (_.startsWith(view, "views/professor")) {
-        return type === "Docente";
+      else if (_.startsWith(view, 'views/professor')) {
+        return type === 'Docente';
       }
-      else if (_.startsWith(view, "views/student")) {
-        return type === "Estudiante";
+      else if (_.startsWith(view, 'views/student')) {
+        return type === 'Estudiante';
       }
       else {
         return false;

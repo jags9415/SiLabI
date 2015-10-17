@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('ProfessorsDetailController', ProfessorsDetailController);
 
-    ProfessorsDetailController.$inject = ['$scope', '$routeParams', '$location', 'ProfessorService', 'GenderService', 'MessageService'];
+    ProfessorsDetailController.$inject = ['$scope', '$routeParams', '$location', 'ProfessorService', 'GenderService', 'MessageService', 'CryptoJS', 'lodash'];
 
-    function ProfessorsDetailController($scope, $routeParams, $location, ProfessorService, GenderService, MessageService) {
+    function ProfessorsDetailController($scope, $routeParams, $location, ProfessorService, GenderService, MessageService, CryptoJS, _) {
         var vm = this;
         vm.username = $routeParams.username;
         vm.update = updateProfessor;
@@ -39,11 +39,11 @@
 
         function deleteProfessor() {
           if (!_.isEmpty(vm.professor)) {
-            MessageService.confirm("¿Desea realmente eliminar este docente?")
+            MessageService.confirm('¿Desea realmente eliminar este docente?')
             .then(function() {
               ProfessorService.Delete(vm.professor.id)
               .then(redirectToProfessors)
-              .catch(handleError)
+              .catch(handleError);
             });
           }
         }
@@ -57,12 +57,12 @@
         }
 
         function redirectToProfessors() {
-          $location.path("/Operador/Docentes");
+          $location.path('/Operador/Docentes');
         }
 
         function handleUpdate(professor) {
           setProfessor(professor);
-          MessageService.success("Docente actualizado.");
+          MessageService.success('Docente actualizado.');
           $scope.$broadcast('show-errors-reset');
         }
 

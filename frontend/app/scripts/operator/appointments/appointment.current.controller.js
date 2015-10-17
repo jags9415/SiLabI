@@ -14,9 +14,9 @@
     vm.today = new Date();
     vm.appointments = [];
     vm.hours = [];
-    vm.laboratories = ["Laboratorio A", "Laboratorio B"];
-    vm.selected_laboratory = vm.laboratories[1];
-    vm.selected_date = vm.today;
+    vm.laboratories = ['Laboratorio A', 'Laboratorio B'];
+    vm.selectedLaboratory = vm.laboratories[1];
+    vm.selectedDate = vm.today;
     vm.mark = mark;
     vm.isLoaded = isLoaded;
     vm.isEmpty = isEmpty;
@@ -26,8 +26,8 @@
     vm.loadHours = loadHours;
 
     vm.request = {
-      fields : "id,state,attendance,student.username,student.full_name,software.name",
-      sort: [{field: "student.name"}],
+      fields : 'id,state,attendance,student.username,student.full_name,software.name',
+      sort: [{field: 'student.name'}],
       query: {}
     };
 
@@ -45,8 +45,8 @@
       var minHour = 8;
       var maxHour = 17;
 
-      if (moment(vm.selected_date).isSame(vm.today, 'day') && date.getHours() < maxHour) {
-        var maxHour = Math.max(minHour, date.getHours());
+      if (moment(vm.selectedDate).isSame(vm.today, 'day') && date.getHours() < maxHour) {
+        maxHour = Math.max(minHour, date.getHours());
       }
 
       for (var i = minHour; i <= maxHour; i++) {
@@ -54,13 +54,13 @@
         date.setHours(i, 0, 0, 0);
         vm.hours.push(date);
 
-        if (i == (new Date().getHours())) {
-          vm.selected_hour = vm.hours[vm.hours.length - 1];
+        if (i === (new Date().getHours())) {
+          vm.selectedHour = vm.hours[vm.hours.length - 1];
         }
       }
 
-      if (!vm.selected_hour) {
-        vm.selected_hour = vm.hours[vm.hours.length - 1];
+      if (!vm.selectedHour) {
+        vm.selectedHour = vm.hours[vm.hours.length - 1];
       }
 
       loadAppointments();
@@ -69,20 +69,20 @@
     function loadAppointments() {
       vm.request.query = {};
 
-      vm.request.query["state"] = {
+      vm.request.query['state'] = {
         operation: 'ne',
         value: 'Cancelada'
-      }
+      };
 
-      vm.request.query["laboratory.name"] = {
+      vm.request.query['laboratory.name'] = {
         operation: 'eq',
-        value: vm.selected_laboratory
-      }
+        value: vm.selectedLaboratory
+      };
 
-      vm.request.query["date"] = {
+      vm.request.query['date'] = {
         operation: 'eq',
         value: getSelectedDateTime().toISOString()
-      }
+      };
 
       vm.promise = AppointmentService.GetAll(vm.request, false)
       .then(setAppointments)
@@ -91,9 +91,9 @@
 
     function mark(id, attendance) {
       var appointment = {
-        "attendance": attendance,
-        "state": "Finalizada"
-      }
+        'attendance': attendance,
+        'state': 'Finalizada'
+      };
 
       AppointmentService.Update(id, appointment)
       .then(updateAppointment)
@@ -101,19 +101,19 @@
     }
 
     function getSelectedDateTime() {
-      if (vm.selected_date == null) {
-        vm.selected_date = new Date();
+      if (vm.selectedDate == null) {
+        vm.selectedDate = new Date();
       }
 
       var date = new Date();
 
-      date.setDate(vm.selected_date.getDate());
-      date.setMonth(vm.selected_date.getMonth());
-      date.setFullYear(vm.selected_date.getFullYear());
-      date.setHours(vm.selected_hour.getHours());
-      date.setMinutes(vm.selected_hour.getMinutes());
-      date.setSeconds(vm.selected_hour.getSeconds());
-      date.setMilliseconds(vm.selected_hour.getMilliseconds());
+      date.setDate(vm.selectedDate.getDate());
+      date.setMonth(vm.selectedDate.getMonth());
+      date.setFullYear(vm.selectedDate.getFullYear());
+      date.setHours(vm.selectedHour.getHours());
+      date.setMinutes(vm.selectedHour.getMinutes());
+      date.setSeconds(vm.selectedHour.getSeconds());
+      date.setMilliseconds(vm.selectedHour.getMilliseconds());
 
       return date;
     }
@@ -124,14 +124,14 @@
         $event.stopPropagation();
       }
       vm.opened = true;
-    };
+    }
 
     function isDisabledDate(date, mode) {
       return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-    };
+    }
 
     function isEmpty() {
-      return vm.appointments.length == 0;
+      return vm.appointments.length === 0;
     }
 
     function isLoaded() {
@@ -145,7 +145,7 @@
 
     function updateAppointment(appointment) {
       for (var i = 0; i < vm.appointments.length; i++) {
-        if (vm.appointments[i].id == appointment.id) {
+        if (vm.appointments[i].id === appointment.id) {
           vm.appointments[i] = appointment;
           return;
         }

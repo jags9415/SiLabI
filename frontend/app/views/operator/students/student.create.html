@@ -109,7 +109,7 @@
             <label for="password_confirmation" class="control-label"><small>*</small> Confirmar Contraseña</label>
             <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
-              <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmar Contraseña" ng-model="StudentsAdd.password_confirm" ng-pattern="{{StudentsAdd.password}}" required>
+              <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirmar Contraseña" ng-model="StudentsAdd.passwordConfirm" ng-pattern="{{StudentsAdd.password}}" required>
             </div>
             <p class="help-block" ng-if="createStudentForm.password_confirmation.$error.pattern">Las contraseñas no coinciden.</p>
             <p class="help-block" ng-if="createStudentForm.password_confirmation.$error.required">Confirmación de contraseña requerida.</p>

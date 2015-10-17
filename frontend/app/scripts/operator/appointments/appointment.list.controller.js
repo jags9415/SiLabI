@@ -5,14 +5,14 @@
         .module('silabi')
         .controller('AppointmentListController', AppointmentListController);
 
-    AppointmentListController.$inject = ['$scope', 'AppointmentService', 'MessageService', 'StateService', '$location'];
+    AppointmentListController.$inject = ['$scope', '$location', 'AppointmentService', 'MessageService', 'StateService', 'moment'];
 
-  function AppointmentListController($scope, AppointmentService, MessageService, StateService, $location) {
+  function AppointmentListController($scope, $location, AppointmentService, MessageService, StateService, moment) {
     var vm = this;
     vm.advanceSearch = false;
-    vm.datepicker_open = false;
+    vm.datePickerOpen = false;
     vm.loaded = false;
-    vm.laboratories = ["Laboratorio A", "Laboratorio B"];
+    vm.laboratories = ['Laboratorio A', 'Laboratorio B'];
     vm.appointments = [];
     vm.searched = {
       laboratory : {},
@@ -20,11 +20,11 @@
     };
     vm.limit = 20;
     vm.request = {
-      fields : "id,date,state,student.username,laboratory.name,software.code",
+      fields : 'id,date,state,student.username,laboratory.name,software.code',
       sort: [
-        {field: "date", type: "ASC"},
-        {field: "laboratory.name", type: "ASC"},
-        {field: "software.code", type: "ASC"},
+        {field: 'date', type: 'ASC'},
+        {field: 'laboratory.name', type: 'ASC'},
+        {field: 'software.code', type: 'ASC'},
       ]
     };
     vm.states = [];
@@ -76,30 +76,30 @@
 
       if (vm.searched.student.username) {
         vm.request.query['student.username'] = {
-          operation: "like",
+          operation: 'like',
           value: '*' + vm.searched.student.username.replace(' ', '*') + '*'
-        }
+        };
       }
 
       if (vm.searched.laboratory.name) {
         vm.request.query['laboratory.name'] = {
-          operation: "like",
+          operation: 'like',
           value: '*' + vm.searched.laboratory.name.replace(' ', '*') + '*'
-        }
+        };
       }
 
       if (vm.searched.state) {
         vm.request.query['state'] = {
-          operation: "like",
+          operation: 'like',
           value: vm.searched.state.value
-        }
+        };
       }
 
       if (vm.searched.software) {
         vm.request.query['software.code'] = {
-          operation: "like",
+          operation: 'like',
           value: '*' + vm.searched.software.replace(' ', '*') + '*'
-        }
+        };
       }
 
       if (vm.searched.date) {
@@ -107,13 +107,13 @@
         var start = moment(date);
         var end = moment(date).add(1, 'days');
 
-        vm.request.query["date"] = [
+        vm.request.query['date'] = [
           {
-          	operation: "ge",
+          	operation: 'ge',
           	value: start.format()
           },
           {
-          	operation: "lt",
+          	operation: 'lt',
           	value: end.format()
           }
         ];
@@ -124,8 +124,9 @@
 
     function toggleAdvanceSearch() {
       vm.advanceSearch = !vm.advanceSearch;
-      delete vm.searched.code;
-      delete vm.searched.name;
+      delete vm.searched.laboratory.name;
+      delete vm.searched.software;
+      delete vm.searched.date;
       delete vm.searched.state;
     }
 
@@ -134,11 +135,11 @@
         $event.preventDefault();
         $event.stopPropagation();
       }
-      vm.datepicker_open = true;
+      vm.datePickerOpen = true;
     }
 
     function isEmpty() {
-      return vm.appointments.length == 0;
+      return vm.appointments.length === 0;
     }
 
     function isLoaded() {
@@ -147,8 +148,8 @@
 
     function setAppointments(data) {
       vm.appointments = data.results;
-      vm.page = data.current_page;
-      vm.totalPages = data.total_pages;
+      vm.page = data['current_page'];
+      vm.totalPages = data['total_pages'];
       vm.totalItems = vm.limit * vm.totalPages;
       vm.loaded = true;
     }
@@ -158,7 +159,7 @@
     }
 
     function deleteAppointment(id) {
-      MessageService.confirm("¿Desea realmente eliminar esta cita?")
+      MessageService.confirm('¿Desea realmente eliminar esta cita?')
       .then(function() {
         AppointmentService.Delete(id)
         .then(loadPage)

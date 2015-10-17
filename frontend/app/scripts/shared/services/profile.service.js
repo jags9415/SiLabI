@@ -13,14 +13,14 @@
 
         function GetProfile(cached) {
           var request = {
-            access_token: $localStorage['access_token']
+            'access_token': $localStorage['access_token']
           };
           return RequestService.get('/me', request, cached);
         }
 
         function UpdateProfile(profile) {
           var request = {
-            access_token: $localStorage['access_token'],
+            'access_token': $localStorage['access_token'],
             user: profile
           };
           return RequestService.put('/me', request);

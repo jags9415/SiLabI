@@ -1,18 +1,18 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('silabi')
-        .controller('StudentAppListController', AppointmentListController);
+  angular
+      .module('silabi')
+      .controller('StudentAppListController', AppointmentListController);
 
-    AppointmentListController.$inject = ['StudentAppService', '$localStorage','MessageService', 'StateService', '$location'];
+  AppointmentListController.$inject = ['$location', '$localStorage', 'StudentAppService', 'MessageService', 'StateService', 'moment'];
 
-  function AppointmentListController(StudentAppService, $localStorage, MessageService, StateService, $location) {
+  function AppointmentListController($location, $localStorage, StudentAppService, MessageService, StateService, moment) {
     var vm = this;
     vm.advanceSearch = false;
-    vm.datepicker_open = false;
+    vm.datePickerOpen = false;
     vm.loaded = false;
-    vm.laboratories = ["Laboratorio A", "Laboratorio B"];
+    vm.laboratories = ['Laboratorio A', 'Laboratorio B'];
     vm.appointments = [];
     vm.searched = {
       laboratory : {},
@@ -20,16 +20,16 @@
     };
     vm.limit = 20;
     vm.request = {
-      fields : "id,date,state,laboratory.name,software.code",
+      fields : 'id,date,state,laboratory.name,software.code',
       sort: [
-        {field: "date", type: "ASC"},
-        {field: "laboratory.name", type: "ASC"},
-        {field: "software.code", type: "ASC"},
+        {field: 'date', type: 'ASC'},
+        {field: 'laboratory.name', type: 'ASC'},
+        {field: 'software.code', type: 'ASC'},
       ]
     };
     vm.states = [];
     vm.$storage = $localStorage;
-    vm.student_id = vm.$storage['username'];
+    vm.username = vm.$storage['username'];
 
     vm.open = openAppointment;
     vm.delete = deleteAppointment;
@@ -64,7 +64,7 @@
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      vm.promise = StudentAppService.GetAll(vm.student_id, vm.request)
+      vm.promise = StudentAppService.GetAll(vm.username, vm.request)
       .then(setAppointments)
       .catch(handleError);
     }
@@ -78,23 +78,23 @@
 
       if (vm.searched.software) {
         vm.request.query['software.code'] = {
-          operation: "like",
+          operation: 'like',
           value: '*' + vm.searched.software.replace(' ', '*') + '*'
-        }
+        };
       }
 
       if (vm.searched.laboratory.name) {
         vm.request.query['laboratory.name'] = {
-          operation: "like",
+          operation: 'like',
           value: '*' + vm.searched.laboratory.name.replace(' ', '*') + '*'
-        }
+        };
       }
 
       if (vm.searched.state) {
         vm.request.query.state = {
-          operation: "like",
+          operation: 'like',
           value: vm.searched.state.value
-        }
+        };
       }
 
       if (vm.searched.date) {
@@ -102,13 +102,13 @@
         var start = moment(date);
         var end = moment(date).add(1, 'days');
 
-        vm.request.query["date"] = [
+        vm.request.query['date'] = [
           {
-          	operation: "ge",
+          	operation: 'ge',
           	value: start.format()
           },
           {
-          	operation: "lt",
+          	operation: 'lt',
           	value: end.format()
           }
         ];
@@ -130,11 +130,11 @@
         $event.preventDefault();
         $event.stopPropagation();
       }
-      vm.datepicker_open = true;
+      vm.datePickerOpen = true;
     }
 
     function isEmpty() {
-      return vm.appointments.length == 0;
+      return vm.appointments.length === 0;
     }
 
     function isLoaded() {
@@ -143,8 +143,8 @@
 
     function setAppointments(data) {
       vm.appointments = data.results;
-      vm.page = data.current_page;
-      vm.totalPages = data.total_pages;
+      vm.page = data['current_page'];
+      vm.totalPages = data['total_pages'];
       vm.totalItems = vm.limit * vm.totalPages;
       vm.loaded = true;
     }
@@ -154,9 +154,9 @@
     }
 
     function deleteAppointment(appID) {
-      MessageService.confirm("¿Desea realmente eliminar esta cita?")
+      MessageService.confirm('¿Desea realmente eliminar esta cita?')
       .then(function() {
-        StudentAppService.Delete(vm.student_id, appID)
+        StudentAppService.Delete(vm.username, appID)
         .then(loadPage)
         .catch(handleError);
       });

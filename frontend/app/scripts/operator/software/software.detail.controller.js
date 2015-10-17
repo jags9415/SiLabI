@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('SoftwareDetailController', SoftwareDetailController);
 
-  SoftwareDetailController.$inject = ['$routeParams', '$location', '$scope', 'SoftwareService', 'MessageService'];
+  SoftwareDetailController.$inject = ['$routeParams', '$location', '$scope', 'SoftwareService', 'MessageService', 'lodash'];
 
-  function SoftwareDetailController($routeParams, $location, $scope, SoftwareService, MessageService) {
+  function SoftwareDetailController($routeParams, $location, $scope, SoftwareService, MessageService, _) {
     var vm = this;
     vm.code = $routeParams.code;
     vm.update = updateSoftware;
@@ -31,7 +31,7 @@
 
     function deleteSoftware() {
       if (!_.isEmpty(vm.software)) {
-        MessageService.confirm("¿Desea realmente eliminar este software?")
+        MessageService.confirm('¿Desea realmente eliminar este software?')
         .then(function() {
           SoftwareService.Delete(vm.software.id)
           .then(redirectToSoftware)
@@ -51,7 +51,7 @@
 
     function handleUpdateSuccess(software) {
       setSoftware(software);
-      MessageService.success("Software actualizado.");
+      MessageService.success('Software actualizado.');
       $scope.$broadcast('show-errors-reset');
     }
 

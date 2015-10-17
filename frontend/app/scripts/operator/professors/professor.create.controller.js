@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('ProfessorsCreateController', ProfessorsCreateController);
 
-    ProfessorsCreateController.$inject = ['$scope', 'ProfessorService', 'GenderService', 'MessageService', 'CryptoJS'];
+    ProfessorsCreateController.$inject = ['$scope', 'ProfessorService', 'GenderService', 'MessageService', 'CryptoJS', 'lodash'];
 
-    function ProfessorsCreateController($scope, ProfessorService, GenderService, MessageService, CryptoJS) {
+    function ProfessorsCreateController($scope, ProfessorService, GenderService, MessageService, CryptoJS, _) {
       var vm = this;
       vm.professor = {};
 	    vm.create = createProfessor;
@@ -22,9 +22,9 @@
       }
 
       function generateUserName() {
-          if (vm.professor.name && vm.professor.last_name_1) {
-              vm.professor.username = (vm.professor.name.substring(0, 1) + vm.professor.last_name_1).toLowerCase();
-          }
+        if (vm.professor['name'] && vm.professor['last_name_1']) {
+          vm.professor.username = (vm.professor['name'].substring(0, 1) + vm.professor['last_name_1']).toLowerCase();
+        }
       }
 
     	function createProfessor() {
@@ -38,13 +38,13 @@
     	}
 
       function handleCreateSuccess(data) {
-        MessageService.success("Docente creado.");
+        MessageService.success('Docente creado.');
 
         // Reset form data.
         vm.professor = {};
         vm.professor.gender = vm.genders[0];
         delete vm.password;
-        delete vm.password_confirm;
+        delete vm.passwordConfirm;
 
         // Reset form validations.
         $scope.$broadcast('show-errors-reset');

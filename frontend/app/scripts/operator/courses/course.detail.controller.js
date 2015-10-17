@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('CourseDetailController', CourseDetail);
 
-    CourseDetail.$inject = ['$scope', '$routeParams', '$location', 'CourseService', 'MessageService'];
+    CourseDetail.$inject = ['$scope', '$routeParams', '$location', 'CourseService', 'MessageService', 'lodash'];
 
-    function CourseDetail($scope, $routeParams, $location, CourseService, MessageService) {
+    function CourseDetail($scope, $routeParams, $location, CourseService, MessageService, _) {
       var vm = this;
       vm.course = {};
       vm.id = $routeParams.id;
@@ -32,7 +32,7 @@
 
       function deleteCourse() {
         if (!_.isEmpty(vm.course)) {
-          MessageService.confirm("¿Desea realmente eliminar este curso?")
+          MessageService.confirm('¿Desea realmente eliminar este curso?')
           .then(function () {
             CourseService.Delete(vm.course.id)
             .then(redirectToCourses)
@@ -52,7 +52,7 @@
 
       function handleUpdate(course) {
         setCourse(course);
-        MessageService.success("Curso actualizado.");
+        MessageService.success('Curso actualizado.');
         $scope.$broadcast('show-errors-reset');
       }
 

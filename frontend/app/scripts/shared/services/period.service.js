@@ -84,28 +84,28 @@
       switch(periodType)
       {
         case 'Semestre':
-          res = 
+          res =
           {
             value: getSemester(),
             year: currentYear
           };
           break;
         case 'Cuatrimestre':
-          res = 
+          res =
           {
             value: getQuarter(),
             year: currentYear
           };
           break;
         case 'Trimestre':
-          res = 
+          res =
           {
             value: getTrimester(),
             year: currentYear
           };
           break;
         case 'Bimestre':
-          res = 
+          res =
           {
             value: getBimester(),
             year: currentYear
@@ -114,11 +114,11 @@
       return res;
     }
 
-    function getSemester () 
+    function getSemester ()
     {
       var month = new Date().getMonth();
       var res = 1;
-      if(month > 5) res = 2;
+      if (month > 5) { res = 2; }
       return res;
     }
 
@@ -139,7 +139,7 @@
       return res;
     }
 
-    function getTrimester() 
+    function getTrimester()
     {
       var month = new Date().getMonth();
       var res = 0;
@@ -159,7 +159,7 @@
       }
     }
 
-    function getBimester() 
+    function getBimester()
     {
       var month = new Date().getMonth();
       var res = 0;

@@ -9,8 +9,9 @@
 
     function LoginController(AuthenticationService, MessageService, $route, $location, $localStorage, jwtHelper, CryptoJS) {
       var vm = this;
+
       vm.logIn = logIn;
-      vm.logOut = logOut
+      vm.logOut = logOut;
       vm.isAuthenticated = isAuthenticated;
       vm.$storage = $localStorage;
       vm.loading = false;
@@ -34,11 +35,11 @@
       }
 
       function handleSuccess(result) {
-        vm.$storage['username'] = result.user.username;
-        vm.$storage['user_id'] = result.user.id.toString();
-        vm.$storage['user_name'] = result.user.full_name;
-        vm.$storage['user_type'] = result.user.type;
-        vm.$storage['access_token'] = result.access_token;
+        vm.$storage['username'] = result.user['username'];
+        vm.$storage['user_id'] = result.user['id'].toString();
+        vm.$storage['user_name'] = result.user['full_name'];
+        vm.$storage['user_type'] = result.user['type'];
+        vm.$storage['access_token'] = result['access_token'];
       }
 
       function handleError(error) {

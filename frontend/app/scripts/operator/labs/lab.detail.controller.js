@@ -6,10 +6,11 @@
       .module('silabi')
       .controller('LabDetailController', LabDetail);
 
-    LabDetail.$inject = ['$scope', '$routeParams', '$location', 'LabService', 'SoftwareService', 'MessageService'];
+    LabDetail.$inject = ['$scope', '$routeParams', '$location', 'LabService', 'SoftwareService', 'MessageService', 'lodash'];
 
-    function LabDetail($scope, $routeParams, $location, LabService, SoftwareService, MessageService) {
+    function LabDetail($scope, $routeParams, $location, LabService, SoftwareService, MessageService, _) {
       var vm = this;
+
       vm.lab = {};
       vm.id = $routeParams.id;
       vm.software = [];
@@ -25,8 +26,8 @@
       vm.sliceSoftware = sliceSoftware;
 
       vm.softwareRequest = {
-        fields: "id,code,name"
-      }
+        fields: 'id,code,name'
+      };
 
       activate();
 
@@ -48,8 +49,8 @@
             vm.lab.software = getSoftwareCodes();
           }
 
-          vm.lab.appointment_priority = vm.appointment_priority.value;
-          vm.lab.reservation_priority = vm.reservation_priority.value;
+          vm.lab['appointment_priority'] = vm['appointment_priority'].value;
+          vm.lab['reservation_priority'] = vm['reservation_priority'].value;
 
           LabService.Update(vm.lab.id, vm.lab)
           .then(updateLaboratory)
@@ -59,7 +60,7 @@
 
       function deleteLab() {
         if (!_.isEmpty(vm.lab)) {
-          MessageService.confirm("¿Desea realmente eliminar esta Sala de Laboratorio?")
+          MessageService.confirm('¿Desea realmente eliminar esta Sala de Laboratorio?')
           .then(function () {
             LabService.Delete(vm.lab.id)
             .then(redirectToLabs)
@@ -71,15 +72,21 @@
 
       function setLaboratory(lab) {
         vm.lab = lab;
-        vm.appointment_priority = _.find(vm.priorities, function(p) { return p.value == lab.appointment_priority });
-        vm.reservation_priority = _.find(vm.priorities, function(p) { return p.value == lab.reservation_priority });
+
+        vm['appointment_priority'] = _.find(vm.priorities, function(p) {
+          return p.value === lab['appointment_priority'];
+        });
+
+        vm['reservation_priority'] = _.find(vm.priorities, function(p) {
+          return p.value === lab['reservation_priority'];
+        });
       }
 
       function updateLaboratory(lab) {
         setLaboratory(lab);
         $scope.$broadcast('show-errors-reset');
         vm.isSoftwareModified = false;
-        MessageService.success("Laboratorio actualizado.");
+        MessageService.success('Laboratorio actualizado.');
       }
 
       function contains(software) {
@@ -95,8 +102,8 @@
       }
 
       function searchSoftware() {
-        if (vm.software_code) {
-          SoftwareService.GetOne(vm.software_code, vm.softwareRequest)
+        if (vm.softwareCode) {
+          SoftwareService.GetOne(vm.softwareCode, vm.softwareRequest)
           .then(addSoftware)
           .catch(handleError);
         }
@@ -110,12 +117,12 @@
       function addSoftware(software) {
         if (!contains(software)) {
           vm.software.unshift(software);
-          vm.software_code = "";
+          vm.softwareCode = '';
           vm.isSoftwareModified = true;
           sliceSoftware();
         }
         else {
-          MessageService.info("El software seleccionado ya se encuentra en la lista.")
+          MessageService.info('El software seleccionado ya se encuentra en la lista.');
         }
       }
 

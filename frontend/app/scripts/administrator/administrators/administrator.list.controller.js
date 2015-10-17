@@ -7,16 +7,17 @@
         AdminListController.$inject = ['AdminService', 'MessageService', '$location'];
 
     function AdminListController(AdminService, MessageService, $location) {
-
       var vm = this;
+
       vm.loaded = false;
       vm.administrators = [];
       vm.searched = {};
       vm.limit = 20;
       vm.advanceSearch = false;
+
       vm.request = {
-        fields: "id,full_name,email,phone,username,state",
-        sort: [{field: "created_at", type: "DESC"}]
+        fields: 'id,full_name,email,phone,username,state',
+        sort: [{field: 'created_at', type: 'DESC'}]
       };
 
   	  vm.loadPage = loadPage;
@@ -67,7 +68,7 @@
         vm.promise = AdminService.GetAll(vm.request)
         .then(handleGetSuccess)
         .catch(handleError);
-    	};
+    	}
 
       function createAdministrator() {
         $location.path('/Administrador/Administradores/Agregar');
@@ -78,43 +79,43 @@
       }
 
       function deleteAdministrator(id) {
-        MessageService.confirm("¿Desea realmente eliminar este administrador?")
+        MessageService.confirm('¿Desea realmente eliminar este administrador?')
         .then(function(){
           AdminService.Delete(id)
           .then(handleDeleteSuccess)
-          .catch(handleError)
+          .catch(handleError);
         });
       }
 
       function searchAdministrators() {
         vm.request.query = {};
 
-          if (vm.searched.full_name) {
-            vm.request.query.full_name = {
-              operation: "like",
-              value: '*' + vm.searched.full_name.replace(' ', '*') + '*'
-            }
+          if (vm.searched.fullName) {
+            vm.request.query['full_name'] = {
+              operation: 'like',
+              value: '*' + vm.searched.fullName.replace(' ', '*') + '*'
+            };
           }
 
           if (vm.searched.username) {
-            vm.request.query.username = {
-              operation: "like",
+            vm.request.query['username'] = {
+              operation: 'like',
               value: '*' + vm.searched.username + '*'
-            }
+            };
           }
 
           if (vm.searched.state) {
-            vm.request.query.state = {
-              operation: "like",
+            vm.request.query['state'] = {
+              operation: 'like',
               value: vm.searched.state.value
-            }
+            };
           }
 
           if (vm.searched.email) {
-            vm.request.query.email = {
-              operation: "eq",
+            vm.request.query['email'] = {
+              operation: 'eq',
               value: vm.searched.email
-            }
+            };
           }
 
           loadPage();
@@ -132,9 +133,9 @@
         }
 
         function handleGetSuccess(data) {
-          vm.administrators = data.results;
-          vm.page = data.current_page;
-          vm.totalPages = data.total_pages;
+          vm.administrators = data['results'];
+          vm.page = data['current_page'];
+          vm.totalPages = data['total_pages'];
           vm.totalItems = vm.limit * vm.totalPages;
           vm.loaded = true;
         }
@@ -145,7 +146,7 @@
         }
 
         function isEmpty() {
-          return vm.administrators.length == 0;
+          return vm.administrators.length === 0;
         }
 
         function isLoaded() {

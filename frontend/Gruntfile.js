@@ -144,9 +144,9 @@ module.exports = function (grunt) {
     },
 
     jscs: {
-      src: "<%= yeoman.app %>/scripts/**/*.js",
+      src: '<%= yeoman.app %>/scripts/**/*.js',
       options: {
-          config: ".jscsrc",
+          config: '.jscsrc',
           esnext: true,
           verbose: true
         }
