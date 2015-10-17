@@ -5,27 +5,32 @@
       .module('silabi')
       .controller('ReservationCreateController', AppointmentCreateController);
 
-  AppointmentCreateController.$inject = ['ReservationService', 'MessageService', 'ProfessorService', 'SoftwareService', 'PeriodService', 'LabService', '$location'];
+  AppointmentCreateController.$inject = ['$scope', 'ReservationService', 'MessageService', 'DateService', 'ProfessorService', 'SoftwareService', 'PeriodService', 'LabService', '$location'];
 
-  function AppointmentCreateController(ReservationService, MessageService, ProfessorService, SoftwareService, PeriodService, LabService, $location) {
+  function AppointmentCreateController($scope, ReservationService, MessageService, DateService, ProfessorService, SoftwareService, PeriodService, LabService, $location) {
     var vm = this;
     vm.professor = {};
+    vm.start_hours = [];
+    vm.end_hours = [];
+    vm.end_hours_sliced = [];
 
     vm.professor_request = {
       fields: "id,username,full_name"
-    }
+    };
 
     vm.selected_date;
     vm.datepicker_open = false;
     vm.min_date = new Date();
 
     vm.openDatePicker = openDatePicker;
+    vm.loadEndHours = loadEndHours;
     vm.searchProfessor = searchProfessor;
 
     activate();
 
     function activate() {
       //getLaboratories();
+      getHours();
     }
 
     function searchProfessor() {
@@ -43,6 +48,31 @@
 
     function setProfessor (professor) {
       vm.professor = professor;
+    }
+
+    function loadEndHours () {
+      var index = -1;
+
+      for (var i = 0; i < vm.end_hours.length; i++)
+      {
+        if(vm.selected_start_time.value == vm.end_hours[i].value)
+        {
+          index = i;
+        }
+      }
+      if(index >= 0)
+      {
+        vm.end_hours_sliced = vm.end_hours.slice(index+1, vm.end_hours.length);
+      }
+      else
+      {
+        vm.end_hours_sliced = vm.end_hours;
+      }
+    }
+
+    function getHours() {
+      vm.start_hours = DateService.GetReservationStartHours();
+      vm.end_hours = DateService.GetReservationEndHours();
     }
 
     function openDatePicker($event){

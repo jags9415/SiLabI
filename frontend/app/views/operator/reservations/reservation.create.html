@@ -27,7 +27,7 @@
           <label for="professor">Docente</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
-            <input class="form-control" type="text" ng-model="ReservationCreate.professor.full_name" readonly>
+            <input class="form-control" type="text" ng-model="ReservationCreate.professor.full_name" required readonly>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-          <label for="name">* Fecha Inicial</label>
+          <label for="name">* Fecha</label>
           <div class="input-group">
               <input type="text" class="form-control"
                      datepicker-popup="mediumDate"
@@ -53,9 +53,43 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">* Hora Inicio</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
+            <ui-select id="date" ng-model="ReservationCreate.selected_start_time" ng-disabled="!ReservationCreate.selected_date" on-select="ReservationCreate.loadEndHours()" required>
+              <ui-select-match placeholder="{{$select.selected.hour}}">
+                {{$select.selected.hour}}
+              </ui-select-match>
+              <ui-select-choices repeat="hour in ReservationCreate.start_hours | filter: $select.search">
+                <span ng-bind-html="hour.hour | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">* Hora Final</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
+            <ui-select id="hour" ng-model="ReservationCreate.selected_end_time" on-select="ReservationCreate.changeLaboratory()" ng-disabled="!ReservationCreate.selected_start_time" required>
+              <ui-select-match placeholder="{{$select.selected.hour}}">
+                {{$select.selected.hour}}
+              </ui-select-match>
+              <ui-select-choices repeat="hour in ReservationCreate.end_hours_sliced | filter: $select.search">
+                <span ng-bind-html="hour.hour | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-lg btn-success" ng-click="ReservationCreate.create()" ng-disabled="createReservForm.$invalid">
+        <button type="submit" class="btn btn-lg btn-success" ng-click="ReservationCreate.create()" ng-disabled="createReservForm.$invalid" required>
           <i class="glyphicon glyphicon-plus"></i> Crear
         </button>
       </div>
