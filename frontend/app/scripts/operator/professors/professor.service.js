@@ -20,7 +20,7 @@
         return RequestService.get('/professors', request, cached);
       };
 
-      function GetOne(username, cached) {
+      function GetOne(username, request, cached) {
         var request = {};
         request.access_token = $localStorage['access_token'];
         return RequestService.get('/professors/' + username, request, cached);

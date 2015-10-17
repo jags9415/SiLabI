@@ -10,8 +10,8 @@
     <div class="row">
       <div class="col-md-10 col-xs-10">
         <div class="form-group">
-          <input type="text" class="form-control" id="username" placeholder="Buscar Docente (Usuario)" ng-model="ReservationCreate.professor.username">
-          <p class="help-block" ng-if="createLabForm.name.$error.required">Nombre de usuario repetido.</p>
+          <input type="text" class="form-control" id="username" placeholder="Buscar Docente (Usuario)" ng-model="ReservationCreate.professor_username">
+          <p class="help-block" ng-if="createLabForm.name.$error.required">Nombre de usuario requerido.</p>
         </div>
       </div>
       <div class="col-md-2 col-xs-2">
@@ -24,93 +24,17 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-          <label for="student">Estudiante</label>
+          <label for="professor">Docente</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
-            <input class="form-control" type="text" ng-model="AppointmentCreate.student.full_name" readonly>
+            <input class="form-control" type="text" ng-model="ReservationCreate.professor.full_name" readonly>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group" show-errors>
-          <label for="appointment_priority">Prioridad para Citas</label>
-          <ui-select id="appointment_priority" ng-model="ReservationAdd.appointment_priority" required>
-            <ui-select-match placeholder="Prioridad para Citas">
-              {{$select.selected.name}}
-            </ui-select-match>
-            <ui-select-choices repeat="priority in ReservationAdd.priorities | filter: $select.search">
-              <span ng-bind-html="priority.name | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group" show-errors>
-          <label for="reservation_priority">Prioridad para Reservaciones</label>
-          <ui-select id="reservation_priority" ng-model="ReservationAdd.reservation_priority" required>
-            <ui-select-match placeholder="Prioridad para Reservaciones">
-              {{$select.selected.name}}
-            </ui-select-match>
-            <ui-select-choices repeat="priority in ReservationAdd.priorities | filter: $select.search">
-              <span ng-bind-html="priority.name | highlight: $select.search"></span>
-            </ui-select-choices>
-          </ui-select>
-        </div>
-      </div>
-    </div>
-    <h4><b>Lista de software</b></h4>
-    <div class="row">
-      <div class="col-md-10 col-xs-10">
-        <div class="form-group">
-          <input type="text" class="form-control" id="code" placeholder="Buscar Software (Código)" ng-model="ReservationAdd.software_code">
-        </div>
-      </div>
-      <div class="col-md-2 col-xs-2">
-        <button type="button" class="btn btn-success btn-block" ng-click="ReservationAdd.searchSoftware()">
-          <i class="glyphicon glyphicon-plus"></i>
-          <span class="hidden-xs">Agregar</span>
-        </button>
-      </div>
-    </div>
-    <div class="table-responsive">
-      <table class="table table-striped" ng-show="ReservationAdd.software.length > 0">
-        <thead>
-          <tr>
-            <th>Código</th>
-            <th>Nombre</th>
-            <th style="text-align: center">Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="software in ReservationAdd.slicedSoftware">
-            <td>{{ software.code }}</td>
-            <td>{{ software.name }}</td>
-            <td style="text-align: center">
-              <a class='btn btn-info btn-sm' href="{{'#Operador/Software/' + software.code}}">
-                <span class="glyphicon glyphicon-eye-open"></span>
-              </a>
-              <a href="" class="btn btn-danger btn-sm" ng-click="ReservationAdd.deleteSoftware(software.code)">
-                <span class="glyphicon glyphicon-trash"></span>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="row" ng-show="ReservationAdd.software.length > ReservationAdd.limit">
-      <div class="col-xs-12 col-md-12 pagination">
-        <pagination
-          ng-model="ReservationAdd.page" items-per-page="ReservationAdd.limit" total-items="ReservationAdd.software.length"
-          ng-change="ReservationAdd.sliceSoftware()" max-size="5" boundary-links="true" rotate="true"
-          previous-text="<" next-text=">" first-text="<<" last-text=">>">
-        </pagination>
-      </div>
-    </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-lg btn-success" ng-click="ReservationAdd.create()" ng-disabled="createReservForm.$invalid">
+        <button type="submit" class="btn btn-lg btn-success" ng-click="ReservationCreate.create()" ng-disabled="createReservForm.$invalid">
           <i class="glyphicon glyphicon-plus"></i> Crear
         </button>
       </div>

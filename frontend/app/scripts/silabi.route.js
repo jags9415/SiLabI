@@ -231,6 +231,11 @@
           controllerAs: 'ReservationList',
           reloadOnSearch: false
         })
+        .when('/Operador/Reservaciones/Agregar', {
+          templateUrl: 'views/operator/reservations/reservation.create.html',
+          controller: 'ReservationCreateController',
+          controllerAs: 'ReservationCreate'
+        })
         .when('/404', {
           templateUrl: 'views/public/404.html'
         })
