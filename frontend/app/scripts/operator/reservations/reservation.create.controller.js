@@ -15,6 +15,11 @@
       fields: "id,username,full_name"
     }
 
+    vm.selected_date;
+    vm.datepicker_open = false;
+    vm.min_date = new Date();
+
+    vm.openDatePicker = openDatePicker;
     vm.searchProfessor = searchProfessor;
 
     activate();
@@ -24,6 +29,7 @@
     }
 
     function searchProfessor() {
+      clearFields();
       ProfessorService.GetOne(vm.professor_username, vm.professor_request)
       .then(setProfessor)
       .catch(handleError);
@@ -39,20 +45,21 @@
       vm.professor = professor;
     }
 
+    function openDatePicker($event){
+      if ($event)
+      {
+        $event.preventDefault();
+        $event.stopPropagation();
+      }
+      vm.datepicker_open = true;
+    }
+
 
     function clearFields() {
       $scope.$broadcast('show-errors-reset');
 
       delete vm.professor;
-      delete vm.groups;
-      delete vm.available_dates;
-      delete vm.available_hours;
-      delete vm.software_list;
       delete vm.selected_date;
-      delete vm.selected_software;
-      delete vm.selected_hour;
-      delete vm.selected_laboratory;
-      delete vm.group;
     }
 
     function handleSuccess (data) {

@@ -32,6 +32,27 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">* Fecha Inicial</label>
+          <div class="input-group">
+              <input type="text" class="form-control"
+                     datepicker-popup="mediumDate"
+                     is-open="ReservationCreate.datepicker_open"
+                     ng-model="ReservationCreate.selected_date"
+                     min-date="ReservationCreate.min_date"
+                     ng-click="ReservationCreate.openDatePicker($event)"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        ng-click="ReservationCreate.openDatePicker($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-lg btn-success" ng-click="ReservationCreate.create()" ng-disabled="createReservForm.$invalid">
