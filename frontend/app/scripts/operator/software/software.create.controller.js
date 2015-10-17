@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('SoftwareCreateController', SoftwareCreateController);
 
-    SoftwareCreateController.$inject = ['$scope', 'SoftwareService', 'MessageService'];
+    SoftwareCreateController.$inject = ['$scope', 'SoftwareService', 'MessageService', 'lodash'];
 
-    function SoftwareCreateController($scope, SoftwareService, MessageService) {
+    function SoftwareCreateController($scope, SoftwareService, MessageService, _) {
         var vm = this;
         vm.software = {};
         vm.create = create;
@@ -21,7 +21,7 @@
         }
 
         function handleCreateSuccess(result) {
-          MessageService.success("Software creado.");
+          MessageService.success('Software creado.');
           vm.software = {};
           $scope.$broadcast('show-errors-reset');
         }

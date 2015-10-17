@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$scope', 'ProfileService', 'MessageService', 'GenderService', 'CryptoJS'];
+    ProfileController.$inject = ['$scope', 'ProfileService', 'MessageService', 'GenderService', 'CryptoJS', 'lodash'];
 
-    function ProfileController($scope, ProfileService, MessageService, GenderService, CryptoJS) {
+    function ProfileController($scope, ProfileService, MessageService, GenderService, CryptoJS, _) {
         var vm = this;
         vm.profile = {};
         vm.genders = [];
@@ -49,7 +49,7 @@
         function updateProfile(profile) {
           setProfile(profile);
           $scope.$broadcast('show-errors-reset');
-          MessageService.success("Perfil actualizado.");
+          MessageService.success('Perfil actualizado.');
         }
 
         function handleError(error) {

@@ -14,7 +14,7 @@
               <div class="col-md-4">
                 <div class="input-group" style="padding-bottom: 2%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-                  <ui-select id="laboratory" ng-model="AppointmentCurrent.selected_laboratory" ng-change="AppointmentCurrent.loadAppointments()">
+                  <ui-select id="laboratory" ng-model="AppointmentCurrent.selectedLaboratory" ng-change="AppointmentCurrent.loadAppointments()">
                     <ui-select-match placeholder="Laboratorio">
                       {{$select.selected}}
                     </ui-select-match>
@@ -34,7 +34,7 @@
                            show-weeks="false"
                            max-date="AppointmentCurrent.today"
                            is-open="AppointmentCurrent.opened"
-                           ng-model="AppointmentCurrent.selected_date"
+                           ng-model="AppointmentCurrent.selectedDate"
                            ng-click="AppointmentCurrent.openDatePicker($event)"
                            ng-change="AppointmentCurrent.loadHours()"
                            date-disabled="AppointmentCurrent.isDisabledDate(date, mode)"
@@ -46,7 +46,7 @@
               <div class="col-md-4">
                 <div class="input-group" style="padding-bottom: 2%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-                  <ui-select id="hour" ng-model="AppointmentCurrent.selected_hour" ng-change="AppointmentCurrent.loadAppointments()">
+                  <ui-select id="hour" ng-model="AppointmentCurrent.selectedHour" ng-change="AppointmentCurrent.loadAppointments()">
                     <ui-select-match placeholder="Hora">
                       {{$select.selected | date: 'hh:mm a'}}
                     </ui-select-match>

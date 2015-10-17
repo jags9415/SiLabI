@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('OperatorDetailController', OperatorDetailController);
 
-    OperatorDetailController.$inject = ['$location', '$routeParams', 'OperatorService', 'MessageService'];
+    OperatorDetailController.$inject = ['$location', '$routeParams', 'OperatorService', 'MessageService', 'lodash'];
 
-    function OperatorDetailController($location, $routeParams, OperatorService, MessageService) {
+    function OperatorDetailController($location, $routeParams, OperatorService, MessageService, _) {
         var vm = this;
         vm.id = $routeParams.id;
         vm.user = {};
@@ -23,7 +23,7 @@
 
         function deleteOperator() {
           if (!_.isEmpty(vm.user)) {
-            MessageService.confirm("¿Desea realmente eliminar este operador?")
+            MessageService.confirm('¿Desea realmente eliminar este operador?')
             .then(function() {
               OperatorService.Delete(vm.id)
               .then(redirectToOperators)
@@ -37,7 +37,7 @@
         }
 
         function redirectToOperators() {
-          $location.path('/Administrador/Operadores')
+          $location.path('/Administrador/Operadores');
         }
 
         function handleError(data) {

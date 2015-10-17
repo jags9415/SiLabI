@@ -5,41 +5,41 @@
         .module('silabi')
         .controller('MainController', MainController);
 
-    MainController.$inject = ['$scope', '$location', '$route', '$localStorage'];
+    MainController.$inject = ['$scope', '$location', '$route', '$localStorage', 'lodash'];
 
-    function MainController($scope, $location, $route, $localStorage) {
+    function MainController($scope, $location, $route, $localStorage, _) {
       var vm = this;
 
       $scope.$storage = $localStorage;
       vm.$storage = $localStorage;
 
-      vm.AccessToken = GetAccessToken;
-      vm.UserId = GetUserId;
-      vm.UserName = GetUserName;
-      vm.UserType = GetUserType;
+      vm.AccessToken = getAccessToken;
+      vm.UserId = getUserId;
+      vm.UserName = getUserName;
+      vm.UserType = getUserType;
 
       $scope.$watch('$storage.access_token', function(newValue, oldValue) {
         if (_.isEmpty(newValue)) {
           $location.path('/Login');
         }
-        else if ($location.path() == '/Login') {
-          $location.path('/' + GetUserType());
+        else if ($location.path() === '/Login') {
+          $location.path('/' + getUserType());
         }
       });
 
-      function GetAccessToken() {
+      function getAccessToken() {
         return vm.$storage['access_token'];
       }
 
-      function GetUserId() {
+      function getUserId() {
         return vm.$storage['user_id'];
       }
 
-      function GetUserName() {
+      function getUserName() {
         return vm.$storage['user_name'];
       }
 
-      function GetUserType() {
+      function getUserType() {
         return vm.$storage['user_type'];
       }
     }

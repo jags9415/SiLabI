@@ -13,11 +13,11 @@
           <label for="date">Fecha</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-            <ui-select id="date" name="date" ng-model="AppointmentDetail.selected_date" on-select="AppointmentDetail.setAvailableHours()">
+            <ui-select id="date" name="date" ng-model="AppointmentDetail.selectedDate" on-select="AppointmentDetail.setAvailableHours()">
               <ui-select-match placeholder="Fecha">
                 {{$select.selected.day | date : 'fullDate'}}
               </ui-select-match>
-              <ui-select-choices repeat="date in AppointmentDetail.available_dates | filter: $select.search">
+              <ui-select-choices repeat="date in AppointmentDetail.availableDates | filter: $select.search">
                 <span ng-bind-html="date.day | date : 'fullDate' | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
@@ -30,12 +30,12 @@
           <label for="hour">Hora</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="hour" name="hour" ng-model="AppointmentDetail.selected_hour" on-select="AppointmentDetail.changeLaboratory()">
+            <ui-select id="hour" name="hour" ng-model="AppointmentDetail.selectedHour" on-select="AppointmentDetail.changeLaboratory()">
               <ui-select-match placeholder="Hora">
-                {{$select.selected.full_date | date: 'hh:mm a'}}
+                {{$select.selected.fullDate | date: 'hh:mm a'}}
               </ui-select-match>
-              <ui-select-choices repeat="hour in AppointmentDetail.available_hours | filter: $select.search">
-                <span ng-bind-html="hour.full_date | date : 'hh:mm a' | highlight: $select.search"></span>
+              <ui-select-choices repeat="hour in AppointmentDetail.availableHours | filter: $select.search">
+                <span ng-bind-html="hour.fullDate | date : 'hh:mm a' | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
             <p class="help-block" ng-show="updateAppForm.hour.$error.required">Fecha requerida.</p>

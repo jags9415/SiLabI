@@ -5,10 +5,11 @@
       .module('silabi')
       .controller('GroupDetailController', GroupDetailController);
 
-    GroupDetailController.$inject = ['$scope', '$routeParams', '$location', 'GroupService', 'ProfessorService', 'CourseService', 'StudentService', 'MessageService', 'PeriodService'];
+    GroupDetailController.$inject = ['$scope', '$routeParams', '$location', 'GroupService', 'ProfessorService', 'CourseService', 'StudentService', 'MessageService', 'PeriodService', 'lodash'];
 
-    function GroupDetailController($scope, $routeParams, $location, GroupService, ProfessorService, CourseService, StudentService, MessageService, PeriodService) {
+    function GroupDetailController($scope, $routeParams, $location, GroupService, ProfessorService, CourseService, StudentService, MessageService, PeriodService, _) {
       var vm = this;
+
       vm.group = {};
       vm.periods = [];
       vm.students = [];
@@ -19,27 +20,25 @@
       vm.page = 1;
       vm.limit = 15;
 
+      vm.groupRequest = {
+        fields: 'id,period,number,created_at,updated_at,professor.full_name,professor.username,course.code,course.name'
+      };
+
+      vm.studentRequest = {
+        fields: 'id,username,full_name'
+      };
+
       vm.update = updateGroup;
       vm.delete = deleteGroup;
       vm.deleteStudent = deleteStudent;
       vm.searchStudent = searchStudent;
       vm.sliceStudents = sliceStudents;
-
       vm.getProfessors = getProfessors;
       vm.setProfessor = setProfessor;
       vm.checkProfessor = checkProfessor;
-
       vm.getCourses = getCourses;
       vm.setCourse = setCourse;
       vm.checkCourse = checkCourse;
-
-      vm.groupRequest = {
-        fields: "id,period,number,created_at,updated_at,professor.full_name,professor.username,course.code,course.name"
-      }
-
-      vm.studentRequest = {
-        fields: "id,username,full_name"
-      }
 
       activate();
 
@@ -59,10 +58,10 @@
           vm.group.period.year = vm.year;
 
           var request = {
-              "number": vm.group.number,
-              "professor": vm.group.professor.username,
-              "course": vm.group.course.code,
-              "period": vm.group.period
+              'number': vm.group.number,
+              'professor': vm.group.professor.username,
+              'course': vm.group.course.code,
+              'period': vm.group.period
           };
 
           if (vm.isStudentsModified) {
@@ -77,7 +76,7 @@
 
       function deleteGroup() {
         if (!_.isEmpty(vm.group)) {
-          MessageService.confirm("¿Desea realmente eliminar este grupo?")
+          MessageService.confirm('¿Desea realmente eliminar este grupo?')
           .then(function () {
             GroupService.Delete(vm.group.id)
             .then(redirectToGroups)
@@ -89,15 +88,15 @@
 
       function getProfessors(name) {
         var request = {
-          fields: "id,username,full_name",
+          fields: 'id,username,full_name',
           limit: 10,
           query: {
-            full_name: {
-              operation: "like",
+            'full_name': {
+              operation: 'like',
               value: '*' + name + '*'
             }
           }
-        }
+        };
 
         return ProfessorService.GetAll(request)
         .then(function(data) {
@@ -107,15 +106,15 @@
 
       function getCourses(name) {
         var request = {
-          field: "id,code,name",
+          field: 'id,code,name',
           limit: 10,
           query: {
             name: {
-              operation: "like",
+              operation: 'like',
               value: '*' + name + '*'
             }
           }
-        }
+        };
 
         return CourseService.GetAll(request)
         .then(function(data) {
@@ -124,33 +123,33 @@
       }
 
       function checkProfessor() {
-        if (vm.professor_name != vm.group.professor.full_name || _.isEmpty(vm.group.professor)) {
-          vm.professor_name = "";
+        if (vm['professor_name'] !== vm.group.professor['full_name'] || _.isEmpty(vm.group.professor)) {
+          vm['professor_name'] = '';
           vm.group.professor = {};
         }
       }
 
       function checkCourse() {
-        if (vm.course_name != vm.group.course.name || _.isEmpty(vm.group.course)) {
-          vm.course_name = "";
+        if (vm['course_name'] !== vm.group.course.name || _.isEmpty(vm.group.course)) {
+          vm['course_name'] = '';
           vm.group.course = {};
         }
       }
 
       function setProfessor(user) {
         vm.group.professor = user;
-        vm.professor_name = user.full_name;
+        vm['professor_name'] = user['full_name'];
       }
 
       function setCourse(course) {
         vm.group.course = course;
-        vm.course_name = course.name;
+        vm['course_name'] = course.name;
       }
 
       function setGroup(group) {
         vm.group = group;
-        vm.professor_name = group.professor.full_name;
-        vm.course_name = group.course.name;
+        vm['professor_name'] = group.professor['full_name'];
+        vm['course_name'] = group.course.name;
         vm.year = group.period.year;
         return GroupService.GetStudents(vm.group.id, vm.studentRequest);
       }
@@ -166,14 +165,14 @@
 
       function showUpdate(group) {
         setGroup(group);
-        $scope.$broadcast('show-errors-reset');
         vm.isStudentsModified = false;
-        MessageService.success("Grupo actualizado.");
+        $scope.$broadcast('show-errors-reset');
+        MessageService.success('Grupo actualizado.');
       }
 
       function searchStudent() {
-        if (vm.student_username) {
-          StudentService.GetOne(vm.student_username, vm.studentRequest)
+        if (vm['student_username']) {
+          StudentService.GetOne(vm['student_username'], vm.studentRequest)
           .then(addStudent)
           .catch(handleError);
         }
@@ -186,13 +185,13 @@
           vm.isStudentsModified = true;
         }
         else {
-          MessageService.info("El estudiante seleccionado ya se encuentra en la lista.");
+          MessageService.info('El estudiante seleccionado ya se encuentra en la lista.');
         }
       }
 
       function deleteStudent(id) {
         for (var i = 0; i < vm.students.length; i++) {
-          if (vm.students[i].id == id) {
+          if (vm.students[i].id === id) {
             vm.students.splice(i, 1);
             sliceStudents();
             vm.isStudentsModified = true;

@@ -5,39 +5,39 @@
       .module('silabi')
       .controller('AppointmentDetailController', AppointmentDetailController);
 
-  AppointmentDetailController.$inject = ['$scope', 'AppointmentService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', 'PeriodService', 'LabService', 'StateService', '$location', '$routeParams'];
+  AppointmentDetailController.$inject = ['$scope', '$location', '$routeParams', 'AppointmentService', 'AppointmentDateService', 'MessageService', 'StudentService', 'SoftwareService', 'PeriodService', 'LabService', 'StateService', 'moment', 'lodash'];
 
-  function AppointmentDetailController($scope, AppointmentService, AppointmentDateService, MessageService, StudentService, SoftwareService, PeriodService, LabService, StateService, $location, $routeParams) {
+  function AppointmentDetailController($scope, $location, $routeParams, AppointmentService, AppointmentDateService, MessageService, StudentService, SoftwareService, PeriodService, LabService, StateService, moment, _) {
     var vm = this;
-    vm.selected_software = {};
-    vm.software_list = [];
+    vm.selectedSoftware = {};
+    vm.softwareList = [];
     vm.courses = [];
     vm.laboratories = [];
     vm.states = [];
     vm.groups = [];
-    vm.available_dates = [];
-    vm.available_hours = [];
-    vm.selected_state = {};
-    vm.selected_laboratory = {};
+    vm.availableDates = [];
+    vm.availableHours = [];
+    vm.selectedState = {};
+    vm.selectedLaboratory = {};
 
     vm.request = {
-      fields: "id,date,state,created_at,updated_at,student.full_name,student.username,group.number,group.course.name,software.code,software.name,laboratory.name"
-    }
-
-    vm.lab_request = {
-      fields: "name"
-    }
-
-    vm.date_request = {
-      fields: "date,laboratory.name"
+      fields: 'id,date,state,created_at,updated_at,student.full_name,student.username,group.number,group.course.name,software.code,software.name,laboratory.name'
     };
 
-    vm.groups_request = {
-      fields : "id,number,course.name"
+    vm.laboratoryRequest = {
+      fields: 'name'
     };
 
-    vm.software_request = {
-      fields: "code,name",
+    vm.dateRequest = {
+      fields: 'date,laboratory.name'
+    };
+
+    vm.groupRequest = {
+      fields : 'id,number,course.name'
+    };
+
+    vm.softwareRequest = {
+      fields: 'code,name',
       limit: 10
     };
 
@@ -71,14 +71,14 @@
     }
 
     function searchSoftware (input) {
-      vm.software_request.query = {};
+      vm.softwareRequest.query = {};
 
-      vm.software_request.query.code = {
-        operation: "like",
+      vm.softwareRequest.query.code = {
+        operation: 'like',
         value: '*' + input + '*'
-      }
+      };
 
-      return SoftwareService.GetAll(vm.software_request)
+      return SoftwareService.GetAll(vm.softwareRequest)
         .then(function(data) {
           return data.results;
         });
@@ -86,28 +86,28 @@
 
     function getGroups () {
       var period = PeriodService.GetCurrentPeriod('Semestre');
-      vm.groups_request.query = {};
+      vm.groupRequest.query = {};
 
-      vm.groups_request.query["period.type"] = {
-        operation: "eq",
-        value: "Semestre"
+      vm.groupRequest.query['period.type'] = {
+        operation: 'eq',
+        value: 'Semestre'
       };
 
-      vm.groups_request.query["period.value"] = {
-        operation: "eq",
+      vm.groupRequest.query['period.value'] = {
+        operation: 'eq',
         value: period.value
       };
 
-      vm.groups_request.query["period.year"] = {
-        operation: "eq",
+      vm.groupRequest.query['period.year'] = {
+        operation: 'eq',
         value: period.year
       };
 
-      return StudentService.GetGroups(vm.appointment.student.username, vm.groups_request);
+      return StudentService.GetGroups(vm.appointment.student.username, vm.groupRequest);
     }
 
     function getAvailableDates() {
-        return AppointmentService.GetAvailable(vm.appointment.student.username, vm.date_request);
+        return AppointmentService.GetAvailable(vm.appointment.student.username, vm.dateRequest);
     }
 
     function getStates () {
@@ -117,7 +117,7 @@
     }
 
     function getLaboratories () {
-      LabService.GetAll(vm.lab_request)
+      LabService.GetAll(vm.laboratoryRequest)
       .then(setLaboratories)
       .catch(handleError);
     }
@@ -129,7 +129,7 @@
 
     function setStates(states) {
       vm.states = states;
-      vm.states = _.reject(vm.states, function (state) { return state.value == "*" });
+      vm.states = _.reject(vm.states, function (state) { return state.value === '*'; });
       vm.states = _.map(vm.states, 'name');
     }
 
@@ -147,70 +147,70 @@
     }
 
     function setAvailableDates (dates) {
-      vm.available_dates = AppointmentDateService.ParseAvailableDates(dates);
-      vm.selected_date = null;
+      vm.availableDates = AppointmentDateService.ParseAvailableDates(dates);
+      vm.selectedDate = null;
 
-      for (var i = 0; i < vm.available_dates.length; i++) {
-        if (moment(vm.available_dates[i].day).isSame(vm.appointment.date, 'day')) {
-          vm.selected_date = vm.available_dates[i];
+      for (var i = 0; i < vm.availableDates.length; i++) {
+        if (moment(vm.availableDates[i].day).isSame(vm.appointment.date, 'day')) {
+          vm.selectedDate = vm.availableDates[i];
           setAvailableHours();
           break;
         }
       }
 
-      if (!vm.selected_date) {
+      if (!vm.selectedDate) {
         var current = {
-          day: moment(vm.appointment.date).format("YYYY-MM-DD"),
+          day: moment(vm.appointment.date).format('YYYY-MM-DD'),
           hoursByLab: [{
-            full_date: vm.appointment.date,
-            hour: moment(vm.appointment.date).format("HH:mm"),
+            fullDate: vm.appointment.date,
+            hour: moment(vm.appointment.date).format('HH:mm'),
             laboratory: vm.appointment.laboratory
           }]
         };
 
-        vm.available_dates.unshift(current);
-        vm.selected_date = vm.available_dates[0];
+        vm.availableDates.unshift(current);
+        vm.selectedDate = vm.availableDates[0];
         setAvailableHours();
       }
     }
 
     function setAvailableHours() {
-      if (vm.selected_date) {
-        vm.available_hours = vm.selected_date.hoursByLab;
-        vm.selected_hour = null;
+      if (vm.selectedDate) {
+        vm.availableHours = vm.selectedDate.hoursByLab;
+        vm.selectedHour = null;
 
-        for (var i = 0; i < vm.available_hours.length; i++) {
-          if (moment(vm.available_hours[i].full_date).isSame(vm.appointment.date, 'hour')) {
-            vm.selected_hour = vm.available_hours[i];
+        for (var i = 0; i < vm.availableHours.length; i++) {
+          if (moment(vm.availableHours[i].fullDate).isSame(vm.appointment.date, 'hour')) {
+            vm.selectedHour = vm.availableHours[i];
             break;
           }
         }
 
-        if (!vm.selected_hour) {
-          vm.selected_hour = vm.available_hours[0];
+        if (!vm.selectedHour) {
+          vm.selectedHour = vm.availableHours[0];
         }
       }
     }
 
     function changeLaboratory () {
-      if (vm.selected_hour) {
-        vm.selected_laboratory = vm.selected_hour.laboratory;
+      if (vm.selectedHour) {
+        vm.selectedLaboratory = vm.selectedHour.laboratory;
       }
     }
 
     function updateAppointment () {
       if (!_.isEmpty(vm.appointment)) {
-        if (vm.selected_date && vm.selected_hour) {
-          vm.date = vm.selected_date.day + "T" + vm.selected_hour.hour + ":00.000";
+        if (vm.selectedDate && vm.selectedHour) {
+          vm.date = vm.selectedDate.day + 'T' + vm.selectedHour.hour + ':00.000';
         }
 
         var app = {
-          "date": vm.date,
-          "laboratory": vm.appointment.laboratory.name,
-          "software": vm.appointment.software.code,
-          "group": vm.appointment.group.id,
-          "state": vm.appointment.state
-        }
+          'date': vm.date,
+          'laboratory': vm.appointment.laboratory.name,
+          'software': vm.appointment.software.code,
+          'group': vm.appointment.group.id,
+          'state': vm.appointment.state
+        };
 
         AppointmentService.Update(vm.id, app)
         .then(handleSuccess)
@@ -220,7 +220,7 @@
 
     function deleteAppointment() {
       if (!_.isEmpty(vm.appointment)) {
-        MessageService.confirm("¿Desea realmente eliminar esta cita?")
+        MessageService.confirm('¿Desea realmente eliminar esta cita?')
         .then(function() {
           AppointmentService.Delete(vm.id)
           .then(redirectPage)
@@ -230,11 +230,11 @@
     }
 
     function redirectPage () {
-      $location.path("/Operador/Citas");
+      $location.path('/Operador/Citas');
     }
 
     function handleSuccess (data) {
-      MessageService.success("Cita actualizada.");
+      MessageService.success('Cita actualizada.');
       setAppointment(data);
     }
 

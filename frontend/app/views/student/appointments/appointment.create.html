@@ -13,11 +13,11 @@
           <label for="name">Fechas Disponiles</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-            <ui-select id="date" name="date" ng-model="AppointmentCreate.selected_date" on-select="AppointmentCreate.setAvailableHours()" required>
+            <ui-select id="date" name="date" ng-model="AppointmentCreate.selectedDate" on-select="AppointmentCreate.setAvailableHours()" required>
               <ui-select-match placeholder="Fecha">
                 {{$select.selected.day | date : 'fullDate'}}
               </ui-select-match>
-              <ui-select-choices repeat="date in AppointmentCreate.available_dates | filter: $select.search">
+              <ui-select-choices repeat="date in AppointmentCreate.availableDates | filter: $select.search">
                 <span ng-bind-html="date.day | date : 'fullDate' | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
@@ -30,12 +30,12 @@
           <label for="name">Horas Disponibles</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="hour" name="hour" ng-model="AppointmentCreate.selected_hour" on-select="AppointmentCreate.changeLaboratory()" required>
+            <ui-select id="hour" name="hour" ng-model="AppointmentCreate.selectedHour" on-select="AppointmentCreate.changeLaboratory()" required>
               <ui-select-match placeholder="Hora">
-                {{$select.selected.full_date | date: 'hh:mm a'}}
+                {{$select.selected.fullDate | date: 'hh:mm a'}}
               </ui-select-match>
-              <ui-select-choices repeat="hour in AppointmentCreate.available_hours | filter: $select.search">
-                <span ng-bind-html="hour.full_date | date : 'hh:mm a' | highlight: $select.search"></span>
+              <ui-select-choices repeat="hour in AppointmentCreate.availableHours | filter: $select.search">
+                <span ng-bind-html="hour.fullDate | date : 'hh:mm a' | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
             <p class="help-block" ng-show="createAppForm.hour.$error.required">Hora requerida.</p>
@@ -77,7 +77,7 @@
           <label for="lab">Laboratorio</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-desktop"></i></span>
-            <input type="text" class="form-control" id="lab" name="lab" ng-model="AppointmentCreate.selected_laboratory.name" ng-trim readonly required>
+            <input type="text" class="form-control" id="lab" name="lab" ng-model="AppointmentCreate.selectedLaboratory.name" ng-trim readonly required>
             <p class="help-block" ng-show="createAppForm.date.$error.required">Laboratorio requerido.</p>
           </div>
         </div>

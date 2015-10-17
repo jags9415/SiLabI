@@ -16,8 +16,8 @@
         vm.searched = {};
         vm.limit = 20;
         vm.request = {
-          fields : "id,code,name,state",
-          sort: [{field: "code", type: "ASC"}]
+          fields : 'id,code,name,state',
+          sort: [{field: 'code', type: 'ASC'}]
         };
 
         vm.open = openCourse;
@@ -66,30 +66,30 @@
 
           if (vm.searched.code) {
             vm.request.query.code = {
-              operation: "eq",
+              operation: 'eq',
               value: vm.searched.code
-            }
+            };
           }
 
           if (vm.searched.name) {
             vm.request.query.name = {
-              operation: "like",
+              operation: 'like',
               value: '*' + vm.searched.name.replace(' ', '*') + '*'
-            }
+            };
           }
 
           if (vm.searched.state) {
             vm.request.query.state = {
-              operation: "like",
+              operation: 'like',
               value: vm.searched.state.value
-            }
+            };
           }
 
           loadPage();
         }
 
         function isEmpty() {
-          return vm.courses.length == 0;
+          return vm.courses.length === 0;
         }
 
         function isLoaded() {
@@ -105,14 +105,14 @@
 
         function setCourses(data) {
           vm.courses = data.results;
-          vm.page = data.current_page;
-          vm.totalPages = data.total_pages;
+          vm.page = data['current_page'];
+          vm.totalPages = data['total_pages'];
           vm.totalItems = vm.limit * vm.totalPages;
           vm.loaded = true;
         }
 
         function deleteCourse(id) {
-          MessageService.confirm("¿Desea realmente eliminar este curso?")
+          MessageService.confirm('¿Desea realmente eliminar este curso?')
           .then(function() {
             CourseService.Delete(id)
             .then(loadPage)

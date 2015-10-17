@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('AdministratorDetailController', AdministratorDetailController);
 
-    AdministratorDetailController.$inject = ['$location', '$routeParams', 'AdminService', 'MessageService'];
+    AdministratorDetailController.$inject = ['$location', '$routeParams', 'AdminService', 'MessageService', 'lodash'];
 
-    function AdministratorDetailController($location, $routeParams, AdminService, MessageService) {
+    function AdministratorDetailController($location, $routeParams, AdminService, MessageService, _) {
         var vm = this;
         vm.id = $routeParams.id;
         vm.user = {};
@@ -23,7 +23,7 @@
 
         function deleteAdministrator() {
           if (!_.isEmpty(vm.user)) {
-            MessageService.confirm("¿Desea realmente eliminar este administrador?")
+            MessageService.confirm('¿Desea realmente eliminar este administrador?')
             .then(function() {
               AdminService.Delete(vm.id)
               .then(handleDeleteSuccess)
@@ -37,7 +37,7 @@
         }
 
         function handleDeleteSuccess() {
-          $location.path('/Administrador/Administradores')
+          $location.path('/Administrador/Administradores');
         }
 
         function handleError(data) {

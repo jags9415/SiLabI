@@ -14,5 +14,5 @@
             bindToController: true
         };
         return directive;
-    };
+    }
 })();

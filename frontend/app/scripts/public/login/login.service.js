@@ -16,14 +16,19 @@
           var credentials = {
             'username': username,
             'password': password
-          }
+          };
           return RequestService.post('/authenticate', credentials);
         }
 
         function isAuthenticated() {
           var token = $localStorage['access_token'];
-          if (!token) return false;
-          else return !jwtHelper.isTokenExpired(token);
+
+          if (!token) {
+            return false;
+          }
+          else {
+            return !jwtHelper.isTokenExpired(token);
+          }
         }
 
         function getUserData() {
@@ -31,7 +36,7 @@
           var token = $localStorage['access_token'];
           var payload = jwtHelper.decodeToken(token);
 
-          data.access_token = token;
+          data['access_token'] = token;
           data.username = payload.username;
           data.id = payload.id;
           data.type = payload.type;

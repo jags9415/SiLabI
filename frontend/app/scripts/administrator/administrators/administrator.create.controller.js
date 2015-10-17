@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('AdministratorCreateController', AdministratorCreateController);
 
-    AdministratorCreateController.$inject = ['AdminService', 'UserService', 'MessageService'];
+    AdministratorCreateController.$inject = ['AdminService', 'UserService', 'MessageService', 'lodash'];
 
-    function AdministratorCreateController(AdminService, UserService, MessageService) {
+    function AdministratorCreateController(AdminService, UserService, MessageService, _) {
         var vm = this;
         vm.search = search;
         vm.create = create;
@@ -34,7 +34,7 @@
         }
 
         function handleCreateSuccess() {
-          MessageService.success("Administrador creado.");
+          MessageService.success('Administrador creado.');
           vm.user = {};
           delete vm.username;
         }

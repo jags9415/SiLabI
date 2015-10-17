@@ -31,7 +31,7 @@
         * @param title The message title. Optional.
         */
         function success(content, title) {
-          message("success", content, title);
+          message('success', content, title);
         }
 
         /**
@@ -40,7 +40,7 @@
         * @param title The message title. Optional.
         */
         function info(content, title) {
-          message("info", content, title);
+          message('info', content, title);
         }
 
         /**
@@ -49,7 +49,7 @@
         * @param title The message title. Optional.
         */
         function warning(content, title) {
-          message("warning", content, title);
+          message('warning', content, title);
         }
 
         /**
@@ -58,7 +58,7 @@
         * @param title The message title. Optional.
         */
         function error(content, title) {
-          message("error", content, title);
+          message('error', content, title);
         }
 
         /**
@@ -72,7 +72,7 @@
           bootbox.confirm({
             size: 'small',
             message: message,
-            callback: function(result) { if (result) defer.resolve(); else defer.reject(); }
+            callback: function(result) { if (result) { defer.resolve(); } else { defer.reject(); } }
           });
 
           return defer.promise;

@@ -16,8 +16,8 @@
     vm.searched = {};
     vm.limit = 20;
     vm.request = {
-      fields : "id,name,seats,state",
-      sort: {field: "name", type: "ASC"}
+      fields : 'id,name,seats,state',
+      sort: {field: 'name', type: 'ASC'}
     };
 
     vm.open = openLab;
@@ -62,34 +62,34 @@
     }
 
     function searchLab() {
-      vm.request.query = {}
+      vm.request.query = {};
 
       if (vm.searched.name) {
         vm.request.query.name = {
-          operation: "like",
+          operation: 'like',
           value: '*' + vm.searched.name.replace(' ', '*') + '*'
-        }
+        };
       }
 
       if (vm.searched.seats) {
         vm.request.query.seats = {
-          operation: "eq",
+          operation: 'eq',
           value: vm.searched.seats
-        }
+        };
       }
 
       if (vm.searched.state) {
         vm.request.query.state = {
-          operation: "like",
+          operation: 'like',
           value: vm.searched.state.value
-        }
+        };
       }
 
       loadPage();
     }
 
     function isEmpty() {
-      return vm.labs.length == 0;
+      return vm.labs.length === 0;
     }
 
     function isLoaded() {
@@ -99,20 +99,19 @@
     function toggleAdvanceSearch() {
       vm.advanceSearch = !vm.advanceSearch;
       delete vm.searched.seats;
-      delete vm.searched.name;
       delete vm.searched.state;
     }
 
     function setLabs(data) {
       vm.labs = data.results;
-      vm.page = data.current_page;
-      vm.totalPages = data.total_pages;
+      vm.page = data['current_page'];
+      vm.totalPages = data['total_pages'];
       vm.totalItems = vm.limit * vm.totalPages;
       vm.loaded = true;
     }
 
     function deleteLab(id) {
-      MessageService.confirm("¿Desea realmente eliminar esta Sala de Laboratorio?")
+      MessageService.confirm('¿Desea realmente eliminar esta Sala de Laboratorio?')
       .then(function() {
         LabService.Delete(id)
         .then(loadPage)

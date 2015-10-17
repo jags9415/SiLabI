@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('CourseAddController', CourseAddController);
 
-    CourseAddController.$inject = ['$scope', 'CourseService', 'MessageService'];
+    CourseAddController.$inject = ['$scope', 'CourseService', 'MessageService', 'lodash'];
 
-    function CourseAddController($scope, CourseService, MessageService) {
+    function CourseAddController($scope, CourseService, MessageService, _) {
         var vm = this;
         vm.course = {};
         vm.create = create;
@@ -21,7 +21,7 @@
         }
 
         function handleCreateSuccess(result) {
-          MessageService.success("Curso creado.");
+          MessageService.success('Curso creado.');
 
           // Reset form data.
           vm.course = {};

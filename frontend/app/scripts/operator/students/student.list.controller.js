@@ -9,14 +9,16 @@
 
     function StudentListController($location, StudentService, MessageService, StateService) {
         var vm = this;
+
         vm.loaded = false;
         vm.advanceSearch = false;
         vm.students = [];
         vm.searched = {};
         vm.limit = 20;
+
         vm.request = {
-          fields : "id,full_name,email,phone,username,state",
-          sort: [{field: "full_name", type: "ASC"}]
+          fields : 'id,full_name,email,phone,username,state',
+          sort: [{field: 'full_name', type: 'ASC'}]
         };
 
         vm.createStudent = createStudent;
@@ -66,7 +68,7 @@
         }
 
         function deleteStudent(id) {
-          MessageService.confirm("¿Desea realmente eliminar este estudiante?")
+          MessageService.confirm('¿Desea realmente eliminar este estudiante?')
           .then(function() {
             StudentService.Delete(id)
             .then(loadPage)
@@ -77,32 +79,32 @@
         function searchStudents() {
           vm.request.query = {};
 
-          if (vm.searched.full_name) {
-            vm.request.query.full_name = {
-              operation: "like",
-              value: '*' + vm.searched.full_name.replace(' ', '*') + '*'
-            }
+          if (vm.searched.fullName) {
+            vm.request.query['full_name'] = {
+              operation: 'like',
+              value: '*' + vm.searched.fullName.replace(' ', '*') + '*'
+            };
           }
 
           if (vm.searched.username) {
-            vm.request.query.username = {
-              operation: "like",
+            vm.request.query['username'] = {
+              operation: 'like',
               value: '*' + vm.searched.username.replace(' ', '*') + '*'
-            }
+            };
           }
 
           if (vm.searched.state) {
-            vm.request.query.state = {
-              operation: "like",
+            vm.request.query['state'] = {
+              operation: 'like',
               value: vm.searched.state.value
-            }
+            };
           }
 
           if (vm.searched.email) {
-            vm.request.query.email = {
-              operation: "like",
+            vm.request.query['email'] = {
+              operation: 'like',
               value: '*' + vm.searched.email.replace(' ', '*') + '*'
-            }
+            };
           }
 
           loadPage();
@@ -115,9 +117,8 @@
           delete vm.searched.username;
         }
 
-
         function isEmpty() {
-          return vm.students.length == 0;
+          return vm.students.length === 0;
         }
 
         function isLoaded() {
@@ -125,9 +126,9 @@
         }
 
         function setStudents(data) {
-          vm.students = data.results;
-          vm.page = data.current_page;
-          vm.totalPages = data.total_pages;
+          vm.students = data['results'];
+          vm.page = data['current_page'];
+          vm.totalPages = data['total_pages'];
           vm.totalItems = vm.limit * vm.totalPages;
           vm.loaded = true;
         }

@@ -5,9 +5,9 @@
         .module('silabi')
         .controller('OperatorCreateController', OperatorCreateController);
 
-    OperatorCreateController.$inject = ['OperatorService', 'StudentService', 'PeriodService', 'MessageService'];
+    OperatorCreateController.$inject = ['OperatorService', 'StudentService', 'PeriodService', 'MessageService', 'lodash'];
 
-    function OperatorCreateController(OperatorService, StudentService, PeriodService, MessageService) {
+    function OperatorCreateController(OperatorService, StudentService, PeriodService, MessageService, _) {
         var vm = this;
         vm.periods = [];
         vm.currentYear = new Date().getFullYear();
@@ -52,7 +52,7 @@
         }
 
         function handleCreateSuccess() {
-          MessageService.success("Operador creado.");
+          MessageService.success('Operador creado.');
           vm.user = {};
           delete vm.username;
         }

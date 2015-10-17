@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('StudentsDetailController', StudentsDetail);
 
-    StudentsDetail.$inject = ['$scope', '$routeParams', '$location', 'StudentService', 'GenderService', 'MessageService', 'CryptoJS'];
+    StudentsDetail.$inject = ['$scope', '$routeParams', '$location', 'StudentService', 'GenderService', 'MessageService', 'CryptoJS', 'lodash'];
 
-    function StudentsDetail($scope, $routeParams, $location, StudentService, GenderService, MessageService, CryptoJS) {
+    function StudentsDetail($scope, $routeParams, $location, StudentService, GenderService, MessageService, CryptoJS, _) {
       var vm = this;
       vm.student = {};
       vm.username = $routeParams.username;
@@ -40,7 +40,7 @@
 
       function deleteStudent() {
         if (!_.isEmpty(vm.student)) {
-          MessageService.confirm("¿Desea realmente eliminar este estudiante?")
+          MessageService.confirm('¿Desea realmente eliminar este estudiante?')
           .then(function () {
             StudentService.Delete(vm.student.id)
             .then(redirectToStudents)
@@ -65,7 +65,7 @@
 
       function handleUpdate(student) {
         setStudent(student);
-        MessageService.success("Estudiante actualizado.");
+        MessageService.success('Estudiante actualizado.');
         $scope.$broadcast('show-errors-reset');
       }
 

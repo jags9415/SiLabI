@@ -5,10 +5,11 @@
         .module('silabi')
         .controller('LabAddController', LabAddController);
 
-    LabAddController.$inject = ['$scope', 'LabService', 'SoftwareService', 'MessageService'];
+    LabAddController.$inject = ['$scope', 'LabService', 'SoftwareService', 'MessageService', 'lodash'];
 
-    function LabAddController($scope, LabService, SoftwareService, MessageService) {
+    function LabAddController($scope, LabService, SoftwareService, MessageService, _) {
         var vm = this;
+
         vm.lab = {};
         vm.priorities = [];
         vm.software = [];
@@ -29,10 +30,10 @@
         }
 
         function create() {
-          if (!_.isEmpty(vm.lab) && !_.isEmpty(vm.appointment_priority) && !_.isEmpty(vm.reservation_priority)) {
-            vm.lab.software = getSoftwareCodes();
-            vm.lab.appointment_priority = vm.appointment_priority.value;
-            vm.lab.reservation_priority = vm.reservation_priority.value;
+          if (!_.isEmpty(vm.lab) && !_.isEmpty(vm['appointment_priority']) && !_.isEmpty(vm['reservation_priority'])) {
+            vm.lab['software'] = getSoftwareCodes();
+            vm.lab['appointment_priority'] = vm['appointment_priority'].value;
+            vm.lab['reservation_priority'] = vm['reservation_priority'].value;
 
             LabService.Create(vm.lab)
             .then(handleCreateSuccess)
@@ -41,13 +42,13 @@
         }
 
         function handleCreateSuccess(result) {
-          MessageService.success("Laboratorio creado.");
+          MessageService.success('Laboratorio creado.');
 
           // Reset form data.
           vm.lab = {};
           vm.software = [];
-          delete vm.appointment_priority;
-          delete vm.reservation_priority;
+          delete vm['appointment_priority'];
+          delete vm['reservation_priority'];
           vm.isSoftwareModified = false;
 
           // Reset form validations.
@@ -59,8 +60,8 @@
         }
 
         function searchSoftware() {
-          if (vm.software_code) {
-            SoftwareService.GetOne(vm.software_code)
+          if (vm.softwareCode) {
+            SoftwareService.GetOne(vm.softwareCode)
             .then(addSoftware)
             .catch(handleError);
           }
@@ -73,12 +74,12 @@
         function addSoftware(software) {
           if (!contains(software)) {
             vm.software.unshift(software);
-            vm.software_code = "";
+            vm.softwareCode = '';
             vm.isSoftwareModified = true;
             sliceSoftware();
           }
           else {
-            MessageService.info("El software seleccionado ya se encuentra en la lista.")
+            MessageService.info('El software seleccionado ya se encuentra en la lista.');
           }
         }
 

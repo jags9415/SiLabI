@@ -11,12 +11,12 @@
       var vm = this;
 
       vm.loaded = false;
-      vm.software_list = [];
+      vm.softwareList = [];
       vm.searched = {};
       vm.limit = 20;
       vm.request = {
-        fields : "id,code,name,state",
-        sort: [{field: "code", type: "ASC"}]
+        fields : 'id,code,name,state',
+        sort: [{field: 'code', type: 'ASC'}]
       };
       vm.states = [];
 
@@ -66,23 +66,23 @@
 
         if (vm.searched.name) {
           vm.request.query.name = {
-            operation: "like",
+            operation: 'like',
             value: '*' + vm.searched.name.replace(' ', '*') + '*'
-          }
+          };
         }
 
         if (vm.searched.code) {
           vm.request.query.code = {
-            operation: "eq",
+            operation: 'eq',
             value: vm.searched.code
-          }
+          };
         }
 
         if (vm.searched.state) {
         vm.request.query.state = {
-          operation: "like",
+          operation: 'like',
           value: vm.searched.state.value
-        }
+        };
       }
 
 
@@ -98,7 +98,7 @@
 
 
       function isEmpty() {
-        return vm.software_list.length == 0;
+        return vm.softwareList.length === 0;
       }
 
       function isLoaded() {
@@ -106,9 +106,9 @@
       }
 
       function setSoftware(data) {
-        vm.software_list = data.results;
-        vm.page = data.current_page;
-        vm.totalPages = data.total_pages;
+        vm.softwareList = data.results;
+        vm.page = data['current_page'];
+        vm.totalPages = data['total_pages'];
         vm.totalItems = vm.limit * vm.totalPages;
         vm.loaded = true;
       }
@@ -118,7 +118,7 @@
     }
 
       function deleteSoftware(id) {
-        MessageService.confirm("¿Desea realmente eliminar este software?")
+        MessageService.confirm('¿Desea realmente eliminar este software?')
         .then(function() {
           SoftwareService.Delete(id)
           .then(loadPage)
