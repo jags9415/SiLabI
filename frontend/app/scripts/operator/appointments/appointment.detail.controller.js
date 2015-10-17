@@ -9,6 +9,7 @@
 
   function AppointmentDetailController($scope, $location, $routeParams, AppointmentService, AppointmentDateService, MessageService, StudentService, SoftwareService, PeriodService, LabService, StateService, moment, _) {
     var vm = this;
+
     vm.selectedSoftware = {};
     vm.softwareList = [];
     vm.courses = [];

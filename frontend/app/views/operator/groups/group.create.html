@@ -10,14 +10,14 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" show-errors>
-          <label for="professor">* Docente</label>
+          <label for="professor">Docente</label>
           <input id="professor" name="professor" class="form-control" type="text" placeholder="Docente" ng-model="GroupCreate.professor_name" typeahead="professor.full_name for professor in GroupCreate.getProfessors($viewValue)" typeahead-editable="false" typeahead-on-select="GroupCreate.setProfessor($item)" ng-blur="GroupCreate.checkProfessor()" required>
           <p class="help-block" ng-if="createGroupForm.professor.$error.required">Docente requerido.</p>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group" show-errors>
-          <label for="course">* Curso</label>
+          <label for="course">Curso</label>
           <input id="course" name="course" class="form-control" type="text" placeholder="Curso" ng-model="GroupCreate.course_name" typeahead="course.name for course in GroupCreate.getCourses($viewValue)" typeahead-editable="false" typeahead-on-select="GroupCreate.setCourse($item)" ng-blur="GroupCreate.checkCourse()" required>
           <p class="help-block" ng-if="createGroupForm.course.$error.required">Curso requerido.</p>
         </div>
@@ -26,7 +26,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="period">* Periodo</label>
+          <label for="period">Periodo</label>
           <ui-select id="period" ng-model="GroupCreate.period">
             <ui-select-match placeholder="{{$select.selected.value + ' ' + $select.selected.type}}">
               {{$select.selected.value + ' ' + $select.selected.type}}
@@ -40,7 +40,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="year">* Año</label>
+          <label for="year">Año</label>
           <ui-select id="year" ng-model="GroupCreate.year">
             <ui-select-match placeholder="{{GroupCreate.year}}">
               {{$select.selected}}
@@ -55,7 +55,7 @@
     <div class="row">
       <div class="col-md-12 col-xs-12">
         <div class="form-group" show-errors>
-        <label for="number">* Número</label>
+        <label for="number">Número</label>
           <input type="number" min="0" class="form-control" id="number" name="number" placeholder="Número" ng-model="GroupCreate.group.number" required>
           <p class="help-block" ng-if="createGroupForm.number.$error.required">Número de grupo requerido.</p>
           <p class="help-block" ng-if="createGroupForm.number.$error.number  || createGroupForm.number.$error.min">Ingrese un número positivo.</p>
