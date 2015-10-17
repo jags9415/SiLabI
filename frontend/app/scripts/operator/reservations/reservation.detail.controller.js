@@ -214,6 +214,7 @@
 
     function handleSuccess (data) {
       MessageService.success("Reservación actualizada.");
+      setReservation(data);
     }
 
     function handleError(data) {
