@@ -90,10 +90,10 @@
             <td>{{ student.username }}</td>
             <td>{{ student.full_name }}</td>
             <td style="text-align: center">
-              <a class='btn btn-info btn-sm' href="{{'#Operador/Estudiantes/' + student.username}}">
+              <a class='btn btn-info btn-sm action-btn' href="{{'#Operador/Estudiantes/' + student.username}}">
                 <span class="glyphicon glyphicon-eye-open"></span>
               </a>
-              <a href="" class="btn btn-danger btn-sm" ng-click="GroupCreate.deleteStudent(student.id)">
+              <a href="" class="btn btn-danger btn-sm action-btn" ng-click="GroupCreate.deleteStudent(student.id)">
                 <span class="glyphicon glyphicon-remove"></span>
               </a>
             </td>
