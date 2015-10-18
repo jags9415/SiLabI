@@ -211,11 +211,14 @@
       MessageService.confirm("¿Desea realmente eliminar esta reservación?")
       .then(function() {
         ProfessorReservationService.Delete(vm.username, vm.reservation_id)
-        .then(loadPage)
+        .then(redirectToHome)
         .catch(handleError);
       });
     }
 
+    function redirectToHome () {
+      $location.path('Docente/Reservaciones');
+    }
 
     function handleSuccess (data) {
       MessageService.success("Reservación actualizada.");
