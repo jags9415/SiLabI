@@ -197,9 +197,11 @@ EXEC sp_addrolemember 'appointment_data_writer', 'Operator'
 EXEC sp_addrolemember 'appointment_data_writer', 'Student'
 GRANT INSERT, UPDATE ON [dbo].[Appointments] TO [appointment_data_writer]
 GRANT SELECT ON [dbo].[StudentsByGroup] TO [appointment_data_writer]
-GRANT SELECT ON [dbo].[fn_GetAvailableAppointments] TO [appointment_data_writer]
+GRANT SELECT ON [dbo].[fn_GetAvailableAppointmentsForCreate] TO [appointment_data_writer]
+GRANT SELECT ON [dbo].[fn_GetAvailableAppointmentsForUpdate] TO [appointment_data_writer]
 GRANT EXECUTE ON [dbo].[sp_GetGroupsByStudent] TO [appointment_data_writer]
-GRANT EXECUTE ON [dbo].[sp_GetAvailableAppointments] TO [appointment_data_writer]
+GRANT EXECUTE ON [dbo].[sp_GetAvailableAppointmentsForCreate] TO [appointment_data_writer]
+GRANT EXECUTE ON [dbo].[sp_GetAvailableAppointmentsForUpdate] TO [appointment_data_writer]
 GRANT EXECUTE ON [dbo].[sp_CreateAppointment] TO [appointment_data_writer]
 GRANT EXECUTE ON [dbo].[sp_UpdateAppointment] TO [appointment_data_writer]
 GRANT EXECUTE ON [dbo].[sp_DeleteAppointment] TO [appointment_data_writer]

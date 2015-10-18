@@ -108,7 +108,7 @@
     }
 
     function getAvailableDates() {
-        return AppointmentService.GetAvailable(vm.appointment.student.username, vm.dateRequest);
+        return AppointmentDateService.GetAvailableForUpdate(vm.dateRequest, vm.appointment.student.username, vm.appointment.id);
     }
 
     function getStates () {
@@ -158,21 +158,6 @@
           break;
         }
       }
-
-      if (!vm.selectedDate) {
-        var current = {
-          day: moment(vm.appointment.date).format('YYYY-MM-DD'),
-          hoursByLab: [{
-            fullDate: vm.appointment.date,
-            hour: moment(vm.appointment.date).format('HH:mm'),
-            laboratory: vm.appointment.laboratory
-          }]
-        };
-
-        vm.availableDates.unshift(current);
-        vm.selectedDate = vm.availableDates[0];
-        setAvailableHours();
-      }
     }
 
     function setAvailableHours() {
@@ -187,7 +172,7 @@
           }
         }
 
-        if (!vm.selectedHour) {
+        if (_.isNull(vm.selectedHour)) {
           vm.selectedHour = vm.availableHours[0];
         }
       }
@@ -201,12 +186,9 @@
 
     function updateAppointment () {
       if (!_.isEmpty(vm.appointment)) {
-        if (vm.selectedDate && vm.selectedHour) {
-          vm.date = vm.selectedDate.day + 'T' + vm.selectedHour.hour + ':00.000';
-        }
 
         var app = {
-          'date': vm.date,
+          'date': vm.selectedHour.fullDate,
           'laboratory': vm.appointment.laboratory.name,
           'software': vm.appointment.software.code,
           'group': vm.appointment.group.id,

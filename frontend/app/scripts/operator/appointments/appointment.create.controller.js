@@ -97,7 +97,7 @@
     }
 
     function getAvailableDates() {
-        return AppointmentService.GetAvailable(vm.studentUsername, vm.dateRequest);
+        return AppointmentDateService.GetAvailableForCreate(vm.dateRequest, vm.studentUsername);
     }
 
     function searchSoftware (input) {

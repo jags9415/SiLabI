@@ -5,58 +5,60 @@
     .module('silabi')
     .service('AppointmentDateService', AppointmentService);
 
-  AppointmentService.$inject = ['RequestService', '$localStorage'];
+  AppointmentService.$inject = ['RequestService', '$localStorage', 'moment', 'lodash'];
 
-  function AppointmentService(RequestService, $localStorage) {
-    this.GetAvailable = GetAvailable;
+  function AppointmentService(RequestService, $localStorage, moment, _) {
+
+    this.GetAvailableForCreate = GetAvailableForCreate;
+    this.GetAvailableForUpdate = GetAvailableForUpdate;
     this.ParseAvailableDates = ParseAvailableDates;
 
-    function GetAvailable(request, username){
+    function GetAvailableForCreate(request, username) {
       if (!request) { request = {}; }
       request['access_token'] = $localStorage['access_token'];
       return RequestService.get('/students/' + username + '/appointments/available', request);
     }
 
+    function GetAvailableForUpdate(request, username, appointment) {
+      if (!request) { request = {}; }
+      request['access_token'] = $localStorage['access_token'];
+      return RequestService.get('/students/' + username + '/appointments/' + appointment + '/available', request);
+    }
+
     function ParseAvailableDates(data) {
-      var availableDates = [];
+      var result = [];
+
       for (var i = 0; i < data.length; i++) {
-        var date = data[i].date;
-        var currentDate = date.substring(0, date.indexOf('T'));
-        if (getRepetitions(currentDate, availableDates) === 0) {
-          var currentJson = {
-            'day': currentDate,
-            'hoursByLab': getHoursByLab(currentDate, data)
-          };
-          availableDates.push(currentJson);
+        var current = moment(data[i].date).format("YYYY-MM-DD");
+
+        if (!_.find(result, 'day', current)) {
+          result.push({
+            'day': current,
+            'hoursByLab': getHoursByLab(current, data)
+          });
         }
       }
-      return availableDates;
+
+      return result;
     }
 
-    function getRepetitions(date, array){
-      var count = 0;
-      for (var i = 0; i < array.length; i++) {
-        var currentDate = array[i].day;
-        if (currentDate === date) {
-          count++;
+    function getHoursByLab(date, data) {
+      var hours = [];
+
+      for (var i = 0; i < data.length; i++) {
+        var current = moment(data[i].date).format("YYYY-MM-DD");
+
+        if (current === date) {
+          hours.push({
+            'fullDate': data[i].date,
+            'laboratory': {
+              'name': data[i].laboratory.name
+            }
+          });
         }
       }
-      return count;
-    }
 
-  function getHoursByLab(date, datesArray){
-    var hours = [];
-    for (var i = 0; i < datesArray.length; i++){
-      var newDate = datesArray[i].date;
-      var currentDate = newDate.substring(0, newDate.indexOf('T'));
-      if(currentDate === date){
-        var index = newDate.indexOf('T') + 1;
-        var hour = newDate.substring(index, newDate.length - 7);
-        var json = {'fullDate':newDate, 'hour':hour,'laboratory': {'name':datesArray[i].laboratory.name}};
-        hours.push(json);
-      }
+      return hours;
     }
-    return hours;
-  }
   }
 })();

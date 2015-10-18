@@ -84,7 +84,7 @@ namespace SiLabI
             _AppointmentController.Delete(num, request, payload);
         }
 
-        public List<AvailableAppointment> GetAvailableAppointments(string token, string username, string query, string sort, string fields)
+        public List<AvailableAppointment> GetAvailableAppointmentsForCreate(string token, string username, string query, string sort, string fields)
         {
             Dictionary<string, object> payload = Token.Decode(token);
             Token.CheckPayload(payload, UserType.Student);
@@ -95,7 +95,27 @@ namespace SiLabI
             request.ParseSort(sort);
             request.ParseFields(fields);
 
-            return _AppointmentController.GetAvailable(username, request, payload);
+            return _AppointmentController.GetAvailableForCreate(username, request, payload);
+        }
+
+        public List<AvailableAppointment> GetAvailableAppointmentsForUpdate(string token, string username, string id, string query, string sort, string fields)
+        {
+            int num;
+            if (!Int32.TryParse(id, out num))
+            {
+                throw new InvalidParameterException("id");
+            }
+
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Student);
+            QueryString request = new QueryString(ValidFields.AvailableAppointment);
+
+            request.AccessToken = token;
+            request.ParseQuery(query);
+            request.ParseSort(sort);
+            request.ParseFields(fields);
+
+            return _AppointmentController.GetAvailableForUpdate(username, num, request, payload);
         }
 
         public PaginatedResponse<Appointment> GetStudentAppointments(string token, string username, string query, string page, string limit, string sort, string fields)

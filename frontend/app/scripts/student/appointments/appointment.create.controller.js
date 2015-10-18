@@ -96,7 +96,7 @@
     }
 
     function getAvailableDates() {
-        return AppointmentDateService.GetAvailable(vm.request, vm.username);
+        return AppointmentDateService.GetAvailableForCreate(vm.request, vm.username);
     }
 
     function setAvailableDates(dates) {

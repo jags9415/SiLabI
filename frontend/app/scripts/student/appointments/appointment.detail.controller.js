@@ -9,6 +9,7 @@
 
   function AppointmentDetailController($localStorage, $location, $routeParams, StudentAppService, AppointmentDateService, MessageService, SoftwareService, moment, _) {
     var vm = this;
+
     vm.selectedSoftware = {};
     vm.softwareList = [];
     vm.availableDates = [];
@@ -67,7 +68,7 @@
     }
 
     function getAvailableDates() {
-        return AppointmentDateService.GetAvailable(vm.dateRequest, vm.username);
+        return AppointmentDateService.GetAvailableForUpdate(vm.dateRequest, vm.username, vm.appointment.id);
     }
 
     function setAppointment (data) {
@@ -90,21 +91,6 @@
           break;
         }
       }
-
-      if (!vm.selectedDate) {
-        var current = {
-          day: moment(vm.appointment.date).format('YYYY-MM-DD'),
-          hoursByLab: [{
-            fullDate: vm.appointment.date,
-            hour: moment(vm.appointment.date).format('HH:mm'),
-            laboratory: vm.appointment.laboratory
-          }]
-        };
-
-        vm.availableDates.unshift(current);
-        vm.selectedDate = vm.availableDates[0];
-        setAvailableHours();
-      }
     }
 
     function setAvailableHours() {
@@ -119,7 +105,7 @@
           }
         }
 
-        if (!vm.selectedHour) {
+        if (_.isNull(vm.selectedHour)) {
           vm.selectedHour = vm.availableHours[0];
         }
       }
@@ -133,12 +119,9 @@
 
     function updateAppointment () {
       if (!_.isEmpty(vm.appointment)) {
-        if (vm.selectedDate && vm.selectedHour) {
-          vm.date = vm.selectedDate.day + 'T' + vm.selectedHour.hour + ':00.000';
-        }
 
         var app = {
-          'date': vm.date,
+          'date': vm.selectedHour.fullDate,
           'software': vm.appointment.software.code
         };
 
