@@ -93,7 +93,7 @@
           <label for="course">Grupo</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-            <ui-select id="group" ng-model="ReservationCreate.selected_group" ng-disabled="!ReservationCreate.professor.username" required>
+            <ui-select id="group" ng-model="ReservationCreate.selected_group" ng-disabled="!ReservationCreate.professor.username">
               <ui-select-match placeholder="{{$select.selected.course.name}}">
                 {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
               </ui-select-match>
@@ -127,7 +127,7 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list-alt"></i></span>
-            <input class="form-control" placeholder="Buscar Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in ReservationCreate.searchSoftware($viewValue)" typeahead-on-select="ReservationCreate.setSoftware($item)" typeahead-editable="false" ng-model="ReservationCreate.selected_software" ng-disabled="!ReservationCreate.professor.username" required>
+            <input class="form-control" placeholder="Buscar Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in ReservationCreate.searchSoftware($viewValue)" typeahead-on-select="ReservationCreate.setSoftware($item)" typeahead-editable="false" ng-model="ReservationCreate.selected_software">
           </div>
         </div>
       </div>
