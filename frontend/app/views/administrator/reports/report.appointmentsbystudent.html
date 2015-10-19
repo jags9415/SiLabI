@@ -1,0 +1,52 @@
+<div>
+  <h2>Reporte - Citas por Estudiante</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li class="#/Administrador/Reportes">Reportes</li>
+    <li class="active">Citas por Estudiante</li>
+  </ol>
+  <form autocomplete="off" name="UpdateReservationForm">
+    <div cg-busy="AppsByStudent.promise"></div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Carné</th>
+            <th>Fecha</th>
+            <th>Software</th>
+            <th>Laboratorio</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="app in AppsByStudent.appointments">
+            <td>{{ app.student.username }}</td>
+            <td>{{ app.date | date : 'd MMM y hh:mm a' }}</td>
+            <td>{{ app.software.code }}</td>
+            <td>{{ app.laboratory.name }}</td>
+            <td>
+                <span class="label"
+                ng-class="{ 'label-success': app.state === 'Por iniciar',
+                            'label-primary': app.state === 'Finalizada',
+                            'label-danger': app.state === 'Cancelada'}" >
+                {{ app.state }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p ng-show="AppsByStudent.isLoaded() && AppsByStudent.isEmpty()">No se encontraron resultados.</p>
+    <br>
+    <div class="row" ng-show="AppsByStudent.totalPages > 1">
+      <div class="col-md-12 pagination">
+        <pagination ng-if="AppsByStudent.totalItems"
+          ng-change="AppsByStudent.loadPage(true)" ng-model="AppsByStudent.page" items-per-page="AppsByStudent.limit"
+          total-items="AppsByStudent.totalItems" max-size="5" boundary-links="true" rotate="true"
+          previous-text="<" next-text=">" first-text="<<" last-text=">>"
+        ></pagination>
+      </div>
+    </div>
+  </form>
+</div>

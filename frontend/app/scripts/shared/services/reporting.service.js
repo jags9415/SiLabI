@@ -9,6 +9,19 @@
 
   function ReportingService(RequestService, $localStorage) {
 
+    var appointmentsByStudentRquest = null;
+    this.setAppointmentsByStudentRequest = setAppointmentsByStudentRequest;
+    this.getAppointmentsByStudentRequest = getAppointmentsByStudentRequest;
+    this.GetAppointmentsByStudent = GetAppointmentsByStudent;
+    this.GetAppointmentsByGroup = GetAppointmentsByGroup;
+
+    function setAppointmentsByStudentRequest (request) {
+      appointmentsByStudentRquest = request;
+    }
+
+    function getAppointmentsByStudentRequest () {
+      return appointmentsByStudentRquest;
+    }
 
     function GetAppointmentsByStudent(Username, request) {
       request['access_token'] = $localStorage['access_token'];
@@ -28,10 +41,6 @@
         limit: -1,
         localStorage: $localStorage['access_token'],
         query: {
-          'state': {
-            operation: 'eq',
-            value: 'Finalizada'
-          },
           'date':[
             {
               operation: 'ge',

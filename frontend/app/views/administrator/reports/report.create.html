@@ -89,24 +89,6 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">Hora Inicial</label>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select name="startHour" ng-model="ReportCreate.selected_start_time" required>
-              <ui-select-match placeholder="{{$select.selected.hour}}">
-                {{$select.selected.hour}}
-              </ui-select-match>
-              <ui-select-choices repeat="hour in ReportCreate.start_hours | filter: $select.search">
-                <span ng-bind-html="hour.hour | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
           <label for="name">Fecha Final</label>
           <div class="input-group">
           <span class="input-group-btn">
@@ -120,22 +102,6 @@
              ng-model="ReportCreate.selected_end_date"
              min-date="ReportCreate.min_date"
              ng-click="ReportCreate.openDatePicker2($event)"/>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="name">Hora Final</label>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select name="endHour" ng-model="ReportCreate.selected_end_time" required>
-              <ui-select-match placeholder="{{$select.selected.hour}}">
-                {{$select.selected.hour}}
-              </ui-select-match>
-              <ui-select-choices repeat="hour in ReportCreate.end_hours | filter: $select.search">
-                <span ng-bind-html="hour.hour | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
           </div>
         </div>
       </div>

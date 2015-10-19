@@ -77,6 +77,11 @@
           controller: 'ReportCreateController',
           controllerAs: 'ReportCreate'
         })
+        .when('/Administrador/Reportes/Citas_Por_Estudiante', {
+          templateUrl: 'views/administrator/reports/report.appointmentsbystudent.html',
+          controller: 'AppointmentsByStudentController',
+          controllerAs: 'AppsByStudent'
+        })
         .when('/Operador/Docentes', {
           templateUrl: 'views/operator/professors/professor.list.html',
           controller: 'ProfessorListController',

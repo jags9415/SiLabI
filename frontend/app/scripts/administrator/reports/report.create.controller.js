@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('ReportCreateController', ReportCreateController);
 
-  ReportCreateController.$inject = ['$scope', '$routeParams', 'ProfessorReservationService', 'MessageService',  'PeriodService', 'GroupService', 'DateService', 'StudentAppService', 'StudentService', 'ProfessorService', '$location', '$localStorage'];
+  ReportCreateController.$inject = ['$scope', '$routeParams', 'MessageService', 'PeriodService', 'GroupService', 'DateService', 'StudentService', 'ProfessorService', 'ReportingService', '$location', '$localStorage'];
 
-  function ReportCreateController($scope, $routeParams, ProfessorReservationService, MessageService,  PeriodService, GroupService,  DateService, StudentAppService, StudentService, ProfessorService, $location, $localStorage) {
+  function ReportCreateController($scope, $routeParams, MessageService, PeriodService, GroupService,  DateService, StudentService, ProfessorService, ReportingService, $location, $localStorage) {
     var vm = this;
     vm.groups = [];
     vm.start_hours = [];
@@ -56,6 +56,7 @@
     vm.setProfessor = setProfessor;
     vm.setStudent = setStudent;
     vm.fieldsReady = fieldsReady;
+    vm.generateReport =  generateReport;
 
     activate();
 
@@ -85,7 +86,7 @@
     function fieldsReady () {
       return !_.isEmpty(vm.selected_report) && ( !_.isEmpty(vm.student) || !_.isEmpty(vm.professor) || !_.isEmpty(vm.group)) 
     }
-    
+
     function loadEndHours () {
       var index = -1;
 
@@ -215,17 +216,45 @@
   }
 
   function generateReport () {
-    if(vm.selected_report)
+    if(!_.isEmpty(vm.selected_report))
     {
       switch(vm.selected_report.value)
       {
-
+        case 1:
+          generateAppointmentsByStudent();
+          break;
       }
     }
   }
 
-  function handleSuccess (data) {
-    MessageService.success("Reservación actualizada.");
+  function generateAppointmentsByStudent () {
+    if(!_.isEmpty(vm.student))
+    {
+      var start_date = new Date(vm.selected_start_date);
+      var end_date = new Date(vm.selected_end_date);
+      start_date.setHours(08, 0, 0);
+      end_date.setHours(18, 0, 0);
+
+      var app_request = 
+      {
+        period:
+        {
+          start_date: start_date.toJSON(),
+          end_date: end_date.toJSON()
+        },
+        student: vm.student.username
+      };
+      ReportingService.setAppointmentsByStudentRequest(app_request);
+      redirectToAppsByStudent ();
+    }
+    else
+    {
+      MessageService.info("Debe buscar un estudiante.");
+    }
+  }
+
+  function redirectToAppsByStudent () {
+    $location.path('Administrador/Reportes/Citas_Por_Estudiante');
   }
 
   function handleError(data) {
