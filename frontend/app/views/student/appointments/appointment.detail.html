@@ -13,7 +13,7 @@
           <label for="date">Fecha</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-            <ui-select id="date" name="date" ng-model="AppointmentDetail.selectedDate" on-select="AppointmentDetail.setAvailableHours()">
+            <ui-select id="date" name="date" ng-model="AppointmentDetail.selectedDate" on-select="AppointmentDetail.setAvailableHours()" ng-disabled="AppointmentDetail.disabled">
               <ui-select-match placeholder="Fecha">
                 {{$select.selected.day | date : 'fullDate'}}
               </ui-select-match>
@@ -30,7 +30,7 @@
           <label for="hour">Hora</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="hour" name="hour" ng-model="AppointmentDetail.selectedHour" on-select="AppointmentDetail.changeLaboratory()">
+            <ui-select id="hour" name="hour" ng-model="AppointmentDetail.selectedHour" on-select="AppointmentDetail.changeLaboratory()" ng-disabled="AppointmentDetail.disabled">
               <ui-select-match placeholder="Hora">
                 {{$select.selected.fullDate | date: 'hh:mm a'}}
               </ui-select-match>
@@ -49,7 +49,13 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-cd"></i></span>
-            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)" typeahead-on-select="AppointmentDetail.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentDetail.appointment.software" ng-value="{{ '[' + AppointmentDetail.appointment.software.code + '] ' + AppointmentDetail.appointment.software.name }}">
+            <input class="form-control" placeholder="Software" name="searchInput" type="text"
+              typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)"
+              typeahead-on-select="AppointmentDetail.setSoftware($item)"
+              typeahead-editable="false"
+              ng-model="AppointmentDetail.appointment.software"
+              ng-disabled="AppointmentDetail.disabled"
+              ng-value="{{ '[' + AppointmentDetail.appointment.software.code + '] ' + AppointmentDetail.appointment.software.name }}">
           </div>
         </div>
       </div>
@@ -69,12 +75,12 @@
           <label for="group">Curso</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-            <input id="group" class="form-control" ng-model="AppointmentDetail.appointment.group.course.name" readonly>
+            <input id="group" class="form-control" ng-model="AppointmentDetail.appointment.group.course.name" ng-disabled="AppointmentDetail.disabled" readonly>
           </div>
         </div>
       </div>
     </div>
-    <div class="row" style="margin-top: 3%;">
+    <div class="row" style="margin-top: 3%;" ng-show="!AppointmentDetail.disabled">
       <div class="col-md-6 col-sm-6 col-xs-6 text-center">
         <button type="submit" class="btn btn-lg btn-primary" ng-click="AppointmentDetail.update()" ng-disabled="updateAppForm.$invalid">
           <i class="glyphicon glyphicon-floppy-disk"></i> Guardar

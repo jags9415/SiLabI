@@ -33,6 +33,7 @@
     vm.create = createAppointment;
     vm.setAvailableHours = setAvailableHours;
     vm.changeLaboratory = changeLaboratory;
+    vm.formatSoftware = formatSoftware;
 
     activate();
 
@@ -61,6 +62,12 @@
 
     function setSoftware(data) {
       vm.selectedSoftware = data;
+    }
+
+    function formatSoftware(model) {
+      if (model) {
+        return model.code;
+      }
     }
 
     function getGroups() {

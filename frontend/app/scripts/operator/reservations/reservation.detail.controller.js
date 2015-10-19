@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('ReservationDetailController', ReservationDetailController);
 
-  ReservationDetailController.$inject = ['$routeParams', 'ReservationService', 'MessageService', 'SoftwareService', 'PeriodService', 'GroupService', 'LabService', 'DateService', '$location'];
+  ReservationDetailController.$inject = ['$routeParams', '$location', 'ReservationService', 'MessageService', 'SoftwareService', 'PeriodService', 'GroupService', 'LabService', 'DateService', 'StateService'];
 
-  function ReservationDetailController($routeParams, ReservationService, MessageService, SoftwareService, PeriodService, GroupService, LabService, DateService, $location) {
+  function ReservationDetailController($routeParams, $location, ReservationService, MessageService, SoftwareService, PeriodService, GroupService, LabService, DateService, StateService) {
     var vm = this;
 
     vm.reservation = {};
@@ -22,6 +22,14 @@
     vm.min_date = new Date();
     vm.datepicker_open = false;
 
+    vm.request = {
+      fields: 'id,start_time,end_time,state,created_at,updated_at,professor.full_name,professor.username,laboratory.name,group.course.name,software.code'
+    }
+
+    vm.lab_request = {
+      fields: 'name'
+    }
+
     vm.groups_request = {
       fields: 'id,number,course.name'
     };
@@ -35,22 +43,23 @@
     vm.update = updateReservation;
     vm.searchSoftware = searchSoftware;
     vm.setSoftware = setSoftware;
+    vm.formatSoftware = formatSoftware;
     vm.openDatePicker = openDatePicker;
     vm.loadEndHours = loadEndHours;
 
     activate();
 
-
     function activate() {
       vm.reservation_id = $routeParams.id;
+
+      getReservation();
       getLaboratories();
       getHours();
-      getReservation();
+      getStates();
     }
 
     function openDatePicker($event){
-      if ($event)
-      {
+      if ($event){
         $event.preventDefault();
         $event.stopPropagation();
       }
@@ -73,14 +82,20 @@
     }
 
     function getReservation() {
-      ReservationService.GetOne(vm.reservation_id)
+      ReservationService.GetOne(vm.reservation_id, vm.request)
       .then(setReservation)
       .catch(handleError);
     }
 
-    function getLaboratories () {
-      LabService.GetAll()
+    function getLaboratories() {
+      LabService.GetAll(vm.lab_request, true)
       .then(setLaboratories)
+      .catch(handleError);
+    }
+
+    function getStates() {
+      StateService.GetReservationStates()
+      .then(setStates)
       .catch(handleError);
     }
 
@@ -108,14 +123,14 @@
         value: vm.username
       };
 
-      GroupService.GetAll(vm.groups_request)
+      GroupService.GetAll(vm.groups_request, true)
       .then(setGroups)
       .catch(handleError);
     }
 
     function getHours() {
-      vm.start_hours = DateService.GetReservationStartHours(vm.selected_date);
-      vm.end_hours = DateService.GetReservationEndHours(vm.selected_date);
+      vm.start_hours = DateService.GetHourRange(8, 17);
+      vm.end_hours = DateService.GetHourRange(9, 18);
     }
 
     function searchSoftware (input) {
@@ -126,7 +141,7 @@
         value: '*' + input + '*'
       }
 
-      return SoftwareService.GetAll(vm.software_request)
+      return SoftwareService.GetAll(vm.software_request, true)
         .then(function(data) {
           return data.results;
         });
@@ -135,22 +150,34 @@
     function setReservation (data) {
       vm.reservation = data;
 
+      vm.disabled = data.state != 'Por iniciar';
       vm.selected_date = new Date(data.start_time);
       vm.username = vm.reservation.professor.username;
-      vm.selected_software = data.software;
 
       getGroups();
       setStartHour();
       setEndHour();
+      loadEndHours();
     }
 
-    function setLaboratories (data) {
+    function setLaboratories(data) {
       vm.laboratories = data.results;
     }
 
-    function setSoftware (data) {
-      vm.selected_software = data;
+    function setStates(data) {
+      vm.states = data;
+      vm.states = _.reject(vm.states, function (state) { return state.value === '*'; });
+      vm.states = _.map(vm.states, 'name');
+    }
+
+    function setSoftware(data) {
       vm.reservation.software = data;
+    }
+
+    function formatSoftware(model) {
+      if (model) {
+        return model.code;
+      }
     }
 
     function setGroups (data) {
@@ -192,7 +219,8 @@
         'start_time': start_time.format(),
         'end_time': end_time.format(),
         'group': !_.isEmpty(vm.reservation.group) ? vm.reservation.group.id : 0,
-        'software': !_.isEmpty(vm.selected_software) ? vm.selected_software.code : ''
+        'software': !_.isEmpty(vm.reservation.software) ? vm.reservation.software.code : '',
+        'state': vm.reservation.state
       };
 
       ReservationService.Update(vm.reservation_id, res)
@@ -212,7 +240,6 @@
     function redirectToReservations() {
       $location.path('/Operador/Reservaciones');
     }
-
 
     function handleSuccess (data) {
       MessageService.success('Reservación actualizada.');

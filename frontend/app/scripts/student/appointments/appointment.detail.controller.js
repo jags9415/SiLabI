@@ -10,6 +10,7 @@
   function AppointmentDetailController($localStorage, $location, $routeParams, StudentAppService, AppointmentDateService, MessageService, SoftwareService, moment, _) {
     var vm = this;
 
+    vm.disabled = true;
     vm.selectedSoftware = {};
     vm.softwareList = [];
     vm.availableDates = [];
@@ -73,6 +74,7 @@
 
     function setAppointment (data) {
       vm.appointment = data;
+      vm.disabled = data.state != 'Por iniciar';
       return getAvailableDates();
     }
 

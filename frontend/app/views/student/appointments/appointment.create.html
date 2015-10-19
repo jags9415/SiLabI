@@ -66,7 +66,13 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-floppy-disk"></i></span>
-            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentCreate.searchSoftware($viewValue)" typeahead-on-select="AppointmentCreate.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentCreate.appointment.software" ng-value="{{ '[' + AppointmentCreate.appointment.software.code + '] ' + AppointmentCreate.appointment.software.name }}" required>
+            <input class="form-control" placeholder="Software" name="searchInput" type="text"
+              typeahead="'[' + software.code + '] ' + software.name for software in AppointmentCreate.searchSoftware($viewValue)"
+              typeahead-on-select="AppointmentCreate.setSoftware($item)"
+              typeahead-input-formatter="AppointmentCreate.formatSoftware($model)"
+              typeahead-editable="false"
+              ng-model="AppointmentCreate.selectedSoftware"
+              required>
           </div>
         </div>
       </div>

@@ -20,8 +20,8 @@ ReservationService.$inject = ['RequestService', '$localStorage'];
       return RequestService.get('/reservations', request, cached);
     }
 
-    function GetOne(id, cached) {
-      var request = {};
+    function GetOne(id, request, cached) {
+      if (!request) request = {};
       request.access_token = $localStorage['access_token'];
       return RequestService.get('/reservations/' + id, request, cached);
     }
