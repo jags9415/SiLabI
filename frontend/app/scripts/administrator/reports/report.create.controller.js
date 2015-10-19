@@ -27,6 +27,24 @@
       fields: "id,code,name",
       limit: 10
     };
+
+    vm.reports = [
+      {
+        name:"Citas por estudiante",
+        value: 1
+      },
+      {
+        name:"Citas por grupo",
+        value: 2
+      },
+      {
+        name:"Reservaciones por docente",
+        value: 3
+      },
+      {
+        name:"Reservaciones por grupo",
+        value: 4
+      }];
     
     vm.searchGroup = searchGroup;
     vm.setGroup = setGroup;
@@ -178,25 +196,35 @@
     }
   }
 
-     function setEndHour() {
-      var end_time = vm.reservation.end_time;
-      var end_hour = end_time.substring(end_time.indexOf("T") + 1, end_time.length);
-      for (var i = 0; i < vm.end_hours.length; i++) {
-        var current_hour = vm.end_hours[i];
-        if(end_hour === current_hour.value)
-        {
-          vm.selected_end_time = current_hour;
-          return;
-        }
-    }
-    }
-
-    function handleSuccess (data) {
-      MessageService.success("Reservación actualizada.");
-    }
-
-    function handleError(data) {
-      MessageService.error(data.description);
+   function setEndHour() {
+    var end_time = vm.reservation.end_time;
+    var end_hour = end_time.substring(end_time.indexOf("T") + 1, end_time.length);
+    for (var i = 0; i < vm.end_hours.length; i++) {
+      var current_hour = vm.end_hours[i];
+      if(end_hour === current_hour.value)
+      {
+        vm.selected_end_time = current_hour;
+        return;
+      }
     }
   }
+
+  function generateReport () {
+    if(vm.selected_report)
+    {
+      switch(vm.selected_report.value)
+      {
+
+      }
+    }
+  }
+
+  function handleSuccess (data) {
+    MessageService.success("Reservación actualizada.");
+  }
+
+  function handleError(data) {
+    MessageService.error(data.description);
+  }
+}
 })();

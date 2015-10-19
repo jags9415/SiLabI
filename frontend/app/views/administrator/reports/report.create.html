@@ -7,15 +7,35 @@
   </ol>
   <form autocomplete="off" name="UpdateReservationForm">
   <div class="row">
-      <div class="col-md-6">
+  <div class="col-md-12">
         <div class="form-group">
+          <label for="name">Seleccione el tipo de reporte</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-search"></i></span>
-            <input id="student" name="student" class="form-control" type="text" placeholder="Buscar Estudiante(Carné)" ng-model="ReportCreate.student_id" typeahead="student.username for student in ReportCreate.getStudents($viewValue)" typeahead-editable="false" typeahead-on-select="ReportCreate.setStudent($item)">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-file"></i></span>
+            <ui-select name="selected_report" ng-model="ReportCreate.selected_report" required>
+              <ui-select-match placeholder="{{$select.selected.name}}">
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="report in ReportCreate.reports | filter: $select.search">
+                <span ng-bind-html="report.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+  </div>
+  <div class="row" ng-show="ReportCreate.selected_report.value == 1">
+    <div class="col-md-12">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-search"></i></span>
+          <input id="student" name="student" class="form-control" type="text" placeholder="Buscar Estudiante(Carné)" ng-model="ReportCreate.student_id" typeahead="student.username for student in ReportCreate.getStudents($viewValue)" typeahead-editable="false" typeahead-on-select="ReportCreate.setStudent($item)">
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="row" ng-show="ReportCreate.selected_report.value == 3">
+      <div class="col-md-12">
         <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-search"></i></span>
@@ -24,8 +44,9 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6">
+    </div>
+    <div class="row" ng-show="ReportCreate.selected_report.value == 1">
+      <div class="col-md-12">
         <div class="form-group">
           <label for="name">Estudiante</label>
           <div class="input-group">
@@ -34,7 +55,9 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      </div>
+      <div class="row" ng-show="ReportCreate.selected_report.value == 3">
+      <div class="col-md-12">
         <div class="form-group">
           <label for="name">Docente</label>
           <div class="input-group">
@@ -43,6 +66,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
     <div class="row">
       <div class="col-md-6">
@@ -116,7 +140,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" ng-show="ReportCreate.selected_report.value == 2 || ReportCreate.selected_report.value == 4">
       <div class="col-md-12">
         <div class="form-group">
           <label for="software">Grupo</label>
@@ -127,42 +151,12 @@
         </div>
       </div>
     </div>
+    <br/>
     <div class="row">
       <div class="col-md-12 text-center">
-      <div class="panel-heading">
-        <label for="software">Seleccionar Reporte</label>
-        </div>
-      </div>
-    </div>
-    <div class="well">
-      <div class="row">
-        <div class="col-md-6">
-          <button type="submit" class="btn btn-default btn-block" ng-click="ReportCreate.appointmentsByStudent()" ng-disabled="!ReportCreate.student">
-            <i class="glyphicon glyphicon-file"></i>
-            <span class="hidden-xs">Citas por estudiante</span>
-          </button>
-        </div>
-        <div class="col-md-6">
-          <button type="submit" class="btn btn-default btn-block" ng-click="ReportCreate.appointmentsByGroup()" ng-disabled="!ReportCreate.group">
-            <i class="glyphicon glyphicon-file"></i>
-            <span class="hidden-xs">Citas por grupo</span>
-          </button>
-        </div>
-      </div>
-      <br/>
-      <div class="row">
-        <div class="col-md-6">
-          <button type="submit" class="btn btn-default btn-block" ng-click="ReportCreate.reservationsByProfessor()" ng-disabled="!ReportCreate.professor">
-            <i class="glyphicon glyphicon-file"></i>
-            <span class="hidden-xs">Reservaciones por docente</span>
-          </button>
-        </div>
-        <div class="col-md-6">
-          <button type="submit" class="btn btn-default btn-block" ng-click="ReportCreate.reservationsByProfessor()" ng-disabled="!ReportCreate.group">
-            <i class="glyphicon glyphicon-file"></i>
-            <span class="hidden-xs">Reservaciones por grupo</span>
-          </button>
-        </div>
+        <button type="button" class="btn btn-primary btn-lg" ng-click="ReportCreate.generateReport()">
+          <i class="glyphicon glyphicon-file"></i> Generar Reporte
+        </button>
       </div>
     </div>
   </form>
