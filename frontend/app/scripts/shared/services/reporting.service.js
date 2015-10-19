@@ -23,7 +23,7 @@
         localStorage: $localStorage['access_token']
       };
 
-      var student_request{
+      var student_request = {
         fields: "id,date,software.code,software.name",
         limit: -1,
         localStorage: $localStorage['access_token'],
@@ -32,15 +32,16 @@
             operation: 'eq',
             value: 'Finalizada'
           },
-          'date':
-          {
-            operation: 'ge',
-            value: startDate
-          },
-          {
-            operation: 'lt',
-            value: endDate
-          }
+          'date':[
+            {
+              operation: 'ge',
+              value: startDate
+            },
+            {
+              operation: 'lt',
+              value: endDate
+            }
+          ]
         }
       };
 
