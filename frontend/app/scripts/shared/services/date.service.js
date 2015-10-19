@@ -5,101 +5,34 @@
     .module('silabi')
     .service('DateService', DateService);
 
-  DateService.$inject = ['RequestService', '$localStorage'];
+  DateService.$inject = ['RequestService', '$localStorage', 'moment'];
 
-  function DateService(RequestService, $localStorage) {
+  function DateService(RequestService, $localStorage, moment) {
+
     this.GetReservationStartHours = GetReservationStartHours;
     this.GetReservationEndHours = GetReservationEndHours;
 
-    function GetReservationStartHours () {
-      var hours = [
-      {
-        hour: '8:00am',
-        value: '08:00:00.000'
-      },
-      {
-        hour: '9:00am',
-        value: '09:00:00.000'
-      },
-      {
-        hour: '10:00am',
-        value: '10:00:00.000'
-      },
-      {
-        hour: '11:00am',
-        value: '11:00:00.000'
-      },
-      {
-        hour: '12:00pm',
-        value: '12:00:00.000'
-      },
-      {
-        hour: '01:00pm',
-        value: '13:00:00.000'
-      },
-      {
-        hour: '02:00pm',
-        value: '14:00:00.000'
-      },
-      {
-        hour: '03:00pm',
-        value: '15:00:00.000'
-      },
-      {
-        hour: '04:00pm',
-        value: '16:00:00.000'
-      },
-      {
-        hour: '05:00pm',
-        value: '17:00:00.000'
+    function GetReservationStartHours(date) {
+      var hours = [];
+      var now = moment(date).startOf('day');
+
+      for (var i = 8; i <= 17; i++) {
+        now.hour(i);
+        hours.push(now.format());
       }
-      ];
+
       return hours;
     }
 
-    function GetReservationEndHours () {
-      var hours = [
-      {
-        hour: '9:00am',
-        value: '09:00:00.000'
-      },
-      {
-        hour: '10:00am',
-        value: '10:00:00.000'
-      },
-      {
-        hour: '11:00am',
-        value: '11:00:00.000'
-      },
-      {
-        hour: '12:00pm',
-        value: '12:00:00.000'
-      },
-      {
-        hour: '01:00pm',
-        value: '13:00:00.000'
-      },
-      {
-        hour: '02:00pm',
-        value: '14:00:00.000'
-      },
-      {
-        hour: '03:00pm',
-        value: '15:00:00.000'
-      },
-      {
-        hour: '04:00pm',
-        value: '16:00:00.000'
-      },
-      {
-        hour: '05:00pm',
-        value: '17:00:00.000'
-      },
-      {
-        hour: '06:00pm',
-        value: '18:00:00.000'
+    function GetReservationEndHours(date) {
+      var hours = [];
+      var now = moment(date).startOf('day');
+
+      for (var i = 9; i <= 18; i++) {
+        now.hour(i);
+        hours.push(now.format());
       }
-      ];
+
       return hours;
     }
   }

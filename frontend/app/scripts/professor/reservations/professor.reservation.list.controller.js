@@ -5,21 +5,32 @@
         .module('silabi')
         .controller('ProfessorReservationListController', ProfessorReservationListController);
 
-   ProfessorReservationListController.$inject = ['$scope', 'ProfessorReservationService', 'MessageService', 'StateService', '$location', '$localStorage'];
+   ProfessorReservationListController.$inject = ['$scope', 'ProfessorReservationService', 'GroupService', 'PeriodService', 'MessageService', 'StateService', '$location', '$localStorage'];
 
-  function ProfessorReservationListController($scope, ProfessorReservationService, MessageService, StateService, $location, $localStorage) {
+  function ProfessorReservationListController($scope, ProfessorReservationService, GroupService, PeriodService, MessageService, StateService, $location, $localStorage) {
     var vm = this;
+
     vm.advanceSearch = false;
+    vm.datePickerOpen = false;
     vm.loaded = false;
+    vm.laboratories = ['Laboratorio A', 'Laboratorio B'];
     vm.reservations = [];
+    vm.limit = 20;
+
     vm.searched = {
       laboratory: {},
       group: { course: {} }
     };
-    vm.limit = 20;
-    vm.request = {
-      fields : "id,laboratory,state,software,group,start_time,end_time"
+
+    vm.groups_request = {
+      fields: 'id,number,course.name'
     };
+
+    vm.request = {
+      fields: 'id,state,start_time,end_time,laboratory.name,group.course.name,software.code',
+      sort: {field: 'start_time', type: 'ASC'}
+    };
+
     vm.states = [];
     vm.$storage = $localStorage;
     vm.open = openReservation;
@@ -29,6 +40,7 @@
     vm.isLoaded = isLoaded;
     vm.loadPage = loadPage;
     vm.toggleAdvanceSearch = toggleAdvanceSearch;
+    vm.openDatePicker = openDatePicker;
 
     activate();
 
@@ -47,6 +59,7 @@
       }
 
       loadPage();
+      getGroups();
 
       StateService.GetReservationStates()
       .then(setStates)
@@ -71,73 +84,87 @@
     function searchReservation() {
       vm.request.query = {};
 
-      if (vm.searched.group.course.name) {
+      if (vm.searched.group) {
+        console.log(vm.searched.group.course.name);
         vm.request.query['group.course.name'] = {
-          operation: "like",
+          operation: 'like',
           value: '*' + vm.searched.group.course.name.replace(' ', '*') + '*'
         }
       }
 
       if (vm.searched.laboratory.name) {
         vm.request.query['laboratory.name'] = {
-          operation: "like",
+          operation: 'like',
           value: '*' + vm.searched.laboratory.name.replace(' ', '*') + '*'
         }
       }
 
       if (vm.searched.state) {
-      vm.request.query.state = {
-        operation: "eq",
-        value: vm.searched.state.value
-      }
-    }
-
-    if (vm.searched.software) {
-      vm.request.query['software.code'] = {
-        operation: "like",
-        value: '*' + vm.searched.software.replace(' ', '*') + '*'
-      }
-    }
-
-    if (vm.searched.start_time) {
-      if(vm.searched.hour)
-        {
-          var date = new Date(vm.searched.start_time.getFullYear(), vm.searched.start_time.getMonth(), vm.searched.start_time.getUTCDate(), vm.searched.hour.slice(0, 2));
-          console.log(vm.searched.hour.slice(0, 2));
-          vm.request.query.start_time = {
-            operation: "eq",
-            value: date.toJSON()
-          }
-        }
-        else
-        {
-          var date1 = new Date(vm.searched.start_time.getFullYear(), vm.searched.start_time.getMonth(), vm.searched.start_time.getUTCDate(), "08");
-          var date2 = new Date(vm.searched.start_time.getFullYear(), vm.searched.start_time.getMonth(), vm.searched.start_time.getUTCDate(), "18");
-          vm.request.query["start_time"] = [
-          {
-            operation: "ge",
-            value: date1.toJSON()
-          },
-          {
-            operation: "lt",
-            value: date2.toJSON()
-          }
-          ]
+        vm.request.query.state = {
+          operation: 'like',
+          value: vm.searched.state.value
         }
       }
+
+      if (vm.searched.start_time) {
+        var start = moment(vm.searched.start_time).startOf('day');
+        var end = moment(vm.searched.start_time).endOf('day');
+
+        vm.request.query['start_time'] = [
+          { operation: 'ge', value: start.format() },
+          { operation: 'le', value: end.format() }
+        ]
+      }
+
       loadPage();
     }
 
-    function toggleAdvanceSearch() {
-    vm.advanceSearch = !vm.advanceSearch;
-    delete vm.searched.code;
-    delete vm.searched.name;
-    delete vm.searched.state;
-  }
+    function getGroups() {
+      var period = PeriodService.GetCurrentPeriod('Semestre');
+      vm.groups_request.query = {};
 
+      vm.groups_request.query['period.type'] = {
+        operation: 'eq',
+        value: 'Semestre'
+      };
+
+      vm.groups_request.query['period.value'] = {
+        operation: 'eq',
+        value: period.value
+      };
+
+      vm.groups_request.query['period.year'] = {
+        operation: 'eq',
+        value: period.year
+      };
+
+      vm.groups_request.query['professor.username'] = {
+        operation: 'eq',
+        value: vm.username
+      };
+
+      GroupService.GetAll(vm.groups_request)
+      .then(setGroups)
+      .catch(handleError);
+    }
+
+    function toggleAdvanceSearch() {
+      vm.advanceSearch = !vm.advanceSearch;
+      delete vm.searched.group;
+      delete vm.searched.laboratory.name
+      delete vm.searched.state;
+    }
+
+    function openDatePicker($event) {
+      if ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+      }
+      vm.datePickerOpen = true;
+    }
 
     function isEmpty() {
-      return vm.reservations.length == 0;
+      return vm.reservations.length === 0;
     }
 
     function isLoaded() {
@@ -152,12 +179,16 @@
       vm.loaded = true;
     }
 
+    function setGroups (data) {
+      vm.groups = data.results;
+    }
+
     function setStates(states) {
-    vm.states = states;
-  }
+      vm.states = states;
+    }
 
     function deleteReservation(id) {
-      MessageService.confirm("¿Desea realmente eliminar esta reservación?")
+      MessageService.confirm('¿Desea realmente eliminar esta reservación?')
       .then(function() {
         ProfessorReservationService.Delete(vm.username, id)
         .then(loadPage)

@@ -10,12 +10,12 @@
     <div class="row">
       <div class="col-md-10 col-xs-10">
         <div class="form-group">
-          <input type="text" class="form-control" id="username" placeholder="Buscar Docente (Usuario)" ng-model="ReservationCreate.professor_username">
+          <input type="text" class="form-control" id="username" placeholder="Docente (usuario)" ng-model="ReservationCreate.professor_username">
           <p class="help-block" ng-if="createLabForm.name.$error.required">Nombre de usuario requerido.</p>
         </div>
       </div>
       <div class="col-md-2 col-xs-2">
-        <button type="button" class="btn btn-default btn-block" ng-click="ReservationCreate.searchProfessor()">
+        <button type="submit" class="btn btn-default btn-block" ng-click="ReservationCreate.searchProfessor()">
           <i class="glyphicon glyphicon-search"></i>
           <span class="hidden-xs">Buscar</span>
         </button>
@@ -33,74 +33,20 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="form-group">
           <label for="name">* Fecha</label>
           <div class="input-group">
-              <input type="text" class="form-control"
-                     datepicker-popup="mediumDate"
-                     is-open="ReservationCreate.datepicker_open"
-                     ng-model="ReservationCreate.selected_date"
-                     min-date="ReservationCreate.min_date"
-                     ng-click="ReservationCreate.openDatePicker($event)"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default"
-                        ng-click="ReservationCreate.openDatePicker($event)">
-                  <i class="glyphicon glyphicon-calendar"></i>
-                </button>
-              </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="name">* Hora Inicio</label>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="date" ng-model="ReservationCreate.selected_start_time" ng-disabled="!ReservationCreate.selected_date" on-select="ReservationCreate.loadEndHours()" required>
-              <ui-select-match placeholder="{{$select.selected.hour}}">
-                {{$select.selected.hour}}
-              </ui-select-match>
-              <ui-select-choices repeat="hour in ReservationCreate.start_hours | filter: $select.search">
-                <span ng-bind-html="hour.hour | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="name">* Hora Final</label>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="hour" ng-model="ReservationCreate.selected_end_time" on-select="ReservationCreate.changeLaboratory()" ng-disabled="!ReservationCreate.selected_start_time" required>
-              <ui-select-match placeholder="{{$select.selected.hour}}">
-                {{$select.selected.hour}}
-              </ui-select-match>
-              <ui-select-choices repeat="hour in ReservationCreate.end_hours_sliced | filter: $select.search">
-                <span ng-bind-html="hour.hour | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="course">Grupo</label>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-            <ui-select id="group" ng-model="ReservationCreate.selected_group" ng-disabled="!ReservationCreate.professor.username">
-              <ui-select-match placeholder="{{$select.selected.course.name}}">
-                {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
-              </ui-select-match>
-              <ui-select-choices repeat="group in ReservationCreate.groups | filter: $select.search">
-                <span ng-bind-html="'[#' + group.number + '] ' + group.course.name | highlight: $select.search"></span>
-              </ui-select-choices>
-            </ui-select>
+            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            <input type="text" class="form-control"
+                   datepicker-popup="mediumDate"
+                   is-open="ReservationCreate.datepicker_open"
+                   show-weeks="false"
+                   ng-model="ReservationCreate.selected_date"
+                   min-date="ReservationCreate.min_date"
+                   ng-click="ReservationCreate.openDatePicker($event)"
+                   ng-disabled="!ReservationCreate.professor"
+                   close-text="Cerrar" clear-text="Limpiar" current-text="Hoy"/>
           </div>
         </div>
       </div>
@@ -108,8 +54,8 @@
         <div class="form-group">
           <label for="lab">* Laboratorio</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-home"></i></span>
-            <ui-select id="lab" ng-model="ReservationCreate.selected_laboratory" ng-disabled="!ReservationCreate.professor.username" required>
+            <span class="input-group-addon"><i class="fa fa-desktop"></i></span>
+            <ui-select id="lab" ng-model="ReservationCreate.selected_laboratory" ng-disabled="!ReservationCreate.professor" required>
               <ui-select-match placeholder="{{$select.selected.name}}">
                 {{$select.selected.name}}
               </ui-select-match>
@@ -122,12 +68,62 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">* Hora Inicio</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
+            <ui-select id="date" ng-model="ReservationCreate.selected_start_time" ng-disabled="!ReservationCreate.professor" on-select="ReservationCreate.loadEndHours()" required>
+              <ui-select-match placeholder="{{$select.selected | date: 'hh:mm a'}}">
+                {{$select.selected | date: 'hh:mm a'}}
+              </ui-select-match>
+              <ui-select-choices repeat="hour in ReservationCreate.start_hours | filter: $select.search">
+                <span ng-bind-html="hour | date: 'hh:mm a' | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="name">* Hora Final</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
+            <ui-select id="hour" ng-model="ReservationCreate.selected_end_time" ng-disabled="!ReservationCreate.professor" required>
+              <ui-select-match placeholder="{{$select.selected | date: 'hh:mm a'}}">
+                {{$select.selected | date: 'hh:mm a'}}
+              </ui-select-match>
+              <ui-select-choices repeat="hour in ReservationCreate.end_hours_sliced | filter: $select.search">
+                <span ng-bind-html="hour | date: 'hh:mm a' | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="course">Grupo</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-group"></i></span>
+            <ui-select id="group" ng-model="ReservationCreate.selected_group" ng-disabled="!ReservationCreate.professor">
+              <ui-select-match placeholder="{{$select.selected.course.name}}">
+                {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="group in ReservationCreate.groups | filter: $select.search">
+                <span ng-bind-html="'[#' + group.number + '] ' + group.course.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
         <div class="form-group">
           <label for="software">Software</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-list-alt"></i></span>
-            <input class="form-control" placeholder="Buscar Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in ReservationCreate.searchSoftware($viewValue)" typeahead-on-select="ReservationCreate.setSoftware($item)" typeahead-editable="false" ng-model="ReservationCreate.selected_software">
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-floppy-disk"></i></span>
+            <input class="form-control" name="searchInput" type="text" ng-disabled="!ReservationCreate.professor" typeahead="'[' + software.code + '] ' + software.name for software in ReservationCreate.searchSoftware($viewValue)" typeahead-on-select="ReservationCreate.setSoftware($item)" typeahead-editable="false" ng-model="ReservationCreate.selected_software">
           </div>
         </div>
       </div>
