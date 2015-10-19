@@ -55,6 +55,7 @@
     vm.getStudents = getStudents;
     vm.setProfessor = setProfessor;
     vm.setStudent = setStudent;
+    vm.fieldsReady = fieldsReady;
 
     activate();
 
@@ -81,6 +82,10 @@
       vm.datepicker2_open = true;
     }
 
+    function fieldsReady () {
+      return !_.isEmpty(vm.selected_report) && ( !_.isEmpty(vm.student) || !_.isEmpty(vm.professor) || !_.isEmpty(vm.group)) 
+    }
+    
     function loadEndHours () {
       var index = -1;
 

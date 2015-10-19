@@ -154,7 +154,7 @@
     <br/>
     <div class="row">
       <div class="col-md-12 text-center">
-        <button type="button" class="btn btn-primary btn-lg" ng-click="ReportCreate.generateReport()">
+        <button type="button" class="btn btn-primary btn-lg" ng-click="ReportCreate.generateReport()" ng-disabled="!ReportCreate.fieldsReady()">
           <i class="glyphicon glyphicon-file"></i> Generar Reporte
         </button>
       </div>
