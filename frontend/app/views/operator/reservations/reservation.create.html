@@ -123,7 +123,12 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-floppy-disk"></i></span>
-            <input class="form-control" name="searchInput" type="text" ng-disabled="!ReservationCreate.professor" typeahead="'[' + software.code + '] ' + software.name for software in ReservationCreate.searchSoftware($viewValue)" typeahead-on-select="ReservationCreate.setSoftware($item)" typeahead-editable="false" ng-model="ReservationCreate.selected_software">
+            <input class="form-control" name="searchInput" type="text" ng-disabled="!ReservationCreate.professor"
+            typeahead="'[' + software.code + '] ' + software.name for software in ReservationCreate.searchSoftware($viewValue)"
+            typeahead-on-select="ReservationCreate.setSoftware($item)"
+            typeahead-input-formatter="ReservationCreate.formatSoftware($model)"
+            typeahead-editable="false"
+            ng-model="ReservationCreate.selected_software">
           </div>
         </div>
       </div>

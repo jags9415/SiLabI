@@ -6,7 +6,7 @@
     <li><a href="#Operador/Citas">Citas</a></li>
     <li class="active">Agregar</li>
   </ol>
-  <form autocomplete="off">
+  <form autocomplete="off" name="createAppointmentForm">
   <div class="row">
       <div class="col-md-10 col-xs-10">
         <div class="form-group">
@@ -26,7 +26,7 @@
           <label for="name">Estudiante</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
-            <input class="form-control" type="text" ng-model="AppointmentCreate.student.full_name" readonly>
+            <input class="form-control" type="text" ng-model="AppointmentCreate.student.full_name" required readonly>
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@
           <label for="name">Fechas Disponiles</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-            <ui-select id="date" ng-model="AppointmentCreate.selectedDate" on-select="AppointmentCreate.setAvailableHours()" ng-disabled="!AppointmentCreate.student.username">
+            <ui-select id="date" ng-model="AppointmentCreate.selectedDate" on-select="AppointmentCreate.setAvailableHours()" ng-disabled="!AppointmentCreate.student.username" required>
               <ui-select-match placeholder="Fecha">
                 {{$select.selected.day | date : 'fullDate'}}
               </ui-select-match>
@@ -53,7 +53,7 @@
           <label for="name">Horas Disponibles</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="hour" ng-model="AppointmentCreate.selectedHour" on-select="AppointmentCreate.changeLaboratory()" ng-disabled="!AppointmentCreate.student.username">
+            <ui-select id="hour" ng-model="AppointmentCreate.selectedHour" on-select="AppointmentCreate.changeLaboratory()" ng-disabled="!AppointmentCreate.student.username" required>
               <ui-select-match placeholder="Hora">
                 {{$select.selected.fullDate | date: 'hh:mm a'}}
               </ui-select-match>
@@ -71,7 +71,7 @@
           <label for="course">Grupo</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-group"></i></span>
-            <ui-select id="group" ng-model="AppointmentCreate.group" ng-disabled="!AppointmentCreate.student.username">
+            <ui-select id="group" ng-model="AppointmentCreate.group" ng-disabled="!AppointmentCreate.student.username" required>
               <ui-select-match placeholder="Grupo">
                 {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
               </ui-select-match>
@@ -105,7 +105,14 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-floppy-disk"></i></span>
-            <input class="form-control" placeholder="Software" name="searchInput" type="text" typeahead="'[' + software.code + '] ' + software.name for software in AppointmentCreate.searchSoftware($viewValue)" typeahead-on-select="AppointmentCreate.setSoftware($item)" typeahead-editable="false" ng-model="AppointmentCreate.selectedSoftware">
+            <input class="form-control" placeholder="Software" name="searchInput" type="text"
+              typeahead="'[' + software.code + '] ' + software.name for software in AppointmentCreate.searchSoftware($viewValue)"
+              typeahead-on-select="AppointmentCreate.setSoftware($item, $model, $label)"
+              typeahead-input-formatter="AppointmentCreate.formatSoftware($model)"
+              typeahead-editable="false"
+              ng-model="AppointmentCreate.selectedSoftware"
+              ng-disabled="!AppointmentCreate.student.username"
+              required/>
           </div>
         </div>
       </div>

@@ -32,6 +32,10 @@
       limit: 10
     };
 
+    vm.lab_request = {
+      fields: 'name'
+    }
+
     vm.selected_date;
     vm.datepicker_open = false;
     vm.min_date = new Date();
@@ -41,6 +45,7 @@
     vm.searchProfessor = searchProfessor;
     vm.searchSoftware = searchSoftware;
     vm.setSoftware = setSoftware;
+    vm.formatSoftware = formatSoftware;
     vm.create = createReservation;
 
     activate();
@@ -51,14 +56,14 @@
     }
 
     function searchProfessor() {
-      ProfessorService.GetOne(vm.professor_username, vm.professor_request)
+      ProfessorService.GetOne(vm.professor_username, vm.professor_request, true)
       .then(setProfessor)
       .catch(handleError);
       clearFields();
     }
 
     function getLaboratories () {
-      LabService.GetAll()
+      LabService.GetAll(vm.lab_request, true)
       .then(setLaboratories)
       .catch(handleError);
     }
@@ -84,8 +89,8 @@
     }
 
     function getHours() {
-      vm.start_hours = DateService.GetReservationStartHours(vm.selected_date);
-      vm.end_hours = DateService.GetReservationEndHours(vm.selected_date);
+      vm.start_hours = DateService.GetHourRange(8, 17);
+      vm.end_hours = DateService.GetHourRange(9, 18);
     }
 
     function getGroups () {
@@ -112,7 +117,7 @@
         value: vm.professor.username
       };
 
-      GroupService.GetAll(vm.groups_request)
+      GroupService.GetAll(vm.groups_request, true)
       .then(setGroups)
       .catch(handleError);
     }
@@ -125,7 +130,7 @@
         value: '*' + input + '*'
       }
 
-      return SoftwareService.GetAll(vm.software_request)
+      return SoftwareService.GetAll(vm.software_request, true)
         .then(function(data) {
           return data.results;
         });
@@ -141,6 +146,12 @@
 
     function setSoftware (data) {
       vm.selected_software = data;
+    }
+
+    function formatSoftware(model) {
+      if (model) {
+        return model.code;
+      }
     }
 
     function openDatePicker($event){

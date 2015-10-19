@@ -125,6 +125,7 @@
 
     function setAppointment (data) {
       vm.appointment = data;
+      vm.disabled = data.state != 'Por iniciar';
       return getGroups();
     }
 

@@ -10,6 +10,7 @@
   function ProfessorReservationDetailController($scope, $routeParams, ProfessorReservationService, MessageService, SoftwareService, PeriodService, GroupService, LabService, DateService, $location, $localStorage) {
     var vm = this;
 
+    vm.disabled = true;
     vm.software_list = [];
     vm.groups = [];
     vm.laboratories = [];
@@ -26,6 +27,10 @@
       fields: 'id,state,start_time,end_time,laboratory.name,group.course.name,software.code,software.name'
     }
 
+    vm.laboratory_request = {
+      fields: 'name'
+    }
+
     vm.groups_request = {
       fields: 'id,course.name'
     };
@@ -39,6 +44,7 @@
     vm.update = updateReservation;
     vm.searchSoftware = searchSoftware;
     vm.setSoftware = setSoftware;
+    vm.formatSoftware = formatSoftware;
     vm.openDatePicker = openDatePicker;
     vm.loadEndHours = loadEndHours;
 
@@ -60,7 +66,7 @@
     }
 
     function getLaboratories() {
-      LabService.GetAll()
+      LabService.GetAll(vm.laboratory_request, true)
       .then(setLaboratories)
       .catch(handleError);
     }
@@ -89,14 +95,14 @@
         value: vm.username
       };
 
-      GroupService.GetAll(vm.groups_request)
+      GroupService.GetAll(vm.groups_request, true)
       .then(setGroups)
       .catch(handleError);
     }
 
     function getHours() {
-      vm.start_hours = DateService.GetReservationStartHours(vm.selected_date);
-      vm.end_hours = DateService.GetReservationEndHours(vm.selected_date);
+      vm.start_hours = DateService.GetHourRange(8, 17);
+      vm.end_hours = DateService.GetHourRange(9, 18);
     }
 
     function loadEndHours() {
@@ -122,7 +128,7 @@
         value: '*' + input + '*'
       }
 
-      return SoftwareService.GetAll(vm.software_request)
+      return SoftwareService.GetAll(vm.software_request, true)
         .then(function(data) {
           return data.results;
         });
@@ -130,10 +136,9 @@
 
     function setReservation(data) {
       vm.reservation = data;
+      vm.disabled = data.state != 'Por iniciar';
       vm.selected_date = new Date(data.start_time);
-      vm.selected_software = data.software;
 
-      getHours();
       setStartHour();
       setEndHour();
       loadEndHours();
@@ -145,7 +150,12 @@
 
     function setSoftware(data) {
       vm.reservation.software = data;
-      vm.selected_software = data;
+    }
+
+    function formatSoftware(model) {
+      if (model) {
+        return model.code;
+      }
     }
 
     function setGroups(data) {
@@ -187,7 +197,7 @@
         'start_time': start_time.format(),
         'end_time': end_time.format(),
         'group': !_.isEmpty(vm.reservation.group) ? vm.reservation.group.id : 0,
-        'software': !_.isEmpty(vm.selected_software) ? vm.selected_software.code : ''
+        'software': !_.isEmpty(vm.reservation.software) ? vm.reservation.software.code : ''
       };
 
       ProfessorReservationService.Update(vm.username, vm.reservation_id, res)

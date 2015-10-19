@@ -41,6 +41,7 @@
     vm.changeLaboratory = changeLaboratory;
     vm.searchSoftware = searchSoftware;
     vm.setSoftware = setSoftware;
+    vm.formatSoftware = formatSoftware;
 
     activate();
 
@@ -120,6 +121,12 @@
 
     function setSoftware (data) {
       vm.selectedSoftware = data;
+    }
+
+    function formatSoftware(model) {
+      if (model) {
+        return model.code;
+      }
     }
 
     function setStudent (student) {

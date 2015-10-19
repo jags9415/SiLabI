@@ -129,6 +129,15 @@ input[type=number] {
 .form-control:disabled {
   background-color: white;
   opacity: 0.65;
+  cursor: default !important;
+}
+
+.form-control[readonly] {
+  cursor: default !important;
+}
+
+.btn[disabled] {
+  cursor: default !important;
 }
 
 .ui-select-placeholder, .ui-select-match-text {
