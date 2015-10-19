@@ -8,6 +8,7 @@
   ProfessorReservationService.$inject = ['RequestService', '$localStorage'];
 
   function ProfessorReservationService(RequestService, $localStorage) {
+
     this.GetAll = GetAll;
     this.GetOne = GetOne;
     this.Update = Update;
@@ -20,8 +21,8 @@
       return RequestService.get('/professors/' + username + '/reservations', request, cached);
     }
 
-    function GetOne(username, id, cached) {
-      var request = {};
+    function GetOne(username, id, request, cached) {
+      if (!request) request = {};
       request.access_token = $localStorage['access_token'];
       return RequestService.get('/professors/' + username + '/reservations/' + id, request, cached);
     }

@@ -3,15 +3,21 @@
   <hr>
   <ol class="breadcrumb">
     <li><a href="#/">Inicio</a></li>
-    <li class="active">Mis Reservaciones</li>
+    <li class="active">Reservaciones</li>
   </ol>
   <div class="table-search" style="margin-bottom: 3%;">
     <div class="row">
-      <div class="col-md-10 col-xs-10">
+      <div class="col-md-10 col-xs-9">
         <form autocomplete="off" class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar por curso" name="searchInput" type="text" ng-change="ProfessorReservationList.search()" ng-model="ProfessorReservationList.searched.group.course.name">
+            <input class="form-control" placeholder="Buscar (fecha)"
+               datepicker-popup
+               show-weeks="false"
+               is-open="ProfessorReservationList.datePickerOpen"
+               ng-model="ProfessorReservationList.searched.start_time"
+               ng-click="ProfessorReservationList.openDatePicker($event)"
+               close-text="Cerrar" clear-text="Limpiar" current-text="Hoy"/>
           </div>
           <div class="input-group">
             <a href="" ng-click="ProfessorReservationList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
@@ -32,27 +38,31 @@
           <div class="row">
             <div class="col-md-10">
               <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="lab" name="lab" placeholder="Laboratorio" ng-model="ProfessorReservationList.searched.laboratory.name">
+                    <ui-select id="group" ng-model="ProfessorReservationList.searched.group" >
+                      <ui-select-match placeholder="Grupo" allow-clear="true">
+                        {{$select.selected.course.name}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="group in ProfessorReservationList.groups | filter: $select.search">
+                        <span ng-bind-html="group.course.name | highlight: $select.search"></span>
+                      </ui-select-choices>
+                    </ui-select>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="software" name="software" placeholder="Software" ng-model="ProfessorReservationList.searched.software">
+                    <ui-select id="lab" ng-model="ProfessorReservationList.searched.laboratory.name">
+                      <ui-select-match placeholder="Laboratorio" allow-clear="true">
+                        {{$select.selected}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="laboratory in ProfessorReservationList.laboratories">
+                        <span ng-bind-html="laboratory"></span>
+                      </ui-select-choices>
+                    </ui-select>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <input ui-date class="form-control" id="date" placeholder="Fecha Inicio" name="date" ng-model="ProfessorReservationList.searched.start_time">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="hour" name="hour" ng-model="ProfessorReservationList.searched.hour" ui-mask="99:99">
-                  </div>
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <div class="form-group">
                     <ui-select id="state" ng-model="ProfessorReservationList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
@@ -83,10 +93,9 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Curso</th>
-          <th>Fecha Inicio</th>
-          <th>Fecha Finalización</th>
-          <th>Software</th>
+          <th>Grupo</th>
+          <th>Fecha</th>
+          <th>Hora</th>
           <th>Laboratorio</th>
           <th>Estado</th>
           <th style="text-align: center">Acción</th>
@@ -95,9 +104,8 @@
       <tbody>
         <tr ng-repeat="res in ProfessorReservationList.reservations">
           <td>{{ res.group.course.name }}</td>
-          <td>{{ res.start_time | date : 'medium' }}</td>
-          <td>{{ res.end_time | date : 'medium' }}</td>
-          <td>{{ res.software.code }}</td>
+          <td>{{ res.start_time | date : 'mediumDate' }}</td>
+          <td>{{ res.start_time | date : 'hh:mm a' }} - {{ res.end_time | date : 'hh:mm a' }}</td>
           <td>{{ res.laboratory.name }}</td>
           <td>
               <span class="label"

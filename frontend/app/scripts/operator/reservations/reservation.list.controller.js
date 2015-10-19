@@ -10,14 +10,22 @@
   function ProfessorReservationListController(ReservationService, MessageService, StateService, $location) {
     var vm = this;
     vm.advanceSearch = false;
+    vm.datePickerOpen = false;
     vm.loaded = false;
     vm.reservations = [];
+    vm.laboratories = ['Laboratorio A', 'Laboratorio B'];
     vm.searched = {};
     vm.limit = 20;
-    vm.request = {
-      fields : "id,professor,laboratory,state,software,group,start_time"
-    };
     vm.states = [];
+
+    vm.request = {
+      fields: 'id,state,start_time,end_time,professor.full_name,laboratory.name',
+      sort: [
+        {field: 'start_time', type: 'ASC'},
+        {field: 'professor.full_name', type: 'ASC'}
+      ]
+    };
+
     vm.open = openReservation;
     vm.delete = deleteReservation;
     vm.search = searchReservation;
@@ -25,6 +33,7 @@
     vm.isLoaded = isLoaded;
     vm.loadPage = loadPage;
     vm.toggleAdvanceSearch = toggleAdvanceSearch;
+    vm.openDatePicker = openDatePicker;
 
     activate();
 
@@ -63,37 +72,33 @@
     function searchReservation() {
       vm.request.query = {};
 
-      if (vm.searched.professor && vm.searched.professor.full_name) {
+      if (vm.searched.professor) {
         vm.request.query['professor.full_name'] = {
-          operation: "like",
-          value: '*' + vm.searched.professor.full_name.replace(' ', '*') + '*'
+          operation: 'like',
+          value: '*' + vm.searched.professor.replace(' ', '*') + '*'
         }
       }
 
-      if (vm.searched.group && vm.searched.group.course.name) {
-        vm.request.query['group.course.name'] = {
-          operation: "like",
-          value: '*' + vm.searched.group.course.name.replace(' ', '*') + '*'
-        }
-      }
-
-      if (vm.searched.laboratory && vm.searched.laboratory.name) {
+      if (vm.searched.laboratory) {
         vm.request.query['laboratory.name'] = {
-          operation: "like",
-          value: '*' + vm.searched.laboratory.name.replace(' ', '*') + '*'
+          operation: 'like',
+          value: '*' + vm.searched.laboratory.replace(' ', '*') + '*'
         }
       }
 
-      if (vm.searched.software && vm.searched.software.code) {
-        vm.request.query['software.code'] = {
-          operation: "like",
-          value: '*' + vm.searched.software.code.replace(' ', '*') + '*'
-        }
+      if (vm.searched.start_time) {
+        var start = moment(vm.searched.start_time).startOf('day');
+        var end = moment(vm.searched.start_time).endOf('day');
+
+        vm.request.query['start_time'] = [
+          { operation: 'ge', value: start.format() },
+          { operation: 'le', value: end.format() }
+        ]
       }
 
       if (vm.searched.state) {
         vm.request.query.state = {
-          operation: "eq",
+          operation: 'like',
           value: vm.searched.state.value
         }
       }
@@ -103,11 +108,19 @@
 
     function toggleAdvanceSearch() {
       vm.advanceSearch = !vm.advanceSearch;
+      vm.searched = {};
     }
 
+    function openDatePicker($event) {
+      if ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+      }
+      vm.datePickerOpen = true;
+    }
 
     function isEmpty() {
-      return vm.reservations.length == 0;
+      return vm.reservations.length === 0;
     }
 
     function isLoaded() {
@@ -127,7 +140,7 @@
     }
 
     function deleteReservation(id) {
-      MessageService.confirm("¿Desea realmente eliminar esta reservación?")
+      MessageService.confirm('¿Desea realmente eliminar esta reservación?')
       .then(function() {
         ReservationService.Delete(id)
         .then(loadPage)

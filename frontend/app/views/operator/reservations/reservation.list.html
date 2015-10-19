@@ -11,7 +11,7 @@
         <form autocomplete="off" class="form-horizontal">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input class="form-control" placeholder="Buscar (docente)" name="searchInput" type="text" ng-change="ReservationList.search()" ng-model="ReservationList.searched.professor.full_name">
+            <input class="form-control" placeholder="Buscar (docente)" name="searchInput" type="text" ng-change="ReservationList.search()" ng-model="ReservationList.searched.professor">
           </div>
           <div class="input-group">
             <a href="" ng-click="ReservationList.toggleAdvanceSearch()">Búsqueda Avanzada</a>
@@ -26,28 +26,36 @@
         </a>
       </div>
     </div>
-    <div class="row" ng-show="ReservationList.advanceSearch">
+    <div class="row" collapse="!ReservationList.advanceSearch">
       <div class="col-md-12">
         <form autocomplete="off" class="form-inline advanced-search">
           <div class="row">
             <div class="col-md-10">
               <div class="row">
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="course" name="course" placeholder="Curso" ng-model="ReservationList.searched.group.course.name">
+                <div class="col-md-4">
+                  <div class="form-group datepicker-popup">
+                    <input class="form-control" placeholder="Fecha"
+                       datepicker-popup="mediumDate"
+                       show-weeks="false"
+                       is-open="ReservationList.datePickerOpen"
+                       ng-model="ReservationList.searched.start_time"
+                       ng-click="ReservationList.openDatePicker($event)"
+                       close-text="Cerrar" clear-text="Limpiar" current-text="Hoy"/>
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="lab" name="lab" placeholder="Laboratorio" ng-model="ReservationList.searched.laboratory.name">
+                    <ui-select id="lab" ng-model="ReservationList.searched.laborator">
+                      <ui-select-match placeholder="Laboratorio" allow-clear="true">
+                        {{$select.selected}}
+                      </ui-select-match>
+                      <ui-select-choices repeat="laboratory in ReservationList.laboratories">
+                        <span ng-bind-html="laboratory"></span>
+                      </ui-select-choices>
+                    </ui-select>
                   </div>
                 </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="software" name="software" placeholder="Software" ng-model="ReservationList.searched.software.code">
-                  </div>
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <div class="form-group">
                     <ui-select id="state" ng-model="ReservationList.searched.state">
                       <ui-select-match placeholder="Estado" allow-clear="true">
@@ -78,11 +86,10 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th style="width: 20%">Docente</th>
-          <th style="width: 20%">Fecha</th>
-          <th style="width: 20%">Curso</th>
+          <th>Docente</th>
+          <th>Fecha</th>
+          <th>Hora</th>
           <th>Laboratorio</th>
-          <th>Software</th>
           <th>Estado</th>
           <th style="text-align: center">Acción</th>
         </tr>
@@ -90,10 +97,9 @@
       <tbody>
         <tr ng-repeat="reservation in ReservationList.reservations">
           <td>{{ reservation.professor.full_name }}</td>
-          <td>{{ reservation.start_time | date : 'medium' }}</td>
-          <td>{{ reservation.group.course.name }}</td>
+          <td>{{ reservation.start_time | date : 'mediumDate' }}</td>
+          <td>{{ reservation.start_time | date : 'hh:mm a' }} - {{ reservation.end_time | date : 'hh:mm a' }}</td>
           <td>{{ reservation.laboratory.name }}</td>
-          <td>{{ reservation.software.code }}</td>
           <td>
               <span class="label"
               ng-class="{ 'label-success': reservation.state === 'Por iniciar',

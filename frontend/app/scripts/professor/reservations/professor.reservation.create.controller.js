@@ -9,6 +9,7 @@
 
   function ProfessorReservationCreateController($scope, ProfessorReservationService, MessageService, SoftwareService, PeriodService, GroupService, LabService, DateService, $location, $localStorage) {
     var vm = this;
+
     vm.software_list = [];
     vm.groups = [];
     vm.laboratories = [];
@@ -17,16 +18,16 @@
     vm.end_hours_sliced = [];
     vm.selected_software = null;
     vm.selected_group = null;
- 
+    vm.$storage = $localStorage;
+
     vm.groups_request = {
-      fields: "id,number,course.name"
+      fields: 'id,number,course.name'
     };
 
     vm.software_request = {
-      fields: "id,code,name",
+      fields: 'id,code,name',
       limit: 10
     };
-    vm.$storage = $localStorage;
 
     vm.fieldsReady = fieldsReady;
     vm.create = createReservation;
@@ -36,85 +37,78 @@
     vm.datepicker_open = false;
     vm.openDatePicker = openDatePicker;
     vm.loadEndHours = loadEndHours;
+    vm.setHours = setHours;
 
     activate();
 
-
-  
     function activate() {
       getLaboratories();
-      getHours();
-      if(vm.$storage['username'])
-      {
+      setHours();
+
+      if (vm.$storage['username']) {
         vm.username = vm.$storage['username'];
       }
-      getGroups ();
+
+      getGroups();
     }
 
-    function loadEndHours () {
-      var index = -1;
+    function loadEndHours() {
+      var index = _.indexOf(vm.end_hours, vm.selected_start_time);
 
-      for (var i = 0; i < vm.end_hours.length; i++) 
-      {
-        if(vm.selected_start_time.value == vm.end_hours[i].value)
-        {
-          index = i;
-        }  
+      if (index >= 0) {
+        vm.end_hours_sliced = vm.end_hours.slice(index + 1, vm.end_hours.length);
       }
-      if(index >= 0)
-      {
-        vm.end_hours_sliced = vm.end_hours.slice(index+1, vm.end_hours.length);
-      }
-      else
-      {
+      else {
         vm.end_hours_sliced = vm.end_hours;
       }
+
+      if (!_.contains(vm.end_hours_sliced, vm.selected_end_time)) {
+        vm.selected_end_time = vm.end_hours_sliced[0];
+      }
     }
 
-    
     function openDatePicker($event){
-      if ($event) 
-      {
+      if ($event) {
         $event.preventDefault();
-        $event.stopPropagation(); 
+        $event.stopPropagation();
       }
       vm.datepicker_open = true;
     }
 
-    function fieldsReady () {
+    function fieldsReady() {
       return vm.selected_laboratory &&
              vm.selected_date &&
              vm.selected_start_time &&
              vm.selected_end_time;
     }
 
-    function getLaboratories () {
+    function getLaboratories() {
       LabService.GetAll()
       .then(setLaboratories)
       .catch(handleError);
     }
 
-    function getGroups () {
+    function getGroups() {
       var period = PeriodService.GetCurrentPeriod('Semestre');
       vm.groups_request.query = {};
 
-      vm.groups_request.query["period.type"] = {
-        operation: "eq",
-        value: "Semestre"
+      vm.groups_request.query['period.type'] = {
+        operation: 'eq',
+        value: 'Semestre'
       };
 
-      vm.groups_request.query["period.value"] = {
-        operation: "eq",
+      vm.groups_request.query['period.value'] = {
+        operation: 'eq',
         value: period.value
       };
 
-      vm.groups_request.query["period.year"] = {
-        operation: "eq",
+      vm.groups_request.query['period.year'] = {
+        operation: 'eq',
         value: period.year
       };
 
-      vm.groups_request.query["professor.username"] = {
-        operation: "eq",
+      vm.groups_request.query['professor.username'] = {
+        operation: 'eq',
         value: vm.username
       };
 
@@ -123,16 +117,16 @@
       .catch(handleError);
     }
 
-    function getHours() {
-      vm.start_hours = DateService.GetReservationStartHours();
-      vm.end_hours = DateService.GetReservationEndHours();
+    function setHours() {
+      vm.start_hours = DateService.GetReservationStartHours(vm.selected_date);
+      vm.end_hours = DateService.GetReservationEndHours(vm.selected_date);
     }
 
-    function searchSoftware (input) {
+    function searchSoftware(input) {
       vm.software_request.query = {};
 
       vm.software_request.query.code = {
-        operation: "like",
+        operation: 'like',
         value: '*' + input + '*'
       }
 
@@ -154,26 +148,23 @@
       vm.groups = data.results;
     }
 
-    function createReservation () {
-      var group_id = null;
-      var software_code = null;
-      if(vm.selected_group)
-      {
-        group_id = vm.selected_group.id;
-      }
-      if(vm.selected_software)
-      {
-        software_code = vm.selected_software.code;
-      }
-      var start_time = vm.selected_date.getFullYear()+"-"+ (vm.selected_date.getMonth() + 1)+ "-" + vm.selected_date.getUTCDate() + "T" + vm.selected_start_time.value;
-      var end_time = vm.selected_date.getFullYear()+"-"+ (vm.selected_date.getMonth() + 1)+ "-" + vm.selected_date.getUTCDate() + "T" + vm.selected_end_time.value;
+    function createReservation() {
+      var start_time = moment(vm.selected_date).hour(moment(vm.selected_start_time).hour());
+      var end_time = moment(vm.selected_date).hour(moment(vm.selected_end_time).hour());
+
       var res = {
-        "laboratory": vm.selected_laboratory.name,
-        "software": software_code,
-        "start_time": start_time,
-        "end_time": end_time,
-        "group": group_id
+        'laboratory': vm.selected_laboratory.name,
+        'start_time': start_time.format(),
+        'end_time': end_time.format(),
       };
+
+      if (vm.selected_group) {
+        res['group'] = vm.selected_group.id;
+      }
+
+      if (vm.selected_software) {
+        res['software']  = vm.selected_software.code;
+      }
 
       ProfessorReservationService.Create(res, vm.username)
       .then(handleSuccess)
@@ -193,7 +184,7 @@
     }
 
     function handleSuccess (data) {
-      MessageService.success("Reservación creada.");
+      MessageService.success('Reservación creada.');
       clearFields();
     }
 
