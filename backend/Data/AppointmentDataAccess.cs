@@ -83,7 +83,7 @@ namespace SiLabI.Data
             }
         }
 
-        public DataTable GetAvailable(Dictionary<string, object> payload, string username, QueryString request)
+        public DataTable GetAvailableForCreate(Dictionary<string, object> payload, string username, QueryString request)
         {
             SqlParameter[] parameters = new SqlParameter[5];
 
@@ -100,7 +100,27 @@ namespace SiLabI.Data
 
             parameters[4] = SqlUtilities.CreateParameter("@username", SqlDbType.VarChar, username);
 
-            return _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetAvailableAppointments", parameters);
+            return _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetAvailableAppointmentsForCreate", parameters);
+        }
+
+        public DataTable GetAvailableForUpdate(Dictionary<string, object> payload, int id, QueryString request)
+        {
+            SqlParameter[] parameters = new SqlParameter[5];
+
+            parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
+
+            parameters[1] = SqlUtilities.CreateParameter("@fields", SqlDbType.VarChar);
+            parameters[1].Value = SqlUtilities.FormatSelectFields(request.Fields);
+
+            parameters[2] = SqlUtilities.CreateParameter("@order_by", SqlDbType.VarChar);
+            parameters[2].Value = SqlUtilities.FormatOrderByFields(request.Sort);
+
+            parameters[3] = SqlUtilities.CreateParameter("@where", SqlDbType.VarChar);
+            parameters[3].Value = SqlUtilities.FormatWhereFields(request.Query);
+
+            parameters[4] = SqlUtilities.CreateParameter("@appointment", SqlDbType.VarChar, id);
+
+            return _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetAvailableAppointmentsForUpdate", parameters);
         }
 
         public DataRow Create(Dictionary<string, object> payload, object obj)

@@ -1,24 +1,24 @@
 /**
- * @api {get} /v1/students/:username/appointments/available Retrieve the available appointments of an student.
+ * @api {get} /v1/students/:username/appointments/:id/available Retrieve the available appointment update dates.
  * @apiVersion 1.0.0
- * @apiName GetAvailableAppointments
+ * @apiName GetAvailableAppointmentsForUpdate
  * @apiGroup Appointments->User
  * @apiPermission student
  * @apiUse BaseError
  *
- * @apiDescription Retrieve the available appointments of an student.
+ * @apiDescription Retrieve the available appointment update dates.
  *
  * @apiExample Example:
- * 		GET /students/201242273/appointments/available HTTP/1.1
+ * 		GET /students/201242273/appointments/34/available HTTP/1.1
  *
- * @apiParam {String}	access_token	The access token.
+ * @apiParam {String}	access_token	 The access token.
  * @apiParam {String[]} [q]           A query to filter the results.
  * @apiParam {String[]} [fields]      A list of fields to include in the results.
  * @apiParam {String[]} [sort]        A list of fields to sort the results.
  *
  * @apiSuccess {Date}						date 		      The appointment date.
- * @apiSuccess {Object}                     laboratory		The laboratory data.
- * @apiSuccess {Number}                     spaces  		The available spaces in the laboratory.
+ * @apiSuccess {Object}         laboratory		The laboratory data.
+ * @apiSuccess {Number}         spaces  		  The available spaces in the laboratory.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

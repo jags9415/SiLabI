@@ -544,7 +544,15 @@ namespace SiLabI
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Retrieve a list of available appointments dates for a certain student.")]
-        List<AvailableAppointment> GetAvailableAppointments(string token, string username, string query, string sort, string fields);
+        List<AvailableAppointment> GetAvailableAppointmentsForCreate(string token, string username, string query, string sort, string fields);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/students/{username}/appointments/{id}/available/?access_token={token}&q={query}&sort={sort}&fields={fields}",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Retrieve a list of available appointment update dates for a certain appointment.")]
+        List<AvailableAppointment> GetAvailableAppointmentsForUpdate(string token, string username, string id, string query, string sort, string fields);
+
 
         [OperationContract]
         [WebGet(UriTemplate = "/students/{username}/appointments/?access_token={token}&q={query}&page={page}&limit={limit}&sort={sort}&fields={fields}",

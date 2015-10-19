@@ -97,7 +97,7 @@
     }
 
     function getAvailableDates() {
-        return AppointmentService.GetAvailable(vm.studentUsername, vm.dateRequest);
+        return AppointmentDateService.GetAvailableForCreate(vm.dateRequest, vm.studentUsername);
     }
 
     function searchSoftware (input) {
@@ -142,8 +142,13 @@
 
       if (vm.availableDates.length > 0) {
         vm.selectedDate = vm.availableDates[0];
-        setAvailableHours();
       }
+      else {
+        delete vm.selectedDate;
+        MessageService.error('El estudiante no posee fechas disponibles.');
+      }
+
+      setAvailableHours();
     }
 
     function setAvailableHours() {
@@ -151,14 +156,22 @@
         vm.availableHours = vm.selectedDate.hoursByLab;
         if (vm.availableHours.length > 0) {
           vm.selectedHour = vm.availableHours[0];
-          changeLaboratory();
         }
       }
+      else {
+        delete vm.availableHours;
+        delete vm.selectedHour;
+      }
+
+      changeLaboratory();
     }
 
     function changeLaboratory () {
       if (vm.selectedHour) {
         vm.selectedLaboratory = vm.selectedHour.laboratory;
+      }
+      else {
+        delete vm.selectedLaboratory;
       }
     }
 
@@ -177,24 +190,30 @@
     }
 
     function clearFields() {
+       $scope.$broadcast('show-errors-reset');
+
+       delete vm.student;
+       delete vm.groups;
+       delete vm.availableDates;
+       delete vm.availableHours;
+       delete vm.softwareList;
+       delete vm.selectedDate;
+       delete vm.selectedSoftware;
+       delete vm.selectedHour;
+       delete vm.selectedLaboratory;
+       delete vm.group;
+     }
+
+    function handleSuccess(data) {
+      MessageService.success('Cita creada.');
       $scope.$broadcast('show-errors-reset');
 
-      delete vm.student;
-      delete vm.groups;
-      delete vm.availableDates;
-      delete vm.availableHours;
       delete vm.softwareList;
-      delete vm.selectedDate;
       delete vm.selectedSoftware;
-      delete vm.selectedHour;
-      delete vm.selectedLaboratory;
-      delete vm.group;
-    }
 
-    function handleSuccess (data) {
-      MessageService.success('Cita creada.');
-      clearFields();
-      delete vm.studentUsername;
+      getAvailableDates()
+      .then(setAvailableDates)
+      .catch(handleError);
     }
 
     function handleError(data) {

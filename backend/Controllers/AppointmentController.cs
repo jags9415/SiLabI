@@ -59,13 +59,13 @@ namespace SiLabI.Controllers
         }
 
         /// <summary>
-        /// Get the available appointments for a specific student.
+        /// Get the available appointment dates for a specific student.
         /// </summary>
         /// <param name="student">The student username.</param>
         /// <param name="request">The query.</param>
         /// <param name="payload">The token payload.</param>
-        /// <returns>The list of available appointments of the student.</returns>
-        public List<AvailableAppointment> GetAvailable(string student, QueryString request, Dictionary<string, object> payload)
+        /// <returns>The list of available appointments dates of the student.</returns>
+        public List<AvailableAppointment> GetAvailableForCreate(string student, QueryString request, Dictionary<string, object> payload)
         {
             if (payload["type"] as string == "Estudiante" && payload["username"] as string != student)
             {
@@ -73,7 +73,33 @@ namespace SiLabI.Controllers
             }
 
             List<AvailableAppointment> response = new List<AvailableAppointment>();
-            DataTable table = _AppointmentDA.GetAvailable(payload, student, request);
+            DataTable table = _AppointmentDA.GetAvailableForCreate(payload, student, request);
+
+            foreach (DataRow row in table.Rows)
+            {
+                response.Add(AvailableAppointment.Parse(row));
+            }
+
+            return response;
+        }
+
+        /// <summary>
+        /// Get the available update dates for a specific appointment.
+        /// </summary>
+        /// <param name="student">The student username.</param>
+        /// <param name="id">The appointment identity</param>
+        /// <param name="request">The query.</param>
+        /// <param name="payload">The token payload.</param>
+        /// <returns>The list of available appointments update dates.</returns>
+        public List<AvailableAppointment> GetAvailableForUpdate(string student, int id, QueryString request, Dictionary<string, object> payload)
+        {
+            if (payload["type"] as string == "Estudiante" && payload["username"] as string != student)
+            {
+                throw new UnathorizedOperationException("No se permite buscar citas de otros usuarios");
+            }
+
+            List<AvailableAppointment> response = new List<AvailableAppointment>();
+            DataTable table = _AppointmentDA.GetAvailableForUpdate(payload, id, request);
 
             foreach (DataRow row in table.Rows)
             {

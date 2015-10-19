@@ -9,6 +9,7 @@
 
   function AppointmentCreateController($localStorage, StudentAppService, AppointmentDateService, MessageService, StudentService, SoftwareService, PeriodService, _) {
     var vm = this;
+
     vm.groups = [];
     vm.availableDates = [];
     vm.availableHours = [];
@@ -95,7 +96,7 @@
     }
 
     function getAvailableDates() {
-        return AppointmentDateService.GetAvailable(vm.request, vm.username);
+        return AppointmentDateService.GetAvailableForCreate(vm.request, vm.username);
     }
 
     function setAvailableDates(dates) {
@@ -103,8 +104,13 @@
 
       if (vm.availableDates.length > 0) {
         vm.selectedDate = vm.availableDates[0];
-        setAvailableHours();
       }
+      else {
+        delete vm.selectedDate;
+        MessageService.error('No posee fechas disponibles.');
+      }
+
+      setAvailableHours();
     }
 
     function setAvailableHours() {
@@ -112,14 +118,22 @@
         vm.availableHours = vm.selectedDate.hoursByLab;
         if (vm.availableHours.length > 0) {
           vm.selectedHour = vm.availableHours[0];
-          changeLaboratory();
         }
       }
+      else {
+        delete vm.availableHours;
+        delete vm.selectedHour;
+      }
+
+      changeLaboratory();
     }
 
     function changeLaboratory() {
-      if (vm.selectedHour) {
+      if (!_.isEmpty(vm.selectedHour)) {
         vm.selectedLaboratory = vm.selectedHour.laboratory;
+      }
+      else {
+        delete vm.selectedLaboratory;
       }
     }
 
@@ -140,10 +154,10 @@
 
       delete vm.appointment;
       delete vm.selectedSoftware;
-      delete vm.selectedHour;
-      delete vm.group;
-      delete vm.selectedLaboratory;
-      delete vm.selectedDate;
+
+      getAvailableDates()
+      .then(setAvailableDates)
+      .catch(handleError);
     }
 
     function handleError(data) {
