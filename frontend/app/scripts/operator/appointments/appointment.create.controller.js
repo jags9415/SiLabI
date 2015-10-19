@@ -180,7 +180,7 @@
         'student': vm.student.username,
         'laboratory': vm.selectedLaboratory.name,
         'software': vm.selectedSoftware.code,
-        'date': vm.selectedDate.day + 'T' + vm.selectedHour.hour + ':00.000',
+        'date': vm.selectedHour.fullDate,
         'group': vm.group.id
       };
 
@@ -207,13 +207,8 @@
     function handleSuccess(data) {
       MessageService.success('Cita creada.');
       $scope.$broadcast('show-errors-reset');
-
-      delete vm.softwareList;
-      delete vm.selectedSoftware;
-
-      getAvailableDates()
-      .then(setAvailableDates)
-      .catch(handleError);
+      clearFields();
+      delete vm.studentUsername;
     }
 
     function handleError(data) {

@@ -5,9 +5,9 @@
         .module('silabi')
         .service('RequestService', RequestService);
 
-    RequestService.$inject = ['$http', '$q', 'API_URL', 'lodash'];
+    RequestService.$inject = ['$http', '$q', 'CacheFactory', 'API_URL', 'lodash'];
 
-    function RequestService($http, $q, API_URL, _) {
+    function RequestService($http, $q, CacheFactory, API_URL, _) {
 
       this.get = getRequest;
       this.put = putRequest;
@@ -24,6 +24,9 @@
       function join(baseUrl, endpoint) {
         if (_.endsWith(baseUrl, '/')) {
           baseUrl = baseUrl.substring(0, baseUrl.length - 1);
+        }
+        if (_.endsWith(endpoint, '/')) {
+          endpoint = endpoint.substring(0, endpoint.length - 1);
         }
         if (!_.startsWith(endpoint, '/')) {
           endpoint = '/' + endpoint;
@@ -140,8 +143,9 @@
       * Perform a GET request to the SiLabI web service.
       * @param endpoint The endpoint.
       * @param request The request.
+      * @param cached Flag that indicate if the response should be inserted in the cache.
       * @return A promise.
-      * @example getRequest('/students', object)
+      * @example getRequest('/students', {fields: '...', sort: '...'}, true)
       */
       function getRequest(endpoint, request, cached) {
         var defer = $q.defer();
@@ -186,6 +190,7 @@
         $http.post(url, data)
         .then(
           function(response) {
+            CacheFactory.get('$http').removePrefix(url);
             defer.resolve(response.data);
           },
           function(response) {
@@ -213,6 +218,7 @@
         $http.put(url, data)
         .then(
           function(response) {
+            CacheFactory.get('$http').removePrefix(url.substring(0, url.lastIndexOf('/')));
             defer.resolve(response.data);
           },
           function(response) {
@@ -234,17 +240,20 @@
       * @example deleteRequest('/students/201242273', {'access_token': '...'})
       */
       function deleteRequest(endpoint, data) {
+        var url = join(API_URL, endpoint);
         var defer = $q.defer();
+
         var config = {
           method: 'DELETE',
           headers: {'Content-Type': 'application/json'},
-          url : join(API_URL, endpoint),
-          data : data
+          url: url,
+          data: data
         };
 
         $http(config)
         .then(
           function(response) {
+            CacheFactory.get('$http').removePrefix(url.substring(0, url.lastIndexOf('/')));
             defer.resolve(response.data);
           },
           function(response) {

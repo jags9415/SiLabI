@@ -43,6 +43,7 @@ module.exports = function(config) {
       'bower_components/toastr/toastr.js',
       'bower_components/moment/moment.js',
       'bower_components/angular-busy/dist/angular-busy.js',
+      'bower_components/angular-cache/dist/angular-cache.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/silabi.js",

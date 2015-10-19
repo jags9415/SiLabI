@@ -166,8 +166,7 @@
         .when('/Operador/Software/Agregar', {
           templateUrl: 'views/operator/software/software.create.html',
           controller: 'SoftwareCreateController',
-          controllerAs: 'SoftwareCreate',
-          reloadOnSearch: false
+          controllerAs: 'SoftwareCreate'
         })
         .when('/Operador/Software/:code', {
           templateUrl: 'views/operator/software/software.detail.html',
@@ -183,14 +182,12 @@
         .when('/Operador/Citas/Agregar', {
           templateUrl: 'views/operator/appointments/appointment.create.html',
           controller: 'AppointmentCreateController',
-          controllerAs: 'AppointmentCreate',
-          reloadOnSearch: false
+          controllerAs: 'AppointmentCreate'
         })
         .when('/Operador/Citas/:id', {
           templateUrl: 'views/operator/appointments/appointment.detail.html',
           controller: 'AppointmentDetailController',
-          controllerAs: 'AppointmentDetail',
-          reloadOnSearch: false
+          controllerAs: 'AppointmentDetail'
         })
         .when('/Operador/Asistencia', {
           templateUrl: 'views/operator/appointments/appointment.current.html',
@@ -222,8 +219,7 @@
         .when('/Docente/Reservaciones/Agregar', {
           templateUrl: 'views/professor/reservations/reservation.create.html',
           controller: 'ProfessorReservationCreateController',
-          controllerAs: 'ProfessorReservationCreate',
-          reloadOnSearch: false
+          controllerAs: 'ProfessorReservationCreate'
         })
         .when('/Docente/Reservaciones/:id', {
           templateUrl: 'views/professor/reservations/reservation.detail.html',
@@ -252,11 +248,6 @@
         .otherwise('/404');
     }
 
-    function redirectToLogin($location, $localStorage) {
-      $localStorage.$reset();
-      $location.path('/Login');
-    }
-
     handleHomeRedirect.$inject = ['$location', '$localStorage', 'AuthenticationService'];
 
     function handleHomeRedirect($location, $localStorage, AuthenticationService) {
@@ -265,7 +256,8 @@
         $location.path('/' + data.type);
       }
       else {
-        redirectToLogin($location, $localStorage);
+        $localStorage.$reset();
+        $location.path('/Login');
       }
     }
 
@@ -273,14 +265,15 @@
 
     function routeChangeListener($rootScope, $location, $localStorage, AuthenticationService, _) {
       $rootScope.$on('$routeChangeStart', function (event, next, current) {
+        var path = next.originalPath;
         var url = next.templateUrl;
-        if (!url) { return; }
+        if (!path) { return; }
 
         // User is authenticated.
         if (AuthenticationService.isAuthenticated()) {
           var data = AuthenticationService.getUserData();
           // User is trying to access the login view or a restricted view.
-          if (url === 'views/public/login.html' || !hasAccesssToView(_, url, data.type)) {
+          if ((_.startsWith(url, 'views/public') && path !== '/404') || !hasAccesssToView(_, next, data.type)) {
             if (current) {
               event.preventDefault();
             }
@@ -291,28 +284,32 @@
         }
         // User is not authenticated. Only have access to public views.
         else if (!_.startsWith(url, 'views/public')) {
-          redirectToLogin($location, $localStorage);
+          $localStorage.$reset();
+          $location.path('/Login');
         }
       });
     }
 
-    function hasAccesssToView(_, view, type) {
-      if (_.startsWith(view, 'views/public')) {
+    function hasAccesssToView(_, next, type) {
+      var path = next.originalPath;
+      var url = next.templateUrl;
+
+      if (_.startsWith(url, 'views/public')) {
         return true;
       }
-      else if (_.startsWith(view, 'views/shared')) {
+      else if (_.startsWith(url, 'views/shared')) {
         return type === 'Administrador' || type === 'Operador' || type === 'Docente' || type === 'Estudiante';
       }
-      else if (_.startsWith(view, 'views/administrator')) {
+      else if (_.startsWith(path, '/Administrador')) {
         return type === 'Administrador';
       }
-      else if (_.startsWith(view, 'views/operator')) {
+      else if (_.startsWith(path, '/Operador')) {
         return type === 'Operador' || type === 'Administrador';
       }
-      else if (_.startsWith(view, 'views/professor')) {
+      else if (_.startsWith(path, '/Docente')) {
         return type === 'Docente';
       }
-      else if (_.startsWith(view, 'views/student')) {
+      else if (_.startsWith(path, '/Estudiante')) {
         return type === 'Estudiante';
       }
       else {

@@ -29,7 +29,7 @@
       var result = [];
 
       for (var i = 0; i < data.length; i++) {
-        var current = moment(data[i].date).format("YYYY-MM-DD");
+        var current = moment(data[i].date).format('YYYY-MM-DD');
 
         if (!_.find(result, 'day', current)) {
           result.push({
@@ -46,7 +46,7 @@
       var hours = [];
 
       for (var i = 0; i < data.length; i++) {
-        var current = moment(data[i].date).format("YYYY-MM-DD");
+        var current = moment(data[i].date).format('YYYY-MM-DD');
 
         if (current === date) {
           hours.push({
