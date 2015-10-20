@@ -14,6 +14,7 @@
     vm.appointments = [];
     vm.limit = 20;
     vm.period = {};
+    vm.student = null;
 
     vm.request = {
       fields : 'id,date,state,student.username,student.full_name,laboratory.name,software.code',
@@ -57,7 +58,7 @@
           operation: 'eq',
           value: app_request.student
         };
-        vm.promise = ReportingService.GetAppointmentsByStudent(vm.request)
+        vm.promise = ReportingService.GetAppointments(vm.request)
         .then(setAppointments)
         .catch(handleError);
       }
@@ -108,11 +109,15 @@
       vm.totalPages = data['total_pages'];
       vm.totalItems = vm.limit * vm.totalPages;
       vm.loaded = true;
+      if(vm.appointments.length > 0)
+      {
+        vm.student = vm.appointments[0].student;
+      }
     }
 
     function generateReport () {
       var html = $('#reportContent').get(0);
-      FileService.downloadHtmlToPDF(html);
+      FileService.downloadHtmlToPDF(html, "citas_estudiante_"+vm.student.username);
     }
 
     function handleError(data) {

@@ -3,7 +3,7 @@
   <hr>
   <ol class="breadcrumb">
     <li><a href="#/">Inicio</a></li>
-    <li class="#/Administrador/Reportes">Reportes</li>
+    <li><a href="#/Administrador/Reportes">Reportes</a></li>
     <li class="active">Citas por Estudiante</li>
   </ol>
   <form autocomplete="off">
@@ -21,7 +21,7 @@
         <p><b>Periodo:</b> {{ AppsByStudent.period.start_date | date:'longDate' }} - {{ AppsByStudent.period.end_date | date:'longDate' }}</p>
       </div>
       <div ng-show="AppsByStudent.appointments.length > 0">
-        <p><b>Estudiante:</b> {{AppsByStudent.appointments[0].student.username}} - {{AppsByStudent.appointments[0].student.full_name}} </p>
+        <p><b>Estudiante:</b> {{AppsByStudent.student.username}} - {{AppsByStudent.student.full_name}} </p>
         </div>
       </div>
       <div class="table-responsive">
