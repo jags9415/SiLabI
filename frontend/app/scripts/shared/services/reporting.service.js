@@ -9,8 +9,8 @@
 
   function ReportingService(RequestService, $localStorage) {
 
-    var appointments_by_student_rquest = null;
-    var appointments_by_group_rquest = null;
+    var appointments_by_student_request = null;
+    var appointments_by_group_request = null;
     var reservations_by_professor_request = null;
     var reservations_by_group_request = null;
     this.setAppointmentsByStudentRequest = setAppointmentsByStudentRequest;
