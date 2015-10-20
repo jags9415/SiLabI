@@ -13,7 +13,7 @@
     vm.start_hours = [];
     vm.end_hours = [];
     vm.end_hours_sliced = [];
-    vm.min_date = new Date();
+    vm.min_date = null;
     vm.datepicker_open = false;
     vm.datepicker2_open = false;
     vm.$storage = $localStorage;
