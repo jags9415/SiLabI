@@ -12,12 +12,12 @@
     this.htmlToPDF = htmlToPDF;
     this.downloadHtmlToPDF = downloadHtmlToPDF;
 
-    function downloadHtmlToPDF (html) {
+    function downloadHtmlToPDF (html, docname) {
       var doc = new jsPDF();
 
       doc = createPDF(html, doc);
 
-      doc.save("citas_por_estudiante.pdf");
+      doc.save(docname+".pdf");
     }
 
     function htmlToPDF (html) {
