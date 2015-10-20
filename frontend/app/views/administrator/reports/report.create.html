@@ -82,7 +82,7 @@
                datepicker-popup="mediumDate" 
                is-open="ReportCreate.datepicker_open"
                ng-model="ReportCreate.selected_start_date"
-               min-date="ReportCreate.min_date"
+               ng-change="ReportCreate.setMinDate()"
                ng-click="ReportCreate.openDatePicker1($event)"/>
           </div>
         </div>

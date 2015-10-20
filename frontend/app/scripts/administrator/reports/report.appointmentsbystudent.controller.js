@@ -50,26 +50,47 @@
       var app_request = ReportingService.getAppointmentsByStudentRequest();
       if(app_request != null)
       {
-        console.log(app_request.student);
-        vm.request.query = {
-            'date':[
-              {
-                operation: 'ge',
-                value: app_request.period.start_date
-              },
-              {
-                operation: 'lt',
-                value: app_request.period.end_date
-              }
-            ]
-          };
-
-        vm.promise = ReportingService.GetAppointmentsByStudent(app_request.student, vm.request)
+        setDate(app_request);
+        vm.request.query['student.username'] = {
+          operation: 'eq',
+          value: app_request.student
+        };
+        vm.promise = ReportingService.GetAppointmentsByStudent(vm.request)
         .then(setAppointments)
         .catch(handleError);
       }
     }
 
+    function setDate (app_request) {
+      vm.request.query = {};
+      if(app_request.period.start_date != null && app_request.period.end_date != null)
+        {
+          vm.request.query['date'] = [
+            {
+              operation: 'ge',
+              value: app_request.period.start_date
+            },
+            {
+              operation: 'lt',
+              value: app_request.period.end_date
+            }
+          ];
+        }
+      if(app_request.period.start_date != null)
+      {
+        vm.request.query['date'] = {
+          operation: 'ge',
+          value: app_request.period.start_date
+        };
+      }
+      if(app_request.period.end_date != null)
+      {
+        vm.request.query['date'] = {
+          operation: 'lt',
+          value: app_request.period.end_date
+        }
+      }
+    }
 
     function isEmpty() {
       return vm.appointments.length === 0;

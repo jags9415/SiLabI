@@ -17,6 +17,8 @@
     vm.datepicker_open = false;
     vm.datepicker2_open = false;
     vm.$storage = $localStorage;
+    vm.selected_start_date = null;
+    vm.selected_end_date = null; 
  
     vm.groups_request = {
       fields: "id,number,course.name",
@@ -57,12 +59,13 @@
     vm.setStudent = setStudent;
     vm.fieldsReady = fieldsReady;
     vm.generateReport =  generateReport;
+    vm.setMinDate = setMinDate;
 
     activate();
 
   
     function activate() {
-      getHours();
+      
     }
 
     function openDatePicker1($event){
@@ -72,6 +75,13 @@
         $event.stopPropagation(); 
       }
       vm.datepicker_open = true;
+    }
+
+    function setMinDate () {
+      if(vm.selected_start_date)
+        {
+          vm.min_date = new Date(vm.selected_start_date);
+        }
     }
 
     function openDatePicker2($event){
@@ -171,10 +181,6 @@
         });
     }
 
-    function getHours() {
-      vm.start_hours = DateService.GetReservationStartHours();
-      vm.end_hours = DateService.GetReservationStartHours();
-    }
 
 
     function setGroup (data) {
@@ -189,31 +195,6 @@
       vm.professor = data;
     }
 
-    function setStartHour() {
-      var start_time = vm.reservation.start_time;
-      var start_hour = start_time.substring(start_time.indexOf("T") + 1, start_time.length);
-      for (var i = 0; i < vm.start_hours.length; i++) {
-        var current_hour = vm.start_hours[i];
-        if(start_hour === current_hour.value)
-        {
-          vm.selected_start_time = current_hour;
-          return;
-        }
-    }
-  }
-
-   function setEndHour() {
-    var end_time = vm.reservation.end_time;
-    var end_hour = end_time.substring(end_time.indexOf("T") + 1, end_time.length);
-    for (var i = 0; i < vm.end_hours.length; i++) {
-      var current_hour = vm.end_hours[i];
-      if(end_hour === current_hour.value)
-      {
-        vm.selected_end_time = current_hour;
-        return;
-      }
-    }
-  }
 
   function generateReport () {
     if(!_.isEmpty(vm.selected_report))
@@ -230,17 +211,26 @@
   function generateAppointmentsByStudent () {
     if(!_.isEmpty(vm.student))
     {
-      var start_date = new Date(vm.selected_start_date);
-      var end_date = new Date(vm.selected_end_date);
-      start_date.setHours(08, 0, 0);
-      end_date.setHours(18, 0, 0);
+      var start_date = null;
+      var end_date = null;
+      if(vm.selected_start_date != null)
+      {
+        start_date = new Date(vm.selected_start_date);
+        start_date.setHours(08, 0, 0);
+      }
+      if(vm.selected_end_date != null)
+      {
+        end_date = new Date(vm.selected_end_date);
+        end_date.setHours(18, 0, 0);
+      }
+      
 
       var app_request = 
       {
         period:
         {
-          start_date: start_date.toJSON(),
-          end_date: end_date.toJSON()
+          start_date: start_date != null ? start_date.toJSON() : null,
+          end_date: end_date != null ? end_date.toJSON() : null
         },
         student: vm.student.username
       };
