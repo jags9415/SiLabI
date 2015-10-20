@@ -124,7 +124,7 @@
         <div class="form-group">
           <label for="attendance">Asistencia</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+            <span class="input-group-addon"><i class="glyphicon glyphicon-ok"></i></span>
             <ui-select id="attendance" name="attendance" ng-model="ReservationDetail.reservation.attendance" on-select="ReservationDetail.updateState()" required>
               <ui-select-match placeholder="Asistencia">
                 {{$select.selected.name}}

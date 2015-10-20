@@ -13,7 +13,7 @@
           <label for="date">* Fecha</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-            <input type="text" class="form-control" id="date" name="date"
+            <input type="text" class="form-control" id="date" name="date" placeholder="Fecha"
                datepicker-popup="mediumDate"
                show-weeks="false"
                is-open="ProfessorReservationCreate.datepicker_open"
@@ -32,7 +32,7 @@
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-desktop"></i></span>
             <ui-select id="lab" name="lab" ng-model="ProfessorReservationCreate.selected_laboratory" required>
-              <ui-select-match placeholder="{{$select.selected.name}}">
+              <ui-select-match placeholder="Laboratorio">
                 {{$select.selected.name}}
               </ui-select-match>
               <ui-select-choices repeat="lab in ProfessorReservationCreate.laboratories | filter: $select.search">
@@ -49,8 +49,8 @@
           <label for="start_time">* Hora Inicio</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="start_time" name="start_time" ng-model="ProfessorReservationCreate.selected_start_time" ng-disabled="!ProfessorReservationCreate.selected_date" on-select="ProfessorReservationCreate.loadEndHours()" required>
-              <ui-select-match placeholder="{{$select.selected | date : 'hh:mm a'}}">
+            <ui-select id="start_time" name="start_time" ng-model="ProfessorReservationCreate.selected_start_time" on-select="ProfessorReservationCreate.loadEndHours()" required>
+              <ui-select-match placeholder="Hora Inicio">
                 {{$select.selected | date : 'hh:mm a'}}
               </ui-select-match>
               <ui-select-choices repeat="hour in ProfessorReservationCreate.start_hours | filter: $select.search">
@@ -66,7 +66,7 @@
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
             <ui-select id="end_time" name="end_time" ng-model="ProfessorReservationCreate.selected_end_time" ng-disabled="!ProfessorReservationCreate.selected_start_time" required>
-              <ui-select-match placeholder="{{$select.selected | date : 'hh:mm a'}}">
+              <ui-select-match placeholder="Hora Final">
                 {{$select.selected | date : 'hh:mm a'}}
               </ui-select-match>
               <ui-select-choices repeat="hour in ProfessorReservationCreate.end_hours_sliced | filter: $select.search">
@@ -83,8 +83,8 @@
           <label for="group">Grupo</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-group"></i></span>
-            <ui-select id="group" name="group" ng-model="ProfessorReservationCreate.selected_group">
-              <ui-select-match placeholder="{{$select.selected.course.name}}">
+            <ui-select id="group" name="group" ng-model="ProfessorReservationCreate.selected_group" ng-disabled="ProfessorReservationCreate.groups.length === 0">
+              <ui-select-match placeholder="Grupo">
                 {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
               </ui-select-match>
               <ui-select-choices repeat="group in ProfessorReservationCreate.groups | filter: $select.search">
@@ -99,7 +99,7 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-floppy-disk"></i></span>
-            <input class="form-control" id="software" name="software" type="text"
+            <input class="form-control" id="software" name="software" type="text" placeholder="Software"
               typeahead="'[' + software.code + '] ' + software.name for software in ProfessorReservationCreate.searchSoftware($viewValue)"
               typeahead-on-select="ProfessorReservationCreate.setSoftware($item)"
               typeahead-input-formatter="ProfessorReservationCreate.formatSoftware($model)"

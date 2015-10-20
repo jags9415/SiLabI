@@ -139,7 +139,13 @@ namespace SiLabI.Util
             // Checks that day is not weekend.
             if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
             {
-                message = "No se permiten reservaciones durante fines de semana.";
+                message = "No se permiten citas durante fines de semana.";
+                return false;
+            }
+            // Check that day is not a holiday.
+            if (Holidays.Contains(date))
+            {
+                message = "No se permiten citas durante feriados.";
                 return false;
             }
             // Check that hour is between 8:00 am and 5:00 pm.
@@ -180,6 +186,12 @@ namespace SiLabI.Util
             if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
             {
                 message = "No se permiten reservaciones durante fines de semana.";
+                return false;
+            }
+            // Check that day is not a holiday.
+            if (Holidays.Contains(date))
+            {
+                message = "No se permiten reservaciones durante feriados.";
                 return false;
             }
             // Check that hour is between 8:00 am and 6:00 pm.
@@ -224,6 +236,9 @@ namespace SiLabI.Util
             return true;
         }
 
+        /// <summary>
+        /// The list of holidays in Costa Rica.
+        /// </summary>
         private static List<DateTime> Holidays
         {
             get
