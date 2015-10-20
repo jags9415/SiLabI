@@ -5,20 +5,14 @@
       .module('silabi')
       .controller('ReportCreateController', ReportCreateController);
 
-  ReportCreateController.$inject = ['$scope', '$routeParams', 'MessageService', 'PeriodService', 'GroupService', 'DateService', 'StudentService', 'ProfessorService', 'ReportingService', '$location', '$localStorage'];
+  ReportCreateController.$inject = ['$scope', '$routeParams', 'MessageService', 'GroupService', 'StudentService', 'ProfessorService', 'ReportingService', 'PeriodService', '$location', '$localStorage'];
 
-  function ReportCreateController($scope, $routeParams, MessageService, PeriodService, GroupService,  DateService, StudentService, ProfessorService, ReportingService, $location, $localStorage) {
+  function ReportCreateController($scope, $routeParams, MessageService, GroupService, StudentService, ProfessorService, ReportingService, PeriodService, $location, $localStorage) {
     var vm = this;
     vm.groups = [];
     vm.start_hours = [];
     vm.end_hours = [];
     vm.end_hours_sliced = [];
-    vm.min_date = null;
-    vm.datepicker_open = false;
-    vm.datepicker2_open = false;
-    vm.$storage = $localStorage;
-    vm.selected_start_date = null;
-    vm.selected_end_date = null; 
  
     vm.groups_request = {
       fields: "id,number,course.name",
@@ -52,7 +46,6 @@
     vm.setGroup = setGroup;
     vm.openDatePicker1 = openDatePicker1;
     vm.openDatePicker2 = openDatePicker2;
-    vm.loadEndHours = loadEndHours;
     vm.getProfessors = getProfessors;
     vm.getStudents = getStudents;
     vm.setProfessor = setProfessor;
@@ -65,7 +58,12 @@
 
   
     function activate() {
-      
+      vm.min_date = null;
+      vm.datepicker_open = false;
+      vm.datepicker2_open = false;
+      vm.$storage = $localStorage;
+      vm.selected_start_date = null;
+      vm.selected_end_date = null; 
     }
 
     function openDatePicker1($event){
@@ -95,26 +93,6 @@
 
     function fieldsReady () {
       return !_.isEmpty(vm.selected_report) && ( !_.isEmpty(vm.student) || !_.isEmpty(vm.professor) || !_.isEmpty(vm.group)) 
-    }
-
-    function loadEndHours () {
-      var index = -1;
-
-      for (var i = 0; i < vm.end_hours.length; i++) 
-      {
-        if(vm.selected_start_time.value == vm.end_hours[i].value)
-        {
-          index = i;
-        }  
-      }
-      if(index >= 0)
-      {
-        vm.end_hours_sliced = vm.end_hours.slice(index+1, vm.end_hours.length);
-      }
-      else
-      {
-        vm.end_hours_sliced = vm.end_hours;
-      }
     }
 
     function getProfessors(name) {
@@ -181,8 +159,6 @@
         });
     }
 
-
-
     function setGroup (data) {
       vm.group = data;
     }
@@ -204,6 +180,9 @@
         case 1:
           generateAppointmentsByStudent();
           break;
+        case 2:
+          generateAppointmentsByGroup();
+          break;
       }
     }
   }
@@ -223,10 +202,7 @@
         end_date = new Date(vm.selected_end_date);
         end_date.setHours(18, 0, 0);
       }
-      
-
-      var app_request = 
-      {
+      var app_request = {
         period:
         {
           start_date: start_date != null ? start_date.toJSON() : null,
@@ -243,8 +219,45 @@
     }
   }
 
+  function generateAppointmentsByGroup () {
+    console.log("Group report");
+    if(!_.isEmpty(vm.group))
+    {
+      var start_date = null;
+      var end_date = null;
+      if(vm.selected_start_date != null)
+      {
+        start_date = new Date(vm.selected_start_date);
+        start_date.setHours(08, 0, 0);
+      }
+      if(vm.selected_end_date != null)
+      {
+        end_date = new Date(vm.selected_end_date);
+        end_date.setHours(18, 0, 0);
+      }
+      var app_request = {
+        period:
+        {
+          start_date: start_date != null ? start_date.toJSON() : null,
+          end_date: end_date != null ? end_date.toJSON() : null
+        },
+        groupID: vm.group.id
+      };
+      ReportingService.setAppointmentsByGroupRequest(app_request);
+      redirectToAppsByGroup();
+    }
+    else
+    {
+      MessageService.info("Debe indicar un grupo.");
+    }
+  }
+
   function redirectToAppsByStudent () {
     $location.path('Administrador/Reportes/Citas_Por_Estudiante');
+  }
+
+  function redirectToAppsByGroup () {
+    $location.path('Administrador/Reportes/Citas_Por_Grupo');
   }
 
   function handleError(data) {
