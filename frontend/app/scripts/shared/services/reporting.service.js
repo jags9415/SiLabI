@@ -23,9 +23,9 @@
       return appointmentsByStudentRquest;
     }
 
-    function GetAppointmentsByStudent(Username, request) {
+    function GetAppointmentsByStudent(request) {
       request['access_token'] = $localStorage['access_token'];
-      return RequestService.get('/students/' + Username + '/appointments', request);
+      return RequestService.get('/appointments', request);
     }
 
     function GetAppointmentsByGroup(Group, startDate, endDate) {
@@ -58,7 +58,11 @@
 
       for (var i = 0; i < students.length; i++) {
         var current_student = students[i];
-        var apps = GetAppointmentsByStudent(current_student.username, student_request);
+        student_request.query['student_request'] ={
+          operation: "eq",
+          value:current_student.username
+        };
+        var apps = GetAppointmentsByStudent(student_request);
         var json = {
           student_name: current_student.full_name,
           username: current_student.username,
