@@ -21,10 +21,10 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">* Fecha</label>
+          <label for="date">* Fecha</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-            <input type="text" class="form-control"
+            <input type="text" class="form-control" name="date"
                    datepicker-popup="mediumDate"
                    show-weeks="false"
                    is-open="ReservationDetail.datepicker_open"
@@ -41,7 +41,7 @@
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-desktop"></i></span>
             <ui-select name="lab" ng-model="ReservationDetail.reservation.laboratory" ng-disabled="ReservationDetail.disabled" required>
-              <ui-select-match placeholder="{{$select.selected.name}}">
+              <ui-select-match placeholder="Laboratorio">
                 {{$select.selected.name}}
               </ui-select-match>
               <ui-select-choices repeat="lab in ReservationDetail.laboratories | filter: $select.search">
@@ -55,11 +55,11 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">* Hora Inicio</label>
+          <label for="startHour">* Hora Inicio</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
             <ui-select name="startHour" ng-model="ReservationDetail.selected_start_time" ng-disabled="ReservationDetail.disabled" on-select="ReservationDetail.loadEndHours()" required>
-              <ui-select-match placeholder="{{$select.selected | date: 'hh:mm a'}}">
+              <ui-select-match placeholder="Hora Inicio">
                 {{$select.selected | date: 'hh:mm a'}}
               </ui-select-match>
               <ui-select-choices repeat="hour in ReservationDetail.start_hours | filter: $select.search">
@@ -71,11 +71,11 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">* Hora Final</label>
+          <label for="endHour">* Hora Final</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
             <ui-select name="endHour" ng-model="ReservationDetail.selected_end_time" on-select="ReservationDetail.changeLaboratory()" ng-disabled="ReservationDetail.disabled"  required>
-              <ui-select-match placeholder="{{$select.selected | date: 'hh:mm a'}}">
+              <ui-select-match placeholder="Hora Final">
                 {{$select.selected | date: 'hh:mm a'}}
               </ui-select-match>
               <ui-select-choices repeat="hour in ReservationDetail.end_hours_sliced | filter: $select.search">
@@ -89,11 +89,11 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="course">Grupo</label>
+          <label for="group">Grupo</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-group"></i></span>
-            <ui-select id="group" ng-model="ReservationDetail.reservation.group" ng-disabled="ReservationDetail.disabled || ReservationDetail.groups.length == 0">
-              <ui-select-match placeholder="{{$select.selected.course.name}}" allow-clear="true">
+            <ui-select id="group" name="group" ng-model="ReservationDetail.reservation.group" ng-disabled="ReservationDetail.disabled || ReservationDetail.groups.length == 0">
+              <ui-select-match placeholder="Grupo" allow-clear="true">
                 {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
               </ui-select-match>
               <ui-select-choices repeat="group in ReservationDetail.groups | filter: $select.search">
@@ -108,7 +108,7 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-floppy-disk"></i></span>
-            <input class="form-control" name="searchInput" type="text"
+            <input class="form-control" name="software" type="text"
               typeahead="'[' + software.code + '] ' + software.name for software in ReservationDetail.searchSoftware($viewValue)"
               typeahead-on-select="ReservationDetail.setSoftware($item)"
               typeahead-editable="false"
@@ -120,12 +120,28 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="attendance">Asistencia</label>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+            <ui-select id="attendance" name="attendance" ng-model="ReservationDetail.reservation.attendance" on-select="ReservationDetail.updateState()" required>
+              <ui-select-match placeholder="Asistencia">
+                {{$select.selected.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="value in ReservationDetail.attendance | filter: $select.search">
+                <span ng-bind-html="value.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
         <div class="form-group">
           <label for="course">Estado</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
-            <ui-select id="group" ng-model="ReservationDetail.reservation.state">
+            <ui-select id="state" name="state" ng-model="ReservationDetail.reservation.state" required>
               <ui-select-match placeholder="Estado">
                 {{$select.selected}}
               </ui-select-match>

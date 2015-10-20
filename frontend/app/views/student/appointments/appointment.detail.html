@@ -46,25 +46,34 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="software">Software</label>
+          <label for="course">Grupo</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-cd"></i></span>
-            <input class="form-control" placeholder="Software" name="searchInput" type="text"
-              typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)"
-              typeahead-on-select="AppointmentDetail.setSoftware($item)"
-              typeahead-editable="false"
-              ng-model="AppointmentDetail.appointment.software"
-              ng-disabled="AppointmentDetail.disabled"
-              ng-value="{{ '[' + AppointmentDetail.appointment.software.code + '] ' + AppointmentDetail.appointment.software.name }}">
+            <span class="input-group-addon"><i class="fa fa-group"></i></span>
+            <ui-select id="group" name="group" ng-model="AppointmentDetail.appointment.group" required>
+              <ui-select-match placeholder="Grupo">
+                {{$select.selected.course.name}}
+              </ui-select-match>
+              <ui-select-choices repeat="group in AppointmentDetail.groups | filter: $select.search">
+                <span ng-bind-html="group.course.name | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+            <p class="help-block" ng-show="updateAppForm.group.$error.required">Grupo requerido.</p>
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="lab">Laboratorio</label>
+          <label for="software">Software</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-            <input id="lab" class="form-control" placeholder="Laboratorio" ng-model="AppointmentDetail.appointment.laboratory.name" readonly>
+            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-floppy-disk"></i></span>
+            <input class="form-control" placeholder="Software" name="software" type="text"
+              typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)"
+              typeahead-on-select="AppointmentDetail.setSoftware($item)"
+              typeahead-input-formatter="AppointmentDetail.formatSoftware($model)"
+              typeahead-editable="false"
+              ng-model="AppointmentDetail.appointment.software"
+              ng-disabled="AppointmentDetail.disabled"
+              required>
           </div>
         </div>
       </div>
@@ -72,10 +81,10 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
-          <label for="group">Curso</label>
+          <label for="lab">Laboratorio</label>
           <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-th-list"></i></span>
-            <input id="group" class="form-control" ng-model="AppointmentDetail.appointment.group.course.name" ng-disabled="AppointmentDetail.disabled" readonly>
+            <span class="input-group-addon"><i class="fa fa-desktop"></i></span>
+            <input id="lab" class="form-control" placeholder="Laboratorio" ng-model="AppointmentDetail.appointment.laboratory.name" readonly>
           </div>
         </div>
       </div>

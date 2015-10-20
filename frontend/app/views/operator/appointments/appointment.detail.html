@@ -6,7 +6,7 @@
     <li><a href="#Operador/Citas">Citas</a></li>
     <li class="active">Detalle</li>
   </ol>
-  <form autocomplete="off">
+  <form autocomplete="off" name="updateAppForm">
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
@@ -21,10 +21,10 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">Fecha</label>
+          <label for="date">Fecha</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-calendar"></i></span>
-            <ui-select id="course" ng-model="AppointmentDetail.selectedDate" on-select="AppointmentDetail.setAvailableHours()" ng-disabled="AppointmentDetail.disabled">
+            <ui-select id="date" name="date" ng-model="AppointmentDetail.selectedDate" on-select="AppointmentDetail.setAvailableHours()" ng-disabled="AppointmentDetail.disabled" required>
               <ui-select-match placeholder="Fecha">
                 {{$select.selected.day | date : 'fullDate'}}
               </ui-select-match>
@@ -37,10 +37,10 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">Hora</label>
+          <label for="hour">Hora</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-time"></i></span>
-            <ui-select id="course" ng-model="AppointmentDetail.selectedHour" on-select="AppointmentDetail.changeLaboratory()" ng-disabled="AppointmentDetail.disabled">
+            <ui-select id="hour" name="hour" ng-model="AppointmentDetail.selectedHour" on-select="AppointmentDetail.changeLaboratory()" ng-disabled="AppointmentDetail.disabled" required>
               <ui-select-match placeholder="Hora">
                 {{$select.selected.fullDate | date: 'hh:mm a'}}
               </ui-select-match>
@@ -55,10 +55,10 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="course">Grupo</label>
+          <label for="group">Grupo</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-group"></i></span>
-            <ui-select id="course" ng-model="AppointmentDetail.appointment.group" ng-disabled="AppointmentDetail.disabled">
+            <ui-select id="group" name="group" ng-model="AppointmentDetail.appointment.group" ng-disabled="AppointmentDetail.disabled" required>
               <ui-select-match placeholder="Grupo">
                 {{'[#' + $select.selected.number + '] ' + $select.selected.course.name}}
               </ui-select-match>
@@ -74,11 +74,14 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-floppy-disk"></i></span>
-            <input class="form-control" placeholder="Software" name="searchInput" type="text"
+            <input class="form-control" placeholder="Software" id="software" name="software" type="text"
               typeahead="'[' + software.code + '] ' + software.name for software in AppointmentDetail.searchSoftware($viewValue)"
               typeahead-on-select="AppointmentDetail.setSoftware($item)"
-              typeahead-editable="false" ng-model="AppointmentDetail.appointment.software"
-              ng-disabled="AppointmentDetail.disabled">
+              typeahead-input-formatter="AppointmentDetail.formatSoftware($model)"
+              typeahead-editable="false"
+              ng-model="AppointmentDetail.appointment.software"
+              ng-disabled="AppointmentDetail.disabled"
+              required>
           </div>
         </div>
       </div>
@@ -89,7 +92,7 @@
           <label for="lab">Laboratorio</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-desktop"></i></span>
-            <ui-select id="lab" ng-model="AppointmentDetail.appointment.laboratory" ng-disabled="AppointmentDetail.disabled">
+            <ui-select id="lab" name="lab" ng-model="AppointmentDetail.appointment.laboratory" ng-disabled="AppointmentDetail.disabled" required>
               <ui-select-match placeholder="Laboratorio">
                 {{$select.selected.name}}
               </ui-select-match>
@@ -105,7 +108,7 @@
           <label for="state">Estado</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-tag"></i></span>
-            <ui-select id="state" ng-model="AppointmentDetail.appointment.state">
+            <ui-select id="state" name="state" ng-model="AppointmentDetail.appointment.state" required>
               <ui-select-match placeholder="Estado">
                 {{$select.selected}}
               </ui-select-match>
@@ -139,7 +142,7 @@
     </div>
     <div class="row" style="margin-top: 3%;">
       <div class="col-md-6 col-sm-6 col-xs-6 text-center">
-        <button type="submit" class="btn btn-lg btn-primary" ng-click="AppointmentDetail.update()" ng-disabled="!AppointmentDetail.fieldsReady()">
+        <button type="submit" class="btn btn-lg btn-primary" ng-click="AppointmentDetail.update()" ng-disabled="updateAppForm.$invalid">
           <i class="glyphicon glyphicon-floppy-disk"></i> Guardar
         </button>
       </div>

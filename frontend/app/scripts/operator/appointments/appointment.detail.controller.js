@@ -46,7 +46,7 @@
     vm.changeLaboratory = changeLaboratory;
     vm.searchSoftware = searchSoftware;
     vm.setSoftware = setSoftware;
-    vm.fieldsReady = fieldsReady;
+    vm.formatSoftware = formatSoftware;
     vm.update = updateAppointment;
     vm.delete = deleteAppointment;
 
@@ -67,10 +67,6 @@
       .catch(handleError);
     }
 
-    function fieldsReady () {
-      return !_.isEmpty(vm.appointment) && !_.isEmpty(vm.appointment.software);
-    }
-
     function searchSoftware (input) {
       vm.softwareRequest.query = {};
 
@@ -79,7 +75,7 @@
         value: '*' + input + '*'
       };
 
-      return SoftwareService.GetAll(vm.softwareRequest)
+      return SoftwareService.GetAll(vm.softwareRequest, true)
         .then(function(data) {
           return data.results;
         });
@@ -104,7 +100,7 @@
         value: period.year
       };
 
-      return StudentService.GetGroups(vm.appointment.student.username, vm.groupRequest);
+      return StudentService.GetGroups(vm.appointment.student.username, vm.groupRequest, true);
     }
 
     function getAvailableDates() {
@@ -118,7 +114,7 @@
     }
 
     function getLaboratories () {
-      LabService.GetAll(vm.laboratoryRequest)
+      LabService.GetAll(vm.laboratoryRequest, true)
       .then(setLaboratories)
       .catch(handleError);
     }
@@ -141,6 +137,12 @@
 
     function setSoftware (data) {
       vm.appointment.software = data;
+    }
+
+    function formatSoftware(model) {
+      if (model) {
+        return model.code;
+      }
     }
 
     function setGroups (groups) {

@@ -23,7 +23,7 @@
     vm.datepicker_open = false;
 
     vm.request = {
-      fields: 'id,start_time,end_time,state,created_at,updated_at,professor.full_name,professor.username,laboratory.name,group.course.name,software.code'
+      fields: 'id,attendance,start_time,end_time,state,created_at,updated_at,professor.full_name,professor.username,laboratory.name,group.course.name,software.code'
     }
 
     vm.lab_request = {
@@ -46,11 +46,17 @@
     vm.formatSoftware = formatSoftware;
     vm.openDatePicker = openDatePicker;
     vm.loadEndHours = loadEndHours;
+    vm.updateState = updateState;
 
     activate();
 
     function activate() {
       vm.reservation_id = $routeParams.id;
+
+      vm.attendance = [
+        {name: 'Si', value: true},
+        {name: 'No', value: false}
+      ];
 
       getReservation();
       getLaboratories();
@@ -150,6 +156,7 @@
     function setReservation (data) {
       vm.reservation = data;
 
+      vm.reservation.attendance = _.find(vm.attendance, 'value', data.attendance);
       vm.disabled = data.state != 'Por iniciar';
       vm.selected_date = new Date(data.start_time);
       vm.username = vm.reservation.professor.username;
@@ -182,6 +189,12 @@
 
     function setGroups (data) {
       vm.groups = data.results;
+    }
+
+    function updateState() {
+      if (vm.reservation.state === 'Por iniciar') {
+        vm.reservation.state = 'Finalizada';
+      }
     }
 
     function setStartHour() {
@@ -220,7 +233,8 @@
         'end_time': end_time.format(),
         'group': !_.isEmpty(vm.reservation.group) ? vm.reservation.group.id : 0,
         'software': !_.isEmpty(vm.reservation.software) ? vm.reservation.software.code : '',
-        'state': vm.reservation.state
+        'state': vm.reservation.state,
+        'attendance': vm.reservation.attendance.value
       };
 
       ReservationService.Update(vm.reservation_id, res)

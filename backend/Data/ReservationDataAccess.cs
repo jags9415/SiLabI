@@ -103,7 +103,7 @@ namespace SiLabI.Data
         public DataRow Update(Dictionary<string, object> payload, int id, object obj)
         {
             InnerReservationRequest appointment = (obj as InnerReservationRequest);
-            SqlParameter[] parameters = new SqlParameter[9];
+            SqlParameter[] parameters = new SqlParameter[10];
 
             parameters[0] = SqlUtilities.CreateParameter("@requester_id", SqlDbType.Int, payload["id"]);
             parameters[1] = SqlUtilities.CreateParameter("@id", SqlDbType.Int, id);
@@ -114,6 +114,7 @@ namespace SiLabI.Data
             parameters[6] = SqlUtilities.CreateParameter("@start_time", SqlDbType.DateTime, appointment.StartTime);
             parameters[7] = SqlUtilities.CreateParameter("@end_time", SqlDbType.DateTime, appointment.EndTime);
             parameters[8] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, appointment.State);
+            parameters[9] = SqlUtilities.CreateParameter("@attendance", SqlDbType.Bit, appointment.Attendance);
 
             DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_UpdateReservation", parameters);
             return table.Rows[0];

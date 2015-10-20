@@ -19,7 +19,7 @@
     };
 
     vm.groupRequest = {
-      fields : 'id,course'
+      fields : 'id,course.name'
     };
 
     vm.softwareRequest = {

@@ -230,6 +230,7 @@ namespace SiLabI.Model
                     _ReservationValidFields.Add(new Field("updated_at", SqlDbType.DateTime));
                     _ReservationValidFields.Add(new Field("start_time", SqlDbType.DateTime));
                     _ReservationValidFields.Add(new Field("end_time", SqlDbType.DateTime));
+                    _ReservationValidFields.Add(new Field("attendance", SqlDbType.Bit));
                     _ReservationValidFields.Add(new Field("professor", ValidFields.Professor));
                     _ReservationValidFields.Add(new Field("laboratory", ValidFields.Laboratory));
                     _ReservationValidFields.Add(new Field("software", ValidFields.Software));

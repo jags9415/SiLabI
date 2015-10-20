@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('StudentAppDetailController', AppointmentDetailController);
 
-  AppointmentDetailController.$inject = ['$localStorage', '$location', '$routeParams', 'StudentAppService', 'AppointmentDateService', 'MessageService', 'SoftwareService', 'moment', 'lodash'];
+  AppointmentDetailController.$inject = ['$localStorage', '$location', '$routeParams', 'StudentAppService', 'AppointmentDateService', 'StudentService', 'PeriodService', 'MessageService', 'SoftwareService', 'moment', 'lodash'];
 
-  function AppointmentDetailController($localStorage, $location, $routeParams, StudentAppService, AppointmentDateService, MessageService, SoftwareService, moment, _) {
+  function AppointmentDetailController($localStorage, $location, $routeParams, StudentAppService, AppointmentDateService, StudentService, PeriodService, MessageService, SoftwareService, moment, _) {
     var vm = this;
 
     vm.disabled = true;
@@ -20,7 +20,11 @@
     vm.$storage = $localStorage;
 
     vm.request = {
-      fields: 'id,date,state,group.number,group.course.name,software.code,software.name,laboratory.name'
+      fields: 'id,date,state,group.id,group.course.name,software.code,software.name,laboratory.name'
+    };
+
+    vm.groupRequest = {
+      fields : 'id,course.name'
     };
 
     vm.dateRequest = {
@@ -35,6 +39,7 @@
     vm.setAvailableHours = setAvailableHours;
     vm.changeLaboratory = changeLaboratory;
     vm.searchSoftware = searchSoftware;
+    vm.formatSoftware = formatSoftware;
     vm.setSoftware = setSoftware;
     vm.update = updateAppointment;
     vm.delete = deleteAppointment;
@@ -44,7 +49,12 @@
     function activate() {
       vm.username = vm.$storage['username'];
       vm.appointmentId = $routeParams.appointmentId;
+
       getAppointment();
+
+      getGroups()
+      .then(setGroups)
+      .catch(handleError);
     }
 
     function getAppointment () {
@@ -52,6 +62,28 @@
       .then(setAppointment)
       .then(setAvailableDates)
       .catch(handleError);
+    }
+
+    function getGroups() {
+      var period = PeriodService.GetCurrentPeriod('Semestre');
+      vm.groupRequest.query = {};
+
+      vm.groupRequest.query['period.type'] = {
+        operation: 'eq',
+        value: 'Semestre'
+      };
+
+      vm.groupRequest.query['period.value'] = {
+        operation: 'eq',
+        value: period.value
+      };
+
+      vm.groupRequest.query['period.year'] = {
+        operation: 'eq',
+        value: period.year
+      };
+
+      return StudentService.GetGroups(vm.username, vm.groupRequest);
     }
 
     function searchSoftware (input) {
@@ -62,7 +94,7 @@
         value: '*' + input + '*'
       };
 
-      return SoftwareService.GetAll(vm.softwareRequest)
+      return SoftwareService.GetAll(vm.softwareRequest, true)
         .then(function(data) {
           return data.results;
         });
@@ -78,8 +110,18 @@
       return getAvailableDates();
     }
 
+    function setGroups(groups) {
+      vm.groups = groups;
+    }
+
     function setSoftware (data) {
       vm.appointment.software = data;
+    }
+
+    function formatSoftware(model) {
+      if (model) {
+        return model.code;
+      }
     }
 
     function setAvailableDates (dates) {
@@ -124,7 +166,8 @@
 
         var app = {
           'date': vm.selectedHour.fullDate,
-          'software': vm.appointment.software.code
+          'software': vm.appointment.software.code,
+          'group': vm.appointment.group.id
         };
 
         StudentAppService.Update(vm.username, vm.appointmentId, app)

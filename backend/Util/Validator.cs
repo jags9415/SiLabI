@@ -12,6 +12,8 @@ namespace SiLabI.Util
     /// </summary>
     public class Validator
     {
+        private static List<DateTime> _holidays;
+
         /// <summary>
         /// Validate an user identification.
         /// A valid user indentification can be null or an integer greater than zero.
@@ -128,12 +130,6 @@ namespace SiLabI.Util
         /// <returns>True if the input is valid.</returns>
         public static bool IsValidAppointmentDate(DateTime date, out string message)
         {
-            // Check if date is later than today.
-            if (DateTime.Now.CompareTo(date) > 0)
-            {
-                message = "Ingrese un día posterior a la fecha actual.";
-                return false;
-            }
             // Check that date is in the next 2 weeks.
             if (DateTime.Now.AddDays(14).Date.CompareTo(date.Date) < 0)
             {
@@ -226,6 +222,29 @@ namespace SiLabI.Util
             }
             message = string.Empty;
             return true;
+        }
+
+        private static List<DateTime> Holidays
+        {
+            get
+            {
+                if (_holidays == null)
+                {
+                    _holidays = new List<DateTime>();
+                    int year = DateTime.Now.Year;
+
+                    _holidays.Add(new DateTime(year, 1, 1));   // 1 Enero.
+                    _holidays.Add(new DateTime(year, 4, 11));  // 11 Abril.
+                    _holidays.Add(new DateTime(year, 5, 1));   // 5 Mayo.
+                    _holidays.Add(new DateTime(year, 7, 25));  // 25 Julio.
+                    _holidays.Add(new DateTime(year, 8, 2));   // 2 Agosto.
+                    _holidays.Add(new DateTime(year, 8, 15));  // 15 Agosto.
+                    _holidays.Add(new DateTime(year, 9, 15));  // 15 Septiembre.
+                    _holidays.Add(new DateTime(year, 10, 12)); // 12 Octubre.
+                    _holidays.Add(new DateTime(year, 12, 25)); // 25 Diciembre.
+                }
+                return _holidays;
+            }
         }
     }
 }

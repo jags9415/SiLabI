@@ -20,6 +20,7 @@ namespace SiLabI.Model
         protected Group _group;
         protected Laboratory _laboratory;
         protected Software _software;
+        protected bool? _attendance;
 
         /// <summary>
         /// The professor data.
@@ -59,6 +60,16 @@ namespace SiLabI.Model
         {
             set { _group = value; }
             get { return _group; }
+        }
+
+        /// <summary>
+        /// The attendance.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false, Name = "attendance")]
+        public virtual bool? Attendance
+        {
+            set { _attendance = value; }
+            get { return _attendance; }
         }
 
         /// <summary>
@@ -123,6 +134,7 @@ namespace SiLabI.Model
             reservation.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
             reservation.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
             reservation.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
+            reservation.Attendance = row.Table.Columns.Contains(prefix + "attendance") ? Converter.ToNullableBoolean(row[prefix + "attendance"]) : null;
             reservation.Professor = User.Parse(row, prefix + "professor");
             reservation.Laboratory = Laboratory.Parse(row, prefix + "laboratory");
             reservation.Software = Software.Parse(row, prefix + "software");

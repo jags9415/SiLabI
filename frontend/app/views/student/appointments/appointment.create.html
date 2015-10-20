@@ -66,7 +66,7 @@
           <label for="software">Software</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-floppy-disk"></i></span>
-            <input class="form-control" placeholder="Software" name="searchInput" type="text"
+            <input class="form-control" placeholder="Software" name="software" type="text"
               typeahead="'[' + software.code + '] ' + software.name for software in AppointmentCreate.searchSoftware($viewValue)"
               typeahead-on-select="AppointmentCreate.setSoftware($item)"
               typeahead-input-formatter="AppointmentCreate.formatSoftware($model)"
