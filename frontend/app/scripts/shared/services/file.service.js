@@ -24,7 +24,7 @@
       var doc = new jsPDF();
 
       doc = createPDF(html, doc);
-      
+
       doc.output("dataurlnewwindow");
     }
 

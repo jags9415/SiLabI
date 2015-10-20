@@ -12,7 +12,9 @@
       <div class="text-center">
         <p><b>Instituto Tecnológico de Costa Rica</b></p>
         <p><b>Escuela Ciencias del Lenguaje</b></p>
+        <p><b>Laboratorio de Inglés</b></p>
       </div>
+      <br/>
       <div class="text-left">
       <p><b>Reporte: </b> Citas por estudiante </p>
       <div ng-show="AppsByStudent.period.start_date !=null && AppsByStudent.period.end_date!=null">
@@ -37,14 +39,7 @@
               <td>{{ app.date | date : 'd MMM y hh:mm a' }}</td>
               <td>{{ app.software.code }}</td>
               <td>{{ app.laboratory.name }}</td>
-              <td>
-                  <span class="label"
-                  ng-class="{ 'label-success': app.state === 'Por iniciar',
-                              'label-primary': app.state === 'Finalizada',
-                              'label-danger': app.state === 'Cancelada'}" >
-                  {{ app.state }}
-                </span>
-              </td>
+              <td>{{ app.state }}</td>
             </tr>
           </tbody>
         </table>
@@ -53,7 +48,7 @@
     <div class="row">
       <div class="col-md-12 text-left">
         <button type="button" class="btn btn-primary" ng-click="AppsByStudent.generateReport()" ng-show="AppsByStudent.appointments.length > 0 ">
-          <i class="glyphicon glyphicon-file"></i> Descargar Reporte
+          <i class="glyphicon glyphicon-save"></i> Descargar Reporte
         </button>
       </div>
     </div>
