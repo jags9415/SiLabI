@@ -92,6 +92,11 @@
           controller: 'ReservationsByProfessorController',
           controllerAs: 'ResByProfessor'
         })
+        .when('/Administrador/Reportes/Reservaciones_Por_Grupo', {
+          templateUrl: 'views/administrator/reports/report.reservationsbygroup.html',
+          controller: 'ReservationsByGroupController',
+          controllerAs: 'ResByGroup'
+        })
         .when('/Operador/Docentes', {
           templateUrl: 'views/operator/professors/professor.list.html',
           controller: 'ProfessorListController',

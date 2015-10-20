@@ -186,6 +186,9 @@
         case 3:
           generateReservationsByProfessor();
           break;
+        case 4:
+          generateReservationsByGroup ();
+          break;
       }
     }
   }
@@ -285,6 +288,37 @@
     }
   }
 
+  function generateReservationsByGroup () {
+    if(!_.isEmpty(vm.group))
+    {
+      var start_date = null;
+      var end_date = null;
+      if(vm.selected_start_date != null)
+      {
+        start_date = new Date(vm.selected_start_date);
+        start_date.setHours(08, 0, 0);
+      }
+      if(vm.selected_end_date != null)
+      {
+        end_date = new Date(vm.selected_end_date);
+        end_date.setHours(18, 0, 0);
+      }
+      var res_request = {
+        period: {
+          start_date: start_date != null ? start_date.toJSON() : null,
+          end_date: end_date != null ? end_date.toJSON() : null
+        },
+        groupID: vm.group.id
+      };
+      ReportingService.setReservationsByGroupRequest(res_request);
+      redirectToReservationsByGroup();
+    }
+    else
+    {
+      MessageService.info("Debe indicar un grupo.");
+    }
+  }
+
   function redirectToAppsByStudent () {
     $location.path('Administrador/Reportes/Citas_Por_Estudiante');
   }
@@ -295,6 +329,10 @@
 
   function redirectToReservationsByProfessor () {
     $location.path('Administrador/Reportes/Reservaciones_Por_Docente');
+  }
+
+  function redirectToReservationsByGroup () {
+    $location.path('Administrador/Reportes/Reservaciones_Por_Grupo');
   }
 
   function handleError(data) {
