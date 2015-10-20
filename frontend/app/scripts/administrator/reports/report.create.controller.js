@@ -183,6 +183,9 @@
         case 2:
           generateAppointmentsByGroup();
           break;
+        case 3:
+          generateReservationsByProfessor();
+          break;
       }
     }
   }
@@ -220,7 +223,6 @@
   }
 
   function generateAppointmentsByGroup () {
-    console.log("Group report");
     if(!_.isEmpty(vm.group))
     {
       var start_date = null;
@@ -236,8 +238,7 @@
         end_date.setHours(18, 0, 0);
       }
       var app_request = {
-        period:
-        {
+        period: {
           start_date: start_date != null ? start_date.toJSON() : null,
           end_date: end_date != null ? end_date.toJSON() : null
         },
@@ -252,12 +253,48 @@
     }
   }
 
+  function generateReservationsByProfessor () {
+    if(!_.isEmpty(vm.professor))
+    {
+      var start_date = null;
+      var end_date = null;
+      if(vm.selected_start_date != null)
+      {
+        start_date = new Date(vm.selected_start_date);
+        start_date.setHours(08, 0, 0);
+      }
+      if(vm.selected_end_date != null)
+      {
+        end_date = new Date(vm.selected_end_date);
+        end_date.setHours(18, 0, 0);
+      }
+      var res_request = {
+        period:
+        {
+          start_date: start_date != null ? start_date.toJSON() : null,
+          end_date: end_date != null ? end_date.toJSON() : null
+        },
+        professor: vm.professor.username
+      };
+      ReportingService.setReservationsByProfessorRequest(res_request);
+      redirectToReservationsByProfessor ();
+    }
+    else
+    {
+      MessageService.info("Debe buscar un docente.");
+    }
+  }
+
   function redirectToAppsByStudent () {
     $location.path('Administrador/Reportes/Citas_Por_Estudiante');
   }
 
   function redirectToAppsByGroup () {
     $location.path('Administrador/Reportes/Citas_Por_Grupo');
+  }
+
+  function redirectToReservationsByProfessor () {
+    $location.path('Administrador/Reportes/Reservaciones_Por_Docente');
   }
 
   function handleError(data) {

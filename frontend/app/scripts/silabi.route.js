@@ -87,6 +87,11 @@
           controller: 'AppointmentsByGroupController',
           controllerAs: 'AppsByGroup'
         })
+        .when('/Administrador/Reportes/Reservaciones_Por_Docente', {
+          templateUrl: 'views/administrator/reports/report.reservationsbyprofessor.html',
+          controller: 'ReservationsByProfessorController',
+          controllerAs: 'ResByProfessor'
+        })
         .when('/Operador/Docentes', {
           templateUrl: 'views/operator/professors/professor.list.html',
           controller: 'ProfessorListController',
