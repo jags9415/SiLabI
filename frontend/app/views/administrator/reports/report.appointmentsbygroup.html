@@ -1,0 +1,69 @@
+<div>
+  <h2>Citas por Grupo</h2>
+  <hr>
+  <ol class="breadcrumb">
+    <li><a href="#/">Inicio</a></li>
+    <li><a href="#/Administrador/Reportes">Reportes</a></li>
+    <li class="active">Citas por Grupo</li>
+  </ol>
+  <form autocomplete="off">
+    <div cg-busy="AppsByGroup.promise"></div>
+    <div id="reportContent">
+      <div class="text-center">
+        <p><b>Instituto Tecnológico de Costa Rica</b></p>
+        <p><b>Escuela Ciencias del Lenguaje</b></p>
+        <p><b>Laboratorio de Inglés</b></p>
+      </div>
+      <br/>
+      <div class="text-left">
+      <p><b>Reporte: </b> Citas por grupo </p>
+      <div ng-show="AppsByGroup.period.start_date !=null && AppsByGroup.period.end_date!=null">
+        <p><b>Periodo:</b> {{ AppsByGroup.period.start_date | date:'longDate' }} - {{ AppsByGroup.period.end_date | date:'longDate' }}</p>
+      </div>
+      <div ng-show="AppsByGroup.group != null">
+        <p><b>Grupo:</b> {{AppsByGroup.group.course.name}} - Número: {{AppsByGroup.group.number}} </p>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Carné</th>
+              <th>Fecha</th>
+              <th>Software</th>
+              <th>Laboratorio</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="app in AppsByGroup.appointments">
+              <td>{{ app.student.username }}</td>
+              <td>{{ app.date | date : 'd MMM y hh:mm a' }}</td>
+              <td>{{ app.software.code }}</td>
+              <td>{{ app.laboratory.name }}</td>
+              <td>{{ app.state }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-left">
+        <button type="button" class="btn btn-primary" ng-click="AppsByGroup.generateReport()" ng-show="AppsByGroup.appointments.length > 0 ">
+          <i class="glyphicon glyphicon-save"></i> Descargar Reporte
+        </button>
+      </div>
+    </div>
+    <p ng-show="AppsByGroup.isLoaded() && AppsByGroup.isEmpty()">No se encontraron resultados.</p>
+    <br>
+    <div class="row" ng-show="AppsByGroup.totalPages > 1">
+      <div class="col-md-12 pagination">
+        <pagination ng-if="AppsByGroup.totalItems"
+          ng-change="AppsByGroup.loadPage(true)" ng-model="AppsByGroup.page" items-per-page="AppsByGroup.limit"
+          total-items="AppsByGroup.totalItems" max-size="5" boundary-links="true" rotate="true"
+          previous-text="<" next-text=">" first-text="<<" last-text=">>"
+        ></pagination>
+      </div>
+    </div>
+  </form>
+</div>

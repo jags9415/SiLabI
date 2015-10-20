@@ -82,6 +82,11 @@
           controller: 'AppointmentsByStudentController',
           controllerAs: 'AppsByStudent'
         })
+        .when('/Administrador/Reportes/Citas_Por_Grupo', {
+          templateUrl: 'views/administrator/reports/report.appointmentsbygroup.html',
+          controller: 'AppointmentsByGroupController',
+          controllerAs: 'AppsByGroup'
+        })
         .when('/Operador/Docentes', {
           templateUrl: 'views/operator/professors/professor.list.html',
           controller: 'ProfessorListController',
