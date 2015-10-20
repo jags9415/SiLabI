@@ -9,40 +9,51 @@
 
   function ReportingService(RequestService, $localStorage) {
 
-    var appointmentsByStudentRquest = null;
-    var appointmentsByGroupRquest = null;
-    var reservationsByProfessorRequest = null;
+    var appointments_by_student_rquest = null;
+    var appointments_by_group_rquest = null;
+    var reservations_by_professor_request = null;
+    var reservations_by_group_request = null;
     this.setAppointmentsByStudentRequest = setAppointmentsByStudentRequest;
     this.getAppointmentsByStudentRequest = getAppointmentsByStudentRequest;
     this.setAppointmentsByGroupRequest = setAppointmentsByGroupRequest;
     this.getAppointmentsByGroupRequest = getAppointmentsByGroupRequest;
     this.getReservationsByProfessorRequest = getReservationsByProfessorRequest;
     this.setReservationsByProfessorRequest = setReservationsByProfessorRequest;
+    this.setReservationsByGroupRequest = setReservationsByGroupRequest;
+    this.getReservationsByGroupRequest = getReservationsByGroupRequest;
     this.GetAppointments = GetAppointments;
     this.GetReservations = GetReservations;
 
     function setAppointmentsByStudentRequest (request) {
-      appointmentsByStudentRquest = request;
+      appointments_by_student_request = request;
     }
 
     function getAppointmentsByStudentRequest () {
-      return appointmentsByStudentRquest;
+      return appointments_by_student_request;
     }
 
     function setAppointmentsByGroupRequest (request) {
-      appointmentsByGroupRquest = request;
+      appointments_by_group_request = request;
     }
 
     function getAppointmentsByGroupRequest () {
-      return appointmentsByGroupRquest;
+      return appointments_by_group_request;
     }
 
     function setReservationsByProfessorRequest (request) {
-      reservationsByProfessorRequest = request;
+      reservations_by_group_request = request;
     }
 
     function getReservationsByProfessorRequest () {
-      return reservationsByProfessorRequest;
+      return reservations_by_group_request;
+    }
+
+    function setReservationsByGroupRequest (request) {
+      reservations_by_group_request = request;
+    }
+
+    function getReservationsByGroupRequest () {
+      return reservations_by_group_request;
     }
 
     function GetAppointments(request) {
