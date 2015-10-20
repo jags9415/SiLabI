@@ -13,7 +13,7 @@
     vm.loaded = false;
     vm.appointments = [];
     vm.limit = 20;
-
+    vm.period = {};
 
     vm.request = {
       fields : 'id,date,state,student.username,student.full_name,laboratory.name,software.code',
@@ -27,6 +27,7 @@
     vm.isEmpty = isEmpty;
     vm.isLoaded = isLoaded;
     vm.loadPage = loadPage;
+    vm.generateReport = generateReport;
 
     activate();
 
@@ -50,6 +51,7 @@
       var app_request = ReportingService.getAppointmentsByStudentRequest();
       if(app_request != null)
       {
+        vm.period = app_request.period;
         setDate(app_request);
         vm.request.query['student.username'] = {
           operation: 'eq',
@@ -106,6 +108,11 @@
       vm.totalPages = data['total_pages'];
       vm.totalItems = vm.limit * vm.totalPages;
       vm.loaded = true;
+    }
+
+    function generateReport () {
+      var html = $('#reportContent').get(0);
+      FileService.downloadHtmlToPDF(html);
     }
 
     function handleError(data) {
