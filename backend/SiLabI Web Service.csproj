@@ -181,7 +181,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\RESTful API v1.pubxml" />
+    <None Include="Properties\PublishProfiles\SiLabI [local].pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
