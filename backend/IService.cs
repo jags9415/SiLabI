@@ -3,6 +3,7 @@ using SiLabI.Model.Request;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -18,6 +19,17 @@ namespace SiLabI
     [ServiceContract]
     public interface IService
     {
+        /*
+         * WELCOME ENDPOINT.
+         */
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            ResponseFormat = WebMessageFormat.Json),
+        Description("Show a welcome message.")]
+        Stream GetWelcomeMessage();
+
         /*
          * AUTHENTICATION ENDPOINTS.
          */

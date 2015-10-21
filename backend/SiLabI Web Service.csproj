@@ -110,6 +110,7 @@
     <Compile Include="Endpoints\ProfileEndpoints.cs" />
     <Compile Include="Endpoints\ReservationEndpoints.cs" />
     <Compile Include="Endpoints\SoftwareEndpoints.cs" />
+    <Compile Include="Endpoints\WelcomeEndpoint.cs" />
     <Compile Include="Exceptions\InvalidParameterException.cs" />
     <Compile Include="Exceptions\MissingParameterException.cs" />
     <Compile Include="Exceptions\InvalidRequestBodyException.cs" />
