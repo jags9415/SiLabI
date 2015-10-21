@@ -12,7 +12,7 @@ WHILE @APPOINTMENT_i < @APPOINTMENT_rows
 BEGIN
 	SELECT TOP 1 @APPOINTMENT_student = FK_User_Id FROM Students ORDER BY NEWID();
 	SELECT TOP 1 @APPOINTMENT_software = PK_Software_Id FROM Software ORDER BY NEWID();
-	SELECT TOP 1 @APPOINTMENT_date = [date], @APPOINTMENT_laboratory = [laboratory.id] FROM fn_GetAvailableAppointments(@APPOINTMENT_student) ORDER BY NEWID();
+	SELECT TOP 1 @APPOINTMENT_date = [date], @APPOINTMENT_laboratory = [laboratory.id] FROM fn_GetAvailableAppointmentsForCreate(@APPOINTMENT_student) ORDER BY NEWID();
 	
 	SELECT TOP 1 @APPOINTMENT_group = SG.FK_Group_Id
 	FROM StudentsByGroup AS SG
