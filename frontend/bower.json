@@ -19,7 +19,6 @@
     "bootstrap": "^3.2.0",
     "crypto-js": "http://crypto-js.googlecode.com/files/CryptoJS%20v3.1.2.zip",
     "font-awesome": "~4.4.0",
-    "jspdf": "~1.1.135",
     "lodash": "~3.10.1",
     "moment": "~2.10.6",
     "ng-password-strength": "~0.2.1",

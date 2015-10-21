@@ -72,31 +72,6 @@
           controller: 'OperatorDetailController',
           controllerAs: 'Operator'
         })
-        .when('/Administrador/Reportes', {
-          templateUrl: 'views/administrator/reports/report.create.html',
-          controller: 'ReportCreateController',
-          controllerAs: 'ReportCreate'
-        })
-        .when('/Administrador/Reportes/Citas_Por_Estudiante', {
-          templateUrl: 'views/administrator/reports/report.appointmentsbystudent.html',
-          controller: 'AppointmentsByStudentController',
-          controllerAs: 'AppsByStudent'
-        })
-        .when('/Administrador/Reportes/Citas_Por_Grupo', {
-          templateUrl: 'views/administrator/reports/report.appointmentsbygroup.html',
-          controller: 'AppointmentsByGroupController',
-          controllerAs: 'AppsByGroup'
-        })
-        .when('/Administrador/Reportes/Reservaciones_Por_Docente', {
-          templateUrl: 'views/administrator/reports/report.reservationsbyprofessor.html',
-          controller: 'ReservationsByProfessorController',
-          controllerAs: 'ResByProfessor'
-        })
-        .when('/Administrador/Reportes/Reservaciones_Por_Grupo', {
-          templateUrl: 'views/administrator/reports/report.reservationsbygroup.html',
-          controller: 'ReservationsByGroupController',
-          controllerAs: 'ResByGroup'
-        })
         .when('/Operador/Docentes', {
           templateUrl: 'views/operator/professors/professor.list.html',
           controller: 'ProfessorListController',

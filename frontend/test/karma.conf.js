@@ -39,7 +39,6 @@ module.exports = function(config) {
       'bower_components/bootstrap/dist/js/bootstrap.js',
       'bower_components/bootbox/bootbox.js',
       'bower_components/crypto-js/rollups/sha256.js',
-      'bower_components/jspdf/dist/jspdf.min.js',
       'bower_components/lodash/lodash.js',
       'bower_components/moment/moment.js',
       'bower_components/ng-password-strength/dist/scripts/ng-password-strength.js',
