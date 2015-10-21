@@ -201,7 +201,7 @@
       if(vm.selected_start_date != null)
       {
         start_date = new Date(vm.selected_start_date);
-        start_date.setHours(08, 0, 0);
+        start_date.setHours(8, 0, 0);
       }
       if(vm.selected_end_date != null)
       {
@@ -233,7 +233,7 @@
       if(vm.selected_start_date != null)
       {
         start_date = new Date(vm.selected_start_date);
-        start_date.setHours(08, 0, 0);
+        start_date.setHours(8, 0, 0);
       }
       if(vm.selected_end_date != null)
       {
@@ -264,7 +264,7 @@
       if(vm.selected_start_date != null)
       {
         start_date = new Date(vm.selected_start_date);
-        start_date.setHours(08, 0, 0);
+        start_date.setHours(8, 0, 0);
       }
       if(vm.selected_end_date != null)
       {
@@ -296,7 +296,7 @@
       if(vm.selected_start_date != null)
       {
         start_date = new Date(vm.selected_start_date);
-        start_date.setHours(08, 0, 0);
+        start_date.setHours(8, 0, 0);
       }
       if(vm.selected_end_date != null)
       {
