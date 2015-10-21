@@ -11,6 +11,7 @@
 
     this.htmlToPDF = htmlToPDF;
     this.downloadHtmlToPDF = downloadHtmlToPDF;
+    this.createFromHTML = createFromHTML;
 
     function downloadHtmlToPDF (html, docname) {
       var doc = new jsPDF();
@@ -40,6 +41,13 @@
         'elementHandlers': specialElementHandlers
       });
       return doc;
+    }
+
+    function createFromHTML (html, docname) {
+      var pdf = new jsPDF('p','pt','a4');
+      pdf.addHTML(html,function() {
+      pdf.save(docname+".pdf");
+    });
     }
 
 

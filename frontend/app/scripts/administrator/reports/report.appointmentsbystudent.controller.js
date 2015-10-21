@@ -117,7 +117,7 @@
 
     function generateReport () {
       var html = $('#reportContent').get(0);
-      FileService.downloadHtmlToPDF(html, "citas_estudiante_"+vm.student.username);
+      FileService.createFromHTML(html, "citas_estudiante_"+vm.student.username);
     }
 
     function handleError(data) {

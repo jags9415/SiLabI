@@ -116,7 +116,7 @@
 
     function generateReport () {
       var html = $('#reportContent').get(0);
-      FileService.downloadHtmlToPDF(html, "citas_por_grupo"+vm.group.course.name+"["+vm.group.number+"]");
+      FileService.createFromHTML(html, "citas_por_grupo"+vm.group.course.name+"["+vm.group.number+"]");
     }
 
     function handleError(data) {
