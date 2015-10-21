@@ -54,10 +54,10 @@
       {
         vm.period = app_request.period;
         setDate(app_request);
-        vm.request.query['student.username'] = {
+        /*vm.request.query['student.username'] = {
           operation: 'eq',
           value: app_request.student
-        };
+        };*/
         vm.promise = ReportingService.GetAppointments(vm.request)
         .then(setAppointments)
         .catch(handleError);
@@ -109,15 +109,20 @@
       vm.totalPages = data['total_pages'];
       vm.totalItems = vm.limit * vm.totalPages;
       vm.loaded = true;
+      vm.sliced_appointments = vm.appointments;
       if(vm.appointments.length > 0)
       {
         vm.student = vm.appointments[0].student;
+      }
+      if(vm.appointments.length > 20)
+      {
+        vm.sliced_appointments = vm.appointments.slice(0, 20);
       }
     }
 
     function generateReport () {
       var html = $('#reportContent').get(0);
-      FileService.createFromHTML(html, "citas_estudiante_"+vm.student.username);
+      FileService.downloadHtmlToPDF(html, "citas_estudiante_"+vm.student.username);
     }
 
     function handleError(data) {

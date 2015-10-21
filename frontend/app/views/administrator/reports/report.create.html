@@ -13,7 +13,7 @@
           <label for="name">Seleccione el tipo de reporte</label>
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-file"></i></span>
-            <ui-select name="selected_report" ng-model="ReportCreate.selected_report" required>
+            <ui-select name="selected_report" ng-model="ReportCreate.selected_report" on-select="ReportCreate.display_dates=true" required>
               <ui-select-match placeholder="{{$select.selected.name}}">
                 {{$select.selected.name}}
               </ui-select-match>
@@ -69,7 +69,7 @@
       </div>
     </div>
     </div>
-    <div class="row">
+    <div class="row" ng-show="ReportCreate.display_dates">
       <div class="col-md-6">
         <div class="form-group">
           <label for="name">Fecha Inicial</label>

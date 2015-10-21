@@ -118,7 +118,7 @@
 
     function generateReport () {
       var html = $('#reportContent').get(0);
-      FileService.createFromHTML(html, "reservaciones_docente_"+vm.professor.full_name);
+      FileService.downloadHtmlToPDF(html, "reservaciones_docente_"+vm.professor.full_name);
     }
 
     function handleError(data) {

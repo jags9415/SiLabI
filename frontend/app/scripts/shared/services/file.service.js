@@ -36,8 +36,8 @@
           return true;
         }
       };
-      doc.fromHTML(html, 15, 15, {
-        'width': 200, 
+      doc.fromHTML(html, 20, 5, {
+        'width': 100, 
         'elementHandlers': specialElementHandlers
       });
       return doc;

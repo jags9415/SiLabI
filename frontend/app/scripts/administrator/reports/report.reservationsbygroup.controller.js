@@ -115,7 +115,7 @@
 
     function generateReport () {
       var html = $('#reportContent').get(0);
-      FileService.createFromHTML(html, "reservaciones_por_grupo"+vm.group.course.name+"["+vm.group.number+"]");
+      FileService.downloadHtmlToPDF(html, "reservaciones_por_grupo"+vm.group.course.name+"["+vm.group.number+"]");
     }
 
     function handleError(data) {
