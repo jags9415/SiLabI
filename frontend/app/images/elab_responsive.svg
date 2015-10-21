@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Fondo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="600px" height="200px" viewBox="0 0 600 200" enable-background="new 0 0 600 200" xml:space="preserve">
+<radialGradient id="SVGID_1_" cx="300" cy="100.002" r="414.648" gradientTransform="matrix(0.75 0 0 0.25 75 74.9995)" gradientUnits="userSpaceOnUse">
+	<stop  offset="0" style="stop-color:#FFFFFF"/>
+	<stop  offset="1" style="stop-color:#E5E4E5"/>
+</radialGradient>
+<rect fill="url(#SVGID_1_)" width="600" height="200"/>
+<ellipse fill-rule="evenodd" clip-rule="evenodd" fill="#808281" cx="259.926" cy="104.948" rx="0.359" ry="0.439"/>
+<ellipse fill-rule="evenodd" clip-rule="evenodd" fill="#808281" cx="258.523" cy="104.948" rx="0.359" ry="0.439"/>
+<ellipse fill-rule="evenodd" clip-rule="evenodd" fill="#808281" cx="257.122" cy="104.948" rx="0.357" ry="0.439"/>
+<g>
+	<polygon fill-rule="evenodd" clip-rule="evenodd" fill="#00294F" points="96.245,122.926 122.249,122.926 134.437,147.314 
+		84.054,147.314 	"/>
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="#00294F" d="M47.97,41.604h122.553c3.451,0,6.272,3.116,6.272,6.925v73.657
+		c0,3.807-2.822,6.926-6.272,6.926H47.97c-3.447,0-6.271-3.119-6.271-6.926V48.529C41.698,44.72,44.522,41.604,47.97,41.604z"/>
+	<rect x="45.862" y="45.643" fill-rule="evenodd" clip-rule="evenodd" fill="#00294F" width="126.77" height="71.101"/>
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="#00294F" d="M34.458,139.941h149.577c1.836,0,3.338,1.66,3.338,3.688l0,0
+		c0,2.027-1.502,3.686-3.338,3.686H34.458c-1.837,0-3.338-1.658-3.338-3.686l0,0C31.121,141.602,32.622,139.941,34.458,139.941z"/>
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="#00294F" d="M85.875,139.941h98.161c1.836,0,3.338,1.66,3.338,3.688l0,0
+		c0,2.027-1.502,3.686-3.338,3.686H86.603L85.875,139.941z"/>
+</g>
+<text transform="matrix(1.242 0 0 1 189.2842 122.9258)" fill="#1998D5" font-family="'SegoeUI-Bold'" font-size="77.8727">e</text>
+<text transform="matrix(1.0196 0 0 1 237.9688 122.9258)" fill="#00305B" font-family="'SegoeUI-Bold'" font-size="73.6589">Lab</text>
+<line fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" x1="382" y1="78" x2="382" y2="124"/>
+<text transform="matrix(1.0196 0 0 1 397.6367 122.9258)" fill="#00305B" font-family="'TimesNewRomanPS-BoldMT'" font-size="70">TEC</text>
+</svg>
