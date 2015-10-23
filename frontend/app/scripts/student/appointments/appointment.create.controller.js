@@ -147,7 +147,7 @@
     function createAppointment () {
       var app = {
         'software': vm.selectedSoftware.code,
-        'date': vm.selectedHour.fullDate,
+        'date': moment(vm.selectedHour.fullDate).toJSON(),
         'group': vm.group.id
       };
 

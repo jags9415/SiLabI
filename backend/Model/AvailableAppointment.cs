@@ -15,7 +15,7 @@ namespace SiLabI.Model
     public class AvailableAppointment : BaseObject
     {
         protected Laboratory _laboratory;
-        protected DateTime? _date;
+        protected DateTimeOffset? _date;
         protected int? _spaces;
 
         /// <summary>
@@ -41,12 +41,12 @@ namespace SiLabI.Model
         /// <summary>
         /// The date.
         /// </summary>
-        public virtual DateTime? Date
+        public virtual DateTimeOffset? Date
         {
             set
             {
                 _date = value;
-                Date_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fff") : null;
+                Date_ISO8601 = value.HasValue ? value.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ") : null;
             }
             get { return _date; }
         }
@@ -74,7 +74,7 @@ namespace SiLabI.Model
 
             AvailableAppointment appointment = new AvailableAppointment();
 
-            appointment.Date = row.Table.Columns.Contains(prefix + "date") ? Converter.ToDateTime(row[prefix + "date"]) : null;
+            appointment.Date = row.Table.Columns.Contains(prefix + "date") ? Converter.ToNullableDateTimeOffset(row[prefix + "date"]) : null;
             appointment.Spaces = row.Table.Columns.Contains(prefix + "spaces") ? Converter.ToNullableInt32(row[prefix + "spaces"]) : null;
             appointment.Laboratory = Laboratory.Parse(row, prefix + "laboratory");
 

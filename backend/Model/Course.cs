@@ -82,13 +82,10 @@ namespace SiLabI.Model
             }
 
             Course course = new Course();
+            DatabaseObject.Parse(course, row, prefix);
 
-            course.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
             course.Name = row.Table.Columns.Contains(prefix + "name") ? Converter.ToString(row[prefix + "name"]) : null;
             course.Code = row.Table.Columns.Contains(prefix + "code") ? Converter.ToString(row[prefix + "code"]) : null;
-            course.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
-            course.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
-            course.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
 
             if (course.isEmpty())
             {

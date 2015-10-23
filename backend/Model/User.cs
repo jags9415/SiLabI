@@ -255,8 +255,8 @@ namespace SiLabI.Model
             }
 
             User user = new User();
+            DatabaseObject.Parse(user, row, prefix);
 
-            user.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
             user.Name = row.Table.Columns.Contains(prefix + "name") ? Converter.ToString(row[prefix + "name"]) : null;
             user.LastName1 = row.Table.Columns.Contains(prefix + "last_name_1") ? Converter.ToString(row[prefix + "last_name_1"]) : null;
             user.LastName2 = row.Table.Columns.Contains(prefix + "last_name_2") ? Converter.ToString(row[prefix + "last_name_2"]) : null;
@@ -265,9 +265,6 @@ namespace SiLabI.Model
             user.Email = row.Table.Columns.Contains(prefix + "email") ? Converter.ToString(row[prefix + "email"]) : null;
             user.Phone = row.Table.Columns.Contains(prefix + "phone") ? Converter.ToString(row[prefix + "phone"]) : null;
             user.Username = row.Table.Columns.Contains(prefix + "username") ? Converter.ToString(row[prefix + "username"]) : null;
-            user.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
-            user.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
-            user.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
             user.Type = row.Table.Columns.Contains(prefix + "type") ? Converter.ToString(row[prefix + "type"]) : null;
 
             if (user.isEmpty())

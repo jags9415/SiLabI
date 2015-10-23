@@ -2,6 +2,7 @@
 using SiLabI.Util;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
@@ -16,8 +17,8 @@ namespace SiLabI.Model
     public abstract class DatabaseObject : BaseObject
     {
         protected int? _id;
-        protected DateTime? _createdAt;
-        protected DateTime? _updatedAt;
+        protected DateTimeOffset? _createdAt;
+        protected DateTimeOffset? _updatedAt;
         protected string _state;
 
         /// <summary>
@@ -50,12 +51,12 @@ namespace SiLabI.Model
         /// <summary>
         /// The creation date.
         /// </summary>
-        public virtual DateTime? CreatedAt
+        public virtual DateTimeOffset? CreatedAt
         {
             set
             {
                 _createdAt = value;
-                CreatedAt_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fff") : null;
+                CreatedAt_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
             }
             get { return _createdAt; }
         }
@@ -63,12 +64,12 @@ namespace SiLabI.Model
         /// <summary>
         /// The last update date.
         /// </summary>
-        public virtual DateTime? UpdatedAt
+        public virtual DateTimeOffset? UpdatedAt
         {
             set
             {
                 _updatedAt = value;
-                UpdatedAt_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fff") : null;
+                UpdatedAt_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
             }
             get { return _updatedAt; }
         }
@@ -103,6 +104,14 @@ namespace SiLabI.Model
         public virtual bool IsValidForUpdate()
         {
             return true;
+        }
+
+        public static void Parse(DatabaseObject obj, DataRow row, string prefix = "")
+        {
+            obj.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
+            obj.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToNullableDateTimeOffset(row[prefix + "created_at"]) : null;
+            obj.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToNullableDateTimeOffset(row[prefix + "updated_at"]) : null;
+            obj.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
         }
     }
 }

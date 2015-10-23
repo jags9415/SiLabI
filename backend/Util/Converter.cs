@@ -40,14 +40,85 @@ namespace SiLabI.Util
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns>The datetime.</returns>
-        public static DateTime? ToDateTime(object obj)
+        public static DateTime ToDateTime(object obj)
+        {
+            return Convert.ToDateTime(obj);
+        }
+
+        /// <summary>
+        /// Cast an object to a datetime.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>The datetime.</returns>
+        public static DateTime? ToNullableDateTime(object obj)
         {
             if (obj == null || Convert.IsDBNull(obj))
             {
                 return null;
             }
             
-            return Convert.ToDateTime(obj);
+            return Converter.ToDateTime(obj);
+        }
+
+        /// <summary>
+        /// Cast an object to a datetime offset.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>The datetime offset.</returns>
+        public static DateTimeOffset ToDateTimeOffset(object obj)
+        {
+            DateTimeOffset datetime;
+
+            if (obj is IConvertible)
+            {
+                datetime = new DateTimeOffset(Converter.ToDateTime(obj));
+            }
+            else
+            {
+                datetime = (DateTimeOffset) obj;
+            }
+
+            return datetime.ToUniversalTime();
+        }
+
+        /// <summary>
+        /// Cast an object to a datetime offset.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>The datetime offset.</returns>
+        public static DateTimeOffset? ToNullableDateTimeOffset(object obj)
+        {
+            if (obj == null || Convert.IsDBNull(obj))
+            {
+                return null;
+            }
+
+            return Converter.ToDateTimeOffset(obj);
+        }
+
+        /// <summary>
+        /// Cast an object to a boolean.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>The boolean.</returns>
+        public static bool ToBoolean(object obj)
+        {
+            return Convert.ToBoolean(obj);
+        }
+
+        /// <summary>
+        /// Cast an object to a boolean.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>The boolean.</returns>
+        public static bool? ToNullableBoolean(object obj)
+        {
+            if (obj == null || Convert.IsDBNull(obj))
+            {
+                return null;
+            }
+
+            return Converter.ToBoolean(obj);
         }
 
         /// <summary>
@@ -63,21 +134,6 @@ namespace SiLabI.Util
             }
 
             return Convert.ToString(obj);
-        }
-
-        /// <summary>
-        /// Cast an object to a boolean.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <returns>The boolean.</returns>
-        public static bool? ToNullableBoolean(object obj)
-        {
-            if (obj == null || Convert.IsDBNull(obj))
-            {
-                return null;
-            }
-
-            return Convert.ToBoolean(obj);
         }
     }
 }

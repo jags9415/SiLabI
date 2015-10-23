@@ -165,7 +165,7 @@
       if (!_.isEmpty(vm.appointment)) {
 
         var app = {
-          'date': vm.selectedHour.fullDate,
+          'date': moment(vm.selectedHour.fullDate).toJSON(),
           'software': vm.appointment.software.code,
           'group': vm.appointment.group.id
         };

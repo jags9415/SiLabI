@@ -91,8 +91,8 @@
         var end = moment(vm.searched.start_time).endOf('day');
 
         vm.request.query['start_time'] = [
-          { operation: 'ge', value: start.format() },
-          { operation: 'le', value: end.format() }
+          { operation: 'ge', value: start.toJSON() },
+          { operation: 'le', value: end.toJSON() }
         ]
       }
 

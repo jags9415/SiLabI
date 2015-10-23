@@ -17,8 +17,8 @@ namespace SiLabI.Model.Request
         protected string _state;
         protected int? _group;
         protected bool? _attendance;
-        protected DateTime? _startTime;
-        protected DateTime? _endTime;
+        protected DateTimeOffset? _startTime;
+        protected DateTimeOffset? _endTime;
 
         /// <summary>
         /// The professor username.
@@ -83,7 +83,7 @@ namespace SiLabI.Model.Request
         /// <summary>
         /// The start time.
         /// </summary>
-        public virtual DateTime? StartTime
+        public virtual DateTimeOffset? StartTime
         {
             set
             {
@@ -103,7 +103,7 @@ namespace SiLabI.Model.Request
         /// <summary>
         /// The end time.
         /// </summary>
-        public virtual DateTime? EndTime
+        public virtual DateTimeOffset? EndTime
         {
             set
             {
@@ -128,7 +128,7 @@ namespace SiLabI.Model.Request
         {
             get
             {
-                return StartTime.HasValue ? StartTime.Value.ToString("yyyy-MM-ddTHH:mm:ss.fff") : String.Empty;
+                return StartTime.HasValue ? StartTime.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : String.Empty;
             }
             set
             {
@@ -144,7 +144,7 @@ namespace SiLabI.Model.Request
         {
             get
             {
-                return EndTime.HasValue ? EndTime.Value.ToString("yyyy-MM-ddTHH:mm:ss.fff") : String.Empty;
+                return EndTime.HasValue ? EndTime.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : String.Empty;
             }
             set
             {

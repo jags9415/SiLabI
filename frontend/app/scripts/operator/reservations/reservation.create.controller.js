@@ -170,8 +170,8 @@
       var res = {
         'professor': vm.professor.username,
         'laboratory': vm.selected_laboratory.name,
-        'start_time': start_time,
-        'end_time': end_time,
+        'start_time': start_time.toJSON(),
+        'end_time': end_time.toJSON(),
       };
 
       if (vm.selected_group) {

@@ -20,7 +20,7 @@ namespace SiLabI.Model.Request
         protected int? _group;
         protected string _state;
         protected bool? _attendance;
-        protected DateTime? _date;
+        protected DateTimeOffset? _date;
 
         /// <summary>
         /// The student username.
@@ -85,7 +85,7 @@ namespace SiLabI.Model.Request
         /// <summary>
         /// The date.
         /// </summary>
-        public virtual DateTime? Date
+        public virtual DateTimeOffset? Date
         {
             set
             {
@@ -108,7 +108,7 @@ namespace SiLabI.Model.Request
         {
             get
             {
-                return Date.HasValue ? Date.Value.ToString("yyyy-MM-ddTHH:mm:ss.fff") : String.Empty;
+                return Date.HasValue ? Date.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : String.Empty;
             }
             set 
             {

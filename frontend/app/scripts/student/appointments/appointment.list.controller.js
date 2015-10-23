@@ -108,11 +108,11 @@
         vm.request.query['date'] = [
           {
           	operation: 'ge',
-          	value: start.format()
+          	value: start.toJSON()
           },
           {
           	operation: 'lt',
-          	value: end.format()
+          	value: end.toJSON()
           }
         ];
       }

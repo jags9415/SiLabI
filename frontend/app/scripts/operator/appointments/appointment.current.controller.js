@@ -83,7 +83,7 @@
 
       vm.request.query['date'] = {
         operation: 'eq',
-        value: getSelectedDateTime().toISOString()
+        value: getSelectedDateTime().toJSON()
       };
 
       vm.promise = AppointmentService.GetAll(vm.request)
@@ -117,7 +117,7 @@
       date.setSeconds(vm.selectedHour.getSeconds());
       date.setMilliseconds(vm.selectedHour.getMilliseconds());
 
-      return date;
+      return moment(date);
     }
 
     function openDatePicker($event) {

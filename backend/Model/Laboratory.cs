@@ -123,15 +123,12 @@ namespace SiLabI.Model
             }
 
             Laboratory laboratory = new Laboratory();
+            DatabaseObject.Parse(laboratory, row, prefix);
 
-            laboratory.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
             laboratory.Name = row.Table.Columns.Contains(prefix + "name") ? Converter.ToString(row[prefix + "name"]) : null;
             laboratory.Seats = row.Table.Columns.Contains(prefix + "seats") ? Converter.ToNullableInt32(row[prefix + "seats"]) : null;
             laboratory.AppointmentPriority = row.Table.Columns.Contains(prefix + "appointment_priority") ? Converter.ToNullableInt32(row[prefix + "appointment_priority"]) : null;
             laboratory.ReservationPriority = row.Table.Columns.Contains(prefix + "reservation_priority") ? Converter.ToNullableInt32(row[prefix + "reservation_priority"]) : null;
-            laboratory.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
-            laboratory.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
-            laboratory.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
 
             if (laboratory.isEmpty())
             {

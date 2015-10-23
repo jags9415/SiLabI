@@ -128,34 +128,37 @@ namespace SiLabI.Util
         /// <param name="date">The date.</param>
         /// <param name="message">The output error message.</param>
         /// <returns>True if the input is valid.</returns>
-        public static bool IsValidAppointmentDate(DateTime date, out string message)
+        public static bool IsValidAppointmentDate(DateTimeOffset date, out string message)
         {
+            var now = DateTimeOffset.UtcNow.ToOffset(new TimeSpan(-6, 0, 0));
+            var local = date.ToOffset(new TimeSpan(-6, 0, 0));
+
             // Check that date is in the next 2 weeks.
-            if (DateTime.Now.AddDays(14).Date.CompareTo(date.Date) < 0)
+            if (now.AddDays(14).Date.CompareTo(local.Date) < 0)
             {
                 message = "Ingrese un día anterior a dos semanas.";
                 return false;
             }
             // Checks that day is not weekend.
-            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            if (local.DayOfWeek == DayOfWeek.Saturday || local.DayOfWeek == DayOfWeek.Sunday)
             {
                 message = "No se permiten citas durante fines de semana.";
                 return false;
             }
             // Check that day is not a holiday.
-            if (Holidays.Contains(date))
+            if (IsHoliday(local))
             {
                 message = "No se permiten citas durante feriados.";
                 return false;
             }
             // Check that hour is between 8:00 am and 5:00 pm.
-            if (date.Hour < 8 || date.Hour > 17)
+            if (local.Hour < 8 || local.Hour > 17)
             {
                 message = "Ingrese una hora entre 8:00 am y 5:00 pm.";
                 return false;
             }
             // Check that no minute, seconds or milliseconds are provided.
-            if (date.Minute != 0 || date.Second != 0 || date.Millisecond != 0)
+            if (local.Minute != 0 || local.Second != 0 || local.Millisecond != 0)
             {
                 message = "Ingrese unicamente horas exactas.";
                 return false;
@@ -174,34 +177,37 @@ namespace SiLabI.Util
         /// <param name="date">The date.</param>
         /// <param name="message">The output error message.</param>
         /// <returns>True if the input is valid.</returns>
-        public static bool IsValidReservationDate(DateTime date, out string message)
+        public static bool IsValidReservationDate(DateTimeOffset date, out string message)
         {
+            var now = DateTimeOffset.UtcNow.ToOffset(new TimeSpan(-6, 0, 0));
+            var local = date.ToOffset(new TimeSpan(-6, 0, 0));
+
             // Check if date is later than today.
-            if (DateTime.Now.CompareTo(date) > 0)
+            if (now.CompareTo(local) > 0)
             {
                 message = "Ingrese un día posterior a la fecha actual.";
                 return false;
             }
             // Checks that day is not weekend.
-            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            if (local.DayOfWeek == DayOfWeek.Saturday || local.DayOfWeek == DayOfWeek.Sunday)
             {
                 message = "No se permiten reservaciones durante fines de semana.";
                 return false;
             }
             // Check that day is not a holiday.
-            if (Holidays.Contains(date))
+            if (IsHoliday(local))
             {
                 message = "No se permiten reservaciones durante feriados.";
                 return false;
             }
             // Check that hour is between 8:00 am and 6:00 pm.
-            if (date.Hour < 8 || date.Hour > 18)
+            if (local.Hour < 8 || local.Hour > 18)
             {
                 message = "Ingrese una hora entre 8:00 am y 6:00 pm.";
                 return false;
             }
             // Check that no minute, seconds or milliseconds are provided.
-            if (date.Minute != 0 || date.Second != 0 || date.Millisecond != 0)
+            if (local.Minute != 0 || local.Second != 0 || local.Millisecond != 0)
             {
                 message = "Ingrese unicamente horas exactas.";
                 return false;
@@ -220,7 +226,7 @@ namespace SiLabI.Util
         /// <param name="endTime">The reservation end time.</param>
         /// <param name="message">The output error message.</param>
         /// <returns></returns>
-        public static bool IsValidReservationTimeRange(DateTime startTime, DateTime endTime, out string message)
+        public static bool IsValidReservationTimeRange(DateTimeOffset startTime, DateTimeOffset endTime, out string message)
         {
             if (startTime.CompareTo(endTime) >= 0)
             {
@@ -234,6 +240,16 @@ namespace SiLabI.Util
             }
             message = string.Empty;
             return true;
+        }
+
+        /// <summary>
+        /// Check if a date is a holiday.
+        /// </summary>
+        /// <param name="date">The date.</param>
+        /// <returns>True if the date is a holiday.</returns>
+        private static bool IsHoliday(DateTimeOffset date)
+        {
+            return Holidays.Any(x => x.Day == date.Day && x.Month == date.Month);
         }
 
         /// <summary>

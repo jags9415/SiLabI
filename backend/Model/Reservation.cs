@@ -14,8 +14,8 @@ namespace SiLabI.Model
     [DataContract]
     public class Reservation : DatabaseObject
     {
-        protected DateTime? _startTime;
-        protected DateTime? _endTime;
+        protected DateTimeOffset? _startTime;
+        protected DateTimeOffset? _endTime;
         protected User _professor;
         protected Group _group;
         protected Laboratory _laboratory;
@@ -75,12 +75,12 @@ namespace SiLabI.Model
         /// <summary>
         /// The start time.
         /// </summary>
-        public virtual DateTime? StartTime
+        public virtual DateTimeOffset? StartTime
         {
             set
             {
                 _startTime = value;
-                StartTime_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fff") : null;
+                StartTime_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
             }
             get { return _startTime; }
         }
@@ -88,12 +88,12 @@ namespace SiLabI.Model
         /// <summary>
         /// The end time.
         /// </summary>
-        public virtual DateTime? EndTime
+        public virtual DateTimeOffset? EndTime
         {
             set
             {
                 _endTime = value;
-                EndTime_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fff") : null;
+                EndTime_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
             }
             get { return _endTime; }
         }
@@ -127,13 +127,10 @@ namespace SiLabI.Model
             }
 
             Reservation reservation = new Reservation();
+            DatabaseObject.Parse(reservation, row, prefix);
 
-            reservation.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
-            reservation.StartTime = row.Table.Columns.Contains(prefix + "start_time") ? Converter.ToDateTime(row[prefix + "start_time"]) : null;
-            reservation.EndTime = row.Table.Columns.Contains(prefix + "end_time") ? Converter.ToDateTime(row[prefix + "end_time"]) : null;
-            reservation.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
-            reservation.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
-            reservation.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
+            reservation.StartTime = row.Table.Columns.Contains(prefix + "start_time") ? Converter.ToNullableDateTimeOffset(row[prefix + "start_time"]) : null;
+            reservation.EndTime = row.Table.Columns.Contains(prefix + "end_time") ? Converter.ToNullableDateTimeOffset(row[prefix + "end_time"]) : null;
             reservation.Attendance = row.Table.Columns.Contains(prefix + "attendance") ? Converter.ToNullableBoolean(row[prefix + "attendance"]) : null;
             reservation.Professor = User.Parse(row, prefix + "professor");
             reservation.Laboratory = Laboratory.Parse(row, prefix + "laboratory");

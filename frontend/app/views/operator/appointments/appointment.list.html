@@ -128,7 +128,7 @@
   <p ng-show="AppointmentList.isLoaded() && AppointmentList.isEmpty()">No se encontraron resultados.</p>
   <br>
   <div class="row" ng-show="AppointmentList.totalPages > 1">
-    <div class="col-md-12 pagination">
+    <div class="col-md-12 col-sm-12 col-xs-12 pagination">
       <pagination ng-if="AppointmentList.totalItems"
         ng-change="AppointmentList.loadPage(true)" ng-model="AppointmentList.page" items-per-page="AppointmentList.limit"
         total-items="AppointmentList.totalItems" max-size="5" boundary-links="true" rotate="true"

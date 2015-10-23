@@ -191,7 +191,7 @@
       if (!_.isEmpty(vm.appointment)) {
 
         var app = {
-          'date': vm.selectedHour.fullDate,
+          'date': moment(vm.selectedHour.fullDate).toJSON(),
           'laboratory': vm.appointment.laboratory.name,
           'software': vm.appointment.software.code,
           'group': vm.appointment.group.id,

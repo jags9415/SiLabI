@@ -48,8 +48,8 @@ namespace SiLabI.Model.Query
                     double real;
                     return Double.TryParse(Value, out real);
                 case SqlDbType.DateTime:
-                    DateTime date;
-                    return DateTime.TryParse(Value, out date);
+                    DateTimeOffset date;
+                    return DateTimeOffset.TryParse(Value, out date);
                 default:
                     return false;
             }
@@ -74,8 +74,8 @@ namespace SiLabI.Model.Query
             { 
                 if (Type == SqlDbType.DateTime)
                 {
-                    var date = DateTime.Parse(value);
-                    _value = date.ToString("yyyy-MM-ddTHH:mm:ss.fff");
+                    var date = Converter.ToDateTimeOffset(value);
+                    _value = date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
                 }
                 else
                 {

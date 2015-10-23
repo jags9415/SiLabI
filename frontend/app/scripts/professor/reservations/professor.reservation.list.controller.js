@@ -85,7 +85,6 @@
       vm.request.query = {};
 
       if (vm.searched.group) {
-        console.log(vm.searched.group.course.name);
         vm.request.query['group.course.name'] = {
           operation: 'like',
           value: '*' + vm.searched.group.course.name.replace(' ', '*') + '*'
@@ -111,8 +110,8 @@
         var end = moment(vm.searched.start_time).endOf('day');
 
         vm.request.query['start_time'] = [
-          { operation: 'ge', value: start.format() },
-          { operation: 'le', value: end.format() }
+          { operation: 'ge', value: start.toJSON() },
+          { operation: 'le', value: end.toJSON() }
         ]
       }
 

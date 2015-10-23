@@ -2,11 +2,11 @@ USE [SiLabI];
 SET NOCOUNT ON;
 DECLARE @RESERVATION_state INT, @RESERVATION_professor INT, @RESERVATION_laboratory INT, @RESERVATION_software INT;
 DECLARE @RESERVATION_group INT, @RESERVATION_i INT, @RESERVATION_rows INT;
-DECLARE @RESERVATION_start_date DATETIME, @RESERVATION_end_date DATETIME;
+DECLARE @RESERVATION_start_date DATETIMEOFFSET(3), @RESERVATION_end_date DATETIMEOFFSET(3);
 SELECT @RESERVATION_state = PK_State_Id FROM States WHERE Type = 'RESERVATION' AND Name = 'Por iniciar';
 
 SET @RESERVATION_i = 0;
-SET @RESERVATION_rows = 200;
+SET @RESERVATION_rows = 50;
 
 WHILE @RESERVATION_i < @RESERVATION_rows
 BEGIN
@@ -15,7 +15,7 @@ BEGIN
 	SELECT TOP 1 @RESERVATION_software = PK_Software_Id FROM Software ORDER BY NEWID();
 	
 	SELECT TOP 1 @RESERVATION_start_date = [date], @RESERVATION_end_date = DATEADD(HOUR, 1, [date])
-	FROM dbo.fn_GetDateTimeRange(DATEADD(WEEK, 2, GETDATE()), 4)
+	FROM dbo.fn_GetDateTimeRange(DATEADD(WEEK, 2, SYSDATETIMEOFFSET()), 4)
 	WHERE dbo.fn_IsLaboratoryReserved(@RESERVATION_laboratory, [date], DATEADD(HOUR, 1, [date])) = 0
 	AND dbo.fn_GetAppointmentsBetween(@RESERVATION_laboratory, [date], DATEADD(HOUR, 1, [date])) = 0
 	ORDER BY NEWID();

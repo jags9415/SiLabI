@@ -18,7 +18,7 @@ namespace SiLabI.Model
         protected Laboratory _laboratory;
         protected Software _software;
         protected Group _group;
-        protected DateTime? _date;
+        protected DateTimeOffset? _date;
         protected Boolean? _attendance;
 
         /// <summary>
@@ -74,12 +74,12 @@ namespace SiLabI.Model
         /// <summary>
         /// The date.
         /// </summary>
-        public virtual DateTime? Date
+        public virtual DateTimeOffset? Date
         {
             set
             {
                 _date = value;
-                Date_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fff") : null;
+                Date_ISO8601 = value.HasValue ? value.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") : null;
             }
             get { return _date; }
         }
@@ -106,12 +106,9 @@ namespace SiLabI.Model
             }
 
             Appointment appointment = new Appointment();
+            DatabaseObject.Parse(appointment, row, prefix);
 
-            appointment.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
-            appointment.Date = row.Table.Columns.Contains(prefix + "date") ? Converter.ToDateTime(row[prefix + "date"]) : null;
-            appointment.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
-            appointment.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
-            appointment.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
+            appointment.Date = row.Table.Columns.Contains(prefix + "date") ? Converter.ToNullableDateTimeOffset(row[prefix + "date"]) : null;
             appointment.Attendance = row.Table.Columns.Contains(prefix + "attendance") ? Converter.ToNullableBoolean(row[prefix + "attendance"]) : null;
             appointment.Student = Student.Parse(row, prefix + "student");
             appointment.Laboratory = Laboratory.Parse(row, prefix + "laboratory");

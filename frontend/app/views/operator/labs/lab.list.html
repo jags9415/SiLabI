@@ -100,7 +100,7 @@
   <p ng-show="LabList.isLoaded() && LabList.isEmpty()">No se encontraron resultados.</p>
   <br>
   <div class="row" ng-show="LabList.totalPages > 1">
-    <div class="col-xs-12 col-md-12 pagination">
+    <div class="col-md-12 col-sm-12 col-xs-12 pagination">
       <pagination ng-if="LabList.totalItems"
         ng-change="LabList.loadPage(true)" ng-model="LabList.page" items-per-page="LabList.limit"
         total-items="LabList.totalItems" max-size="5" boundary-links="true" rotate="true"

@@ -93,8 +93,8 @@ namespace SiLabI.Data
             parameters[2] = SqlUtilities.CreateParameter("@laboratory", SqlDbType.VarChar, appointment.Laboratory);
             parameters[3] = SqlUtilities.CreateParameter("@software", SqlDbType.VarChar, appointment.Software);
             parameters[4] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, appointment.Group);
-            parameters[5] = SqlUtilities.CreateParameter("@start_time", SqlDbType.DateTime, appointment.StartTime);
-            parameters[6] = SqlUtilities.CreateParameter("@end_time", SqlDbType.DateTime, appointment.EndTime);
+            parameters[5] = SqlUtilities.CreateParameter("@start_time", SqlDbType.DateTimeOffset, appointment.StartTime);
+            parameters[6] = SqlUtilities.CreateParameter("@end_time", SqlDbType.DateTimeOffset, appointment.EndTime);
 
             DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_CreateReservation", parameters);
             return table.Rows[0];
@@ -111,8 +111,8 @@ namespace SiLabI.Data
             parameters[3] = SqlUtilities.CreateParameter("@laboratory", SqlDbType.VarChar, appointment.Laboratory);
             parameters[4] = SqlUtilities.CreateParameter("@software", SqlDbType.VarChar, appointment.Software);
             parameters[5] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, appointment.Group);
-            parameters[6] = SqlUtilities.CreateParameter("@start_time", SqlDbType.DateTime, appointment.StartTime);
-            parameters[7] = SqlUtilities.CreateParameter("@end_time", SqlDbType.DateTime, appointment.EndTime);
+            parameters[6] = SqlUtilities.CreateParameter("@start_time", SqlDbType.DateTimeOffset, appointment.StartTime);
+            parameters[7] = SqlUtilities.CreateParameter("@end_time", SqlDbType.DateTimeOffset, appointment.EndTime);
             parameters[8] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, appointment.State);
             parameters[9] = SqlUtilities.CreateParameter("@attendance", SqlDbType.Bit, appointment.Attendance);
 

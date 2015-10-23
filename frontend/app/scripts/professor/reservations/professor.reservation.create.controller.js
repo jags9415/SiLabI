@@ -154,8 +154,8 @@
 
       var res = {
         'laboratory': vm.selected_laboratory.name,
-        'start_time': start_time.format(),
-        'end_time': end_time.format(),
+        'start_time': start_time.toJSON(),
+        'end_time': end_time.toJSON()
       };
 
       if (vm.selected_group) {

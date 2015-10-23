@@ -74,12 +74,9 @@ namespace SiLabI.Model
             }
 
             Group group = new Group();
+            DatabaseObject.Parse(group, row, prefix);
 
-            group.Id = row.Table.Columns.Contains(prefix + "id") ? Converter.ToNullableInt32(row[prefix + "id"]) : null;
             group.Number = row.Table.Columns.Contains(prefix + "number") ? Converter.ToNullableInt32(row[prefix + "number"]) : null;
-            group.CreatedAt = row.Table.Columns.Contains(prefix + "created_at") ? Converter.ToDateTime(row[prefix + "created_at"]) : null;
-            group.UpdatedAt = row.Table.Columns.Contains(prefix + "updated_at") ? Converter.ToDateTime(row[prefix + "updated_at"]) : null;
-            group.State = row.Table.Columns.Contains(prefix + "state") ? Converter.ToString(row[prefix + "state"]) : null;
             group.Period = Period.Parse(row, prefix + "period");
             group.Course = Course.Parse(row, prefix + "course");
             group.Professor = User.Parse(row, prefix + "professor");

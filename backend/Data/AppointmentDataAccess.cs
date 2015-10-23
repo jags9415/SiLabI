@@ -132,7 +132,7 @@ namespace SiLabI.Data
             parameters[1] = SqlUtilities.CreateParameter("@student", SqlDbType.VarChar, appointment.Student);
             parameters[2] = SqlUtilities.CreateParameter("@laboratory", SqlDbType.VarChar, appointment.Laboratory);
             parameters[3] = SqlUtilities.CreateParameter("@software", SqlDbType.VarChar, appointment.Software);
-            parameters[4] = SqlUtilities.CreateParameter("@date", SqlDbType.DateTime, appointment.Date);
+            parameters[4] = SqlUtilities.CreateParameter("@date", SqlDbType.DateTimeOffset, appointment.Date);
             parameters[5] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, appointment.Group);
 
             DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_CreateAppointment", parameters);
@@ -149,7 +149,7 @@ namespace SiLabI.Data
             parameters[2] = SqlUtilities.CreateParameter("@student", SqlDbType.VarChar, appointment.Student);
             parameters[3] = SqlUtilities.CreateParameter("@laboratory", SqlDbType.VarChar, appointment.Laboratory);
             parameters[4] = SqlUtilities.CreateParameter("@software", SqlDbType.VarChar, appointment.Software);
-            parameters[5] = SqlUtilities.CreateParameter("@date", SqlDbType.DateTime, appointment.Date);
+            parameters[5] = SqlUtilities.CreateParameter("@date", SqlDbType.DateTimeOffset, appointment.Date);
             parameters[6] = SqlUtilities.CreateParameter("@attendance", SqlDbType.Bit, appointment.Attendance);
             parameters[7] = SqlUtilities.CreateParameter("@state", SqlDbType.VarChar, appointment.State);
             parameters[8] = SqlUtilities.CreateParameter("@group", SqlDbType.Int, appointment.Group);
