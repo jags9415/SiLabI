@@ -1,9 +1,36 @@
-USE [master]
+USE [master];
+
+IF EXISTS (SELECT 1 FROM SYS.DATABASES WHERE NAME = 'SiLabI')
+BEGIN
+	ALTER DATABASE [SiLabI] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+	ALTER DATABASE [SiLabI] SET READ_ONLY;
+	ALTER DATABASE [SiLabI] SET MULTI_USER;
+	DROP DATABASE [SiLabI];
+END
+GO
+
+IF  EXISTS (SELECT * FROM sys.server_principals WHERE name = N'SilabiLogin')
+	DROP LOGIN [SilabiLogin]
+GO
+
+IF  EXISTS (SELECT * FROM sys.server_principals WHERE name = N'AdministratorLogin')
+	DROP LOGIN [AdministratorLogin]
+GO
+
+IF  EXISTS (SELECT * FROM sys.server_principals WHERE name = N'OperatorLogin')
+	DROP LOGIN [OperatorLogin]
+GO
+
+IF  EXISTS (SELECT * FROM sys.server_principals WHERE name = N'ProfessorLogin')
+	DROP LOGIN [ProfessorLogin]
+GO
+
+IF  EXISTS (SELECT * FROM sys.server_principals WHERE name = N'StudentLogin')
+	DROP LOGIN [StudentLogin]
 GO
 
 IF NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = 'SiLabI')
 BEGIN
-/****** Object:  Database [SiLabI]    Script Date: 08/11/2015 10:51:00 ******/
 CREATE DATABASE [SiLabI] ON  PRIMARY 
 ( NAME = N'SiLabI', FILENAME = N'C:\SiLabI\SiLabI.mdf' , SIZE = 5072KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
  LOG ON 

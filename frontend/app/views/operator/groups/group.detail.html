@@ -10,14 +10,14 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group" show-errors>
-          <label for="professor">* Docente</label>
+          <label for="professor">Docente</label>
           <input id="professor" name="professor" class="form-control" type="text" placeholder="Docente" ng-model="GroupDetail.professor_name" typeahead="professor.full_name for professor in GroupDetail.getProfessors($viewValue)" typeahead-editable="false" typeahead-on-select="GroupDetail.setProfessor($item)" ng-blur="GroupDetail.checkProfessor()" required>
           <p class="help-block" ng-if="updateGroupForm.professor.$error.required">Docente requerido.</p>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group" show-errors>
-          <label for="course">* Curso</label>
+          <label for="course">Curso</label>
           <input id="course" name="course" class="form-control" type="text" placeholder="Curso" ng-model="GroupDetail.course_name" typeahead="course.name for course in GroupDetail.getCourses($viewValue)" typeahead-editable="false" typeahead-on-select="GroupDetail.setCourse($item)" ng-blur="GroupDetail.checkCourse()" required>
           <p class="help-block" ng-if="updateGroupForm.course.$error.required">Curso requerido.</p>
         </div>
@@ -26,7 +26,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="period">* Periodo</label>
+          <label for="period">Periodo</label>
           <ui-select id="period" ng-model="GroupDetail.group.period">
             <ui-select-match placeholder="{{$select.selected.value + ' ' + $select.selected.type}}">
               {{$select.selected.value + ' ' + $select.selected.type}}
@@ -40,7 +40,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group" show-errors>
-          <label for="year">* Año</label>
+          <label for="year">Año</label>
           <input type="number" min="2000" class="form-control" id="year" name="year" ng-model="GroupDetail.year" required>
           <p class="help-block" ng-if="updateGroupForm.year.$error.required">Año requerido.</p>
           <p class="help-block" ng-if="updateGroupForm.year.$error.number">Ingrese un número.</p>
@@ -51,7 +51,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group" show-errors>
-        <label for="number">* Número</label>
+        <label for="number">Número</label>
           <input type="number" class="form-control" min="0" id="number" name="number" placeholder="Número" ng-model="GroupDetail.group.number" required>
           <p class="help-block" ng-if="updateGroupForm.number.$error.required">Número de grupo requerido.</p>
           <p class="help-block" ng-if="updateGroupForm.number.$error.number  || updateGroupForm.number.$error.min">Ingrese un número positivo.</p>

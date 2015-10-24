@@ -225,6 +225,3 @@ GRANT INSERT, UPDATE ON [dbo].[Reservations] TO [reservation_data_writer]
 GRANT EXECUTE ON [dbo].[sp_CreateReservation] TO [reservation_data_writer]
 GRANT EXECUTE ON [dbo].[sp_UpdateReservation] TO [reservation_data_writer]
 GRANT EXECUTE ON [dbo].[sp_DeleteReservation] TO [reservation_data_writer]
-
-USE [master]
-GO
