@@ -5,7 +5,6 @@
         .module('silabi', [
           'ngAnimate',
           'ngRoute',
-          'ngTouch',
           'ngStorage',
           'ngSanitize',
           'ngPasswordStrength',
