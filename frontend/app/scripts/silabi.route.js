@@ -262,7 +262,6 @@
       $rootScope.$on('$routeChangeStart', function (event, next, current) {
         var path = next.originalPath;
         var url = next.templateUrl;
-        if (!path) { return; }
 
         // User is authenticated.
         if (AuthenticationService.isAuthenticated()) {
@@ -278,7 +277,7 @@
           }
         }
         // User is not authenticated. Only have access to public views.
-        else if (!_.startsWith(url, 'views/public')) {
+        else if (url && !_.startsWith(url, 'views/public')) {
           $localStorage.$reset();
           $location.path('/Login');
         }
@@ -289,6 +288,9 @@
       var path = next.originalPath;
       var url = next.templateUrl;
 
+      if (path === '/') {
+        return true;
+      }
       if (_.startsWith(url, 'views/public')) {
         return true;
       }
