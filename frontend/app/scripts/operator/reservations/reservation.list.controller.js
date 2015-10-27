@@ -60,7 +60,7 @@
       vm.request.page = vm.page;
       vm.request.limit = vm.limit;
 
-      vm.promise = ReservationService.GetAll(vm.request)
+      vm.promise = ReservationService.GetAll(vm.request, true)
       .then(setReservations)
       .catch(handleError);
     }
