@@ -53,7 +53,7 @@ namespace SiLabI.Model.Query
         public void ParseLimit(string limit)
         {
             int result = 20;
-            if ((limit != null && !Int32.TryParse(limit, out result)) || result <= 0)
+            if ((limit != null && !Int32.TryParse(limit, out result)))
             {
                 throw new InvalidParameterException("limit");
             }
