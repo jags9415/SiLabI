@@ -1,5 +1,3 @@
-USE [master];
-
 IF EXISTS (SELECT 1 FROM SYS.DATABASES WHERE NAME = 'SiLabI')
 BEGIN
 	ALTER DATABASE [SiLabI] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
@@ -129,4 +127,39 @@ ALTER DATABASE [SiLabI] SET PAGE_VERIFY CHECKSUM
 GO
 
 ALTER DATABASE [SiLabI] SET DB_CHAINING OFF 
+GO
+
+-- Create silabi login.
+IF NOT EXISTS (SELECT loginname FROM syslogins WHERE name = 'SilabiLogin' and dbname = 'SiLabI')
+BEGIN
+	CREATE LOGIN [SilabiLogin] WITH PASSWORD = 'password', DEFAULT_DATABASE=[SiLabI], CHECK_POLICY = OFF, CHECK_EXPIRATION = OFF
+END
+GO
+
+-- Create administrator login.
+IF NOT EXISTS (SELECT loginname FROM syslogins WHERE name = 'AdministratorLogin' and dbname = 'SiLabI')
+BEGIN
+	CREATE LOGIN [AdministratorLogin] WITH PASSWORD = 'password', DEFAULT_DATABASE=[SiLabI], CHECK_POLICY = OFF, CHECK_EXPIRATION = OFF
+END
+GO
+
+-- Create operator login.
+IF NOT EXISTS (SELECT loginname FROM syslogins WHERE name = 'OperatorLogin' and dbname = 'SiLabI')
+BEGIN
+	CREATE LOGIN [OperatorLogin] WITH PASSWORD = 'password', DEFAULT_DATABASE=[SiLabI], CHECK_POLICY = OFF, CHECK_EXPIRATION = OFF
+END
+GO
+
+-- Create professor login.
+IF NOT EXISTS (SELECT loginname FROM syslogins WHERE name = 'ProfessorLogin' and dbname = 'SiLabI')
+BEGIN
+	CREATE LOGIN [ProfessorLogin] WITH PASSWORD = 'password', DEFAULT_DATABASE=[SiLabI], CHECK_POLICY = OFF, CHECK_EXPIRATION = OFF
+END
+GO
+
+-- Create student login.
+IF NOT EXISTS (SELECT loginname FROM syslogins WHERE name = 'StudentLogin' and dbname = 'SiLabI')
+BEGIN
+	CREATE LOGIN [StudentLogin] WITH PASSWORD = 'password', DEFAULT_DATABASE=[SiLabI], CHECK_POLICY = OFF, CHECK_EXPIRATION = OFF
+END
 GO

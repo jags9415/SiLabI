@@ -53,7 +53,7 @@ namespace SiLabI.Model.Query
         public void ParseLimit(string limit)
         {
             int result = 20;
-            if ((limit != null && !Int32.TryParse(limit, out result)) || result <= 0)
+            if ((limit != null && !Int32.TryParse(limit, out result)))
             {
                 throw new InvalidParameterException("limit");
             }
@@ -196,9 +196,77 @@ namespace SiLabI.Model.Query
             }
             if (field.Type == SqlDbType.Structured)
             {
-                throw new InvalidParameterException("sort", string.Format("[{0}]", "No se permiten búsquedas mediante este campo."));
+                throw new InvalidParameterException("q", string.Format("[{0}]", "No se permiten búsquedas mediante este campo."));
             }
             return new QueryField(field, relationship, value);
+        }
+
+        /// <summary>
+        /// Add a new field.
+        /// </summary>
+        /// <param name="name">The field name.</param>
+        public void AddField(string name)
+        {
+            Field field = Field.Find(ValidFields, name);
+
+            if (field == null)
+            {
+                throw new InvalidParameterException("field", string.Format("[{0}]", name));
+            }
+
+            if (field.Type == SqlDbType.Structured)
+            {
+                Fields.AddRange(Field.Flatten(field.Children));
+            }
+            else
+            {
+                Fields.Add(field);
+            }
+        }
+
+        /// <summary>
+        /// Add a new sort field.
+        /// </summary>
+        /// <param name="name">The field name.</param>
+        /// <param name="order">The sort order.</param>
+        public void AddSort(string name, SortOrder order)
+        {
+            Field field = Field.Find(ValidFields, name);
+
+            if (field == null)
+            {
+                throw new InvalidParameterException("sort", string.Format("[{0}]", name));
+            }
+
+            if (field.Type == SqlDbType.Structured)
+            {
+                throw new InvalidParameterException("sort", string.Format("[{0}]", "No se permiten ordenamientos mediante este campo."));
+            }
+
+            Sort.Add(new SortField(field, order));
+        }
+
+        /// <summary>
+        /// Add a new query field.
+        /// </summary>
+        /// <param name="name">The field name.</param>
+        /// <param name="relationship">The relationship.</param>
+        /// <param name="value">The value.</param>
+        public void AddQuery(string name, Relationship relationship, string value)
+        {
+            Field field = Field.Find(ValidFields, name);
+
+            if (field == null)
+            {
+                throw new InvalidParameterException("q", string.Format("Campo inválido: {0}", name));
+            }
+
+            if (field.Type == SqlDbType.Structured)
+            {
+                throw new InvalidParameterException("q", string.Format("[{0}]", "No se permiten búsquedas mediante este campo."));
+            }
+
+            Query.Add(new QueryField(field, relationship, value));
         }
 
         /// <summary>
