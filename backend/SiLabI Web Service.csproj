@@ -178,7 +178,6 @@
     <Compile Include="Model\Relationship.cs" />
     <Compile Include="Util\Validator.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\SiLabI [local].pubxml" />
@@ -189,6 +188,13 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\AppointmentsByGroupReport.rdlc" />
+    <EmbeddedResource Include="Reports\AppointmentsByStudentReport.rdlc" />
+    <EmbeddedResource Include="Reports\ReservationsByGroupReport.rdlc" />
+    <EmbeddedResource Include="Reports\ReservationsByProfessorReport.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
