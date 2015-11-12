@@ -1,24 +1,141 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Fondo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="600px" height="200px" viewBox="0 0 600 200" enable-background="new 0 0 600 200" xml:space="preserve">
-<ellipse fill-rule="evenodd" clip-rule="evenodd" fill="#808281" cx="259.926" cy="104.948" rx="0.359" ry="0.439"/>
-<ellipse fill-rule="evenodd" clip-rule="evenodd" fill="#808281" cx="258.523" cy="104.948" rx="0.359" ry="0.439"/>
-<ellipse fill-rule="evenodd" clip-rule="evenodd" fill="#808281" cx="257.122" cy="104.948" rx="0.357" ry="0.439"/>
-<g>
-	<polygon fill-rule="evenodd" clip-rule="evenodd" fill="#00294F" points="96.245,122.926 122.249,122.926 134.437,147.314 
-		84.054,147.314 	"/>
-	<path fill-rule="evenodd" clip-rule="evenodd" fill="#00294F" d="M47.97,41.604h122.553c3.451,0,6.272,3.116,6.272,6.925v73.657
-		c0,3.807-2.822,6.926-6.272,6.926H47.97c-3.447,0-6.271-3.119-6.271-6.926V48.529C41.698,44.72,44.522,41.604,47.97,41.604z"/>
-	<rect x="45.862" y="45.643" fill-rule="evenodd" clip-rule="evenodd" fill="#00294F" width="126.77" height="71.101"/>
-	<path fill-rule="evenodd" clip-rule="evenodd" fill="#00294F" d="M34.458,139.941h149.577c1.836,0,3.338,1.66,3.338,3.688l0,0
-		c0,2.027-1.502,3.686-3.338,3.686H34.458c-1.837,0-3.338-1.658-3.338-3.686l0,0C31.121,141.602,32.622,139.941,34.458,139.941z"/>
-	<path fill-rule="evenodd" clip-rule="evenodd" fill="#00294F" d="M85.875,139.941h98.161c1.836,0,3.338,1.66,3.338,3.688l0,0
-		c0,2.027-1.502,3.686-3.338,3.686H86.603L85.875,139.941z"/>
-</g>
-<text transform="matrix(1.242 0 0 1 189.2842 122.9258)" fill="#1998D5" font-family="'SegoeUI-Bold'" font-size="77.8727">e</text>
-<text transform="matrix(1.0196 0 0 1 237.9688 122.9258)" fill="#00305B" font-family="'SegoeUI-Bold'" font-size="73.6589">Lab</text>
-<line fill="none" stroke="#FF0000" stroke-width="3" stroke-miterlimit="10" x1="382" y1="78" x2="382" y2="124"/>
-<text transform="matrix(1.0196 0 0 1 397.6367 122.9258)" fill="#00305B" font-family="'TimesNewRomanPS-BoldMT'" font-size="70">TEC</text>
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Fondo"
+   x="0px"
+   y="0px"
+   width="500"
+   height="200"
+   viewBox="0 0 500 200"
+   enable-background="new 0 0 600 200"
+   xml:space="preserve"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="logo_lab.svg"><metadata
+     id="metadata33"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+     id="defs31" /><sodipodi:namedview
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     id="namedview29"
+     showgrid="false"
+     inkscape:zoom="0.90999997"
+     inkscape:cx="142.65615"
+     inkscape:cy="151.55422"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Fondo"
+     showguides="true"
+     inkscape:guide-bbox="true" /><ellipse
+     clip-rule="evenodd"
+     cx="259.92599"
+     cy="104.948"
+     rx="0.359"
+     ry="0.43900001"
+     id="ellipse3"
+     sodipodi:cx="259.92599"
+     sodipodi:cy="104.948"
+     sodipodi:rx="0.359"
+     sodipodi:ry="0.43900001"
+     transform="translate(-23.529328,5.5335538)"
+     style="fill:#808281;fill-rule:evenodd" /><ellipse
+     clip-rule="evenodd"
+     cx="258.52301"
+     cy="104.948"
+     rx="0.359"
+     ry="0.43900001"
+     id="ellipse5"
+     sodipodi:cx="258.52301"
+     sodipodi:cy="104.948"
+     sodipodi:rx="0.359"
+     sodipodi:ry="0.43900001"
+     transform="translate(-23.529328,5.5335538)"
+     style="fill:#808281;fill-rule:evenodd" /><ellipse
+     clip-rule="evenodd"
+     cx="257.12201"
+     cy="104.948"
+     rx="0.35699999"
+     ry="0.43900001"
+     id="ellipse7"
+     sodipodi:cx="257.12201"
+     sodipodi:cy="104.948"
+     sodipodi:rx="0.35699999"
+     sodipodi:ry="0.43900001"
+     transform="translate(-23.529328,5.5335538)"
+     style="fill:#808281;fill-rule:evenodd" /><g
+     id="g2999"><polygon
+       transform="matrix(0.95997542,0,0,0.94597535,0.12556479,10.643641)"
+       clip-rule="evenodd"
+       points="84.054,147.314 96.245,122.926 122.249,122.926 134.437,147.314 "
+       id="polygon11"
+       style="fill:#ffffff;fill-rule:evenodd" /><path
+       clip-rule="evenodd"
+       d="M 46.175586,49.999999 H 163.82345 c 3.31288,0 6.02097,2.94766 6.02097,6.55088 v 69.677711 c 0,3.60132 -2.70905,6.55182 -6.02097,6.55182 H 46.175586 c -3.309036,0 -6.020006,-2.9505 -6.020006,-6.55182 V 56.550879 c -9.6e-4,-3.60322 2.71001,-6.55088 6.020006,-6.55088 z"
+       id="path13"
+       style="fill:#ffffff;fill-rule:evenodd"
+       inkscape:connector-curvature="0" /><rect
+       x="45.706039"
+       y="56.080585"
+       clip-rule="evenodd"
+       width="118.00517"
+       height="65"
+       id="rect15"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd" /><path
+       clip-rule="evenodd"
+       d="M 33.204398,143.02438 H 176.79464 c 1.76252,0 3.2044,1.57032 3.2044,3.48875 l 0,0 c 0,1.9175 -1.44188,3.48687 -3.2044,3.48687 H 33.204398 C 31.440923,150 30,148.43157 30,146.51313 l 0,0 c 9.6e-4,-1.91749 1.441883,-3.48875 3.204398,-3.48875 z"
+       id="path17"
+       style="fill:#ffffff;fill-rule:evenodd"
+       inkscape:connector-curvature="0" /></g><flowRoot
+     xml:space="preserve"
+     id="flowRoot3010"
+     style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
+       id="flowRegion3012"><rect
+         id="rect3014"
+         width="257.97742"
+         height="115.77902"
+         x="397.8447"
+         y="46.923038" /></flowRegion><flowPara
+       id="flowPara3016" /></flowRoot><text
+     xml:space="preserve"
+     style="font-size:87.92631531000000678px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#5bc0de;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+     x="198.16335"
+     y="135.07507"
+     id="text3022"
+     sodipodi:linespacing="125%"
+     transform="scale(1.0097788,0.9903159)"><tspan
+       sodipodi:role="line"
+       id="tspan3024"
+       x="198.16335"
+       y="135.07507"
+       style="font-size:87.92631531000000678px;fill:#5bc0de;fill-opacity:1;font-style:normal;-inkscape-font-specification:Sans Bold;font-weight:bold">e</tspan></text>
+<text
+     xml:space="preserve"
+     style="font-size:90.62728882px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+     x="260.57117"
+     y="133.98438"
+     id="text3794"
+     sodipodi:linespacing="125%"
+     transform="scale(1.0019828,0.99802117)"><tspan
+       sodipodi:role="line"
+       id="tspan3796"
+       x="260.57117"
+       y="133.98438">Lab</tspan></text>
 </svg>
