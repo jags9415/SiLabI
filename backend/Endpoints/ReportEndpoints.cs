@@ -77,20 +77,16 @@ namespace SiLabI
             }
         }
 
-        public void GetPDF(string token)
+        public Stream GetPDF(string token)
         {
-    
-
-            byte[] bytes = System.IO.File.ReadAllBytes("test.pdf");
+            byte[] bytes = File.ReadAllBytes("test.pdf");
             MemoryStream ms = new MemoryStream(bytes);
-            HttpResponse response = HttpContext.Current.Response;
-            response.Buffer = true;
-            response.Clear();
-            response.ContentType = "application/pdf";
-            response.AddHeader("content-disposition", "attachment; filename= test" + "." + "pdf");
-            response.BinaryWrite(ms.ToArray());
+            OutgoingWebResponseContext response = WebOperationContext.Current.OutgoingResponse;
 
-            response.End();
+            response.ContentType = "application/pdf";
+            response.Headers.Add("content-disposition", "attachment; filename= test" + "." + "pdf");
+
+            return ms;
         }
     }
 }

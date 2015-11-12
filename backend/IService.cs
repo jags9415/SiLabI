@@ -710,6 +710,6 @@ namespace SiLabI
         [OperationContract]
         [WebGet(UriTemplate = "/reports/student/?access_token={token}",
             BodyStyle = WebMessageBodyStyle.Bare)]
-        void GetPDF(string token);
+        Stream GetPDF(string token);
     }
 }
