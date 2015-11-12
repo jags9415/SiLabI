@@ -698,14 +698,18 @@ namespace SiLabI
         void DeleteProfessorReservation(string username, string id, BaseRequest request);
 
         /*
-         * Reports Endpoints
+         * Report Endpoints
          * */
         [OperationContract]
         [WebGet(UriTemplate = "/reports/student/{username}/?access_token={token}&startdate={startdate}&enddate={enddate}",
             BodyStyle = WebMessageBodyStyle.Bare,
             ResponseFormat = WebMessageFormat.Json),
         Description("Generate appointments by student report.")]
-        byte[] GetAppointmentsByStudentReport(string token, string startdate, string enddate, string username);
+        void GetAppointmentsByStudentReport(string token, string startdate, string enddate, string username);
 
+        [OperationContract]
+        [WebGet(UriTemplate = "/reports/student/?access_token={token}",
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        void GetPDF(string token);
     }
 }
