@@ -701,15 +701,14 @@ namespace SiLabI
          * Report Endpoints
          * */
         [OperationContract]
-        [WebGet(UriTemplate = "/reports/student/{username}/?access_token={token}&startdate={startdate}&enddate={enddate}",
-            BodyStyle = WebMessageBodyStyle.Bare,
-            ResponseFormat = WebMessageFormat.Json),
-        Description("Generate appointments by student report.")]
-        void GetAppointmentsByStudentReport(string token, string startdate, string enddate, string username);
+        [WebGet(UriTemplate = "/reports/appointments/student/{username}/?access_token={token}&startdate={startdate}&enddate={enddate}",
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        Stream GetAppointmentsByStudentReport(string token, string startdate, string enddate, string username);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/reports/student/?access_token={token}",
+        [WebGet(UriTemplate = "/reports/appointments/group/{id}/?access_token={token}&startdate={startdate}&enddate={enddate}",
             BodyStyle = WebMessageBodyStyle.Bare)]
-        Stream GetPDF(string token);
+        Stream GetAppointmentsByGroupReport(string token, string startdate, string enddate, string id);
+
     }
 }
