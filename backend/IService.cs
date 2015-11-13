@@ -701,14 +701,24 @@ namespace SiLabI
          * Report Endpoints
          * */
         [OperationContract]
-        [WebGet(UriTemplate = "/reports/appointments/student/{username}/?access_token={token}&startdate={startdate}&enddate={enddate}",
+        [WebGet(UriTemplate = "/report/appointments/student/{username}/?access_token={token}&startdate={startdate}&enddate={enddate}",
             BodyStyle = WebMessageBodyStyle.Bare)]
         Stream GetAppointmentsByStudentReport(string token, string startdate, string enddate, string username);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/reports/appointments/group/{id}/?access_token={token}&startdate={startdate}&enddate={enddate}",
+        [WebGet(UriTemplate = "/report/appointments/group/{id}/?access_token={token}&startdate={startdate}&enddate={enddate}",
             BodyStyle = WebMessageBodyStyle.Bare)]
         Stream GetAppointmentsByGroupReport(string token, string startdate, string enddate, string id);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/report/reservations/group/{id}/?access_token={token}&startdate={startdate}&enddate={enddate}",
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        Stream GetReservationsByGroupReport(string token, string startdate, string enddate, string id);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/report/reservations/professor/{username}/?access_token={token}&startdate={startdate}&enddate={enddate}",
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        Stream GetReservationsByProfessorReport(string token, string startdate, string enddate, string username);
 
     }
 }
