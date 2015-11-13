@@ -43,6 +43,7 @@ module.exports = function(config) {
       'bower_components/ng-password-strength/dist/scripts/ng-password-strength.js',
       'bower_components/ngstorage/ngStorage.js',
       'bower_components/toastr/toastr.js',
+      'bower_components/file-saver.js/FileSaver.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/silabi.js",

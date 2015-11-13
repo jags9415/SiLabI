@@ -8,6 +8,7 @@ using SiLabI.Data;
 using System.Data;
 using System.ServiceModel.Web;
 using SiLabI.Exceptions;
+using SiLabI.Util;
 
 
 namespace SiLabI
@@ -20,276 +21,242 @@ namespace SiLabI
         /// <summary>
         /// Creates a new appointments by student report.
         /// </summary>
-        /// <param name="token"> The session token </param>
-        /// <param name="start_date">The start date for the period</param>
-        /// <param name="end_date">The end date for de period</param>
+        /// <param name="token">The access token</param>
+        /// <param name="startDate">The start date for the period</param>
+        /// <param name="endDate">The end date for the period</param>
         /// <returns>A pdf binary file</returns>
-        public Stream GetAppointmentsByStudentReport(string token, string start_date, string end_date, string username)
+        public Stream GetAppointmentsByStudentReport(string token, string username, string startDate, string endDate)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
-            QueryString stdrequest = new QueryString(ValidFields.Student);
-            stdrequest.AccessToken = token;
-            stdrequest.AddField("full_name");
+            Token.CheckPayload(payload, UserType.Administrator);
 
-            QueryString request = new QueryString(ValidFields.Appointment);
-            request.AccessToken = token;
-            StudentDataAccess studentAccess = new StudentDataAccess();
-            AppointmentDataAccess appDataAccess = new AppointmentDataAccess();
-            DataRow studentInfo = studentAccess.GetOne(payload, username, stdrequest);
+            StudentDataAccess studentDA = new StudentDataAccess();
+            AppointmentDataAccess appointmentDA = new AppointmentDataAccess();
 
-            request.AccessToken = token;
-            request.AddQuery("student.username", Relationship.EQ, username);
-            request.AddField("state");
-            request.AddField("date");
-            request.AddField("laboratory.name");
-            request.AddField("software.code");
-            request.Limit = -1;
+            QueryString studentRequest = new QueryString(ValidFields.Student);
+            studentRequest.AccessToken = token;
+            studentRequest.AddField("full_name");
 
-            if (start_date != null)
+            QueryString appointmentRequest = new QueryString(ValidFields.Appointment);
+            appointmentRequest.AccessToken = token;
+            appointmentRequest.AddQuery("student.username", Relationship.EQ, username);
+            appointmentRequest.AddField("state");
+            appointmentRequest.AddField("date");
+            appointmentRequest.AddField("laboratory.name");
+            appointmentRequest.AddField("software.code");
+            appointmentRequest.Limit = -1;
+
+            if (startDate != null)
             {
-                request.AddQuery("date", Relationship.GE, start_date);
+                appointmentRequest.AddQuery("date", Relationship.GE, startDate);
             }
 
-            if (end_date != null)
+            if (endDate != null)
             {
-                request.AddQuery("date", Relationship.LE, end_date);
+                appointmentRequest.AddQuery("date", Relationship.LE, endDate);
             }
 
-            DataTable appInfo = appDataAccess.GetAll(payload, request);
+            DataRow student = studentDA.GetOne(payload, username, studentRequest);
+            DataTable appointments = appointmentDA.GetAll(payload, appointmentRequest);
 
-            ReportParameter[] param = new ReportParameter[3];
-            param[0] = new ReportParameter("startDate", start_date);
-            param[1] = new ReportParameter("endDate", end_date);
-            param[2] = new ReportParameter("studentName", studentInfo["full_name"].ToString());
-            ReportViewer viewer = new ReportViewer();
-            viewer.LocalReport.ReportEmbeddedResource = "SiLabI.Reports.AppointmentsByStudentReport.rdlc";
-            viewer.LocalReport.SetParameters(param);
-            ReportDataSource dataSource = new ReportDataSource("DataSet1", appInfo);
-            viewer.LocalReport.DataSources.Add(dataSource);
+            ReportParameter[] parameters = new ReportParameter[3];
+            parameters[0] = new ReportParameter("startDate", startDate);
+            parameters[1] = new ReportParameter("endDate", endDate);
+            parameters[2] = new ReportParameter("studentName", Converter.ToString(student["full_name"]));
+  
+            string fileName = "Citas_" + username + "." + "pdf";
 
-            Warning[] warnings;
-            string[] streamIds;
-            string mimeType = string.Empty;
-            string encoding = string.Empty;
-            string extension = string.Empty;
-
-            byte[] bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
-            MemoryStream ms = new MemoryStream(bytes);
-            OutgoingWebResponseContext response = WebOperationContext.Current.OutgoingResponse;
-
-            response.ContentType = "application/pdf";
-            response.Headers.Add("content-disposition", "attachment; filename=citas_" + studentInfo["full_name"].ToString() + "." + "pdf");
-
-            return ms;
+            return GetReportStream("SiLabI.Reports.AppointmentsByStudentReport.rdlc", appointments, parameters, fileName);
         }
 
         /// <summary>
         /// Creates a new appointments by group report.
         /// </summary>
-        /// <param name="token"> The session token </param>
-        /// <param name="start_date">The start date for the period</param>
-        /// <param name="end_date">The end date for de period</param>
-        /// <param name="group_id">The group identifier number</param>
+        /// <param name="token">The access token</param>
+        /// <param name="startDate">The start date for the period</param>
+        /// <param name="endDate">The end date for de period</param>
+        /// <param name="groupId">The group identifier number</param>
         /// <returns>A pdf binary file</returns>
-        public Stream GetAppointmentsByGroupReport(string token, string start_date, string end_date, string group_id)
+        public Stream GetAppointmentsByGroupReport(string token, string groupId, string startDate, string endDate)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
+            Token.CheckPayload(payload, UserType.Administrator);
 
-            QueryString group_request = new QueryString(ValidFields.Group);
-            group_request.AccessToken = token;
-            GroupDataAccess groupAccess = new GroupDataAccess();
-            AppointmentDataAccess appDataAccess = new AppointmentDataAccess();
             int num;
-            if (!Int32.TryParse(group_id, out num))
+            if (!Int32.TryParse(groupId, out num))
             {
                 throw new InvalidParameterException("id");
             }
 
-            group_request.AddField("course.name");
-            group_request.AddField("number");
-            DataRow groupInfo = groupAccess.GetOne(payload, num, group_request);
+            GroupDataAccess groupDA = new GroupDataAccess();
+            AppointmentDataAccess appointmentDA = new AppointmentDataAccess();
 
-            QueryString request = new QueryString(ValidFields.Appointment);
+            QueryString groupRequest = new QueryString(ValidFields.Group);
+            groupRequest.AccessToken = token;
+            groupRequest.AddField("course.code");
+            groupRequest.AddField("course.name");
+            groupRequest.AddField("number");
 
-            request.AccessToken = token;
-            request.AddQuery("group.id", Relationship.EQ, group_id);
-            request.AddField("state");
-            request.AddField("date");
-            request.AddField("software.code");
-            request.AddField("student.username");
-            request.Limit = -1;
+            QueryString appointmentRequest = new QueryString(ValidFields.Appointment);
+            appointmentRequest.AccessToken = token;
+            appointmentRequest.AddQuery("group.id", Relationship.EQ, groupId);
+            appointmentRequest.AddField("state");
+            appointmentRequest.AddField("date");
+            appointmentRequest.AddField("software.code");
+            appointmentRequest.AddField("student.username");
+            appointmentRequest.Limit = -1;
 
-            if (start_date != null)
+            if (startDate != null)
             {
-                request.AddQuery("date", Relationship.GE, start_date);
+                appointmentRequest.AddQuery("date", Relationship.GE, startDate);
             }
 
-            if (end_date != null)
+            if (endDate != null)
             {
-                request.AddQuery("date", Relationship.LE, end_date);
+                appointmentRequest.AddQuery("date", Relationship.LE, endDate);
             }
 
-            DataTable appInfo = appDataAccess.GetAll(payload, request);
+            DataRow group = groupDA.GetOne(payload, num, groupRequest);
+            DataTable appointments = appointmentDA.GetAll(payload, appointmentRequest);
 
-            ReportParameter[] param = new ReportParameter[4];
-            param[0] = new ReportParameter("startDate", start_date);
-            param[1] = new ReportParameter("endDate", end_date);
-            param[2] = new ReportParameter("groupNumber", groupInfo["number"].ToString());
-            param[3] = new ReportParameter("courseName", groupInfo["course.name"].ToString());
+            ReportParameter[] parameters = new ReportParameter[4];
+            parameters[0] = new ReportParameter("startDate", startDate);
+            parameters[1] = new ReportParameter("endDate", endDate);
+            parameters[2] = new ReportParameter("groupNumber", Converter.ToString(group["number"]));
+            parameters[3] = new ReportParameter("courseName", Converter.ToString(group["course.name"]));
 
-            ReportViewer viewer = new ReportViewer();
-            viewer.LocalReport.ReportEmbeddedResource = "SiLabI.Reports.AppointmentsByGroupReport.rdlc";
-            viewer.LocalReport.SetParameters(param);
-            ReportDataSource dataSource = new ReportDataSource("DataSet1", appInfo);
-            viewer.LocalReport.DataSources.Add(dataSource);
+            string fileName = "Citas_Grupo_" + Converter.ToString(group["course.code"]) + "_#" + Converter.ToString(group["number"]) + "." + "pdf";
 
-            Warning[] warnings;
-            string[] streamIds;
-            string mimeType = string.Empty;
-            string encoding = string.Empty;
-            string extension = string.Empty;
-
-            byte[] bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
-            MemoryStream ms = new MemoryStream(bytes);
-            OutgoingWebResponseContext response = WebOperationContext.Current.OutgoingResponse;
-
-            response.ContentType = "application/pdf";
-            response.Headers.Add("content-disposition", "attachment; filename=citas_grupo_" + groupInfo["course.name"].ToString() + "_#" + groupInfo["number"].ToString() + "." + "pdf");
-
-            return ms;
-        }
-
-        /// <summary>
-        /// Creates a new reservations by group report.
-        /// </summary>
-        /// <param name="token"> The session token </param>
-        /// <param name="start_date">The start date for the period</param>
-        /// <param name="end_date">The end date for de period</param>
-        /// <param name="group_id">The group identifier number</param>
-        /// <returns>A pdf binary file</returns>
-        public Stream GetReservationsByGroupReport(string token, string start_date, string end_date, string group_id)
-        {
-            Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
-
-            QueryString group_request = new QueryString(ValidFields.Group);
-            group_request.AccessToken = token;
-            GroupDataAccess groupAccess = new GroupDataAccess();
-            
-
-            int num;
-            if (!Int32.TryParse(group_id, out num))
-            {
-                throw new InvalidParameterException("id");
-            }
-
-            ReservationDataAccess resDataAccess = new ReservationDataAccess();
-
-            group_request.AddField("course.name");
-            group_request.AddField("number");
-            DataRow groupInfo = groupAccess.GetOne(payload, num, group_request);
-
-            QueryString request = new QueryString(ValidFields.Reservation);
-
-            request.AccessToken = token;
-            request.AddQuery("group.id", Relationship.EQ, group_id);
-            request.AddField("state");
-            request.AddField("start_time");
-            request.AddField("software.code");
-            request.AddField("laboratory.name");
-            request.Limit = -1;
-
-            if (start_date != null)
-            {
-                request.AddQuery("start_time", Relationship.GE, start_date);
-            }
-
-            if (end_date != null)
-            {
-                request.AddQuery("end_time", Relationship.LE, end_date);
-            }
-
-            DataTable resInfo = resDataAccess.GetAll(payload, request);
-
-            ReportParameter[] param = new ReportParameter[4];
-            param[0] = new ReportParameter("startDate", start_date);
-            param[1] = new ReportParameter("endDate", end_date);
-            param[2] = new ReportParameter("groupNumber", groupInfo["number"].ToString());
-            param[3] = new ReportParameter("courseName", groupInfo["course.name"].ToString());
-
-            ReportViewer viewer = new ReportViewer();
-            viewer.LocalReport.ReportEmbeddedResource = "SiLabI.Reports.ReservationsByGroupReport.rdlc";
-            viewer.LocalReport.SetParameters(param);
-            ReportDataSource dataSource = new ReportDataSource("DataSet1", resInfo);
-            viewer.LocalReport.DataSources.Add(dataSource);
-
-            Warning[] warnings;
-            string[] streamIds;
-            string mimeType = string.Empty;
-            string encoding = string.Empty;
-            string extension = string.Empty;
-
-            byte[] bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
-            MemoryStream ms = new MemoryStream(bytes);
-            OutgoingWebResponseContext response = WebOperationContext.Current.OutgoingResponse;
-
-            response.ContentType = "application/pdf";
-            response.Headers.Add("content-disposition", "attachment; filename=reservaciones_grupo_" + groupInfo["course.name"].ToString() + "_#" + groupInfo["number"].ToString() + "." + "pdf");
-
-            return ms;
+            return GetReportStream("SiLabI.Reports.AppointmentsByGroupReport.rdlc", appointments, parameters, fileName);
         }
 
         /// <summary>
         /// Creates a new reservations by professor report.
         /// </summary>
         /// <param name="token"> The session token </param>
-        /// <param name="start_date">The start date for the period</param>
-        /// <param name="end_date">The end date for de period</param>
+        /// <param name="startDate">The start date for the period</param>
+        /// <param name="endDate">The end date for de period</param>
         /// <param name="username">The professor username</param>
         /// <returns>A pdf binary file</returns>
-        public Stream GetReservationsByProfessorReport(string token, string start_date, string end_date, string username)
+        public Stream GetReservationsByProfessorReport(string token, string username, string startDate, string endDate)
         {
             Dictionary<string, object> payload = Token.Decode(token);
-            Token.CheckPayload(payload, UserType.Operator);
-            QueryString profrequest = new QueryString(ValidFields.Professor);
-            profrequest.AccessToken = token;
-            profrequest.AddField("full_name");
-            ProfessorDataAccess professorAccess = new ProfessorDataAccess();
-            
-            DataRow professorInfo = professorAccess.GetOne(payload, username, profrequest);
+            Token.CheckPayload(payload, UserType.Administrator);
 
-            QueryString request = new QueryString(ValidFields.Reservation);
-            request.AccessToken = token;
-            request.AddQuery("professor.username", Relationship.EQ, username);
-            request.AddField("state");
-            request.AddField("start_time");
-            request.AddField("laboratory.name");
-            request.AddField("software.code");
-            request.Limit = -1;
+            ProfessorDataAccess professorDA = new ProfessorDataAccess();
+            ReservationDataAccess reservationDA = new ReservationDataAccess();
 
-            if (start_date != null)
+            QueryString professorRequest = new QueryString(ValidFields.Professor);
+            professorRequest.AccessToken = token;
+            professorRequest.AddField("full_name");
+
+            QueryString appointmentRequest = new QueryString(ValidFields.Reservation);
+            appointmentRequest.AccessToken = token;
+            appointmentRequest.AddQuery("professor.username", Relationship.EQ, username);
+            appointmentRequest.AddField("state");
+            appointmentRequest.AddField("start_time");
+            appointmentRequest.AddField("laboratory.name");
+            appointmentRequest.AddField("software.code");
+            appointmentRequest.Limit = -1;
+
+            if (startDate != null)
             {
-                request.AddQuery("start_time", Relationship.GE, start_date);
+                appointmentRequest.AddQuery("start_time", Relationship.GE, startDate);
             }
 
-            if (end_date != null)
+            if (endDate != null)
             {
-                request.AddQuery("end_time", Relationship.LE, end_date);
+                appointmentRequest.AddQuery("end_time", Relationship.LE, endDate);
             }
 
-            ReservationDataAccess resDataAccess = new ReservationDataAccess();
-            DataTable resInfo = resDataAccess.GetAll(payload, request);
+            DataRow professor = professorDA.GetOne(payload, username, professorRequest);
+            DataTable reservations = reservationDA.GetAll(payload, appointmentRequest);
 
-            ReportParameter[] param = new ReportParameter[3];
-            param[0] = new ReportParameter("startDate", start_date);
-            param[1] = new ReportParameter("endDate", end_date);
-            param[2] = new ReportParameter("professor", professorInfo["full_name"].ToString());
+            ReportParameter[] parameters = new ReportParameter[3];
+            parameters[0] = new ReportParameter("startDate", startDate);
+            parameters[1] = new ReportParameter("endDate", endDate);
+            parameters[2] = new ReportParameter("professor", Converter.ToString(professor["full_name"]));
+
+            string fileName = "Reservaciones_" + username + "." + "pdf";
+
+            return GetReportStream("SiLabI.Reports.ReservationsByProfessorReport.rdlc", reservations, parameters, fileName);
+        }
+
+        /// <summary>
+        /// Creates a new reservations by group report.
+        /// </summary>
+        /// <param name="token"> The session token </param>
+        /// <param name="startDate">The start date for the period</param>
+        /// <param name="endDate">The end date for de period</param>
+        /// <param name="groupId">The group identifier number</param>
+        /// <returns>A pdf binary file</returns>
+        public Stream GetReservationsByGroupReport(string token, string groupId, string startDate, string endDate)
+        {
+            Dictionary<string, object> payload = Token.Decode(token);
+            Token.CheckPayload(payload, UserType.Administrator);
+
+            int num;
+            if (!Int32.TryParse(groupId, out num))
+            {
+                throw new InvalidParameterException("id");
+            }
+
+            GroupDataAccess groupDA = new GroupDataAccess();
+            ReservationDataAccess reservationDA = new ReservationDataAccess();
+
+            QueryString groupRequest = new QueryString(ValidFields.Group);
+            groupRequest.AccessToken = token;
+            groupRequest.AddField("course.code");
+            groupRequest.AddField("course.name");
+            groupRequest.AddField("number");
+
+            QueryString reservationRequest = new QueryString(ValidFields.Reservation);
+            reservationRequest.AccessToken = token;
+            reservationRequest.AddQuery("group.id", Relationship.EQ, groupId);
+            reservationRequest.AddField("state");
+            reservationRequest.AddField("start_time");
+            reservationRequest.AddField("software.code");
+            reservationRequest.AddField("laboratory.name");
+            reservationRequest.Limit = -1;
+
+            if (startDate != null)
+            {
+                reservationRequest.AddQuery("start_time", Relationship.GE, startDate);
+            }
+
+            if (endDate != null)
+            {
+                reservationRequest.AddQuery("end_time", Relationship.LE, endDate);
+            }
+
+            DataRow group = groupDA.GetOne(payload, num, groupRequest);
+            DataTable reservations = reservationDA.GetAll(payload, reservationRequest);
+
+            ReportParameter[] parameters = new ReportParameter[4];
+            parameters[0] = new ReportParameter("startDate", startDate);
+            parameters[1] = new ReportParameter("endDate", endDate);
+            parameters[2] = new ReportParameter("groupNumber", Converter.ToString(group["number"]));
+            parameters[3] = new ReportParameter("courseName", Converter.ToString(group["course.name"]));
+
+            string fileName = "Reservaciones_Grupo_" + Converter.ToString(group["course.code"]) + "_#" + Converter.ToString(group["number"]) + "." + "pdf";
+
+            return GetReportStream("SiLabI.Reports.ReservationsByGroupReport.rdlc", reservations, parameters, fileName);
+        }
+
+        /// <summary>
+        /// Create a report stream.
+        /// </summary>
+        /// <param name="report">The report resource.</param>
+        /// <param name="table">The table data.</param>
+        /// <param name="parameters">The report parameters.</param>
+        /// <param name="fileName">The name of the output file.</param>
+        /// <returns>The stream.</returns>
+        private Stream GetReportStream(string report, DataTable table, ReportParameter[] parameters, string fileName)
+        {
+            ReportDataSource dataSource = new ReportDataSource("DataSet1", table);
             ReportViewer viewer = new ReportViewer();
-            viewer.LocalReport.ReportEmbeddedResource = "SiLabI.Reports.ReservationsByProfessorReport.rdlc";
-            viewer.LocalReport.SetParameters(param);
-            ReportDataSource dataSource = new ReportDataSource("DataSet1", resInfo);
+            viewer.LocalReport.ReportEmbeddedResource = report;
+            viewer.LocalReport.SetParameters(parameters);
             viewer.LocalReport.DataSources.Add(dataSource);
 
             Warning[] warnings;
@@ -303,10 +270,9 @@ namespace SiLabI
             OutgoingWebResponseContext response = WebOperationContext.Current.OutgoingResponse;
 
             response.ContentType = "application/pdf";
-            response.Headers.Add("content-disposition", "attachment; filename=reservaciones_" + professorInfo["full_name"].ToString() + "." + "pdf");
+            response.Headers.Add("content-disposition", "attachment; filename=" + fileName);
 
             return ms;
         }
-
     }
 }

@@ -11,9 +11,10 @@
 
         this.GetAppointmentsByStudent = GetAppointmentsByStudent;
 
-        function GetAppointmentsByStudent(username, start_date, end_date) {
-          return RequestService.get('/report/appointments/student'+username+'/?access_token='
-            +$localStorage['access_token']+'&startdate='+start_date+'&enddate='+end_date);
+        function GetAppointmentsByStudent(username, request) {
+          if (!request) { request = {}; }
+          request['access_token'] = $localStorage['access_token'];
+          return RequestService.pdf('/reports/appointments/students/' + username, request);
         }
 
     }

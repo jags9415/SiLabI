@@ -9,6 +9,7 @@
 
     function RequestService($http, $q, CacheFactory, API_URL, _) {
 
+      this.pdf = pdfRequest;
       this.get = getRequest;
       this.put = putRequest;
       this.post = postRequest;
@@ -137,6 +138,52 @@
           error: 'ServiceUnavailable',
           description: 'El servidor no se encuentra disponible. Inténtelo luego.'
         };
+      }
+
+      function pdfRequest(endpoint, request, cached) {
+        var defer = $q.defer();
+        var url = join(API_URL, endpoint);
+
+        if (_.isNull(cached) || _.isUndefined(cached)) {
+          cached = false;
+        }
+
+        if (request) {
+          var queryString = createQueryString(request);
+          url += queryString;
+        }
+
+        var config = {
+          cache: cached,
+          headers: {
+              accept: 'application/pdf'
+          },
+          responseType: 'arraybuffer',
+          transformResponse: function (data) {
+              var pdf;
+              if (data) {
+                  pdf = new Blob([data], {
+                      type: 'application/pdf'
+                  });
+              }
+              return pdf;
+          }
+        };
+
+        $http.get(url, config)
+        .then(
+          function(response) {
+            defer.resolve(response.data);
+          },
+          function(response) {
+            if (response.status === 0) {
+              response.data = serviceUnavailableResponse();
+            }
+            defer.reject(response.data);
+          }
+        );
+
+        return defer.promise;
       }
 
       /**
