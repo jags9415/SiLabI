@@ -40,7 +40,6 @@
         vm.$storage['user_name'] = result.user['full_name'];
         vm.$storage['user_type'] = result.user['type'];
         vm.$storage['access_token'] = result['access_token'];
-        console.log(vm.$storage['access_token']);
       }
 
       function handleError(error) {

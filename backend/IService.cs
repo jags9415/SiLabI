@@ -717,7 +717,7 @@ namespace SiLabI
 
         [OperationContract]
         [WebGet(UriTemplate = "/report/reservations/professor/{username}/?access_token={token}&startdate={startdate}&enddate={enddate}",
-            BodyStyle = WebMessageBodyStyle.Bare)]
+            BodyStyle = WebMessageBodyStyle.Bare)]  
         Stream GetReservationsByProfessorReport(string token, string startdate, string enddate, string username);
 
     }

@@ -66,6 +66,11 @@
           controller: 'OperatorDetailController',
           controllerAs: 'Operator'
         })
+        .when('/Administrador/Reportes', {
+          templateUrl: 'views/administrator/reports/report.create.html',
+          controller: 'ReportCreateController',
+          controllerAs: 'ReportCreate'
+        })
         .when('/Operador/Docentes', {
           templateUrl: 'views/operator/professors/professor.list.html',
           controller: 'ProfessorListController',
