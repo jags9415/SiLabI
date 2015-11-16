@@ -90,16 +90,16 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>5.10112cm</Width>
+              <Width>5.12384cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.19613cm</Width>
+              <Width>3.21885cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.56654cm</Width>
+              <Width>3.58926cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.60583cm</Width>
+              <Width>2.62855cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -423,9 +423,9 @@
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
         <Top>5.62722cm</Top>
-        <Left>0.60332cm</Left>
+        <Left>0.51242cm</Left>
         <Height>1.2cm</Height>
-        <Width>14.46962cm</Width>
+        <Width>14.5605cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -732,7 +732,7 @@
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
           <Top>0.335cm</Top>
-          <Left>6.52198cm</Left>
+          <Left>12.85044cm</Left>
           <Height>0.6cm</Height>
           <Width>1.01833cm</Width>
           <Style>
@@ -747,7 +747,7 @@
         </Textbox>
         <Line Name="Line2">
           <Top>0.335cm</Top>
-          <Left>7.78788cm</Left>
+          <Left>14.11634cm</Left>
           <Height>0.6cm</Height>
           <Width>0cm</Width>
           <ZIndex>1</ZIndex>
@@ -775,10 +775,76 @@
           </Paragraphs>
           <rd:DefaultName>OverallTotalPages</rd:DefaultName>
           <Top>0.335cm</Top>
-          <Left>7.96427cm</Left>
+          <Left>14.29273cm</Left>
           <Height>0.6cm</Height>
           <Width>0.78021cm</Width>
           <ZIndex>2</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox3">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Fecha emisión:</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox3</rd:DefaultName>
+          <Top>0.335cm</Top>
+          <Left>0.51242cm</Left>
+          <Height>0.6cm</Height>
+          <Width>3.19201cm</Width>
+          <ZIndex>3</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="reportDate">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Parameters!reportDate.Value</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>reportDate</rd:DefaultName>
+          <Top>0.335cm</Top>
+          <Left>3.91765cm</Left>
+          <Height>0.6cm</Height>
+          <Width>4.64313cm</Width>
+          <ZIndex>4</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -877,6 +943,10 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="groupNumber">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="reportDate">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>

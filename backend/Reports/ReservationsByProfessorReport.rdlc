@@ -706,7 +706,7 @@
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
           <Top>0.50698cm</Top>
-          <Left>6.65427cm</Left>
+          <Left>12.93829cm</Left>
           <Height>0.6cm</Height>
           <Width>0.88604cm</Width>
           <Style>
@@ -721,7 +721,7 @@
         </Textbox>
         <Line Name="Line2">
           <Top>0.50698cm</Top>
-          <Left>7.78788cm</Left>
+          <Left>14.0719cm</Left>
           <Height>0.6cm</Height>
           <Width>0cm</Width>
           <ZIndex>1</ZIndex>
@@ -749,10 +749,76 @@
           </Paragraphs>
           <rd:DefaultName>OverallTotalPages</rd:DefaultName>
           <Top>0.50698cm</Top>
-          <Left>7.96427cm</Left>
+          <Left>14.24829cm</Left>
           <Height>0.6cm</Height>
           <Width>0.80667cm</Width>
           <ZIndex>2</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox5">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Fecha emisión:</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox3</rd:DefaultName>
+          <Top>0.50698cm</Top>
+          <Left>0.50414cm</Left>
+          <Height>0.6cm</Height>
+          <Width>3.19201cm</Width>
+          <ZIndex>3</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="reportDate">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Parameters!reportDate.Value</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>reportDate</rd:DefaultName>
+          <Top>0.50698cm</Top>
+          <Left>3.90937cm</Left>
+          <Height>0.6cm</Height>
+          <Width>4.64313cm</Width>
+          <ZIndex>4</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -847,6 +913,10 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="professor">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="reportDate">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>

@@ -415,7 +415,7 @@
         <Top>5.68537cm</Top>
         <Left>0.68474cm</Left>
         <Height>1.2cm</Height>
-        <Width>14.55082cm</Width>
+        <Width>14.55081cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -554,6 +554,20 @@
             <TextRuns>
               <TextRun>
                 <Value>=Parameters!studentName.Value</Value>
+                <Style>
+                  <FontFamily>times New Roman</FontFamily>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value> - </Value>
+                <Style>
+                  <FontFamily>times New Roman</FontFamily>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Parameters!studentId.Value</Value>
                 <Style>
                   <FontFamily>times New Roman</FontFamily>
                   <FontSize>12pt</FontSize>
@@ -707,8 +721,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>0.57891cm</Top>
-          <Left>6.16571cm</Left>
+          <Top>0.31433cm</Top>
+          <Left>12.43098cm</Left>
           <Height>0.6cm</Height>
           <Width>1.36229cm</Width>
           <Style>
@@ -722,8 +736,8 @@
           </Style>
         </Textbox>
         <Line Name="Line2">
-          <Top>0.57891cm</Top>
-          <Left>7.77557cm</Left>
+          <Top>0.31433cm</Top>
+          <Left>14.04084cm</Left>
           <Height>0.6cm</Height>
           <Width>0cm</Width>
           <ZIndex>1</ZIndex>
@@ -750,11 +764,77 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>OverallTotalPages</rd:DefaultName>
-          <Top>0.57891cm</Top>
-          <Left>7.95196cm</Left>
+          <Top>0.31433cm</Top>
+          <Left>14.21723cm</Left>
           <Height>0.6cm</Height>
           <Width>1.01833cm</Width>
           <ZIndex>2</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox4">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Fecha emisión:</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox3</rd:DefaultName>
+          <Top>0.37469cm</Top>
+          <Left>0.68474cm</Left>
+          <Height>0.6cm</Height>
+          <Width>3.19201cm</Width>
+          <ZIndex>3</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="reportDate">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Parameters!reportDate.Value</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>reportDate</rd:DefaultName>
+          <Top>0.37469cm</Top>
+          <Left>4.08997cm</Left>
+          <Height>0.6cm</Height>
+          <Width>4.64313cm</Width>
+          <ZIndex>4</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -841,6 +921,14 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="studentName">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="reportDate">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="studentId">
       <DataType>String</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>

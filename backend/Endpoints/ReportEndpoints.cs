@@ -9,6 +9,7 @@ using System.Data;
 using System.ServiceModel.Web;
 using SiLabI.Exceptions;
 using SiLabI.Util;
+using System.Globalization;
 
 
 namespace SiLabI
@@ -58,11 +59,14 @@ namespace SiLabI
 
             DataRow student = studentDA.GetOne(payload, username, studentRequest);
             DataTable appointments = appointmentDA.GetAll(payload, appointmentRequest);
+            DateTime localDate = DateTime.Now;
 
-            ReportParameter[] parameters = new ReportParameter[3];
+            ReportParameter[] parameters = new ReportParameter[5];
             parameters[0] = new ReportParameter("startDate", startDate);
             parameters[1] = new ReportParameter("endDate", endDate);
             parameters[2] = new ReportParameter("studentName", Converter.ToString(student["full_name"]));
+            parameters[3] = new ReportParameter("reportDate", Converter.ToString(localDate));
+            parameters[4] = new ReportParameter("studentId", username);
   
             string fileName = "Citas_" + username + "." + "pdf";
 
@@ -118,12 +122,14 @@ namespace SiLabI
 
             DataRow group = groupDA.GetOne(payload, num, groupRequest);
             DataTable appointments = appointmentDA.GetAll(payload, appointmentRequest);
+            DateTime localDate = DateTime.Now;
 
-            ReportParameter[] parameters = new ReportParameter[4];
+            ReportParameter[] parameters = new ReportParameter[5];
             parameters[0] = new ReportParameter("startDate", startDate);
             parameters[1] = new ReportParameter("endDate", endDate);
             parameters[2] = new ReportParameter("groupNumber", Converter.ToString(group["number"]));
             parameters[3] = new ReportParameter("courseName", Converter.ToString(group["course.name"]));
+            parameters[4] = new ReportParameter("reportDate", Converter.ToString(localDate));
 
             string fileName = "Citas_Grupo_" + Converter.ToString(group["course.code"]) + "_#" + Converter.ToString(group["number"]) + "." + "pdf";
 
@@ -171,11 +177,13 @@ namespace SiLabI
 
             DataRow professor = professorDA.GetOne(payload, username, professorRequest);
             DataTable reservations = reservationDA.GetAll(payload, appointmentRequest);
+            DateTime localDate = DateTime.Now;
 
-            ReportParameter[] parameters = new ReportParameter[3];
+            ReportParameter[] parameters = new ReportParameter[4];
             parameters[0] = new ReportParameter("startDate", startDate);
             parameters[1] = new ReportParameter("endDate", endDate);
             parameters[2] = new ReportParameter("professor", Converter.ToString(professor["full_name"]));
+            parameters[3] = new ReportParameter("reportDate", Converter.ToString(localDate));
 
             string fileName = "Reservaciones_" + username + "." + "pdf";
 
@@ -231,12 +239,14 @@ namespace SiLabI
 
             DataRow group = groupDA.GetOne(payload, num, groupRequest);
             DataTable reservations = reservationDA.GetAll(payload, reservationRequest);
+            DateTime localDate = DateTime.Now;
 
-            ReportParameter[] parameters = new ReportParameter[4];
+            ReportParameter[] parameters = new ReportParameter[5];
             parameters[0] = new ReportParameter("startDate", startDate);
             parameters[1] = new ReportParameter("endDate", endDate);
             parameters[2] = new ReportParameter("groupNumber", Converter.ToString(group["number"]));
             parameters[3] = new ReportParameter("courseName", Converter.ToString(group["course.name"]));
+            parameters[4] = new ReportParameter("courseName", Converter.ToString(localDate));
 
             string fileName = "Reservaciones_Grupo_" + Converter.ToString(group["course.code"]) + "_#" + Converter.ToString(group["number"]) + "." + "pdf";
 
