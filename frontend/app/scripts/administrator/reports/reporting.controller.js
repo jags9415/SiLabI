@@ -14,7 +14,6 @@
     vm.start_hours = [];
     vm.end_hours = [];
     vm.end_hours_sliced = [];
-    vm.min_date = new Date();
     vm.datepicker_open = false;
     vm.datepicker2_open = false;
     vm.$storage = $localStorage;
@@ -60,6 +59,8 @@
     vm.generateReport = generateReport;
     vm.formatUser = formatUser;
     vm.updateReport = updateReport;
+    vm.setMinDate = setMinDate;
+    vm.setMaxDate = setMaxDate;
 
     activate();
 
@@ -86,6 +87,14 @@
         $event.stopPropagation();
       }
       vm.datepicker2_open = true;
+    }
+
+    function setMinDate() {
+      vm.min_date = vm.selected_start_date;
+    }
+
+    function setMaxDate() {
+      vm.max_date = vm.selected_end_date;
     }
 
     function loadEndHours () {

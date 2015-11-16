@@ -26,7 +26,7 @@
     </div>
     </div>
     <div class="row" ng-show="ReportCreate.selected_report.value == 1">
-      <div class="col-md-3">
+      <div class="col-md-3 col-sm-5">
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-search"></i></span>
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-9 col-sm-7">
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="row" ng-show="ReportCreate.selected_report.value == 3">
-      <div class="col-md-3">
+      <div class="col-md-3 col-sm-5">
         <div class="form-group">
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-search"></i></span>
@@ -62,7 +62,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-9 col-sm-7">
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon glyphicon-user"></i></span>
@@ -96,6 +96,7 @@
                is-open="ReportCreate.datepicker_open"
                ng-model="ReportCreate.selected_start_date"
                ng-change="ReportCreate.setMinDate()"
+               max-date="ReportCreate.max_date"
                show-weeks="false"
                ng-click="ReportCreate.openDatePicker1($event)"
                close-text="Cerrar" clear-text="Limpiar" current-text="Hoy"/>
@@ -115,6 +116,7 @@
              datepicker-popup="mediumDate"
              is-open="ReportCreate.datepicker2_open"
              ng-model="ReportCreate.selected_end_date"
+             ng-change="ReportCreate.setMaxDate()"
              min-date="ReportCreate.min_date"
              show-weeks="false"
              ng-click="ReportCreate.openDatePicker2($event)"
