@@ -67,7 +67,7 @@ namespace SiLabI.Controllers
 
             if (!courseRequest.Course.IsValidForCreate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de curso incompletos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de curso incompletos.");
             }
 
             DataRow row = _CourseDA.Create(payload, courseRequest.Course);
@@ -84,7 +84,7 @@ namespace SiLabI.Controllers
 
             if (!courseRequest.Course.IsValidForUpdate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de curso inválidos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de curso inválidos.");
             }
 
             DataRow row = _CourseDA.Update(payload, id, courseRequest.Course);

@@ -9,7 +9,7 @@ namespace SiLabI.Exceptions
     /// <summary>
     /// This exception is thrown when a parameter doesn't have the right format.
     /// </summary>
-    public class InvalidParameterException : SiLabIException
+    public class InvalidParameterException : BaseException
     {
         protected string _parameter;
 

@@ -9,7 +9,7 @@ namespace SiLabI.Exceptions
     /// <summary>
     /// This exception is thrown when an user sends a request with an invalid body.
     /// </summary>
-    public class InvalidRequestBodyException : SiLabIException
+    public class InvalidRequestBodyException : BaseException
     {
         /// <summary>
         /// Create a new InvalidRequestBodyException.

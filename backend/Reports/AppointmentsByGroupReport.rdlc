@@ -2,116 +2,20 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox1">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Instituto Tecnológico de Costa Rica</Value>
-                <Style>
-                  <FontFamily>Times New Roman</FontFamily>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Escuela Ciencias del Lenguaje</Value>
-                <Style>
-                  <FontFamily>Times New Roman</FontFamily>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style>
-              <TextAlign>Center</TextAlign>
-            </Style>
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontFamily>Times New Roman</FontFamily>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontFamily>Times New Roman</FontFamily>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontFamily>Times New Roman</FontFamily>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontFamily>Times New Roman</FontFamily>
-                  <FontSize>12pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.61281cm</Top>
-        <Left>2.00899cm</Left>
-        <Height>1.34084cm</Height>
-        <Width>10.52097cm</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>3.69883cm</Width>
+              <Width>4.59068cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>5.23341cm</Width>
+              <Width>6.12526cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.06383cm</Width>
+              <Width>3.95568cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.71166cm</Width>
+              <Width>3.60351cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -315,7 +219,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!date.Value</Value>
+                              <Value>=Code.ToLocalTime(Fields!date.Value)</Value>
                               <Style>
                                 <FontFamily>times New Roman</FontFamily>
                                 <FontSize>12pt</FontSize>
@@ -434,11 +338,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>6.13516cm</Top>
-        <Left>0.53389cm</Left>
+        <Top>4.26944cm</Top>
         <Height>1.2cm</Height>
-        <Width>14.70773cm</Width>
-        <ZIndex>1</ZIndex>
+        <Width>18.27513cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -466,11 +368,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox15</rd:DefaultName>
-        <Top>4.94067cm</Top>
-        <Left>0.53061cm</Left>
+        <Top>2.47882cm</Top>
         <Height>0.6cm</Height>
-        <Width>3.19201cm</Width>
-        <ZIndex>2</ZIndex>
+        <Width>3.27138cm</Width>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -516,11 +417,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox16</rd:DefaultName>
-        <Top>4.94067cm</Top>
-        <Left>3.99665cm</Left>
+        <Top>2.54056cm</Top>
+        <Left>3.42132cm</Left>
         <Height>0.6cm</Height>
-        <Width>11.08478cm</Width>
-        <ZIndex>3</ZIndex>
+        <Width>14.8273cm</Width>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -565,11 +466,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox14</rd:DefaultName>
-        <Top>3.93527cm</Top>
-        <Left>3.99665cm</Left>
+        <Top>1.76417cm</Top>
+        <Left>3.42132cm</Left>
         <Height>0.6cm</Height>
-        <Width>11.08478cm</Width>
-        <ZIndex>4</ZIndex>
+        <Width>14.8273cm</Width>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -601,11 +502,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Top>3.93527cm</Top>
-        <Left>0.53061cm</Left>
+        <Top>1.72889cm</Top>
         <Height>0.6cm</Height>
-        <Width>3.19201cm</Width>
-        <ZIndex>5</ZIndex>
+        <Width>3.24493cm</Width>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -638,11 +538,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox12</rd:DefaultName>
-        <Top>3.03183cm</Top>
-        <Left>0.53061cm</Left>
+        <Top>0.9525cm</Top>
         <Height>0.6cm</Height>
-        <Width>3.19201cm</Width>
-        <ZIndex>6</ZIndex>
+        <Width>3.21847cm</Width>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -674,11 +573,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox14</rd:DefaultName>
-        <Top>3.03183cm</Top>
-        <Left>3.99665cm</Left>
+        <Top>0.9525cm</Top>
+        <Left>3.39486cm</Left>
         <Height>0.6cm</Height>
-        <Width>11.08478cm</Width>
-        <ZIndex>7</ZIndex>
+        <Width>14.88027cm</Width>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -690,24 +589,73 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>4.625in</Height>
+    <Height>3in</Height>
     <Style />
   </Body>
-  <Width>6.14647in</Width>
+  <Width>18.27513cm</Width>
   <Page>
     <PageHeader>
-      <Height>1.97307cm</Height>
+      <Height>1.32361cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Image Name="elab_logo">
+        <Textbox Name="Textbox1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Instituto Tecnológico de Costa Rica</Value>
+                  <Style>
+                    <FontFamily>Times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Escuela Ciencias del Lenguaje</Value>
+                  <Style>
+                    <FontFamily>Times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Left>4.58681cm</Left>
+          <Height>1.32361cm</Height>
+          <Width>13.63535cm</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Image Name="elab_logo2">
           <Source>Embedded</Source>
           <Value>eLab_fondo_blanco</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.34078cm</Top>
-          <Left>0.53061cm</Left>
+          <Left>0.02646cm</Left>
           <Height>1.32361cm</Height>
-          <Width>3.51083cm</Width>
+          <Width>4.38396cm</Width>
+          <ZIndex>1</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -722,75 +670,31 @@
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>1.16416cm</Height>
+      <Height>0.62646cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
-        <Textbox Name="PageNumber">
+        <Textbox Name="reportDate">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Globals!PageNumber</Value>
-                  <Style />
+                  <Value>=Parameters!reportDate.Value</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                  </Style>
                 </TextRun>
               </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
+              <Style />
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>0.335cm</Top>
-          <Left>12.87811cm</Left>
+          <rd:DefaultName>reportDate</rd:DefaultName>
+          <Left>3.39486cm</Left>
           <Height>0.6cm</Height>
-          <Width>0.9125cm</Width>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Line Name="Line2">
-          <Top>0.335cm</Top>
-          <Left>14.03818cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0cm</Width>
-          <ZIndex>1</ZIndex>
-          <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
-          </Style>
-        </Line>
-        <Textbox Name="OverallTotalPages">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=Globals!OverallTotalPages</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Center</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>OverallTotalPages</rd:DefaultName>
-          <Top>0.335cm</Top>
-          <Left>14.21457cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.86686cm</Width>
-          <ZIndex>2</ZIndex>
+          <Width>4.64313cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -819,10 +723,77 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox3</rd:DefaultName>
-          <Top>0.335cm</Top>
-          <Left>0.53389cm</Left>
+          <Left>0.02646cm</Left>
           <Height>0.6cm</Height>
-          <Width>3.69883cm</Width>
+          <Width>3.19201cm</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="PageNumber">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Globals!PageNumber</Value>
+                  <Style>
+                    <FontFamily>Times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>PageNumber</rd:DefaultName>
+          <Top>0.01323cm</Top>
+          <Left>15.84849cm</Left>
+          <Height>0.6cm</Height>
+          <Width>0.9125cm</Width>
+          <ZIndex>2</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox5">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>de</Value>
+                  <Style>
+                    <FontFamily>times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox3</rd:DefaultName>
+          <Top>0.01323cm</Top>
+          <Left>16.76099cm</Left>
+          <Height>0.6cm</Height>
+          <Width>0.64729cm</Width>
           <ZIndex>3</ZIndex>
           <Style>
             <Border>
@@ -834,28 +805,30 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Textbox Name="reportDate">
+        <Textbox Name="OverallTotalPages">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Parameters!reportDate.Value</Value>
+                  <Value>=Globals!OverallTotalPages</Value>
                   <Style>
-                    <FontFamily>times New Roman</FontFamily>
+                    <FontFamily>Times New Roman</FontFamily>
                     <FontSize>12pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
-          <rd:DefaultName>reportDate</rd:DefaultName>
-          <Top>0.335cm</Top>
-          <Left>4.57412cm</Left>
+          <rd:DefaultName>OverallTotalPages</rd:DefaultName>
+          <Top>0.01323cm</Top>
+          <Left>17.40827cm</Left>
           <Height>0.6cm</Height>
-          <Width>4.64313cm</Width>
+          <Width>0.86686cm</Width>
           <ZIndex>4</ZIndex>
           <Style>
             <Border>
@@ -874,14 +847,18 @@
         </Border>
       </Style>
     </PageFooter>
-    <PageHeight>29.7cm</PageHeight>
-    <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
+    <PageHeight>27.94cm</PageHeight>
+    <PageWidth>21.59cm</PageWidth>
+    <LeftMargin>1.5cm</LeftMargin>
+    <RightMargin>1.5cm</RightMargin>
+    <TopMargin>1cm</TopMargin>
+    <BottomMargin>1cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
-    <Style />
+    <Style>
+      <Border>
+        <Style>None</Style>
+      </Border>
+    </Style>
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
@@ -955,6 +932,9 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
+  <Code>Public Shared Function ToLocalTime(ByVal d As DateTimeOffset) As String
+    Return (d.ToOffset(new TimeSpan(-6, 0, 0)).ToString("G"))
+End Function</Code>
   <EmbeddedImages>
     <EmbeddedImage Name="eLab_fondo_blanco">
       <MIMEType>image/png</MIMEType>
@@ -964,6 +944,7 @@ fDliAVb3YaWj2ee6QseurP+sheUPhetcyQiwWsN6umtY1mVtaTIQmDuugxXxfvSSUWFjAlanYQVxaW1p
 D1kFLKGje5uesaoaVmE4dQ1LLg+L1jdiOAhTD6yieJ/eBayUVm4FEs3DBvVY1LNVuwIsUVjF8/YeYBWjVVQJoEmhH607YFXeFWAJw2pAa/rxrBxWwZzF+9VeXQA0gVV9dG9E5F0BlgSsM60P8Rsie4a6PayzLA6Cydxwi2awzrK4G9i8+qG8K8CSgnWZld7uRc4Y/9jIliaLD0aZ7Kk8x182rHm/vGDssfewGRBvXBR6YS0B62vw4X1bcbD9+q3fW9R+7I4tmf/rsPLyvmvJKv+acTGzqrey/v7rBW7ol09afSWe6Ra6YY26CWvZ6IPrbfr9t987u3/u8b7t9ze9Z8H/o4Z0vtdd5X6W/GEwSTI//10/E9S9lXvtYUiJ87cpHZyvGo+asZKDlXYT1rj4F5OODI/OL+dWEuoZo6GSi7pBGNPV50VXNJ61uarUfSDuoiuv+GfjWp9xFZP9vGja8ipSsIIuwjILREPkeq55BxssFwhuDyv10MNCNMDq3s0wAIG7gNWxNsuDq3uBVbhmd2iFQwC4G1iXgV9TUWZNNOSqfvoY3fY7g6Xuh+MxDrA0xEJ/G7DupsGiNMa3BlgaGiw0WYClpcFCkwVYehosNFmApaXBQpMFWBVJMREDWDoStoGFJguwOBmiJgGw7q7BarAAAnkMWMO288cWvjrAUt9gockCLD0NFposwNLSYKHJAiw9DRaarH8aljuaGRqiZLFPrOM3M0ao9roCrA4uykEZ/B3AekRXuMdeAZbxkK4wX6Qb1pA+aDBfpBfW6FFhYTcHvbDMR4WFITLA0pIZWGiFNcatENEBy/UeFFYKFnqHG0zcCREdsNz8EV3lmNTRPqXjLh+wvYIr/bD+bJ/6OMHGRteBhSCAhQAWAlgIAlgIYCGAhSCAhQAWAlgIAlgIYCGAhSCAhQAWAlgIAljILfOfAAMALNyHO/+03mEAAAAASUVORK5CYII=</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
+  <Language>es-CR</Language>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>09dcbe03-dc34-4361-9e0e-ba133514900f</rd:ReportID>
 </Report>

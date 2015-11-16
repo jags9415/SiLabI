@@ -9,7 +9,7 @@ namespace SiLabI.Exceptions
     /// <summary>
     /// Base exception class.
     /// </summary>
-    public class SiLabIException : Exception
+    public class BaseException : Exception
     {
         protected Error _error;
 
@@ -18,7 +18,7 @@ namespace SiLabI.Exceptions
         /// </summary>
         /// <param name="code">The HTTP status code.</param>
         /// <param name="description">The description.</param>
-        public SiLabIException(HttpStatusCode code, string description)
+        public BaseException(HttpStatusCode code, string description)
         {
             this._error = new Error(code, description);
         }
@@ -29,7 +29,7 @@ namespace SiLabI.Exceptions
         /// <param name="code">The HTTP status code.</param>
         /// <param name="error">The error name.</param>
         /// <param name="description">The description.</param>
-        public SiLabIException(HttpStatusCode code, string error, string description)
+        public BaseException(HttpStatusCode code, string error, string description)
         {
             this._error = new Error(code, error, description);
         }
@@ -38,7 +38,7 @@ namespace SiLabI.Exceptions
         /// Creates a new WcfException.
         /// </summary>
         /// <param name="error">The error data.</param>
-        public SiLabIException(Error error)
+        public BaseException(Error error)
         {
             this._error = error;
         }

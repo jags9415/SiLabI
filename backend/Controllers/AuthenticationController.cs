@@ -82,7 +82,7 @@ namespace SiLabI.Controllers
                 }
                 else
                 {
-                    throw new SiLabIException(HttpStatusCode.BadRequest, "InvalidCredentials", String.Format("Credenciales inválidos. Intentos restantes: {0}", MaxAttempts - _clientAttempts[ip].Count));
+                    throw new BaseException(HttpStatusCode.BadRequest, "InvalidCredentials", String.Format("Credenciales inválidos. Intentos restantes: {0}", MaxAttempts - _clientAttempts[ip].Count));
                 }
             }
 

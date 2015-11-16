@@ -20,7 +20,7 @@ namespace SiLabI.Model
     /// </summary>
     public class Token
     {
-        private static string secret = ConfigurationManager.AppSettings["JWTsecret"];
+        private static string key = ConfigurationManager.AppSettings["jwtKey"];
 
         /// <summary>
         /// Encode a payload into a JWT token.
@@ -41,7 +41,7 @@ namespace SiLabI.Model
             var exp = Math.Round((tomorrow - epoch).TotalSeconds);
             payload.Add("exp", exp);
 
-            return JWT.JsonWebToken.Encode(payload, Token.secret, JWT.JwtHashAlgorithm.HS256);
+            return JWT.JsonWebToken.Encode(payload, Token.key, JWT.JwtHashAlgorithm.HS256);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace SiLabI.Model
 
             try
             {
-                return JWT.JsonWebToken.DecodeToObject(token, Token.secret) as Dictionary<string, object>;
+                return JWT.JsonWebToken.DecodeToObject(token, Token.key) as Dictionary<string, object>;
             }
             catch (JWT.SignatureVerificationException e)
             {
@@ -81,6 +81,13 @@ namespace SiLabI.Model
         /// <returns>The token validity.</returns>
         public static void CheckPayload(Dictionary<string, object> payload, UserType type)
         {
+            string check = ConfigurationManager.AppSettings["checkAccessToken"];
+
+            if (check.Equals("false", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
             if (!payload.ContainsKey("id") || !payload.ContainsKey("username") || !payload.ContainsKey("type"))
             {
                 throw new InvalidParameterException("access_token", "Los datos del token de acceso están incompletos.");

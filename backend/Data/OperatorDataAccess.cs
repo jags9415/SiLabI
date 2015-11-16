@@ -75,7 +75,7 @@ namespace SiLabI.Data
             DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetOperator", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Operador no encontrado.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Operador no encontrado.");
             }
             else
             {

@@ -81,7 +81,7 @@ namespace SiLabI.Controllers
 
             if (!userRequest.User.IsValidForUpdate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de usuario inválidos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de usuario inválidos.");
             }
 
             DataRow row = _UserDA.Update(payload, id, userRequest.User);

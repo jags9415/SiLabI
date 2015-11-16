@@ -20,10 +20,10 @@
           return RequestService.pdf('/reports/appointments/students/' + username, request);
         }
 
-        function GetAppointmentsByGroup(GroupId, request) {
+        function GetAppointmentsByGroup(group, request) {
           if (!request) { request = {}; }
           request['access_token'] = $localStorage['access_token'];
-          return RequestService.pdf('/reports/appointments/groups/' + GroupId, request);
+          return RequestService.pdf('/reports/appointments/groups/' + group, request);
         }
 
         function GetReservationsByProfessor(username, request) {
@@ -32,12 +32,11 @@
           return RequestService.pdf('/reports/reservations/professors/' + username, request);
         }
 
-        function GetReservationsByGroup(GroupId, request) {
+        function GetReservationsByGroup(group, request) {
           if (!request) { request = {}; }
           request['access_token'] = $localStorage['access_token'];
-          return RequestService.pdf('/reports/reservations/groups/' + GroupId, request);
+          return RequestService.pdf('/reports/reservations/groups/' + group, request);
         }
-
 
     }
 })();

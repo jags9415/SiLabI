@@ -58,6 +58,8 @@
     vm.setStudent = setStudent;
     vm.fieldsReady = fieldsReady;
     vm.generateReport = generateReport;
+    vm.formatUser = formatUser;
+    vm.updateReport = updateReport;
 
     activate();
 
@@ -104,6 +106,7 @@
 
     function getProfessors(name) {
       var request = {
+        fields: "username,full_name",
         limit: 10,
         query: {
           'username': {
@@ -121,6 +124,7 @@
 
     function getStudents(name) {
       var request = {
+        fields: "username,full_name",
         limit: 10,
         query: {
           'username': {
@@ -179,6 +183,12 @@
       vm.student = data;
     }
 
+    function formatUser(model) {
+      if (model) {
+        return model.username;
+      }
+    }
+
     function setProfessor(data) {
       vm.professor = data;
     }
@@ -209,19 +219,24 @@
       }
     }
 
-    function generateReport () {
-      var request = {
-        query: {}
-      };
+    function updateReport() {
+      vm.display_dates = true;
+      delete vm.student;
+      delete vm.professor;
+      delete vm.group;
+    }
 
-      if (!_.isEmpty(vm.selected_start_date)) {
+    function generateReport () {
+      var request = {};
+
+      if (_.isDate(vm.selected_start_date)) {
         var startDate = moment(vm.selected_start_date).hours(0).minutes(0).seconds(0).milliseconds(0);
-        request.query['startDate'] = startDate.toJson();
+        request['startdate'] = startDate.toJSON();
       }
 
-      if (!_.isEmpty(vm.selected_end_date)) {
+      if (_.isDate(vm.selected_end_date)) {
         var endDate = moment(vm.selected_end_date).hours(0).minutes(0).seconds(0).milliseconds(0);
-        request.query['endDate'] = endDate.toJson();
+        request['enddate'] = endDate.toJSON();
       }
 
       if (vm.selected_report) {
@@ -236,12 +251,12 @@
               .then(savePdf)
               .catch(handleError)
               break;
-          case 3: 
+          case 3:
             ReportingService.GetReservationsByProfessor(vm.professor.username, request)
               .then(savePdf)
               .catch(handleError)
               break;
-          case 4: 
+          case 4:
             ReportingService.GetReservationsByGroup(vm.group.id, request)
               .then(savePdf)
               .catch(handleError)

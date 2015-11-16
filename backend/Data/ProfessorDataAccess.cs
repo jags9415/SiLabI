@@ -74,7 +74,7 @@ namespace SiLabI.Data
             DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetProfessorByUsername", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Docente no encontrado.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Docente no encontrado.");
             }
             else
             {
@@ -95,7 +95,7 @@ namespace SiLabI.Data
             DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetProfessor", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Docente no encontrado.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Docente no encontrado.");
             }
             else
             {

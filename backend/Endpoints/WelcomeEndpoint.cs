@@ -27,7 +27,7 @@ namespace SiLabI
             sb.AppendLine("              /`)  .  (`\\           BLEEP BOOP BLOOP ");
             sb.AppendLine("             / /|.-'-.|\\ \\         /                 ");
             sb.AppendLine("             \\ \\| (_) |/ /  .-\"\"-.                   ");
-            sb.AppendLine("              \\_\'-.-'/_/   /[] _ _\\                   ");
+            sb.AppendLine("              \\_\'-.-'/_/   /[] _ _\\                  ");
             sb.AppendLine("              /_/ \\_/ \\_\\ _|_o_LII|_                 ");
             sb.AppendLine("                |'._.'|  / | ==== | \\                ");
             sb.AppendLine("                |  |  |  |_| ==== |_|                ");

@@ -67,7 +67,7 @@ namespace SiLabI.Controllers
 
             if (!reservationRequest.Reservation.IsValidForCreate() || reservationRequest.Reservation.Professor == null)
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de reservación incompletos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de reservación incompletos.");
             }
 
             DataRow row = _ReservationDA.Create(payload, reservationRequest.Reservation);
@@ -84,7 +84,7 @@ namespace SiLabI.Controllers
 
             if (!reservationRequest.Reservation.IsValidForUpdate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de reservación inválidos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de reservación inválidos.");
             }
 
             DataRow row = _ReservationDA.Update(payload, id, reservationRequest.Reservation);

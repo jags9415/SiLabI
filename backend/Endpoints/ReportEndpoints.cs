@@ -59,7 +59,7 @@ namespace SiLabI
 
             DataRow student = studentDA.GetOne(payload, username, studentRequest);
             DataTable appointments = appointmentDA.GetAll(payload, appointmentRequest);
-            DateTime localDate = DateTime.Now;
+            DateTimeOffset localDate = DateTimeOffset.UtcNow.ToOffset(new TimeSpan(-6, 0, 0));
 
             ReportParameter[] parameters = new ReportParameter[5];
             parameters[0] = new ReportParameter("startDate", startDate);
@@ -122,7 +122,7 @@ namespace SiLabI
 
             DataRow group = groupDA.GetOne(payload, num, groupRequest);
             DataTable appointments = appointmentDA.GetAll(payload, appointmentRequest);
-            DateTime localDate = DateTime.Now;
+            DateTimeOffset localDate = DateTimeOffset.UtcNow.ToOffset(new TimeSpan(-6, 0, 0));
 
             ReportParameter[] parameters = new ReportParameter[5];
             parameters[0] = new ReportParameter("startDate", startDate);
@@ -177,7 +177,7 @@ namespace SiLabI
 
             DataRow professor = professorDA.GetOne(payload, username, professorRequest);
             DataTable reservations = reservationDA.GetAll(payload, appointmentRequest);
-            DateTime localDate = DateTime.Now;
+            DateTimeOffset localDate = DateTimeOffset.UtcNow.ToOffset(new TimeSpan(-6, 0, 0));
 
             ReportParameter[] parameters = new ReportParameter[4];
             parameters[0] = new ReportParameter("startDate", startDate);
@@ -239,7 +239,7 @@ namespace SiLabI
 
             DataRow group = groupDA.GetOne(payload, num, groupRequest);
             DataTable reservations = reservationDA.GetAll(payload, reservationRequest);
-            DateTime localDate = DateTime.Now;
+            DateTimeOffset localDate = DateTimeOffset.UtcNow.ToOffset(new TimeSpan(-6, 0, 0));
 
             ReportParameter[] parameters = new ReportParameter[5];
             parameters[0] = new ReportParameter("startDate", startDate);
@@ -269,18 +269,12 @@ namespace SiLabI
             viewer.LocalReport.SetParameters(parameters);
             viewer.LocalReport.DataSources.Add(dataSource);
 
-            Warning[] warnings;
-            string[] streamIds;
-            string mimeType = string.Empty;
-            string encoding = string.Empty;
-            string extension = string.Empty;
-
-            byte[] bytes = viewer.LocalReport.Render("PDF", null, out mimeType, out encoding, out extension, out streamIds, out warnings);
-            MemoryStream ms = new MemoryStream(bytes);
             OutgoingWebResponseContext response = WebOperationContext.Current.OutgoingResponse;
-
             response.ContentType = "application/pdf";
             response.Headers.Add("content-disposition", "attachment; filename=" + fileName);
+
+            byte[] bytes = viewer.LocalReport.Render("PDF");
+            MemoryStream ms = new MemoryStream(bytes);
 
             return ms;
         }

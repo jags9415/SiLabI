@@ -74,7 +74,7 @@ namespace SiLabI.Controllers
 
             if (!professorRequest.Professor.IsValidForCreate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de docente incompletos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de docente incompletos.");
             }
 
             DataRow row = _ProfessorDA.Create(payload, professorRequest.Professor);
@@ -91,7 +91,7 @@ namespace SiLabI.Controllers
 
             if (!professorRequest.Professor.IsValidForUpdate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de docente inválidos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de docente inválidos.");
             }
 
             DataRow row = _ProfessorDA.Update(payload, id, professorRequest.Professor);

@@ -69,7 +69,7 @@ namespace SiLabI.Controllers
 
             if (!laboratoryRequest.Laboratory.IsValidForCreate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de laboratorio incompletos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de laboratorio incompletos.");
             }
 
             DataRow row = _LaboratoryDA.Create(payload, laboratoryRequest.Laboratory);
@@ -86,7 +86,7 @@ namespace SiLabI.Controllers
 
             if (!laboratoryRequest.Laboratory.IsValidForUpdate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de laboratorio inválidos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de laboratorio inválidos.");
             }
 
             DataRow row = _LaboratoryDA.Update(payload, id, laboratoryRequest.Laboratory);

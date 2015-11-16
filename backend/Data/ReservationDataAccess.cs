@@ -75,7 +75,7 @@ namespace SiLabI.Data
             DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetReservation", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Reservación no encontrada.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Reservación no encontrada.");
             }
             else
             {

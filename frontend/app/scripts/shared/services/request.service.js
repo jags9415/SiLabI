@@ -35,6 +35,20 @@
         return baseUrl + endpoint;
       }
 
+      function parseFields(fields) {
+        if (_.isArray(fields)) {
+          var result = '';
+          for (var i = 0; i < fields.length; i++) {
+            result += fields[i];
+            if (i < fields.length - 1) { result += ','; }
+          }
+          return result;
+        }
+        else {
+          return fields;
+        }
+      }
+
       function parseSortField(obj) {
         var result = '';
         if (obj.type === 'DESC') {
@@ -87,46 +101,96 @@
       /**
       * Create a query string based on a request object.
       * @param request The request.
-      * @return The query string representation of the request.
+      * @return The query string.
+      *
+      * @example createQueryString({
+      *   "page": 2,
+      *   "limit": 30,
+      *   "sort": { "type": "ASC", "field": "name" },
+      *   "query": {
+      *     "course.code": {
+      *       "operation": "ge",
+      *       "value": 312
+      *     },
+      *     "id": {
+      *       "operation": "ne",
+      *       "value": 12
+      *     }
+      *   }
+      *   "fields": ["id", "period"]
+      * }) => "page=2&limit=30&sort=name&q=course.code+ge+312,id+ne+12&fields=id,period"
+      *
+      * @example createQueryString({
+      *   "sort": [{ "type": "ASC", "field": "name" }, { "type": "DESC", "field": "created_at" }],
+      *   "query": {
+      *     "id": [
+      *       {
+      *         "operation": "ge",
+      *         "value": 300
+      *       },
+      *       {
+      *         "operation": "le",
+      *         "value": 400
+      *       }
+      *     ],
+      *   },
+      *   "fields": "id,period",
+      *   "other1": "test1",
+      *   "other2": "test2"
+      * }) => "sort=name,-created_at&q=id+ge+300,id+le+400&fields=id,period&other1=test1&other2=test2"
       */
       function createQueryString(request) {
-        var query = '?';
+        var query = '';
         var addAmpersand = false;
 
         if (request['access_token']) {
           if (addAmpersand) { query += '&'; }
           query += 'access_token=' + request['access_token'];
           addAmpersand = true;
+          delete request['access_token'];
         }
 
         if (request.fields) {
           if (addAmpersand) { query += '&'; }
-          query += 'fields=' + request.fields;
+          query += 'fields=' + parseFields(request.fields);
           addAmpersand = true;
+          delete request['fields'];
         }
 
         if (request.page) {
           if (addAmpersand) { query += '&'; }
           query += 'page=' + request.page;
           addAmpersand = true;
+          delete request['page'];
         }
 
         if (request.limit) {
           if (addAmpersand) { query += '&'; }
           query += 'limit=' + request.limit;
           addAmpersand = true;
+          delete request['limit'];
         }
 
         if (request.sort && !_.isEmpty(request.sort)) {
           if (addAmpersand) { query += '&'; }
           query += 'sort=' + parseSort(request.sort);
           addAmpersand = true;
+          delete request['sort'];
         }
 
         if (request.query && !_.isEmpty(request.query)) {
           if (addAmpersand) { query += '&'; }
           query += 'q=' + parseQuery(request.query);
           addAmpersand = true;
+          delete request['query'];
+        }
+
+        for (var property in request) {
+          if (request.hasOwnProperty(property)) {
+            if (addAmpersand) { query += '&'; }
+            query += property + '=' + request[property];
+            addAmpersand = true;
+          }
         }
 
         return query;
@@ -150,7 +214,7 @@
 
         if (request) {
           var queryString = createQueryString(request);
-          url += queryString;
+          url += '?' + queryString;
         }
 
         var config = {
@@ -204,7 +268,7 @@
 
         if (request) {
           var queryString = createQueryString(request);
-          url += queryString;
+          url += '?' + queryString;
         }
 
         $http.get(url, { cache: cached })

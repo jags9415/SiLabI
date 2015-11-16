@@ -9,7 +9,7 @@ namespace SiLabI.Exceptions
     /// <summary>
     /// This exception is thrown when an user is trying to do an operation but doesn't have the right permissions.
     /// </summary>
-    public class UnathorizedOperationException : SiLabIException
+    public class UnathorizedOperationException : BaseException
     {
         /// <summary>
         /// Creates a new UnathorizedOperationException.

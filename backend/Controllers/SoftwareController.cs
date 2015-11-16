@@ -73,7 +73,7 @@ namespace SiLabI.Controllers
 
             if (!softwareRequest.Software.IsValidForCreate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de software incompletos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de software incompletos.");
             }
 
             DataRow row = _SoftwareDA.Create(payload, softwareRequest.Software);
@@ -90,7 +90,7 @@ namespace SiLabI.Controllers
 
             if (!softwareRequest.Software.IsValidForUpdate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de software inválidos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de software inválidos.");
             }
 
             DataRow row = _SoftwareDA.Update(payload, id, softwareRequest.Software);

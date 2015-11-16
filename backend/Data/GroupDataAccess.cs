@@ -94,7 +94,7 @@ namespace SiLabI.Data
             DataTable table = _connectionGroup.Get(payload["type"] as string).executeQuery("sp_GetGroup", parameters);
             if (table.Rows.Count == 0)
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Grupo no encontrado.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Grupo no encontrado.");
             }
             else
             {

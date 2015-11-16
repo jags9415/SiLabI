@@ -138,7 +138,7 @@ namespace SiLabI.Controllers
 
             if (!appointmentRequest.Appointment.IsValidForCreate() || appointmentRequest.Appointment.Student == null)
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de cita incompletos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de cita incompletos.");
             }
 
             DataRow row = _AppointmentDA.Create(payload, appointmentRequest.Appointment);
@@ -162,7 +162,7 @@ namespace SiLabI.Controllers
 
             if (!appointmentRequest.Appointment.IsValidForUpdate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de cita inválidos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de cita inválidos.");
             }
 
             DataRow row = _AppointmentDA.Update(payload, id, appointmentRequest.Appointment);

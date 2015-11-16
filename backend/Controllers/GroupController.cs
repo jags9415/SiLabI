@@ -70,7 +70,7 @@ namespace SiLabI.Controllers
 
             if (!groupRequest.Group.IsValidForCreate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de grupo incompletos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de grupo incompletos.");
             }
 
             DataRow row = _GroupDA.Create(payload, groupRequest.Group);
@@ -87,7 +87,7 @@ namespace SiLabI.Controllers
 
             if (!groupRequest.Group.IsValidForUpdate())
             {
-                throw new SiLabIException(HttpStatusCode.BadRequest, "Datos de grupo inválidos.");
+                throw new BaseException(HttpStatusCode.BadRequest, "Datos de grupo inválidos.");
             }
 
             DataRow row = _GroupDA.Update(payload, id, groupRequest.Group);

@@ -36,9 +36,9 @@ namespace SiLabI.Configuration
         {
             Error error;
 
-            if (exception is SiLabIException)
+            if (exception is BaseException)
             {
-                error = (exception as SiLabIException).Error;
+                error = (exception as BaseException).Error;
             }
             else
             {
