@@ -5,26 +5,26 @@
  * @apiGroup Authentication
  * @apiPermission none
  *
- * @apiDescription Retrieves the user information and access token based on an user log in credentials.
+ * @apiDescription Retrieves the user profile and access token based on an user log in credentials.
  *
- * @apiParam {String} username The username.
- * @apiParam {String} password The password.
+ * @apiParam {String}   username    The username.
+ * @apiParam {String}   password    The password (SHA-256).
  *
- * @apiSuccess {String}													access_token		The access token.
- * @apiSuccess {Object}													user 				The user data.
- * @apiSuccess {Number}													user.id 			The user identification.
- * @apiSuccess {String}													user.name 			The first name.
- * @apiSuccess {String}													user.last_name_1	The first last name.
- * @apiSuccess {String}													user.last_name_2	The second last name.
- * @apiSuccess {String}													user.full_name		The full name.
- * @apiSuccess {String}													user.username		The username.
- * @apiSuccess {String="Masculino, Femenino"}							user.gender			The gender.
- * @apiSuccess {String}													user.email			The email address.
- * @apiSuccess {String}													user.phone			The phone number.
- * @apiSuccess {String}													user.phone			The phone number.
- * @apiSuccess {String="Estudiante, Docente, Operador, Administrador"}	user.type			The user type.
- * @apiSuccess {Date}													user.created_at		The creation date.
- * @apiSuccess {Date}													user.updated_at		The last update date.
+ * @apiSuccess {String}                                                 access_token        The access token.
+ * @apiSuccess {Object}                                                 user                The user data.
+ * @apiSuccess {Number}                                                 user.id             The user identity.
+ * @apiSuccess {String}                                                 user.name           The first name.
+ * @apiSuccess {String}                                                 user.last_name_1    The first last name.
+ * @apiSuccess {String}                                                 user.last_name_2    The second last name.
+ * @apiSuccess {String}                                                 user.full_name      The full name.
+ * @apiSuccess {String}                                                 user.username       The username.
+ * @apiSuccess {String="Masculino, Femenino"}                           user.gender         The gender.
+ * @apiSuccess {String}                                                 user.email          The email address.
+ * @apiSuccess {String}                                                 user.phone          The phone number.
+ * @apiSuccess {String}                                                 user.phone          The phone number.
+ * @apiSuccess {String="Estudiante, Docente, Operador, Administrador"}  user.type           The user type.
+ * @apiSuccess {Date}                                                   user.created_at     The creation date.
+ * @apiSuccess {Date}                                                   user.updated_at     The last update date.
  *
  * @apiParamExample {json} Request-Example:
  *     POST /authenticate HTTP/1.1
@@ -37,7 +37,7 @@
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
- *       "access_token": "...",
+ *       "access_token": "xxx.yyy.zzz",
  *       "user": {
  *         "id": 2,
  *         "name": "Eric",

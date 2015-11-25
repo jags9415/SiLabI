@@ -2,7 +2,7 @@
  * @api {get} /v1/groups/:id/students Get the group students.
  * @apiVersion 1.0.0
  * @apiName GetGroupStudents.
- * @apiGroup Groups/Students
+ * @apiGroup Groups_Students
  * @apiPermission operator
  * @apiUse BaseError
  *
@@ -11,23 +11,23 @@
  * @apiExample Example:
  *     GET /groups/45/students HTTP/1.1
  *
- * @apiParam {String}						access_token    The access token.
- * @apiParam {String[]} [q]				A query to filter the results.
- * @apiParam {String[]} [fields]		A list of fields to include in the results.
- * @apiParam {String[]} [sort]			A list of fields to sort the results.
+ * @apiParam {String}       access_token    The access token.
+ * @apiParam {String[]}     [q]             A query to filter the results.
+ * @apiParam {String[]}     [fields]        A list of fields to include in the results.
+ * @apiParam {String[]}     [sort]          A list of fields to sort the results.
  *
- * @apiSuccess {Number}									id 				The user identification.
- * @apiSuccess {String}									name 			The first name.
- * @apiSuccess {String}									last_name_1		The first last name.
- * @apiSuccess {String}									last_name_2		The second last name.
- * @apiSuccess {String}									full_name		The full name.
- * @apiSuccess {String}									username		The username.
- * @apiSuccess {String="Masculino, Femenino"}			gender			The gender.
- * @apiSuccess {String}									email			The email address.
- * @apiSuccess {String}									phone			The phone number.
- * @apiSuccess {Date}									created_at		The creation date.
- * @apiSuccess {Date}									updated_at		The last update date.
- * @apiSuccess {String="Activo, Inactivo, Bloqueado"}	state			The user state.
+ * @apiSuccess {Number}                                 id              The user identity.
+ * @apiSuccess {String}                                 name            The first name.
+ * @apiSuccess {String}                                 last_name_1     The first last name.
+ * @apiSuccess {String}                                 last_name_2     The second last name.
+ * @apiSuccess {String}                                 full_name       The full name.
+ * @apiSuccess {String}                                 username        The username.
+ * @apiSuccess {String="Masculino, Femenino"}           gender          The gender.
+ * @apiSuccess {String}                                 email           The email address.
+ * @apiSuccess {String}                                 phone           The phone number.
+ * @apiSuccess {Date}                                   created_at      The creation date.
+ * @apiSuccess {Date}                                   updated_at      The last update date.
+ * @apiSuccess {String="Activo, Inactivo, Bloqueado"}   state           The user state.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

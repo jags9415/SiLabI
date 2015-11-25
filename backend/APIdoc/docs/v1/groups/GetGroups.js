@@ -8,42 +8,27 @@
  *
  * @apiDescription Retrieve a list of groups.
  *
- * @apiParamExample Example query:
- * 		GET /groups?q=created_at+gt+2015-03-12T00:00:00 HTTP/1.1
- *		Retrieve all the groups that was created after 2015/03/12
+ * @apiParamExample Example:
+ *      GET /groups?access_token=xxx.yyy.zzz HTTP/1.1
  *
- *		Valid Operations: eq, ne, gt, ge, lt, le, like.
- *		The character '*' is a wildcard for the like operation.
+ * @apiParam {String}       access_token    The access token.
+ * @apiParam {String[]}     [q]             A query to filter the results.
+ * @apiParam {String[]}     [fields]        A list of fields to include in the results.
+ * @apiParam {String[]}     [sort]          A list of fields to sort the results.
+ * @apiParam {Number}       [page=1]        The page number.
+ * @apiParam {Number}       [limit=20]      The amount of results by page.
  *
- * @apiParamExample Example fields:
- *      GET /groups?fields=number,course HTTP/1.1
- *      Retrieves only the number and course fields.
- *
- * @apiParamExample Example sort:
- *      GET /groups?sort=id HTTP/1.1
- *      Order the results by ascending id.
- *
- * @apiParamExample Full example:
- *      GET /groups?q=created_at+gt+2015-03-12T00:00:00&fields=number,course&sort=id HTTP/1.1
- *
- * @apiParam {String}   access_token	The access token.
- * @apiParam {String[]} [q]           A query to filter the results.
- * @apiParam {String[]} [fields]      A list of fields to include in the results.
- * @apiParam {String[]} [sort]        A list of fields to sort the results.
- * @apiParam {Number}   [page=1]      The page number.
- * @apiParam {Number}   [limit=20]    The amount of results by page.
- *
- * @apiSuccess {Number}							        total_pages			        The total amount of pages for this query.
- * @apiSuccess {Number}	  								  current_page	          The current page number.
- * @apiSuccess {Object[]} 								  results 				        The list of groups.
- * @apiSuccess {Number}									    results.id 		      The group identification.
- * @apiSuccess {Number}									    results.number 		  The group number.
- * @apiSuccess {Object}									    results.course 			The course data.
- * @apiSuccess {Object}                     results.professor		The professor data.
- * @apiSuccess {Object}                     results.period  		The period data.
- * @apiSuccess {Date}									      results.created_at  The creation date.
- * @apiSuccess {Date}									      results.updated_at  The last update date.
- * @apiSuccess {String="Activo, Inactivo"}	results.state			  The group state.
+ * @apiSuccess {Number}                     total_pages         The total amount of pages for this query.
+ * @apiSuccess {Number}                     current_page        The current page number.
+ * @apiSuccess {Object[]}                   results             The list of groups.
+ * @apiSuccess {Number}                     results.id          The group identity.
+ * @apiSuccess {Number}                     results.number      The group number.
+ * @apiSuccess {Object}                     results.course      The course data.
+ * @apiSuccess {Object}                     results.professor   The professor data.
+ * @apiSuccess {Object}                     results.period      The period data.
+ * @apiSuccess {Date}                       results.created_at  The creation date.
+ * @apiSuccess {Date}                       results.updated_at  The last update date.
+ * @apiSuccess {String="Activo, Inactivo"}  results.state       The group state.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

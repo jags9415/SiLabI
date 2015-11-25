@@ -1,21 +1,21 @@
 /**
- * @api {delete} /v1/reservations/:id Delete an reservation.
+ * @api {delete} /v1/reservations/:id Delete a reservation.
  * @apiVersion 1.0.0
  * @apiName DeleteReservation
  * @apiGroup Reservations
  * @apiPermission operator
  * @apiUse BaseError
  *
- * @apiDescription Delete an reservation.
+ * @apiDescription Delete a reservation.
  *
  * @apiExample Example:
  *     DELETE /reservations/87 HTTP/1.1
  *     Content-Type: application/json
  *     {
- *       "access_token": "..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
- * @apiParam {String}	access_token	The access token.
+ * @apiParam {String}   access_token    The access token.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

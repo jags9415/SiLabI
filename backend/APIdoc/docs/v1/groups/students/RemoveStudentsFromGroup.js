@@ -2,7 +2,7 @@
  * @api {delete} /v1/groups/:id/students Remove students from a group.
  * @apiVersion 1.0.0
  * @apiName RemoveStudentsFromGroup
- * @apiGroup Groups/Students
+ * @apiGroup Groups_Students
  * @apiPermission operator
  * @apiUse BaseError
  *
@@ -13,11 +13,11 @@
  *     Content-Type: application/json
  *     {
  *       "students": ["201242273", "201390652", "201503214"],
- *       "access_token": "..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
- * @apiParam {Object[]}				  students  The students list.
- * @apiParam {String}						access_token    The access token.
+ * @apiParam {String[]}    students         The students list.
+ * @apiParam {String}      access_token     The access token.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

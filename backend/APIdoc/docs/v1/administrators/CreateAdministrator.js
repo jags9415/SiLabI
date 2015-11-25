@@ -1,34 +1,34 @@
 /**
- * @api {post} /v1/administrators/:id Create an administrator.
+ * @api {post} /v1/administrators/:id Assign the administrator role to an user.
  * @apiVersion 1.0.0
  * @apiName CreateAdministrator
  * @apiGroup Administrators
  * @apiPermission administrator
  * @apiUse BaseError
  *
- * @apiDescription Create an administrator.
+ * @apiDescription Assign the administrator role to an user.
  *
  * @apiExample Example:
  *     POST /administrators/87 HTTP/1.1
  *     Content-Type: application/json
  *     {
- *       "access_token": "..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
- * @apiParam {String}	access_token	The access token.
+ * @apiParam {String}   access_token    The access token.
  *
- * @apiSuccess {Number}									id 				The user identification.
- * @apiSuccess {String}									name 			The first name.
- * @apiSuccess {String}									last_name_1		The first last name.
- * @apiSuccess {String}									last_name_2		The second last name.
- * @apiSuccess {String}									full_name		The full name.
- * @apiSuccess {String}									username		The username.
- * @apiSuccess {String="Masculino, Femenino"}			gender			The gender.
- * @apiSuccess {String}									email			The email address.
- * @apiSuccess {String}									phone			The phone number.
- * @apiSuccess {Date}									created_at		The creation date.
- * @apiSuccess {Date}									updated_at		The last update date.
- * @apiSuccess {String="Activo, Inactivo, Bloqueado"}	state			The user state.
+ * @apiSuccess {Number}                                 id              The user identity.
+ * @apiSuccess {String}                                 name            The first name.
+ * @apiSuccess {String}                                 last_name_1     The first last name.
+ * @apiSuccess {String}                                 last_name_2     The second last name.
+ * @apiSuccess {String}                                 full_name       The full name.
+ * @apiSuccess {String}                                 username        The username.
+ * @apiSuccess {String="Masculino, Femenino"}           gender          The gender.
+ * @apiSuccess {String}                                 email           The email address.
+ * @apiSuccess {String}                                 phone           The phone number.
+ * @apiSuccess {Date}                                   created_at      The creation date.
+ * @apiSuccess {Date}                                   updated_at      The last update date.
+ * @apiSuccess {String="Activo, Inactivo, Bloqueado"}   state           The user state.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

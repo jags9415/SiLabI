@@ -9,17 +9,17 @@
  * @apiDescription Retrieve a course.
  *
  * @apiExample Example:
- * 		GET /courses/87 HTTP/1.1
+ *   GET /courses/87?access_token=xxx.yyy.zzz HTTP/1.1
  *
- * @apiParam {String}	access_token	The access token.
- * @apiParam {String[]} [fields]		A list of fields to include in the results.
+ * @apiParam {String}       access_token    The access token.
+ * @apiParam {String[]}     [fields]        A list of fields to include in the results.
  *
- * @apiSuccess {Number}									    id 		      The course identification.
- * @apiSuccess {String}									    name 			  The course name.
- * @apiSuccess {String}                     code		    The course code.
- * @apiSuccess {Date}									      created_at  The creation date.
- * @apiSuccess {Date}									      updated_at  The last update date.
- * @apiSuccess {String="Activo, Inactivo"}	state			  The course state.
+ * @apiSuccess {Number}                     id          The course identity.
+ * @apiSuccess {String}                     name        The course name.
+ * @apiSuccess {String}                     code        The course code.
+ * @apiSuccess {Date}                       created_at  The creation date.
+ * @apiSuccess {Date}                       updated_at  The last update date.
+ * @apiSuccess {String="Activo, Inactivo"}  state       The course state.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

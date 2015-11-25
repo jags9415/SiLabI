@@ -16,20 +16,20 @@
  *         "code": "CI-1312",
  *         "name": "Inglés II Para Computación"
  *       },
- *       "access_token": "..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
- * @apiParam {Object}						course 		     The course data.
- * @apiParam {String}						course.code    The course code.
- * @apiParam {String}						course.name    The course name.
- * @apiParam {String}						access_token   The access token.
+ * @apiParam {Object}      course         The course data.
+ * @apiParam {String}      course.code    The course code.
+ * @apiParam {String}      course.name    The course name.
+ * @apiParam {String}      access_token   The access token.
  *
- * @apiSuccess {Number}									    id 		      The course identification.
- * @apiSuccess {String}									    name 			  The course name.
- * @apiSuccess {String}                     code		    The course code.
- * @apiSuccess {Date}									      created_at  The creation date.
- * @apiSuccess {Date}									      updated_at  The last update date.
- * @apiSuccess {String="Activo, Inactivo"}	state			  The course state.
+ * @apiSuccess {Number}                     id              The course identity.
+ * @apiSuccess {String}                     name            The course name.
+ * @apiSuccess {String}                     code            The course code.
+ * @apiSuccess {Date}                       created_at      The creation date.
+ * @apiSuccess {Date}                       updated_at      The last update date.
+ * @apiSuccess {String="Activo, Inactivo"}  state           The course state.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

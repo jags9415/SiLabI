@@ -1,29 +1,30 @@
 /**
- * @api {get} /v1/reservations/:id Retrieve an reservation.
+ * @api {get} /v1/reservations/:id Retrieve a reservation.
  * @apiVersion 1.0.0
  * @apiName GetReservation
  * @apiGroup Reservations
  * @apiPermission operator
  * @apiUse BaseError
  *
- * @apiDescription Retrieve an reservation.
+ * @apiDescription Retrieve a reservation.
  *
  * @apiExample Example:
- * 		GET /reservations/87 HTTP/1.1
+ *   GET /reservations/87?access_token=xxx.yyy.zzz HTTP/1.1
  *
- * @apiParam {String}	access_token	The access token.
- * @apiParam {String[]} [fields]		A list of fields to include in the results.
+ * @apiParam {String}       access_token    The access token.
+ * @apiParam {String[]}     [fields]        A list of fields to include in the results.
  *
- * @apiSuccess {Number}									                      id 		        The reservation identification.
- * @apiSuccess {Date}									                        start_time 		The reservation start time.
- * @apiSuccess {Date}									                        end_time 		  The reservation end time.
- * @apiSuccess {Date}									                        created_at    The creation date.
- * @apiSuccess {Date}									                        updated_at    The last update date.
- * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	state			    The reservation state.
- * @apiSuccess {Object}									                      professor 	  The professor data.
- * @apiSuccess {Object}                                       laboratory		The laboratory data.
- * @apiSuccess {Object}                                       software  		The software data.
- * @apiSuccess {Object}                                       group  		    The group data.
+ * @apiSuccess {Number}                                         id              The reservation identity.
+ * @apiSuccess {Date}                                           start_time      The reservation start time.
+ * @apiSuccess {Date}                                           end_time        The reservation end time.
+ * @apiSuccess {Boolean}                                        attendance      The professor attendance.
+ * @apiSuccess {Date}                                           created_at      The creation date.
+ * @apiSuccess {Date}                                           updated_at      The last update date.
+ * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}    state           The reservation state.
+ * @apiSuccess {Object}                                         professor       The professor data.
+ * @apiSuccess {Object}                                         laboratory      The laboratory data.
+ * @apiSuccess {Object}                                         software        The software data.
+ * @apiSuccess {Object}                                         group           The group data.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -32,6 +33,7 @@
  *       "state": "Por iniciar",
  *       "start_time": "2015-08-27T13:00:00.000Z",
  *       "end_time": "2015-08-27T14:00:00.000Z",
+ *       "attendance": false,
  *       "created_at": "2015-08-27T22:14:20.646Z",
  *       "updated_at": "2015-08-27T22:14:20.646Z",
  *       "professor": {

@@ -1,24 +1,19 @@
 /**
- * @api {delete} /v1/operators/:id Revoke the operator role from a student.
+ * @api {get} /v1/reports/appointments/groups/:id Get the appointments report of a group.
  * @apiVersion 1.0.0
- * @apiName DeleteOperator
- * @apiGroup Operators
+ * @apiName GetAppointmentsByGroupReport
+ * @apiGroup Reports
  * @apiPermission administrator
  * @apiUse BaseError
  *
- * @apiDescription Revoke the operator role from a student.
+ * @apiDescription Get the appointments report of a group.
  *
  * @apiExample Example:
- *     DELETE /operators/87 HTTP/1.1
- *     Content-Type: application/json
- *     {
- *       "access_token": "xxx.yyy.zzz"
- *     }
+ *   GET /reports/appointments/groups/312?access_token=xxx.yyy.zzz HTTP/1.1
  *
  * @apiParam {String}   access_token    The access token.
  *
- * @apiSuccessExample {json} Success-Response:
- *     HTTP/1.1 200 OK
+ * @apiSuccess {Byte[]}    bytes   The report in PDF format.
  *
  * @apiErrorExample {json} Error-Response:
  *     HTTP/1.1 401 Unauthorized

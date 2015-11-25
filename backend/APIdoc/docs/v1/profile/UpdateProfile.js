@@ -16,29 +16,29 @@
  *         "email": "ataylor4a@moonfruit.com",
  *         "phone": "83492144"
  *       },
- *       "access_token":"..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
- * @apiParam {Object}							             	user 			      	The user data.
- * @apiParam {String}							            	[user.password]		The password.
- * @apiParam {String="Masculino, Femenino"}			[user.gender]		  The gender.
- * @apiParam {String}								            [user.email]			The email address. [To delete this field send an empty string]
- * @apiParam {String}							             	[user.phone]			The phone number. [To delete this field send an empty string]
- * @apiParam {String}							            	access_token			The access token.
+ * @apiParam {Object}                           user                The user data.
+ * @apiParam {String}                           [user.password]     The password (SHA-256).
+ * @apiParam {String="Masculino, Femenino"}     [user.gender]       The gender.
+ * @apiParam {String}                           [user.email]        The email address. [To delete this field send an empty string]
+ * @apiParam {String}                           [user.phone]        The phone number. [To delete this field send an empty string]
+ * @apiParam {String}                           access_token        The access token.
  *
- * @apiSuccess {Number}																			 		  				id 				    The user identification.
- * @apiSuccess {String}																			 		  				name 			    The first name.
- * @apiSuccess {String}																			 		  				last_name_1		The first last name.
- * @apiSuccess {String}																			 		  				last_name_2		The second last name.
- * @apiSuccess {String}																			 			  			full_name		  The full name.
- * @apiSuccess {String}																			 			  			username		  The username.
- * @apiSuccess {String="Masculino, Femenino"}									 			  	  gender			  The gender.
- * @apiSuccess {String}																				   					email		    	The email address.
- * @apiSuccess {String}																				 	  				phone			    The phone number.
- * @apiSuccess {Date}																			  			 			  created_at		The creation date.
- * @apiSuccess {Date}														  								 			  updated_at		The last update date.
- * @apiSuccess {String="Activo, Inactivo, Bloqueado"}						          state		    	The user state.
- * @apiSuccess {String="Estudiante, Docente, Operador, Administrador"} 		type 		    	The user type.
+ * @apiSuccess {Number}                                                 id              The user identity.
+ * @apiSuccess {String}                                                 name            The first name.
+ * @apiSuccess {String}                                                 last_name_1     The first last name.
+ * @apiSuccess {String}                                                 last_name_2     The second last name.
+ * @apiSuccess {String}                                                 full_name       The full name.
+ * @apiSuccess {String}                                                 username        The username.
+ * @apiSuccess {String="Masculino, Femenino"}                           gender          The gender.
+ * @apiSuccess {String}                                                 email           The email address.
+ * @apiSuccess {String}                                                 phone           The phone number.
+ * @apiSuccess {Date}                                                   created_at      The creation date.
+ * @apiSuccess {Date}                                                   updated_at      The last update date.
+ * @apiSuccess {String="Activo, Inactivo, Bloqueado"}                   state           The user state.
+ * @apiSuccess {String="Estudiante, Docente, Operador, Administrador"}  type            The user type.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

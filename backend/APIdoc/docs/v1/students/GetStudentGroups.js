@@ -1,45 +1,30 @@
 /**
- * @api {get} /v1/students/:username/groups Retrieve the group list of a student.
+ * @api {get} /v1/students/:username/groups Retrieve the student groups.
  * @apiVersion 1.0.0
  * @apiName GetStudentGroups
  * @apiGroup Students
  * @apiPermission student
  * @apiUse BaseError
  *
- * @apiDescription Retrieve the group list of a student.
+ * @apiDescription Retrieve the student groups.
  *
- * @apiParamExample Example query:
- * 		GET /students/201242273/groups?q=created_at+gt+2015-03-12T00:00:00 HTTP/1.1
- *		Retrieve all the groups that was created after 2015/03/12
+ * @apiParamExample Example:
+ *      GET /students/201242273/groups?access_token=xxx.yyy.zzz HTTP/1.1
  *
- *		Valid Operations: eq, ne, gt, ge, lt, le, like.
- *		The character '*' is a wildcard for the like operation.
+ * @apiParam {String}       access_token    The access token.
+ * @apiParam {String[]}     [q]             A query to filter the results.
+ * @apiParam {String[]}     [fields]        A list of fields to include in the results.
+ * @apiParam {String[]}     [sort]          A list of fields to sort the results.
  *
- * @apiParamExample Example fields:
- *      GET /students/201242273/groups?fields=number,course HTTP/1.1
- *      Retrieves only the number and course fields.
- *
- * @apiParamExample Example sort:
- *      GET /students/201242273/groups?sort=id HTTP/1.1
- *      Order the results by ascending id.
- *
- * @apiParamExample Full example:
- *      GET /students/201242273/groups?q=created_at+gt+2015-03-12T00:00:00&fields=number,course&sort=id HTTP/1.1
- *
- * @apiParam {String}   access_token	The access token.
- * @apiParam {String[]} [q]           A query to filter the results.
- * @apiParam {String[]} [fields]      A list of fields to include in the results.
- * @apiParam {String[]} [sort]        A list of fields to sort the results.
- *
- * @apiSuccess {Object[]} 								  results 				    The list of groups.
- * @apiSuccess {Number}									    results.id 		      The group identification.
- * @apiSuccess {Number}									    results.number 		  The group number.
- * @apiSuccess {Object}									    results.course 			The course data.
- * @apiSuccess {Object}                     results.professor		The professor data.
- * @apiSuccess {Object}                     results.period  		The period data.
- * @apiSuccess {Date}									      results.created_at  The creation date.
- * @apiSuccess {Date}									      results.updated_at  The last update date.
- * @apiSuccess {String="Activo, Inactivo"}	results.state			  The group state.
+ * @apiSuccess {Object[]}                   results                 The list of groups.
+ * @apiSuccess {Number}                     results.id              The group identity.
+ * @apiSuccess {Number}                     results.number          The group number.
+ * @apiSuccess {Object}                     results.course          The course data.
+ * @apiSuccess {Object}                     results.professor       The professor data.
+ * @apiSuccess {Object}                     results.period          The period data.
+ * @apiSuccess {Date}                       results.created_at      The creation date.
+ * @apiSuccess {Date}                       results.updated_at      The last update date.
+ * @apiSuccess {String="Activo, Inactivo"}  results.state           The group state.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

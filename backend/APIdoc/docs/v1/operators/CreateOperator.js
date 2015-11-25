@@ -1,12 +1,12 @@
 /**
- * @api {post} /v1/operators/:id Create an operator.
+ * @api {post} /v1/operators/:id Assign the operator role to a student.
  * @apiVersion 1.0.0
  * @apiName CreateOperator
  * @apiGroup Operators
  * @apiPermission administrator
  * @apiUse BaseError
  *
- * @apiDescription Create an operator.
+ * @apiDescription Assign the operator role to a student.
  *
  * @apiExample Example:
  *     POST /operators/87 HTTP/1.1
@@ -17,31 +17,31 @@
  *         "type": "Semestre",
  *         "year": 2015
  *       },
- *       "access_token": "..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
- * @apiParam {String}												access_token	The access token.
- * @apiParam {Object}												period 			The period in which the student will be operating.
- * @apiParam {Number}												period.value	The period value.
- * @apiParam {String="Bimestre, Trimestre, Cuatrimestre, Semestre"}	period.type 	The period type.
- * @apiParam {Number}												period.year		The period year.
+ * @apiParam {String}                                               access_token    The access token.
+ * @apiParam {Object}                                               period          The period in which the student will be operating.
+ * @apiParam {Number}                                               period.value    The period value.
+ * @apiParam {String="Bimestre, Trimestre, Cuatrimestre, Semestre"} period.type     The period type.
+ * @apiParam {Number}                                               period.year     The period year.
  *
- * @apiSuccess {Number}													id 				The user identification.
- * @apiSuccess {String}													name 			The first name.
- * @apiSuccess {String}													last_name_1		The first last name.
- * @apiSuccess {String}													last_name_2		The second last name.
- * @apiSuccess {String}													full_name		The full name.
- * @apiSuccess {String}													username		The username.
- * @apiSuccess {String="Masculino, Femenino"}							gender			The gender.
- * @apiSuccess {String}													email			The email address.
- * @apiSuccess {String}													phone			The phone number.
- * @apiSuccess {Date}													created_at		The creation date.
- * @apiSuccess {Date}													updated_at		The last update date.
- * @apiSuccess {String="Activo, Inactivo, Bloqueado"}					state			The user state.
- * @apiSuccess {Object}													period 			The period in which the student is operating.
- * @apiSuccess {Number}													period.value	The period value.
- * @apiSuccess {String="Bimestre, Trimestre, Cuatrimestre, Semestre"}	period.type 	The period type.
- * @apiSuccess {Number}													period.year		The period year.
+ * @apiSuccess {Number}                                                 id              The user identity.
+ * @apiSuccess {String}                                                 name            The first name.
+ * @apiSuccess {String}                                                 last_name_1     The first last name.
+ * @apiSuccess {String}                                                 last_name_2     The second last name.
+ * @apiSuccess {String}                                                 full_name       The full name.
+ * @apiSuccess {String}                                                 username        The username.
+ * @apiSuccess {String="Masculino, Femenino"}                           gender          The gender.
+ * @apiSuccess {String}                                                 email           The email address.
+ * @apiSuccess {String}                                                 phone           The phone number.
+ * @apiSuccess {Date}                                                   created_at      The creation date.
+ * @apiSuccess {Date}                                                   updated_at      The last update date.
+ * @apiSuccess {String="Activo, Inactivo, Bloqueado"}                   state           The user state.
+ * @apiSuccess {Object}                                                 period          The period in which the student is operating.
+ * @apiSuccess {Number}                                                 period.value    The period value.
+ * @apiSuccess {String="Bimestre, Trimestre, Cuatrimestre, Semestre"}   period.type     The period type.
+ * @apiSuccess {Number}                                                 period.year     The period year.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

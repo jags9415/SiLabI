@@ -2,24 +2,26 @@
  * @api {get} /v1/laboratories/:id Retrieve a laboratory.
  * @apiVersion 1.0.0
  * @apiName GetLaboratory
- * @apiGroup Laboratory
+ * @apiGroup Laboratories
  * @apiPermission any
  * @apiUse BaseError
  *
  * @apiDescription Retrieve a laboratory.
  *
  * @apiExample Example:
- * 		GET /laboratories/87 HTTP/1.1
+ *   GET /laboratories/87?access_token=xxx.yyy.zzz HTTP/1.1
  *
- * @apiParam {String}	access_token	The access token.
- * @apiParam {String[]} [fields]		A list of fields to include in the results.
+ * @apiParam {String}       access_token    The access token.
+ * @apiParam {String[]}     [fields]        A list of fields to include in the results.
  *
- * @apiSuccess {Number}									    id 		      The laboratory identification.
- * @apiSuccess {String}									    name 			  The laboratory name.
- * @apiSuccess {Number}                     seats		    The laboratory available seats.
- * @apiSuccess {Date}									      created_at  The creation date.
- * @apiSuccess {Date}									      updated_at  The last update date.
- * @apiSuccess {String="Activo, Inactivo"}	state			  The laboratory state.
+ * @apiSuccess {Number}                     id                          The laboratory identity.
+ * @apiSuccess {String}                     name                        The laboratory name.
+ * @apiSuccess {Number}                     seats                       The laboratory available seats.
+ * @apiSuccess {Number}                     appointment_priority        The priority of appointments in the laboratory. (1: High, 2: Medium, 3: Low)
+ * @apiSuccess {Number}                     reservation_priority        The priority of reservations in the laboratory. (1: High, 2: Medium, 3: Low)
+ * @apiSuccess {Date}                       created_at                  The creation date.
+ * @apiSuccess {Date}                       updated_at                  The last update date.
+ * @apiSuccess {String="Activo, Inactivo"}  state                       The laboratory state.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -27,6 +29,8 @@
  *       "id": 1136,
  *       "name": "Laboratorio B1",
  *       "seats": 20,
+ *       "appointment_priority": 1,
+ *       "reservation_priority": 3,
  *       "state": "Activo",
  *       "created_at": "2015-08-27T22:14:20.646Z",
  *       "updated_at": "2015-08-27T22:14:20.646Z"

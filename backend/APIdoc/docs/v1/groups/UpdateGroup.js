@@ -16,25 +16,25 @@
  *         "number": 41,
  *         "students": ["201242273", "201390652", "201503214"],
  *       },
- *       "access_token": "..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
- * @apiParam {Object}						group 		      The group data.
- * @apiParam {String}						[group.course]    The course code.
- * @apiParam {Number}						[group.number]    The group number.
- * @apiParam {String}						[group.professor] The professor username.
- * @apiParam {String}						[group.students] The students list.
- * @apiParam {Object}						[group.period]    The period.
- * @apiParam {String}						access_token    The access token.
+ * @apiParam {Object}      group                    The group data.
+ * @apiParam {String}      [group.course]           The course code.
+ * @apiParam {Number}      [group.number]           The group number.
+ * @apiParam {String}      [group.professor]        The professor username.
+ * @apiParam {String}      [group.students]         The students list.
+ * @apiParam {Object}      [group.period]           The period.
+ * @apiParam {String}      access_token             The access token.
  *
- * @apiSuccess {Number}									    id 		      The group identification.
- * @apiSuccess {Number}									    number 		  The group number.
- * @apiSuccess {Object}									    course 			The course data.
- * @apiSuccess {Object}                     professor		The professor data.
- * @apiSuccess {Object}                     period  		The period data.
- * @apiSuccess {Date}									      created_at  The creation date.
- * @apiSuccess {Date}									      updated_at  The last update date.
- * @apiSuccess {String="Activo, Inactivo"}	state			  The group state.
+ * @apiSuccess {Number}                     id              The group identity.
+ * @apiSuccess {Number}                     number          The group number.
+ * @apiSuccess {Object}                     course          The course data.
+ * @apiSuccess {Object}                     professor       The professor data.
+ * @apiSuccess {Object}                     period          The period data.
+ * @apiSuccess {Date}                       created_at      The creation date.
+ * @apiSuccess {Date}                       updated_at      The last update date.
+ * @apiSuccess {String="Activo, Inactivo"}  state           The group state.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

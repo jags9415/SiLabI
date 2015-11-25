@@ -2,7 +2,7 @@
  * @api {put} /v1/laboratories/:id/software Update the laboratory software.
  * @apiVersion 1.0.0
  * @apiName UpdateLaboratorySoftware
- * @apiGroup Laboratory/Software
+ * @apiGroup Laboratories_Software
  * @apiPermission operator
  * @apiUse BaseError
  *
@@ -13,11 +13,11 @@
  *     Content-Type: application/json
  *     {
  *       "software": ["SF-01", "SF-02", "SF-03"],
- *       "access_token": "..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
- * @apiParam {Object[]}				  software  The software list.
- * @apiParam {String}						access_token    The access token.
+ * @apiParam {String[]}    software         The software list.
+ * @apiParam {String}      access_token     The access token.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

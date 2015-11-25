@@ -9,21 +9,21 @@
  * @apiDescription Retrieve an appointment.
  *
  * @apiExample Example:
- * 		GET /appointments/87 HTTP/1.1
+ *   GET /appointments/87?access_token=xxx.yyy.zzz HTTP/1.1
  *
- * @apiParam {String}	access_token	The access token.
- * @apiParam {String[]} [fields]		A list of fields to include in the results.
+ * @apiParam {String}       access_token    The access token.
+ * @apiParam {String[]}     [fields]        A list of fields to include in the results.
  *
- * @apiSuccess {Number}									                      id 		        The appointment identification.
- * @apiSuccess {Date}									                        date 		      The appointment number.
- * @apiSuccess {Boolean}                                      attendance    The student attendance.
- * @apiSuccess {Date}									                        created_at    The creation date.
- * @apiSuccess {Date}									                        updated_at    The last update date.
- * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	state			    The appointment state.
- * @apiSuccess {Object}									                      student 			The student data.
- * @apiSuccess {Object}                                       laboratory		The laboratory data.
- * @apiSuccess {Object}                                       software  		The software data.
- * @apiSuccess {Object}                                       group     		The group data.
+ * @apiSuccess {Number}                                         id              The appointment identity.
+ * @apiSuccess {Date}                                           date            The appointment number.
+ * @apiSuccess {Boolean}                                        attendance      The student attendance.
+ * @apiSuccess {Date}                                           created_at      The creation date.
+ * @apiSuccess {Date}                                           updated_at      The last update date.
+ * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}    state           The appointment state.
+ * @apiSuccess {Object}                                         student         The student data.
+ * @apiSuccess {Object}                                         laboratory      The laboratory data.
+ * @apiSuccess {Object}                                         software        The software data.
+ * @apiSuccess {Object}                                         group           The group data.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

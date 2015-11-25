@@ -1,12 +1,12 @@
 /**
- * @api {put} /v1/professors/:username/reservations/:id Update an reservation.
+ * @api {put} /v1/professors/:username/reservations/:id Update a reservation.
  * @apiVersion 1.0.0
  * @apiName UpdateReservation
- * @apiGroup Reservations->Professor
+ * @apiGroup Reservations_Professors
  * @apiPermission professor
  * @apiUse BaseError
  *
- * @apiDescription Update an reservation.
+ * @apiDescription Update a reservation.
  *
  * @apiExample Example:
  *     PUT /professors/gjackson/reservations/87 HTTP/1.1
@@ -16,27 +16,29 @@
  *         "start_time": "2015-08-28T15:00:00.000Z",
  *         "end_time": "2015-08-28T16:00:00.000Z"
  *       },
- *       "access_token": "..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
  * @apiParam {Object}    reservation                The reservation data.
  * @apiParam {Date}      [reservation.start_time]   The reservation start time.
  * @apiParam {Date}      [reservation.end_time]     The reservation end time.
+ * @apiParam {Boolean}   [reservation.attendance]   The professor attendance.
  * @apiParam {String}    [reservation.laboratory]   The laboratory name.
- * @apiParam {Number}    [reservation.group]        The group identification number. [To delete this field send 0]
+ * @apiParam {Number}    [reservation.group]        The group identity number. [To delete this field send 0]
  * @apiParam {String}    [reservation.software]     The software code. [To delete this field send an empty string]
  * @apiParam {String}    access_token               The access token.
  *
- * @apiSuccess {Number}									                      id 		        The reservation identification.
- * @apiSuccess {Date}									                        start_time 		The reservation start time.
- * @apiSuccess {Date}									                        end_time 		  The reservation end time.
- * @apiSuccess {Date}									                        created_at    The creation date.
- * @apiSuccess {Date}									                        updated_at    The last update date.
- * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	state			    The reservation state.
- * @apiSuccess {Object}									                      professor 	  The professor data.
- * @apiSuccess {Object}                                       laboratory		The laboratory data.
- * @apiSuccess {Object}                                       software  		The software data.
- * @apiSuccess {Object}                                       group  		    The group data.
+ * @apiSuccess {Number}                                         id              The reservation identity.
+ * @apiSuccess {Date}                                           start_time      The reservation start time.
+ * @apiSuccess {Date}                                           end_time        The reservation end time.
+ * @apiSuccess {Boolean}                                        attendance      The professor attendance.
+ * @apiSuccess {Date}                                           created_at      The creation date.
+ * @apiSuccess {Date}                                           updated_at      The last update date.
+ * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}    state           The reservation state.
+ * @apiSuccess {Object}                                         professor       The professor data.
+ * @apiSuccess {Object}                                         laboratory      The laboratory data.
+ * @apiSuccess {Object}                                         software        The software data.
+ * @apiSuccess {Object}                                         group           The group data.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -45,6 +47,7 @@
  *       "state": "Por iniciar",
  *       "start_time": "2015-08-27T13:00:00.000Z",
  *       "end_time": "2015-08-27T14:00:00.000Z",
+ *       "attendance": false,
  *       "created_at": "2015-08-27T22:14:20.646Z",
  *       "updated_at": "2015-08-27T22:14:20.646Z",
  *       "professor": {

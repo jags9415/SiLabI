@@ -18,33 +18,33 @@
  *         "last_name_2": "Taylor",
  *         "phone": "83492144"
  *       },
- *       "access_token":"..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
- * @apiParam {Object}								professor 				The professor data.
- * @apiParam {String}								[professor.name] 		The first name.
- * @apiParam {String}								[professor.last_name_1]	The first last name.
- * @apiParam {String}								[professor.last_name_2]	The second last name. [To delete this field send an empty string]
- * @apiParam {String}								[professor.username]	The username.
- * @apiParam {String}								[professor.password]	The password.
- * @apiParam {String="Masculino, Femenino"}			[professor.gender]		The gender.
- * @apiParam {String}								[professor.email]		The email address. [To delete this field send an empty string]
- * @apiParam {String}								[professor.phone]		The phone number. [To delete this field send an empty string]
- * @apiParam {String="Activo, Inactivo, Bloqueado"}	[professor.state]		The user state.
- * @apiParam {String}								access_token			The access token.
+ * @apiParam {Object}                                   professor               The professor data.
+ * @apiParam {String}                                   [professor.name]        The first name.
+ * @apiParam {String}                                   [professor.last_name_1] The first last name.
+ * @apiParam {String}                                   [professor.last_name_2] The second last name. [To delete this field send an empty string]
+ * @apiParam {String}                                   [professor.username]    The username.
+ * @apiParam {String}                                   [professor.password]    The password.
+ * @apiParam {String="Masculino, Femenino"}             [professor.gender]      The gender.
+ * @apiParam {String}                                   [professor.email]       The email address. [To delete this field send an empty string]
+ * @apiParam {String}                                   [professor.phone]       The phone number. [To delete this field send an empty string]
+ * @apiParam {String="Activo, Inactivo, Bloqueado"}     [professor.state]       The user state.
+ * @apiParam {String}                                   access_token            The access token.
  *
- * @apiSuccess {Number}									id 				The user identification.
- * @apiSuccess {String}									name 			The first name.
- * @apiSuccess {String}									last_name_1		The first last name.
- * @apiSuccess {String}									last_name_2		The second last name.
- * @apiSuccess {String}									full_name		The full name.
- * @apiSuccess {String}									username		The username.
- * @apiSuccess {String="Masculino, Femenino"}			gender			The gender.
- * @apiSuccess {String}									email			The email address.
- * @apiSuccess {String}									phone			The phone number.
- * @apiSuccess {Date}									created_at		The creation date.
- * @apiSuccess {Date}									updated_at		The last update date.
- * @apiSuccess {String="Activo, Inactivo, Bloqueado"}	state			The user state.
+ * @apiSuccess {Number}                                 id              The user identity.
+ * @apiSuccess {String}                                 name            The first name.
+ * @apiSuccess {String}                                 last_name_1     The first last name.
+ * @apiSuccess {String}                                 last_name_2     The second last name.
+ * @apiSuccess {String}                                 full_name       The full name.
+ * @apiSuccess {String}                                 username        The username.
+ * @apiSuccess {String="Masculino, Femenino"}           gender          The gender.
+ * @apiSuccess {String}                                 email           The email address.
+ * @apiSuccess {String}                                 phone           The phone number.
+ * @apiSuccess {Date}                                   created_at      The creation date.
+ * @apiSuccess {Date}                                   updated_at      The last update date.
+ * @apiSuccess {String="Activo, Inactivo, Bloqueado"}   state           The user state.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK

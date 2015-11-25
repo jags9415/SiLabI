@@ -2,7 +2,7 @@
  * @api {post} /v1/students/:username/appointments Create an appointment.
  * @apiVersion 1.0.0
  * @apiName CreateAppointment
- * @apiGroup Appointments->User
+ * @apiGroup Appointments_Students
  * @apiPermission student
  * @apiUse BaseError
  *
@@ -17,30 +17,32 @@
  *         "date": "2015-08-27T13:00:00.000",
  *         "group": 87
  *       },
- *       "access_token": "..."
+ *       "access_token": "xxx.yyy.zzz"
  *     }
  *
- * @apiParam {Object}						appointment 		        The appointment data.
- * @apiParam {String}						appointment.software    The software code.
- * @apiParam {Number}						appointment.group       The group identity.
- * @apiParam {Date}					    appointment.date        The date.
- * @apiParam {String}						access_token            The access token.
+ * @apiParam {Object}      appointment              The appointment data.
+ * @apiParam {String}      appointment.software     The software code.
+ * @apiParam {Number}      appointment.group        The group identity.
+ * @apiParam {Date}        appointment.date         The date.
+ * @apiParam {String}      access_token             The access token.
  *
- * @apiSuccess {Number}									                      id 		        The appointment identification.
- * @apiSuccess {Date}									                        date 		      The appointment number.
- * @apiSuccess {Date}									                        created_at    The creation date.
- * @apiSuccess {Date}									                        updated_at    The last update date.
- * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}	state			    The appointment state.
- * @apiSuccess {Object}									                      student 			The student data.
- * @apiSuccess {Object}                                       laboratory		The laboratory data.
- * @apiSuccess {Object}                                       software  		The software data.
- * @apiSuccess {Object}                                       group  		    The group data.
+ * @apiSuccess {Number}                                         id              The appointment identity.
+ * @apiSuccess {Date}                                           date            The appointment number.
+ * @apiSuccess {Boolean}                                        attendance      The student attendance.
+ * @apiSuccess {Date}                                           created_at      The creation date.
+ * @apiSuccess {Date}                                           updated_at      The last update date.
+ * @apiSuccess {String="Por iniciar, Cancelada, Finalizada"}    state           The appointment state.
+ * @apiSuccess {Object}                                         student         The student data.
+ * @apiSuccess {Object}                                         laboratory      The laboratory data.
+ * @apiSuccess {Object}                                         software        The software data.
+ * @apiSuccess {Object}                                          group          The group data.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "id": 1,
  *       "state": "Por iniciar",
+ *       "attendance": false,
  *       "date": "2015-08-27T13:00:00.000Z",
  *       "created_at": "2015-08-27T22:14:20.646Z",
  *       "updated_at": "2015-08-27T22:14:20.646Z",

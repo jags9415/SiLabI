@@ -9,19 +9,19 @@
  * @apiDescription Retrieve a group.
  *
  * @apiExample Example:
- * 		GET /groups/87 HTTP/1.1
+ *   GET /groups/87?access_token=xxx.yyy.zzz HTTP/1.1
  *
- * @apiParam {String}	access_token	The access token.
- * @apiParam {String[]} [fields]		A list of fields to include in the results.
+ * @apiParam {String}       access_token    The access token.
+ * @apiParam {String[]}     [fields]        A list of fields to include in the results.
  *
- * @apiSuccess {Number}									    id 		      The group identification.
- * @apiSuccess {Number}									    number 		  The group number.
- * @apiSuccess {Object}									    course 			The course data.
- * @apiSuccess {Object}                     professor		The professor data.
- * @apiSuccess {Object}                     period  		The period data.
- * @apiSuccess {Date}									      created_at  The creation date.
- * @apiSuccess {Date}									      updated_at  The last update date.
- * @apiSuccess {String="Activo, Inactivo"}	state			  The group state.
+ * @apiSuccess {Number}                     id              The group identity.
+ * @apiSuccess {Number}                     number          The group number.
+ * @apiSuccess {Object}                     course          The course data.
+ * @apiSuccess {Object}                     professor       The professor data.
+ * @apiSuccess {Object}                     period          The period data.
+ * @apiSuccess {Date}                       created_at      The creation date.
+ * @apiSuccess {Date}                       updated_at      The last update date.
+ * @apiSuccess {String="Activo, Inactivo"}  state           The group state.
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
