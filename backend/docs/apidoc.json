@@ -1,8 +1,8 @@
 {
-  "name": "SiLabI API",
-  "title": "SiLabI API",
+  "name": "eLab API",
+  "title": "eLab | API",
   "version": "1.0.0",
-  "url": "http://localhost/api",
+  "url": "https://api.elabcr.com",
   "header": {
     "title": "Introduction",
     "filename": "header.md"

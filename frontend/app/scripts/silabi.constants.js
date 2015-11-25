@@ -4,7 +4,7 @@
 
     angular
         .module('silabi')
-        .constant('API_URL','https://localhost/api/v1')
+        .constant('API_URL','https://api.elabcr.com/v1')
         .constant('CryptoJS', CryptoJS)
         .constant('toastr', toastr)
         .constant('bootbox', bootbox)

@@ -7,7 +7,7 @@
 *.pdb
 *.user
 **/packages/*
-**/APIdoc/output/*
+**/docs/output/*
 
 **/node_modules/*
 **/bower_components/*
