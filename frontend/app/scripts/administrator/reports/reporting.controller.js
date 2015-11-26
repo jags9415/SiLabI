@@ -275,7 +275,23 @@
     }
 
     function savePdf(data) {
-      saveAs(data, "report.pdf");
+      var reportName;
+      switch (vm.selected_report.value) 
+      {
+        case 1:
+          reportName = "citas_por_estudiante_"+vm.student.username;
+          break;
+        case 2:
+          reportName = "citas_por_grupo_"+vm.group.course.name+"["+vm.group.number+"]";
+          break;
+        case 3:
+          reportName = "reservaciones_por_docente_"+vm.professor.full_name;
+            break;
+        case 4:
+          reportName = "reservaciones_por_grupo_"+vm.group.course.name+"["+vm.group.number+"]";
+            break;
+      }
+      saveAs(data, reportName+".pdf");
     }
 
     function handleError(data) {
