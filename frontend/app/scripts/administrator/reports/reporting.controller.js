@@ -251,22 +251,22 @@
       if (vm.selected_report) {
         switch (vm.selected_report.value) {
           case 1:
-            ReportingService.GetAppointmentsByStudent(vm.student.username, request)
+            vm.promise = ReportingService.GetAppointmentsByStudent(vm.student.username, request)
             .then(savePdf)
             .catch(handleError)
             break;
           case 2:
-            ReportingService.GetAppointmentsByGroup(vm.group.id, request)
+            vm.promise = ReportingService.GetAppointmentsByGroup(vm.group.id, request)
               .then(savePdf)
               .catch(handleError)
               break;
           case 3:
-            ReportingService.GetReservationsByProfessor(vm.professor.username, request)
+            vm.promise =ReportingService.GetReservationsByProfessor(vm.professor.username, request)
               .then(savePdf)
               .catch(handleError)
               break;
           case 4:
-            ReportingService.GetReservationsByGroup(vm.group.id, request)
+            vm.promise =ReportingService.GetReservationsByGroup(vm.group.id, request)
               .then(savePdf)
               .catch(handleError)
               break;
