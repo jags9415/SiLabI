@@ -41,6 +41,7 @@ def create_release():
 	execute_file("fill_scripts/02-PeriodTypes.sql")
 	execute_file("fill_scripts/03-Periods.sql")
 	execute_file("fill_scripts/11-Laboratories.sql")
+	execute_file("fill_scripts/08-Administrators.sql")
 
 def main(argv):
 	configuration = "debug"
