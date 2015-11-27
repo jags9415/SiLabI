@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('SoftwareDetailController', SoftwareDetailController);
 
-  SoftwareDetailController.$inject = ['$routeParams', '$location', '$scope', 'SoftwareService', 'MessageService', 'lodash'];
+  SoftwareDetailController.$inject = ['$routeParams', '$location', '$scope', 'SoftwareService', 'MessageService', 'StateService', 'lodash'];
 
-  function SoftwareDetailController($routeParams, $location, $scope, SoftwareService, MessageService, _) {
+  function SoftwareDetailController($routeParams, $location, $scope, SoftwareService, MessageService, StateService, _) {
     var vm = this;
     vm.code = $routeParams.code;
     vm.update = updateSoftware;
@@ -16,6 +16,11 @@
     activate();
 
     function activate() {
+
+      StateService.GetLabStates()
+      .then(setStates)
+      .catch(handleError);
+
       SoftwareService.GetOne(vm.code)
       .then(setSoftware)
       .catch(handleError);
@@ -43,6 +48,16 @@
 
     function setSoftware(software) {
       vm.software = software;
+    }
+
+    function setStates(States) {
+      vm.states = [];
+      for (var i = 0; i < States.length; i++) {
+        if(States[i].value  != "*")
+        {
+          vm.states.push(States[i].value);
+        }
+      };
     }
 
     function redirectToSoftware() {

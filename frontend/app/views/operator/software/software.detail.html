@@ -10,18 +10,31 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group" show-errors>
+          <label for="name" class="control-label">Nombre</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="SoftwareDetail.software.name" ng-trim required>
+          <p class="help-block" ng-if="updateSoftwareForm.name.$error.required">Nombre requerido.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
           <label for="code" class="control-label">Código</label>
           <input type="text" class="form-control" id="code" name="code" placeholder="Código" ng-model="SoftwareDetail.software.code" ng-trim required>
           <p class="help-block" ng-if="updateSoftwareForm.code.$error.required">Código requerido.</p>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="form-group" show-errors>
-          <label for="name" class="control-label">Nombre</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="SoftwareDetail.software.name" ng-trim required>
-          <p class="help-block" ng-if="updateSoftwareForm.name.$error.required">Nombre requerido.</p>
+          <label for="state" class="control-label">Estado</label>
+          <ui-select id="state" ng-model="SoftwareDetail.software.state">
+            <ui-select-match placeholder="{{SoftwareDetail.software.state}}">
+              {{ $select.selected }}
+            </ui-select-match>
+            <ui-select-choices repeat="state in SoftwareDetail.states">
+              <span ng-bind-html="state"></span>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
     </div>
