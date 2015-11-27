@@ -49,12 +49,25 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="form-group" show-errors>
         <label for="number">Número</label>
           <input type="number" class="form-control" min="0" id="number" name="number" placeholder="Número" ng-model="GroupDetail.group.number" required>
           <p class="help-block" ng-if="updateGroupForm.number.$error.required">Número de grupo requerido.</p>
           <p class="help-block" ng-if="updateGroupForm.number.$error.number  || updateGroupForm.number.$error.min">Ingrese un número positivo.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="state" class="control-label">Estado</label>
+          <ui-select id="state" ng-model="GroupDetail.group.state">
+            <ui-select-match placeholder="{{GroupDetail.group.state}}">
+              {{ $select.selected }}
+            </ui-select-match>
+            <ui-select-choices repeat="state in GroupDetail.states">
+              <span ng-bind-html="state"></span>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
     </div>

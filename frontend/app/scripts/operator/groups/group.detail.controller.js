@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('GroupDetailController', GroupDetailController);
 
-    GroupDetailController.$inject = ['$scope', '$routeParams', '$location', 'GroupService', 'ProfessorService', 'CourseService', 'StudentService', 'MessageService', 'PeriodService', 'lodash'];
+    GroupDetailController.$inject = ['$scope', '$routeParams', '$location', 'GroupService', 'ProfessorService', 'CourseService', 'StudentService', 'MessageService', 'PeriodService', 'StateService', 'lodash'];
 
-    function GroupDetailController($scope, $routeParams, $location, GroupService, ProfessorService, CourseService, StudentService, MessageService, PeriodService, _) {
+    function GroupDetailController($scope, $routeParams, $location, GroupService, ProfessorService, CourseService, StudentService, MessageService, PeriodService, StateService, _) {
       var vm = this;
 
       vm.group = {};
@@ -21,7 +21,7 @@
       vm.limit = 15;
 
       vm.groupRequest = {
-        fields: 'id,period,number,created_at,updated_at,professor.full_name,professor.username,course.code,course.name'
+        fields: 'id,period,number,state,created_at,updated_at,professor.full_name,professor.username,course.code,course.name'
       };
 
       vm.studentRequest = {
@@ -47,6 +47,10 @@
         .then(setPeriods)
         .catch(handleError);
 
+        StateService.GetLabStates()
+        .then(setStates)
+        .catch(handleError);
+
         GroupService.GetOne(vm.id, vm.groupRequest)
         .then(setGroup)
         .then(setStudents)
@@ -61,7 +65,8 @@
               'number': vm.group.number,
               'professor': vm.group.professor.username,
               'course': vm.group.course.code,
-              'period': vm.group.period
+              'period': vm.group.period,
+              'state': vm.group.state
           };
 
           if (vm.isStudentsModified) {
@@ -161,6 +166,16 @@
 
       function setPeriods(periods) {
         vm.periods = periods;
+      }
+
+      function setStates(States) {
+        vm.states = [];
+        for (var i = 0; i < States.length; i++) {
+          if(States[i].value  != "*")
+          {
+            vm.states.push(States[i].value);
+          }
+        };
       }
 
       function showUpdate(group) {
