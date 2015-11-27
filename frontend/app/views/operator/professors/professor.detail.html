@@ -8,15 +8,13 @@
   </ol>
   <form autocomplete="off" name="updateProfessorForm">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <div class="form-group" show-errors>
           <label for="name" class="control-label">Nombre</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="ProfessorDetail.professor.name" ng-trim required>
           <p class="help-block" ng-if="updateProfessorForm.name.$error.required">Nombre requerido.</p>
         </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6">
         <div class="form-group" show-errors>
           <label for="last_name_1" class="control-label">Primer Apellido</label>
@@ -24,10 +22,25 @@
           <p class="help-block" ng-if="updateProfessorForm.last_name_1.$error.required">Apellido requerido.</p>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col-md-6">
         <div class="form-group" show-errors>
           <label for="last_name_2" class="control-label">Segundo Apellido</label>
           <input type="text" class="form-control" id="last_name_2" name="last_name_2" placeholder="Segundo Apellido" ng-model="ProfessorDetail.professor.last_name_2" ng-trim>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group" show-errors>
+          <label for="state" class="control-label">Estado</label>
+          <ui-select id="state" ng-model="ProfessorDetail.professor.state">
+            <ui-select-match placeholder="{{ProfessorDetail.professor.state}}">
+              {{ $select.selected }}
+            </ui-select-match>
+            <ui-select-choices repeat="state in ProfessorDetail.states">
+              <span ng-bind-html="state"></span>
+            </ui-select-choices>
+          </ui-select>
         </div>
       </div>
     </div>

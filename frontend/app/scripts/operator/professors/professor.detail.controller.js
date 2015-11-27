@@ -5,9 +5,9 @@
       .module('silabi')
       .controller('ProfessorsDetailController', ProfessorsDetailController);
 
-    ProfessorsDetailController.$inject = ['$scope', '$routeParams', '$location', 'ProfessorService', 'GenderService', 'MessageService', 'CryptoJS', 'lodash'];
+    ProfessorsDetailController.$inject = ['$scope', '$routeParams', '$location', 'ProfessorService', 'GenderService', 'MessageService', 'StateService', 'CryptoJS', 'lodash'];
 
-    function ProfessorsDetailController($scope, $routeParams, $location, ProfessorService, GenderService, MessageService, CryptoJS, _) {
+    function ProfessorsDetailController($scope, $routeParams, $location, ProfessorService, GenderService, MessageService, StateService, CryptoJS, _) {
         var vm = this;
         vm.username = $routeParams.username;
         vm.update = updateProfessor;
@@ -18,6 +18,10 @@
         function activate() {
           GenderService.GetAll().
           then(setGenders)
+          .catch(handleError);
+
+          StateService.GetStudentStates()
+          .then(setStates)
           .catch(handleError);
 
           ProfessorService.GetOne(vm.username).
@@ -50,6 +54,16 @@
 
         function setGenders(genders) {
           vm.genders = genders;
+        }
+
+        function setStates(States) {
+          vm.states = [];
+          for (var i = 0; i < States.length; i++) {
+            if(States[i].value  != "*")
+            {
+              vm.states.push(States[i].value);
+            }
+          };
         }
 
         function setProfessor(professor) {
