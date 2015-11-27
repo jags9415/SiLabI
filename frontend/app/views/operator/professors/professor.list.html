@@ -90,7 +90,8 @@
           <td>
             <span class="label"
               ng-class="{ 'label-success': professor.state === 'Activo',
-                          'label-danger': professor.state === 'Inactivo'}" >
+                          'label-danger': professor.state === 'Inactivo',
+                          'label-warning': professor.state === 'Bloqueado'}" >
               {{ professor.state }}
             </span>
           </td>
